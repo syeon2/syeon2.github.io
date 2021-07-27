@@ -134,6 +134,13 @@ defaults:
       layout: plain
       sitemap: false
 
+  # You can use the following to enable comments on all posts.
+  - scope:
+      type: posts
+    values:
+      # https://applause-button.com/
+      applause_button: true
+
   # # You can use the following to enable comments on all posts.
   # - scope:
   #     type:            posts
@@ -169,6 +176,33 @@ kramdown:
 # Set your Google Analytics id to receive `pageview` events.
 # To remove Google Anaylics from your page, remove the line below.
 # google_analytics:      UA-XXXXXXXX-X
+
+# Set which comment system to use
+comments:
+  # 'disqus' or 'utterances' are available
+  provider: utterances
+
+# You must install utterances github app before use.(https://github.com/apps/utterances)
+# Make sure all variables are set properly. Check below link for detail.
+# https://utteranc.es/
+utterances:
+  repo: "ksy4568/ksy4568.github.io"
+  issue-term: "pathname"
+  label: "Comments"
+  theme: "github-light"
+
+# You must install giscus github app before use.(https://github.com/apps/giscus)
+# Make sure all variables are set properly. Check below link for detail.
+# https://giscus.vercel.app/
+giscus:
+  repo: "ksy4568/ksy4568.github.io"
+  repo-id: "MDEwOlJlcG9zaXRvcnkzODk4NTg2MzQ"
+  category: "General"
+  category-id: "DIC_kwDOFzzFSs4B-dqb"
+  mapping: "pathname"
+  reaction-enabled: "1"
+  theme: "light"
+  crossorigin: "anonymous"
 
 # Setting a disqus shortname will enable the comment section on
 # pages with `comments: true` in the front matter.
@@ -302,8 +336,7 @@ collections:
 # ----------------------------------------------------------------------------------------
 
 exclude:
-  - ./#jekyll-theme-hydejack/node_modules
-  - ./#jekyll-theme-hydejack/.git
+  - node_modules
   - .jekyll-cache
   - .sass-cache
   - "*.toml"

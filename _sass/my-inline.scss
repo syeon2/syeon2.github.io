@@ -1,2 +1,82 @@
-// Uncomment to disable dingbat icons below posts
-// hr.dingbat { display: none }
+// You can add CSS rules here that will be inlined into each document.
+.sidebar a {
+  text-shadow: rgba(255, 255, 255, 0.25) 0.1rem 0.1rem 0.15rem;
+}
+
+// Sidebar Modification
+
+.sidebar {
+  text-align: center;
+}
+
+.sidebar-sticky {
+  position: absolute;
+  height: 100%;
+  padding-top: 5%;
+}
+
+.sidebar-nav-item {
+  width: 100%;
+  padding: 0.25rem 0;
+}
+
+.sidebar-nav-subitem {
+  @extend .f4;
+  width: 100%;
+  display: inline-block;
+  padding: 0.25rem 0;
+}
+
+.sidebar-nav-subitem:last-child {
+  margin: 0 0 4px 0;
+}
+
+.list-wrapper {
+  text-align: left;
+  display: flex;
+}
+
+.list-body {
+  text-align: left;
+  margin: 0;
+}
+
+.sidebar-about {
+  > a.sidebar-title {
+    &::after {
+      width: 9rem;
+    }
+  }
+}
+
+// Submenu Insertion
+
+.folder {
+  text-align: right;
+  width: 100%;
+  color: #333333;
+  font-size: large;
+  cursor: pointer;
+}
+
+.folder:hover {
+  color: #4fb1ba;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] ~ ul {
+  height: 0;
+  transition: transform 0.2s ease-out;
+  transform: scaleY(0);
+}
+
+input[type="checkbox"]:checked ~ ul {
+  list-style: none;
+  height: 100%;
+  transform-origin: top;
+  transition: transform 0.2s ease-out;
+  transform: scaleY(1);
+}

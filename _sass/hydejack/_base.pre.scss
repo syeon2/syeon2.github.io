@@ -21,7 +21,8 @@ body {
   overflow-x: hidden;
 }
 
-hy-push-state, hy-drawer {
+hy-push-state,
+hy-drawer {
   display: block;
   overflow: hidden;
 }
@@ -29,8 +30,8 @@ hy-push-state, hy-drawer {
 // <<< INLINE
 body::before {
   @media screen {
-    content: '';
-    width: .5rem;
+    content: "";
+    width: 0.5rem;
     background: var(--gray-bg);
     position: fixed;
     left: 0;
@@ -61,15 +62,15 @@ html {
   > ul {
     @extend .ellipsis;
     height: 1rem;
-    margin: -1.5rem 0 .5rem;
+    margin: -1.5rem 0 0.5rem;
     padding: 0;
-    font-size: .667rem;
+    font-size: 0.667rem;
     color: var(--menu-text);
     text-transform: uppercase;
     width: 100%;
     list-style: none;
-    > li { 
-      display: inline; 
+    > li {
+      display: inline;
       a {
         color: var(--gray);
         text-decoration: none;
@@ -80,13 +81,13 @@ html {
 }
 // >>>
 // <<< LINK
-@media print { 
-  html { 
+@media print {
+  html {
     font-size: var(--root-font-size-print);
-  } 
+  }
 }
 
-@page { 
+@page {
   margin: 16mm;
-} 
+}
 // >>>

@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+
+
+
+
+
+
+<head>
+  
+
+
+
+
+
+
+  
+    
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>2차 프로젝트 회고 (CREAM) | Syeon</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="2차 프로젝트 회고 (CREAM)" />
+<meta name="author" content="SuYeon Kim" />
+<meta property="og:locale" content="ko_KR, en_US" />
+<meta name="description" content="Wecode 부트캠프에서 진행한 프로젝트 CREAM에 대한 회고록입니다." />
+<meta property="og:description" content="Wecode 부트캠프에서 진행한 프로젝트 CREAM에 대한 회고록입니다." />
+<link rel="canonical" href="http://localhost:4000/project/project-review-cream.html" />
+<meta property="og:url" content="http://localhost:4000/project/project-review-cream.html" />
+<meta property="og:site_name" content="Syeon" />
+<meta property="og:image" content="http://localhost:4000/assets/img/project/2021-07-24-cream/2021-07-24-project-review-cream-Cover.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-07-24T00:00:00+09:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/img/project/2021-07-24-cream/2021-07-24-project-review-cream-Cover.png" />
+<meta property="twitter:title" content="2차 프로젝트 회고 (CREAM)" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/project/project-review-cream.html"},"author":{"@type":"Person","name":"SuYeon Kim"},"@type":"BlogPosting","description":"Wecode 부트캠프에서 진행한 프로젝트 CREAM에 대한 회고록입니다.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/me.jpg"},"name":"SuYeon Kim"},"url":"http://localhost:4000/project/project-review-cream.html","headline":"2차 프로젝트 회고 (CREAM)","dateModified":"2021-07-24T00:00:00+09:00","datePublished":"2021-07-24T00:00:00+09:00","image":"http://localhost:4000/assets/img/project/2021-07-24-cream/2021-07-24-project-review-cream-Cover.png","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Syeon">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="application-name" content="Syeon">
+
+
+  <meta name="theme-color" content="rgb(8,46,57)">
+
+
+<meta name="generator" content="Hydejack v9.1.4" />
+
+
+<link rel="alternate" href="http://localhost:4000/project/project-review-cream.html" hreflang="ko-kr, en-us">
+
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Syeon" />
+
+
+<link rel="shortcut icon"    href="/assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+
+<link rel="manifest" href="/assets/site.webmanifest">
+
+<link rel="dns-prefetch" href="https://fonts.googleapis.com"><link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+
+
+<link rel="preload" href="/assets/img/swipe.svg" as="image" id="_hrefSwipeSVG">
+
+<link rel="dns-prefetch" href="/assets/js/search-worker-9.1.4.js" as="worker" id="_hrefSearch">
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/applause-button/dist/applause-button.css">
+  <script src="https://unpkg.com/applause-button/dist/applause-button.js"></script>
+
+
+
+<script>!function(r,c){"use strict";function a(e,t,n,o){e.addEventListener?e.addEventListener(t,n,o):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n}r.loadJS=function(e,t){var n=c.createElement("script");n.src=e,t&&a(n,"load",t,{once:!0});t=c.scripts[0];return t.parentNode.insertBefore(n,t),n},r._loaded=!1,r.loadJSDeferred=function(e,t){var n=c.createElement("script");function o(){r._loaded=!0,t&&a(n,"load",t,{once:!0});var e=c.scripts[0];e.parentNode.insertBefore(n,e)}return n.src=e,r._loaded?o():a(r,"load",o,{once:!0}),n},r.setRel=r.setRelStylesheet=function(e){a(c.getElementById(e),"load",function(){this.rel="stylesheet"},{once:!0})}}(window,document);
+!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+!function(w) {
+  w._baseURL = '/';
+  w._publicPath = '/assets/js/';
+  w._noPushState = false;
+  w._noDrawer = false;
+  w._noNavbar = false;
+  w._noToc = false;
+  w._noSearch = false;
+  w._advertise = false;
+  w._search = {
+    DATA_URL: '/assets/sitedata.json?no-cache',
+    STORAGE_KEY: 'mini-search/',
+    INDEX_KEY: 'index--2021-07-27T16:44:35+09:00',
+  };
+  w._clapButton = true;
+}(window);</script>
+
+
+<script async src="/assets/bower_components/MathJax/es5/tex-mml-chtml.js" id="_MathJax"></script>
+
+
+<!--[if gt IE 8]><!---->
+
+  
+
+
+
+
+<link rel="stylesheet" href="/assets/css/hydejack-9.1.4.css" id="_stylePreload">
+<link rel="stylesheet" href="/assets/icomoon/style.css" id="_iconsPreload">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700%7CNoto+Sans:400,400i,700,700i&display=swap" id="_fontsPreload">
+
+
+
+<!--<![endif]-->
+
+
+
+
+
+</head>
+
+<body class="no-break-layout no-large-headings">
+  
+
+
+<hy-push-state
+  id="_pushState"
+  replace-selector="#_main"
+  link-selector="a[href]:not([href^='/assets/']):not(.external):not(.no-push-state)"
+  script-selector="script"
+  duration="500"
+  hashchange
+>
+  
+  
+  <div id="_navbar" class="navbar fixed-top">
+  <div class="content">
+    <span class="sr-only">Jump to:</span>
+    <div class="nav-btn-bar">
+      <a id="_menu" class="nav-btn no-hover" href="#_drawer--opened">
+        <span class="sr-only">Navigation</span>
+        <span class="icon-menu"></span>
+      </a>
+      <div class="nav-span"></div>
+    </div>
+  </div>
+</div>
+<hr class="sr-only" hidden />
+
+  <main
+  id="_main"
+  class="content layout-post"
+  role="main"
+>
+  <nav id="breadcrumbs" class="screen-only"><ul>
+  
+  
+    <li><a href="/">home</a></li>
+    
+      <li>
+      
+        <span>/</span>
+        
+        
+        <a href="/project/">project</a>
+      
+      </li>
+    
+      <li>
+      
+        <span>/</span>
+        <span>project-review-cream.html</span>
+      
+      </li>
+    
+  
+</ul></nav>
+  
+
+
+
+
+
+
+
+
+
+
+<article id="post-project-project-review-cream" class="page post mb6" role="article">
+  <header>
+    <h1 class="post-title flip-project-title">
+      
+        2차 프로젝트 회고 (CREAM)
+      
+    </h1>
+
+    <div class="post-date">
+      
+      <span class="ellipsis mr1">
+        <time datetime="2021-07-24T00:00:00+09:00">24 Jul 2021</time> in <a href="/blog/project/" class="flip-title">Project</a> on <span>Project</span>, <span>Kream</span>, <span>React</span>, <span>경매</span>
+      </span>
+      
+        
+      
+    </div>
+
+    
+    
+      
+        <div class="img-wrapper lead aspect-ratio sixteen-nine flip-project-img">
+          
+
+
+<img
+  
+    src="/assets/img/project/2021-07-24-cream/2021-07-24-project-review-cream-Cover.png"
+    
+    
+  
+  alt="2차 프로젝트 회고 (CREAM)"
+  
+  
+  width="864"
+  height="486"
+  loading="lazy"
+/>
+
+        </div>
+      
+      
+    
+
+    
+
+
+
+  
+
+
+  </header>
+
+  
+    <blockquote>
+  <p>Wecode 부트캠프에서 진행한 프로젝트 CREAM에 대한 회고록입니다.</p>
+</blockquote>
+
+<ul>
+  <li>목차
+    <ul>
+      <li><a href="#-근황">근황</a></li>
+      <li><a href="#-project-cream">Project CREAM</a></li>
+      <li><a href="#1-기획하는-단계">기획하는 단계</a></li>
+      <li><a href="#2-프로젝트-설명">프로젝트 설명</a></li>
+      <li><a href="#-마치며">마치며…</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="-근황">📌 근황…</h2>
+
+<hr />
+
+<p>2차 프로젝트를 마무리하고 약 한달 반이 지났다. 그동안은 Velog를 이용해왔지만 ‘나만의 블로그를 만들어서 운영하고 싶다..’라는 단순하고도 어리석은(?) 생각으로 github를 이용한 블로깅을 해야지..해야지.. 했던게 지금까지 이어져 왔다.😂</p>
+
+<p>Wecode 부트캠프를 수료하고 난 이후에 개인적으로 공부하는 기술 스택들을 블로깅하고 싶은 마음에 마음 단단히(?) 먹고 몇일동안 고군분토한 결과… 드디어!! 블로그가 만들어졌다!!🎉
+이제 부지런히 밀린 블로깅을 하는 일만 남았다..!</p>
+
+<h2 id="-project-cream">📌 Project CREAM</h2>
+
+<hr />
+
+<blockquote>
+  <p>🚌 기간 : 5월 24일 ~ 6월 04일 <br />
+👥 Front-end : 3명, Back-end : 2명
+💻 사용된 기술 스택 : React Hooks, React Router, Styled-Component, KAKAO social login, RESTful API</p>
+
+  <ul>
+    <li>팀원들과 함께 신발 경매 사이트 Kream을 모티브로 하여 개발을 진행 <br /></li>
+    <li>사람들과의 거래 및 경매라는 플로우를 중심으로 한 개발을 목표로 선정</li>
+  </ul>
+</blockquote>
+
+<h3 id="1-기획하는-단계">1. 기획하는 단계🚶</h3>
+
+<hr />
+
+<h4 id="-서비스-파악하기">🌱 서비스 파악하기</h4>
+
+<p>CREAM의 특징은 물품 구매자와 판매자 모두 서비스를 이용하는 이용자들이 될 수 있다는 것이다. 그렇기 때문에 서비스를 이용하는 회원들은 물품을 판매하게 되면 물품 값을 받아야하고 구매를 하게 되면 물품 값을 내야했다.</p>
+
+<p>프로젝트이기 때문에 실제 화폐가 아닌 팀원끼리 사용할 수 있는 가상 활페로 대체하고, 대략적인 플로우를 생각해보았다.</p>
+
+<p>Kream은 경매로 물품에 대해 입찰만 할 수 있는 것이 아니라 상품에 대한 즉시 구매도 가능했다.
+물품에 대한 채결 거래 내역이 실시간으로 갱신되는 것도 chart를 통해서 확인할 수 있었는데, 경매 입찰 거래가와 즉시 구매가, 즉시 판매가에 대한 연결성을 파악해야했다.</p>
+
+<p>얼마 지나지 않아서 즉시 구매가는 판매 입찰로 나온 물품 중 가장 싼 판매 희망가가 즉시 구매가로 책정이 되고, 즉시 판매가는 구매 입찰에 나온 물품 중 가장 비싼 구매 희망가로 책정된다는 것을 발견하였다.</p>
+
+<p>또한 구매 입찰을 진행할 때, 만약 구매 입찰가가 즉시 구매가보다 높다면 자동으로 즉시 구매가로 넘어가주어야 했고, 마찬가지로 판매 입찰을 진행할 때, 만약 판매 입찰가가 즉시 판매가보다 낮으면 자동으로 즉시 판매가로 넘어가주어야 했다.</p>
+
+<p>이러한 거래 플로우를 각 하나의 물품에 대한 여러가지의 사이즈를 고려하여 데이터를 처리해야했기 때문에 생각보다 복잡했고, 팀원들과 의논하며 구현에 집중할 기능들을 하나 둘씩 정리하였다.</p>
+
+<h4 id="-내가-맡은-기능">🌱 내가 맡은 기능</h4>
+
+<ul>
+  <li>제품 상세 페이지 (chart.js 라이브러리 사용, 무한 스크롤 구현)</li>
+  <li>팀원들과 함께 사용할 공용 Modal 구현</li>
+  <li>URLSearchParams를 사용하여 백엔드에서 받는 데이터 필터링 구현</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-프로젝트-설명">2. 프로젝트 설명🙈</h3>
+
+<hr />
+
+<h4 id="-modal">🌱 Modal</h4>
+
+<ul>
+  <li>WIKEA 프로젝트 때 팀원이셨던 분께서 공용 모달로 만드셨던 기억을 떠올려 스스로 구현해보았다.</li>
+  <li>가장 큰 모달창만 구현을 하고 모달 내부에 들어갈 데이터 요소들은 하위 컴포넌트로 구현하기로 기획하였다.</li>
+  <li>
+    <p>여기서 등장하는 모달들은 내부에 있는 데이터만 다르고 모두 같은 컴포넌트로 구현하였다.</p>
+
+    <p><img src="/assets/img/project/2021-07-24-cream/2021-07-24-cream-modal.gif" alt="modal" />
+<img src="/assets/img/project/2021-07-24-cream/2021-07-24-cream-modalCode.png" alt="modalCode" /></p>
+  </li>
+  <li>간단해보이는 modal이다. 모달의 on/off를 상위 컴포넌트의 state로 관리해주고, 내부 데이터들을 children으로 받아서 랜더링시켜준다.</li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="-chart--infinity-scroll">🌱 Chart &amp; Infinity scroll</h4>
+
+<ul>
+  <li>
+    <p>처음 입문한 라이브러리인 Chart.js이다. Chart.js 자체의 기능은 어렵지 않았지만… 설치하는 부분에서 꼬박 하루가 걸렸다..😂 아무리 <code class="language-plaintext highlighter-rouge">npm install chart.js</code>를 실행해서 chart를 설치해도… 일부 기능들이 동작하지 않았다..</p>
+  </li>
+  <li>
+    <p>원인은 chart.js의 버전이었다. chart.js를 사용하는 다른 사람들의 소스코드를 계속보다가 문득 package.json은 어떻지??라는 생각에 살펴보게 되었는데, 다른 사람들은 2.9.3버전의 chart.js를 사용하고 있었고, 나는 최신 버전으로 보이는 chart.js를 사용하고 있었다. 혹시나 하는 마음에 chart.js를 다운그래이드하여 다시 설치해본 결과…!! 드디어!! chart.js의 option으로 관리되는 기능들이 동작하였다..!! 그때의 감격.. (그 이후 package.json의 존재 이유를 알게 되었다는….)</p>
+  </li>
+</ul>
+
+<p><img src="/assets/img/project/2021-07-24-cream/2021-07-24-cream-chart.gif" alt="chartGif" />
+<img src="/assets/img/project/2021-07-24-cream/2021-07-24-cream-chartCode.png" alt="chartCode" /></p>
+
+<hr />
+
+<ul>
+  <li>무한 스크롤은 보통 백엔드와 소통하여 offset과 limit를 사용한 무한 스크롤을 구현하는 경우가 일반적인 것 같다. 하지만 백앤드와 소통해서 구현하기에는 메인 기능이 아니라 여겼기 때문에 백엔드로부터 오는 result값은 다 받고 이벤트가 발생할 때마다 result의 범위를 slice를 통해 넓혀나가는 방법을 택했다. (랜더링 최적화에는 좋지 않은 것 같아 리팩토링이 필요한 로직이라 생각한다.)</li>
+</ul>
+
+<p><img src="/assets/img/project/2021-07-24-cream/2021-07-24-cream-infinity1.png" alt="infinityScroll" />
+<img src="/assets/img/project/2021-07-24-cream/2021-07-24-cream-infinity2.png" alt="infinityScroll" /></p>
+
+<p><br /></p>
+
+<h4 id="-filter">🌱 Filter</h4>
+
+<ul>
+  <li>입찰 거래 내역에는 가격별, 사이즈별로 오름차순 내림차순 기능이 구현되어 있다.</li>
+  <li>처음에는 데이터 영역을 다루는 것 자체가 백엔드의 역할이라는 회의 결과로 인해 백앤드분께서 일일히 해당 엔드포인트를 만들어주셨다. 그래서 URLSearchParams를 가지고 각 해당 엔드포인드로 이동하게끔 만들었다.</li>
+  <li>하지만 오히려 이것은 버튼을 누를 때마다 불필요한 통신을 실행하기에 오버 엔지니어링이라 느꼈다. 프론트에서 자체적으로 간단하게 필터링할 수 있는 부분인 것 같아 효율적인 운용을 위해 리팩토링해야할 것 같다.</li>
+</ul>
+
+<p><img src="/assets/img/project/2021-07-24-cream/2021-07-24-cream-filter.gif" alt="filter" />
+<img src="/assets/img/project/2021-07-24-cream/2021-07-24-cream-filterCode.png" alt="filterCode" /></p>
+
+<p><br /></p>
+
+<h2 id="-마치며">📌 마치며..</h2>
+
+<hr />
+
+<ul>
+  <li>현재 글을 적고 있는 시점은 이미 1달 반이라는 시간이 지났지만 아직까지 팀원들과 프로젝트를 진행했던 기억은 생생하다. 이번 프로젝트의 제일 Blocker는 chart.js의 버전의 차이로 인한 버그인 것 같다.</li>
+  <li>하루종일 ‘왜 동작을 안하지?’ 라는 생각을 수십번도 넘게 했던… 비록 버전 넘버 바꿔주고 npm install하니까 금방 해결될 문제였지만, 현업에서 이런 Blocker를 만나면 어떻게 효율적으로 대처할 것인가에 대해 많이 생각해보았던 것 같다.</li>
+  <li>이 프로젝트를 진행하면서 로직을 통한 문제 해결능력도 중요하지만, 필요한 시점에 적절한 문구를 사용하여 서치하는 능력 또한 중요하다는 것을 느끼는 프로젝트인 것 같다!! :)</li>
+</ul>
+
+  
+</article>
+
+
+
+<applause-button class="mb6"
+    color=rgb(79,177,186)
+    url=http://localhost:4000/project/project-review-cream.html >
+  </applause-button>
+
+
+
+
+
+
+  
+     
+
+
+  <aside class="about related mt4 mb4" role="complementary">
+    
+    
+
+<div class="author mt4">
+  
+
+  
+    
+
+
+<img
+  
+    src="/assets/img/me.jpg"
+    
+    
+  
+  alt="SuYeon Kim"
+  class="avatar"
+  
+  width="120"
+  height="120"
+  loading="lazy"
+/>
+
+  
+
+  
+  
+  <h2  class="page-title hr-bottom">
+    About
+  </h2>
+
+  <p>“&lt;blockquote&gt;개발은 익숙해지는거라네👨🏻‍💻&lt;/blockquote&gt;”</p>
+
+
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/ksy4568" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="mailto:gsy4568@gmail.com" title="Email" class="no-mark-external">
+      <span class="icon-mail"></span>
+      <span class="sr-only">Email</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+
+  </aside>
+
+
+  
+
+  
+    
+
+  
+
+
+  
+<footer class="content" role="contentinfo">
+  <hr/>
+  
+    <p><small class="copyright">© 2021. All rights reserved.
+</small></p>
+  
+  
+  
+  <hr class="sr-only"/>
+</footer>
+
+
+</main>
+
+  <hy-drawer
+  id="_drawer"
+  class=""
+  side="left"
+  threshold="10"
+  noscroll
+  
+>
+  <header id="_sidebar" class="sidebar" role="banner">
+    
+
+
+
+
+<div class="sidebar-bg sidebar-overlay" style="background-color:rgb(8,46,57);background-image:url(/assets/img/sidebar-bg.jpg)"></div>
+
+    <div class="sidebar-sticky">
+  <div class="sidebar-about">
+    
+      <a class="no-hover" href="/" tabindex="-1">
+        <img src="/assets/img/me.jpg" class="avatar" alt="Syeon" width="120" height="120" loading="lazy" />
+      </a>
+    
+    <a class="sidebar-title" href="/"><h2 class="h1">Syeon</h2></a>
+    
+    
+      <p class="">
+        즐거움에 습관을 더하다👨🏻‍💻
+
+      </p>
+    
+  </div>
+
+  <nav class="sidebar-nav heading" role="navigation">
+    <span class="sr-only">Navigation:</span>
+<ul>
+  
+    
+    
+    
+      
+        
+          
+          
+          <li>
+            
+            <div class="list-wrapper">
+              <a id="_navigation" href="/about/" class="sidebar-nav-item"  >About</a>
+              
+            </div>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          
+          
+          <li>
+            
+              <input type="checkbox" id="list-item-10" />
+            
+            <div class="list-wrapper">
+              <a  href="/blog/devlog/" class="sidebar-nav-item"  >Devlog</a>
+              
+                <label class="folder" for="list-item-10">▾</label>
+              
+            </div>
+            
+              <ul class="list-body">
+                  <li>
+                    <a class="sidebar-nav-subitem" href="/tag-algorithm/">Algorithm</a>
+                  </li>
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+          
+          
+          <li>
+            
+            <div class="list-wrapper">
+              <a  href="/blog/project/" class="sidebar-nav-item"  >Project</a>
+              
+            </div>
+            
+          </li>
+        
+      
+    
+      
+        
+          
+          
+          <li>
+            
+            <div class="list-wrapper">
+              <a  href="/tags/" class="sidebar-nav-item"  >Tags</a>
+              
+            </div>
+            
+          </li>
+        
+      
+    
+  
+</ul>
+  </nav>
+
+  
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/ksy4568" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="mailto:gsy4568@gmail.com" title="Email" class="no-mark-external">
+      <span class="icon-mail"></span>
+      <span class="sr-only">Email</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+  </header>
+</hy-drawer>
+<hr class="sr-only" hidden />
+
+</hy-push-state>
+
+
+  <!--[if gt IE 10]><!---->
+  <script nomodule>!function(){var t,n=document.createElement("script");!("noModule"in n)&&"onbeforeload"in n&&(t=!1,document.addEventListener("beforeload",function(e){if(e.target===n)t=!0;else if(!e.target.hasAttribute("nomodule")||!t)return;e.preventDefault()},!0),n.type="module",n.src=".",document.head.appendChild(n),n.remove())}();
+</script>
+  <script src="/assets/js/hydejack-9.1.4.js" type="module"></script>
+  <script src="/assets/js/LEGACY-hydejack-9.1.4.js" nomodule defer></script>
+  
+
+  
+
+  <script type="module">
+    if ('serviceWorker' in navigator) {
+      /**/
+      navigator.serviceWorker.getRegistration()
+        .then(r => r.unregister())
+        .catch(() => {});
+      /**/
+    }
+  </script>
+<!--<![endif]-->
+  
+
+
+
+<div hidden>
+  
+  <h2 class="sr-only">Templates (for web app):</h2>
+
+  <clap-config>
+    <clap-text at="1">Keep going!</clap-text>
+    <clap-text at="2">Keep going ×2!</clap-text>
+    <clap-text at="3">Give me more!</clap-text>
+    <clap-text at="5">Thank you, thank you</clap-text>
+    <clap-text at="7">Far too kind!</clap-text>
+    <clap-text at="10">Never gonna give me up?</clap-text>
+    <clap-text at="14">Never gonna let me down?</clap-text>
+    <clap-text at="20">Turn around and desert me!</clap-text>
+    <clap-text at="30">You're an addict!</clap-text>
+    <clap-text at="40">Son of a clapper!</clap-text>
+    <clap-text at="50">No way</clap-text>
+    <clap-text at="60">Go back to work!</clap-text>
+    <clap-text at="70">This is getting out of <em>hand</em></clap-text>
+    <clap-text at="80">Unbelievable</clap-text>
+    <clap-text at="90">PREPOSTEROUS</clap-text>
+    <clap-text at="100">I N S A N I T Y</clap-text>
+    <clap-text at="185"><span style="font-family:monospace">FEED ME A STRAY CAT</span></clap-text>
+  </clap-config>
+
+  <template id="_animation-template">
+  <div class="animation-main fixed-top">
+    <nav id="breadcrumbs" class="screen-only"><ul>
+  
+  
+</ul></nav>
+    <div class="content">
+      <div class="page"></div>
+    </div>
+  </div>
+</template>
+
+  <template id="_loading-template">
+  <div class="loading nav-btn fr">
+    <span class="sr-only">Loading…</span>
+    <span class="icon-cog"></span>
+  </div>
+</template>
+
+  <template id="_error-template">
+  <div class="page">
+    <h1 class="page-title">Error</h1>
+    
+    
+    <p class="lead">
+      Sorry, an error occurred while loading <a class="this-link" href=""></a>.
+
+    </p>
+  </div>
+</template>
+
+  <template id="_permalink-template">
+  <a href="#" class="permalink">
+    <span class="sr-only">Permalink</span>
+    <span class="content-hash"></span>
+  </a>
+</template>
+
+  
+  
+  
+    <template id="_search-template">
+  <button id="_search" class="nav-btn no-hover">
+    <label class="sr-only" for="_search-input">Search</label>
+    <span class="icon-search"></span>
+  </button>
+  <div id="_search-box">
+    <div class="nav-btn">
+      <span class="icon-search"></span>
+    </div>
+    <input 
+      id="_search-input"
+      type="search"
+      class="form-control form-control-lg nav-btn"
+      placeholder="Build with JEKYLL_ENV=production to enable search."
+    />
+    <button type="reset" class="nav-btn no-hover">
+      <span class="sr-only">Close</span>
+      <span class="icon-cross"></span>
+    </button>
+  </div>
+  <div id="_hits"></div>
+</template>
+
+  
+</div>
+
+</body>
+</html>

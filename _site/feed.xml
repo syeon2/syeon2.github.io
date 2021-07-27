@@ -1,690 +1,354 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-07-27T14:25:55+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Hydejack</title><subtitle>Hydejack is a boutique Jekyll theme for hackers, nerds, and academics, with a focus on personal sites that are meant to impress.
-</subtitle><author><name>&lt;firstname&gt; &lt;lastname&gt;</name><email>&lt;mail@domain.tld&gt;</email></author><entry><title type="html">What’s New in Hydejack 9.1?</title><link href="http://localhost:4000/blog/example/2021-02-13-whats-new-in-hydejack-9-1/" rel="alternate" type="text/html" title="What’s New in Hydejack 9.1?" /><published>2021-02-13T00:00:00+09:00</published><updated>2021-02-13T00:00:00+09:00</updated><id>http://localhost:4000/blog/example/whats-new-in-hydejack-9-1</id><content type="html" xml:base="http://localhost:4000/blog/example/2021-02-13-whats-new-in-hydejack-9-1/">&lt;p&gt;What’s New in Hydejack 9.1?&lt;/p&gt;
-
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#stripe-ified-design&quot; id=&quot;markdown-toc-stripe-ified-design&quot;&gt;Stripe-ified Design&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#inverted-sidebars&quot; id=&quot;markdown-toc-inverted-sidebars&quot;&gt;Inverted Sidebars&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#code-block-headers&quot; id=&quot;markdown-toc-code-block-headers&quot;&gt;Code Block Headers&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#resume-download-buttons&quot; id=&quot;markdown-toc-resume-download-buttons&quot;&gt;Resume Download Buttons&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#serp-breadcrumbs&quot; id=&quot;markdown-toc-serp-breadcrumbs&quot;&gt;&lt;abbr title=&quot;Search Engine Results Page&quot;&gt;SERP&lt;/abbr&gt; Breadcrumbs&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#last-modified-at&quot; id=&quot;markdown-toc-last-modified-at&quot;&gt;Last Modified At&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#clap-button-preview&quot; id=&quot;markdown-toc-clap-button-preview&quot;&gt;Clap Button Preview&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#credits&quot; id=&quot;markdown-toc-credits&quot;&gt;Credits&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;stripe-ified-design&quot;&gt;Stripe-ified Design&lt;/h2&gt;
-&lt;p&gt;Most elements now have rounded borders, making the design look more modern (dare I say “Stripe-ified”) than ever before.&lt;/p&gt;
-
-&lt;p&gt;The goal of Hydejack was always to provide a theme that looks “designed” combined the amenities of a typical Jekyll theme for coders.
-This is an important step in maintaining this goal.&lt;/p&gt;
-
-&lt;p&gt;At the same time, I’m introducing nerdy elements like &lt;a href=&quot;#serp-breadcrumbs&quot;&gt;breadcrumbs&lt;/a&gt;, that are almost ornamental in nature.
-You wouldn’t find these on other Stripe-like designs, but I think they are appealing to developer types like myself. 
-Like most additions to Hydejack, they can be disabled via configuration.&lt;/p&gt;
-
-&lt;h2 id=&quot;inverted-sidebars&quot;&gt;Inverted Sidebars&lt;/h2&gt;
-&lt;p&gt;The colors on the sidebar can now be inverted to allow brighter sidebar images. This can be enabled per-page in the fort matter:&lt;/p&gt;
-
-&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;invert_sidebar&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;code-block-headers&quot;&gt;Code Block Headers&lt;/h2&gt;
-&lt;p&gt;Code blocks can now have headers:&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// file: 'hello-world.js'&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hello World!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Headers are added by making the first line a comment of the form &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(file|title): ['&quot;].*['&quot;]&lt;/code&gt;, e.g.:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~~~js
-// file: 'hello-world.js'
-console.log('Hello World!');
-~~~
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Code blocks with and without headers now also come with a copy button. 
-In the case of header-less code blocks, the button only shows on hover to prevent potential overlap.&lt;/p&gt;
-
-&lt;h2 id=&quot;resume-download-buttons&quot;&gt;Resume Download Buttons&lt;/h2&gt;
-&lt;p&gt;Resumes can now have download buttons:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/img/blog/9.1.0-3.png&quot; alt=&quot;Download Buttons&quot; class=&quot;border lead&quot; width=&quot;1776&quot; height=&quot;258&quot; loading=&quot;lazy&quot; /&gt;&lt;/p&gt;
-
-&lt;p class=&quot;figcaption&quot;&gt;Resumes can now have download buttons.&lt;/p&gt;
-
-&lt;p&gt;The documentation has been updated with a chapter on &lt;a href=&quot;/docs/basics/#downloads&quot;&gt;how to configure the buttons&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;serp-breadcrumbs&quot;&gt;&lt;abbr title=&quot;Search Engine Results Page&quot;&gt;SERP&lt;/abbr&gt; Breadcrumbs&lt;/h2&gt;
-&lt;p&gt;Added breadcrumbs above page title:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/img/blog/9.1.0-2.png&quot; alt=&quot;Breadcrumbs&quot; class=&quot;border lead&quot; width=&quot;1588&quot; height=&quot;164&quot; loading=&quot;lazy&quot; /&gt;&lt;/p&gt;
-
-&lt;p class=&quot;figcaption&quot;&gt;Bread crumbs are now shown above each page title.&lt;/p&gt;
-
-&lt;p&gt;Note that this requires a &lt;a href=&quot;https://qwtel.com/posts/software/urls-are-directories/&quot;&gt;directory-like URL structure&lt;/a&gt; on your entire site, 
-otherwise the intermediate links will point to nonexisting sites.&lt;/p&gt;
-
-&lt;p&gt;On a side note, Hydejack now has built-in tooltips for abbreviations like &lt;abbr title=&quot;Search Engine Results Page&quot;&gt;SERP&lt;/abbr&gt; (activated via tap/click).
-See &lt;a href=&quot;/blog/hyde/2012-02-07-example-content/#inline-html-elements&quot;&gt;Example Content&lt;/a&gt; on how to add them to your content.&lt;/p&gt;
-
-&lt;h2 id=&quot;last-modified-at&quot;&gt;Last Modified At&lt;/h2&gt;
-&lt;p&gt;Blog posts can now have a “last modified at” date in the sub title row.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/img/blog/9.1.0-1.png&quot; alt=&quot;Last modified at&quot; class=&quot;border lead&quot; width=&quot;1254&quot; height=&quot;218&quot; loading=&quot;lazy&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Note that this depends on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;last_modified_at&lt;/code&gt; property of the page, which must be either set manually in the frontmatter (not recommended), or via a plugin like &lt;a href=&quot;https://github.com/gjtorikian/jekyll-last-modified-at&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll-last-modified-at&lt;/code&gt;&lt;/a&gt;. Note that the later is not available when building on GitHub Pages and can increase build times.&lt;/p&gt;
-
-&lt;h2 id=&quot;clap-button-preview&quot;&gt;Clap Button Preview&lt;/h2&gt;
-&lt;p&gt;I’ve been trying something new with &lt;a href=&quot;https://getclaps.app/&quot;&gt;&lt;strong&gt;getclaps.app&lt;/strong&gt;&lt;/a&gt;, a feedback and analytics tool for personal sites like those powered by Hydejack. 
-It looks like this:&lt;/p&gt;
-
-&lt;clap-button style=&quot;--clap-button-color:var(--body-color);margin:2rem auto 3rem;width:3rem;height:3rem;font-size:smaller&quot; nowave=&quot;&quot;&gt;&lt;/clap-button&gt;
-
-&lt;p&gt;It is a separate product from Hydejack and not enabled by default. Because it depends on a backend component, it requires a monthly fee. 
-If enabled, it is placed below posts and pages where the dingbat character (❖) used to be.&lt;/p&gt;
-
-&lt;p&gt;I can’t claim that this product is fully baked (feedback welcome), but I’ve been using it on my personal site and here for the last couple of months with no issues.
-For more, see &lt;a href=&quot;https://getclaps.app/&quot;&gt;the dedicated website&lt;/a&gt;.&lt;/p&gt;
-
-&lt;hr style=&quot;margin:2rem 0&quot; /&gt;
-
-&lt;p&gt;There are many more changes and bugfixes in 9.1. See the &lt;a href=&quot;/changelog/&quot; class=&quot;heading flip-title&quot;&gt;CHANGELOG&lt;/a&gt; for details.&lt;/p&gt;
-
-&lt;h2 id=&quot;credits&quot;&gt;Credits&lt;/h2&gt;
-
-&lt;p&gt;&lt;span&gt;Photo by &lt;a href=&quot;https://unsplash.com/@jjying?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;JJ Ying&lt;/a&gt; on &lt;a href=&quot;https://unsplash.com/?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;Unsplash&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;</content><author><name>&lt;firstname&gt; &lt;lastname&gt;</name><email>&lt;mail@domain.tld&gt;</email></author><category term="example" /><summary type="html">What’s New in Hydejack 9.1?</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/img/blog/jj-ying.jpg" /><media:content medium="image" url="http://localhost:4000/assets/img/blog/jj-ying.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Introducing Hydejack 9</title><link href="http://localhost:4000/blog/example/2020-07-03-introducing-hydejack-9/" rel="alternate" type="text/html" title="Introducing Hydejack 9" /><published>2020-07-03T00:00:00+09:00</published><updated>2020-07-03T00:00:00+09:00</updated><id>http://localhost:4000/blog/example/introducing-hydejack-9</id><content type="html" xml:base="http://localhost:4000/blog/example/2020-07-03-introducing-hydejack-9/">&lt;p class=&quot;lead&quot;&gt;Version 9 is the most complete version of Hydejack yet.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#linking-in-style&quot;&gt;Modernized&lt;/a&gt; &lt;a href=&quot;#whats-in-the-cards&quot;&gt;design&lt;/a&gt;, &lt;a href=&quot;#ready-for-the-big-screen&quot;&gt;big headlines&lt;/a&gt;, big new features: &lt;a href=&quot;#built-in-search&quot;&gt;Built-In Search&lt;/a&gt;, &lt;a href=&quot;#sticky-table-of-contents&quot;&gt;Sticky Table of Contents&lt;/a&gt;, and &lt;a href=&quot;#auto-hiding-navbar&quot;&gt;Auto-Hiding Navbar&lt;/a&gt;. That &lt;a href=&quot;#and-much-more&quot;&gt;and more&lt;/a&gt; is Hydejack 9.&lt;/p&gt;
-
-&lt;ul class=&quot;large-only&quot; id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#linking-in-style&quot; id=&quot;markdown-toc-linking-in-style&quot;&gt;Linking in Style&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#ready-for-the-big-screen&quot; id=&quot;markdown-toc-ready-for-the-big-screen&quot;&gt;Ready for the Big Screen&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#whats-in-the-cards&quot; id=&quot;markdown-toc-whats-in-the-cards&quot;&gt;What’s in the Cards?&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#built-in-search&quot; id=&quot;markdown-toc-built-in-search&quot;&gt;Built-In Search&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#auto-hiding-navbar&quot; id=&quot;markdown-toc-auto-hiding-navbar&quot;&gt;Auto-Hiding Navbar&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#sticky-table-of-contents&quot; id=&quot;markdown-toc-sticky-table-of-contents&quot;&gt;Sticky Table of Contents&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#and-much-more&quot; id=&quot;markdown-toc-and-much-more&quot;&gt;…and much more&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#even-more-to-come&quot; id=&quot;markdown-toc-even-more-to-come&quot;&gt;Even More to Come&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#get-it-now&quot; id=&quot;markdown-toc-get-it-now&quot;&gt;Get It Now&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;linking-in-style&quot;&gt;Linking in Style&lt;/h2&gt;
-
-&lt;p&gt;Ever since the introduction of Dark Mode, link styles have been a bit of an issue. Specifically, finding an accent color that worked on both light and dark backgrounds was the problem. With Hydejack 9, the &lt;a href=&quot;#linking-in-style&quot;&gt;link style&lt;/a&gt; has been revamped so that legibility is no longer tied to the choice of accent_color, giving you much more freedom in creating a unique design flavor for your site.&lt;/p&gt;
-
-&lt;h2 id=&quot;ready-for-the-big-screen&quot;&gt;Ready for the Big Screen&lt;/h2&gt;
-
-&lt;p&gt;The theme on which Hydejack is based was designed for a different era of the web. Hydejack has inherited many of its limitations, but over time I’ve made adjustments, such as centering the content column for better reading ergonomics.&lt;/p&gt;
-
-&lt;p&gt;With version 9, Hydejack takes full advantage of large displays. Whether it’s design indulgences such as oversized headlines, or quality of life improvements such as a floating table of contents, Hydejack now finds use for all that extra screen real estate&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;whats-in-the-cards&quot;&gt;What’s in the Cards?&lt;/h2&gt;
-
-&lt;p&gt;Hydejack 9 now lets you use content cards for both projects and posts. 
-The cards have been redesigned with a new hover style and drop shadows and they retain their unique transition-to-next-page animations, which now also work on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blog&lt;/code&gt; layout. The new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;grid&lt;/code&gt; layout lets you do that.&lt;/p&gt;
-
-&lt;p&gt;Good images are key to making the most out of content cards. For that reason, a &lt;a href=&quot;/docs/basics/#adding-images&quot;&gt;chapter on images&lt;/a&gt; has been added to the documentation.&lt;/p&gt;
-
-&lt;h2 id=&quot;built-in-search&quot;&gt;Built-In Search&lt;/h2&gt;
-
-&lt;p&gt;Hydejack now has Built-In Search. It even works offline. I’ve been prototyping many approaches and eventually settled on a fully client-side, off-the-main thread solution that perfectly fits the use case of personal sites and shows surprisingly good results&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-
-&lt;p&gt;The new search UI is custom made for Hydejack and shows beautiful previews of your posts and pages, right on top of your regular content.&lt;/p&gt;
-
-&lt;p&gt;Together with the Auto-Hiding Navbar, your entire content library is now only a couple of keystrokes away.&lt;/p&gt;
-
-&lt;h2 id=&quot;auto-hiding-navbar&quot;&gt;Auto-Hiding Navbar&lt;/h2&gt;
-
-&lt;p&gt;A navbar that’s there when you need it, and disappears when you don’t. Simple as that.&lt;/p&gt;
-
-&lt;h2 id=&quot;sticky-table-of-contents&quot;&gt;Sticky Table of Contents&lt;/h2&gt;
-
-&lt;p&gt;Already a staple on so many sites on the web, this pattern is now also available in Hydejack. 
-What’s unique about it is that it simply picks up the table of contents already created by kramdown’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{:toc}&lt;/code&gt; tag and transparently upgrades it to a fully dynamic version.&lt;/p&gt;
-
-&lt;h2 id=&quot;and-much-more&quot;&gt;…and much more&lt;/h2&gt;
-
-&lt;p&gt;Other noteworthy changes include:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Support for Jekyll 4&lt;/li&gt;
-  &lt;li&gt;Choice between MathJax and KaTeX for math rendering&lt;/li&gt;
-  &lt;li&gt;Use of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll-include-cache&lt;/code&gt; for drastically improved page building speeds&lt;/li&gt;
-  &lt;li&gt;New variables configuration file — adjust content width, sidebar width, font size, etc…&lt;/li&gt;
-  &lt;li&gt;…and the option to disable grouping projects by year.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Read the the &lt;a href=&quot;/CHANGELOG/&quot; class=&quot;heading flip-title&quot;&gt;CHANGELOG&lt;/a&gt; for the full scope of features and improvements made in Hydejack 9.
-Maybe just glance at it to confirm that it is indeed a pretty long list.&lt;/p&gt;
-
-&lt;h2 id=&quot;even-more-to-come&quot;&gt;Even More to Come&lt;/h2&gt;
-
-&lt;p&gt;New features for 9.1 are already lined up. Code block headers and code line highlights for even better technical blogging, as well as download buttons on the resume page for PDF, vCard, and Resume JSON are just around the corner.&lt;/p&gt;
-
-&lt;h2 id=&quot;get-it-now&quot;&gt;Get It Now&lt;/h2&gt;
-&lt;p&gt;The Free Version of Hydejack is now availabe on &lt;a href=&quot;https://rubygems.org/gems/jekyll-theme-hydejack&quot;&gt;RubyGems&lt;/a&gt;
-and for the first time also on &lt;a href=&quot;https://github.com/hydecorp/hydejack/packages&quot;&gt;GitHub Packages&lt;/a&gt;. 
-The source code is available on &lt;a href=&quot;https://github.com/hydecorp/hydejack&quot;&gt;GitHub&lt;/a&gt; as always.&lt;/p&gt;
-
-&lt;p&gt;The PRO Version is scheduled to release on July 7th on Gumroad. Pre-Orders are open now:&lt;/p&gt;
-
-&lt;div class=&quot;gumroad-product-embed&quot; data-gumroad-product-id=&quot;nuOluY&quot;&gt;&lt;a href=&quot;https://gumroad.com/l/nuOluY&quot;&gt;Loading…&lt;/a&gt;&lt;/div&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;If you are a fan of the old two-column layout, or don’t like modern design tropes such as mega headlines, Hydejack lets you revert these changes on a case-by-case basis via configuration options. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
-
-      &lt;p&gt;Search was mainly tested for English and German. Please let me know about issues in other languages. 
-  While I’ve tried to find a multi-language solution, most showed drastically worse  results for the English base case.
-  If you’re technically inclined, you can adopt the code located in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_includes/js/search-worker.js&lt;/code&gt; to your needs. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>&lt;firstname&gt; &lt;lastname&gt;</name><email>&lt;mail@domain.tld&gt;</email></author><category term="example" /><summary type="html">Version 9 is the most complete version of Hydejack yet.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/img/blog/jeremy-bishop@0,5x.jpg" /><media:content medium="image" url="http://localhost:4000/assets/img/blog/jeremy-bishop@0,5x.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Example Content III</title><link href="http://localhost:4000/blog/example/2018-06-01-example-content-iii/" rel="alternate" type="text/html" title="Example Content III" /><published>2018-06-01T00:00:00+09:00</published><updated>2018-06-01T00:00:00+09:00</updated><id>http://localhost:4000/blog/example/example-content-iii</id><content type="html" xml:base="http://localhost:4000/blog/example/2018-06-01-example-content-iii/">&lt;p&gt;Hydejack offers a few additional features to markup your markdown.
-Don’t worry, these are merely CSS classes added with kramdown’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{:...}&lt;/code&gt; syntax,
-so that your content remains compatible with other Jekyll themes.&lt;/p&gt;
-
-&lt;h2 id=&quot;large-tables&quot;&gt;Large Tables&lt;/h2&gt;
-
-&lt;table class=&quot;scroll-table&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Default aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;Left aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Center aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;Right aligned&lt;/th&gt;
-      &lt;th&gt;Default aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;Left aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Center aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;Right aligned&lt;/th&gt;
-      &lt;th&gt;Default aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;Left aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Center aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;Right aligned&lt;/th&gt;
-      &lt;th&gt;Default aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;Left aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Center aligned&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;Right aligned&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;First body part&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;Second cell&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Third cell&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;fourth cell&lt;/td&gt;
-      &lt;td&gt;First body part&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;Second cell&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Third cell&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;fourth cell&lt;/td&gt;
-      &lt;td&gt;First body part&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;Second cell&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Third cell&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;fourth cell&lt;/td&gt;
-      &lt;td&gt;First body part&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;Second cell&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Third cell&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;fourth cell&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Second line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;foo&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;strong&gt;strong&lt;/strong&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;baz&lt;/td&gt;
-      &lt;td&gt;Second line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;foo&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;strong&gt;strong&lt;/strong&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;baz&lt;/td&gt;
-      &lt;td&gt;Second line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;foo&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;strong&gt;strong&lt;/strong&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;baz&lt;/td&gt;
-      &lt;td&gt;Second line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;foo&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;strong&gt;strong&lt;/strong&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;baz&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Third line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;quux&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;baz&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;bar&lt;/td&gt;
-      &lt;td&gt;Third line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;quux&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;baz&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;bar&lt;/td&gt;
-      &lt;td&gt;Third line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;quux&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;baz&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;bar&lt;/td&gt;
-      &lt;td&gt;Third line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;quux&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;baz&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;bar&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Second body&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-      &lt;td&gt;Second body&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-      &lt;td&gt;Second body&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-      &lt;td&gt;Second body&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2 line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-      &lt;td&gt;2 line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-      &lt;td&gt;2 line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-      &lt;td&gt;2 line&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Footer row&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-      &lt;td&gt;Footer row&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-      &lt;td&gt;Footer row&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-      &lt;td&gt;Footer row&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h2 id=&quot;code-blocks&quot;&gt;Code blocks&lt;/h2&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Example can be run directly in your JavaScript console&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// Create a function that takes two arguments and returns the sum of those&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// arguments&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;return a + b&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// Call the function&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// &amp;gt; 8&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;math&quot;&gt;Math&lt;/h2&gt;
-&lt;p&gt;Lorem ipsum \(f(x) = x^2\).&lt;/p&gt;
-
-\[\begin{aligned}
-  \phi(x,y) &amp;amp;= \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right) \\[2em]
-            &amp;amp;= \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j)            \\[2em]
-            &amp;amp;= (x_1, \ldots, x_n)
-               \left(\begin{array}{ccc}
-                 \phi(e_1, e_1)  &amp;amp; \cdots &amp;amp; \phi(e_1, e_n) \\
-                 \vdots          &amp;amp; \ddots &amp;amp; \vdots         \\
-                 \phi(e_n, e_1)  &amp;amp; \cdots &amp;amp; \phi(e_n, e_n)
-               \end{array}\right)
-               \left(\begin{array}{c}
-                 y_1    \\
-                 \vdots \\
-                 y_n
-               \end{array}\right)
-\end{aligned}\]
-
-&lt;h2 id=&quot;message-boxes&quot;&gt;Message boxes&lt;/h2&gt;
-&lt;p class=&quot;message&quot;&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: You can add a message box.&lt;/p&gt;
-
-&lt;h2 id=&quot;large-text&quot;&gt;Large text&lt;/h2&gt;
-&lt;p class=&quot;lead&quot;&gt;You can add large text.&lt;/p&gt;
-
-&lt;h2 id=&quot;large-images&quot;&gt;Large images&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;https://placehold.it/800x100&quot; alt=&quot;Full-width image&quot; class=&quot;lead&quot; data-width=&quot;800&quot; data-height=&quot;100&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;captions-to-images&quot;&gt;Captions to images&lt;/h2&gt;
-&lt;p class=&quot;figure&quot;&gt;&lt;img src=&quot;https://placehold.it/800x100&quot; alt=&quot;Full-width image&quot; class=&quot;lead&quot; data-width=&quot;800&quot; data-height=&quot;100&quot; /&gt;
-A caption to an image.&lt;/p&gt;
-
-&lt;h2 id=&quot;large-quotes&quot;&gt;Large quotes&lt;/h2&gt;
-&lt;blockquote class=&quot;lead&quot;&gt;
-  &lt;p&gt;You can make a quote “pop out”.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-27T16:44:35+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">Algorithm - Brute Force</title><link href="http://localhost:4000/devlog/algorithm-bruteForce.html" rel="alternate" type="text/html" title="Algorithm - Brute Force" /><published>2021-07-26T00:00:00+09:00</published><updated>2021-07-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-bruteForce</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-bruteForce.html">&lt;blockquote&gt;
+  &lt;p&gt;알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;faded-text&quot;&gt;Faded text&lt;/h2&gt;
-&lt;p class=&quot;faded&quot;&gt;I’m faded, faded, faded.&lt;/p&gt;</content><author><name>&lt;firstname&gt; &lt;lastname&gt;</name><email>&lt;mail@domain.tld&gt;</email></author><category term="example" /><summary type="html">Hydejack offers a few additional features to markup your markdown. Don’t worry, these are merely CSS classes added with kramdown’s {:...} syntax, so that your content remains compatible with other Jekyll themes.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/img/blog/example-content-iii.jpg" /><media:content medium="image" url="http://localhost:4000/assets/img/blog/example-content-iii.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Example Content II</title><link href="http://localhost:4000/blog/example/2017-11-23-example-content-ii/" rel="alternate" type="text/html" title="Example Content II" /><published>2017-11-23T00:00:00+09:00</published><updated>2017-11-23T00:00:00+09:00</updated><id>http://localhost:4000/blog/example/example-content-ii</id><content type="html" xml:base="http://localhost:4000/blog/example/2017-11-23-example-content-ii/">&lt;p&gt;There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;목차&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;There should be whitespace between paragraphs.&lt;/p&gt;
+&lt;h2 id=&quot;brute-force란&quot;&gt;Brute Force란?&lt;/h2&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="BruteForce" /><category term="완전탐색" /><summary type="html">알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.</summary></entry><entry><title type="html">Werecord project 🔥</title><link href="http://localhost:4000/project/project-review-werecord.html" rel="alternate" type="text/html" title="Werecord project 🔥" /><published>2021-07-25T00:00:00+09:00</published><updated>2021-07-25T00:00:00+09:00</updated><id>http://localhost:4000/project/project-review-werecord</id><content type="html" xml:base="http://localhost:4000/project/project-review-werecord.html">&lt;blockquote&gt;
+  &lt;p&gt;A-Z까지 모두 경험했던 We-record 프로젝트!!&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;Text can be &lt;strong&gt;bold&lt;/strong&gt;, &lt;em&gt;italic&lt;/em&gt;, or &lt;del&gt;strikethrough&lt;/del&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;another-page&quot;&gt;Link to another page&lt;/a&gt;.&lt;/p&gt;
-
-&lt;ul class=&quot;large-only&quot; id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#header-2&quot; id=&quot;markdown-toc-header-2&quot;&gt;Header 2&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#header-3&quot; id=&quot;markdown-toc-header-3&quot;&gt;Header 3&lt;/a&gt;        &lt;ul&gt;
-          &lt;li&gt;&lt;a href=&quot;#header-4&quot; id=&quot;markdown-toc-header-4&quot;&gt;Header 4&lt;/a&gt;            &lt;ul&gt;
-              &lt;li&gt;&lt;a href=&quot;#header-5&quot; id=&quot;markdown-toc-header-5&quot;&gt;Header 5&lt;/a&gt;                &lt;ul&gt;
-                  &lt;li&gt;&lt;a href=&quot;#header-6&quot; id=&quot;markdown-toc-header-6&quot;&gt;Header 6&lt;/a&gt;&lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-a-z까지&quot;&gt;A-Z까지&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-위대한-첫걸음-&quot;&gt;위대한(?) 첫걸음&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-we-record의-탄생-&quot;&gt;we-record의 탄생&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-blocker벌써&quot;&gt;Blocker…(벌써…?)&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-중간-점검&quot;&gt;중간 점검&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#theres-a-horizontal-rule-below-this&quot; id=&quot;markdown-toc-theres-a-horizontal-rule-below-this&quot;&gt;There’s a horizontal rule below this.&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#here-is-an-unordered-list&quot; id=&quot;markdown-toc-here-is-an-unordered-list&quot;&gt;Here is an unordered list:&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#and-an-ordered-list&quot; id=&quot;markdown-toc-and-an-ordered-list&quot;&gt;And an ordered list:&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#and-a-nested-list&quot; id=&quot;markdown-toc-and-a-nested-list&quot;&gt;And a nested list:&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#small-image&quot; id=&quot;markdown-toc-small-image&quot;&gt;Small image&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#large-image&quot; id=&quot;markdown-toc-large-image&quot;&gt;Large image&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#definition-lists&quot; id=&quot;markdown-toc-definition-lists&quot;&gt;Definition lists&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-본격적인-개발&quot;&gt;본격적인 개발&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-내가-맡은-task&quot;&gt;내가 맡은 Task&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-각-페이지-소개&quot;&gt;각 페이지 소개&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-예상치-못한-감사&quot;&gt;예상치 못한 감사&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-error--fix&quot;&gt;Error &amp;amp; Fix&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-끝-그리고-시작&quot;&gt;끝 그리고 시작&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;header-2&quot;&gt;Header 2&lt;/h2&gt;
-
-&lt;p&gt;This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.&lt;/p&gt;
-
-&lt;h3 id=&quot;header-3&quot;&gt;Header 3&lt;/h3&gt;
+&lt;h2 id=&quot;-a-z까지&quot;&gt;📌 A-Z까지…&lt;/h2&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;This is a blockquote following a header.&lt;/p&gt;
-
-  &lt;p&gt;When something is important enough, you do it even if the odds are not in your favor.&lt;/p&gt;
+  &lt;p&gt;🚌 기간 : 6월 8일 ~ 7월 16일 &lt;br /&gt;
+👥 Front-end : 3명, Back-end : 2명
+💻 사용된 기술 스택 : React Hooks, React Router, Styled-Component, KAKAO social login, RESTful API&lt;/p&gt;
 &lt;/blockquote&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Javascript code with syntax highlighting.&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;lang&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;dateformat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i18n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./lang/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Ruby code with syntax highlighting&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;GitHubPages&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Dependencies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;gems&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;add_dependency&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;= &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;header-4&quot;&gt;Header 4&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;This is an unordered list following a header.&lt;/li&gt;
-  &lt;li&gt;This is an unordered list following a header.&lt;/li&gt;
-  &lt;li&gt;This is an unordered list following a header.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h5 id=&quot;header-5&quot;&gt;Header 5&lt;/h5&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;This is an ordered list following a header.&lt;/li&gt;
-  &lt;li&gt;This is an ordered list following a header.&lt;/li&gt;
-  &lt;li&gt;This is an ordered list following a header.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h6 id=&quot;header-6&quot;&gt;Header 6&lt;/h6&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;head1&lt;/th&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;head two&lt;/th&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;three&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;ok&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;good swedish fish&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;nice&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;out of stock&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;good and plenty&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;nice&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;ok&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;good &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;oreos&lt;/code&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;hmm&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;ok&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;good &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zoute&lt;/code&gt; drop&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;yumm&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h3 id=&quot;theres-a-horizontal-rule-below-this&quot;&gt;There’s a horizontal rule below this.&lt;/h3&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;here-is-an-unordered-list&quot;&gt;Here is an unordered list:&lt;/h3&gt;
+&lt;h3 id=&quot;-위대한-첫걸음-&quot;&gt;🌱 위대한(?) 첫걸음 👣&lt;/h3&gt;
+
+&lt;p&gt;2차 프로젝트 이후 기업협업과 개인 프로젝트.. 둘중 하나를 택하는 기로에 놓였고, 당연히 기업협업으로 가게 될 것이라는 생각과는 다르게 한번 더 팀으로 프로젝트를 진행하게 되었다..😳&lt;/p&gt;
+
+&lt;p&gt;처음에는 갑작스럽게 팀 프로젝트로 바뀌어서 당황했지만, 이내 곧 마음을 다잡고 1달이라는 시간동안 어떻게 해야 알차게 보낼지 팀원들과 머리를 싸매고..(지끈..🤮) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for(let i = 0; i &amp;lt; MAX.SAFE.INTEGER; i++) {return 고민}&lt;/code&gt;을 거듭했다. (탈모 생길거 가틈)&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;-we-record의-탄생-&quot;&gt;🌱 we-record의 탄생 👶🏻&lt;/h3&gt;
+
+&lt;p&gt;그동안 배운 코딩을 사용해서 무엇을 만들어야할지… 처음으로 ‘무언가를 스스로 만든다’라는 고민을 해보았던 것 같다. 사이트를 모티브로 한 2번의 프로젝트 때와 달리 신선한 고민으로 다가왔지만, 첫 시작은 막막하기도 해서 내심 걱정이 들었다… 하지만 이런 걱정은 기우였을까?? 우려했던 것과는 달리 우리 팀은 제대로 해보겠다는 의지가 불타오르고 있었다🔥&lt;/p&gt;
+
+&lt;p&gt;프로젝트 포인트는 ‘우리 주변에 무언가가 필요했던 상황이 있었나??’를 중점으로 고민했던 것 같다. 그러던 중 마침 기업협업을 나갔던 동기분 한분이 회사 근태 사이트를 구현한다는 소식을 접하게 되면서.. “어라?? 나도 위코드에 있었을 때 출석부 필요했는데…” 생각으로 이어지고 팀원분들의 다양한 의견을 종합해본 결과!! Werecord가 탄생하게 되었다!! (두둔!🥁)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-planing.png&quot; alt=&quot;werecord&quot; /&gt; - 기획기획..끄적끄적…
+&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-planing2.jpg&quot; alt=&quot;werecord&quot; /&gt; - 팀원들 머리 속 깊숙히 박혀있는 아이디어 한톨까지 뽑아낸 결과물..! (feat.동기분들 응원 🙈)&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;-blocker벌써&quot;&gt;🌱 Blocker…(벌써..?)&lt;/h3&gt;
+
+&lt;p&gt;기획까지 너무 좋았다. 사실은 걱정도 잠시, 이것저것 아이디어를 가지고 페이지를 기획하는 과정은 생각보다 재미있었다. 그렇게 분명한 사이트의 목적에 어울리는 여러 아이디어를 뽑았다.&lt;/p&gt;
+
+&lt;p&gt;개발사전에 한번 내뱉은 말은 책임을 져야 한다..라는 말이 있었나..? 아무튼 재미있게, 그리고 진지하게 기획을 마치고 난 이후 우리는 ‘우리가 기획한 프로젝트’를 만들어야했다. ‘아 너무 재미있겠다~~’라고 외쳤던 나에게 다가온 하나의 큰 산… Design…&lt;/p&gt;
+
+&lt;p&gt;나름 전체적인 페이지의 구도를 본다고 생각했지만 이건 좀.. 다른 문제였다. 우리의 아이디어를 페이지에 어떻게 녹여내야할까???의 고민… 주변에 디자인을 전공한 친구들도 없고… 나에게는 다꾸(다꾸 = 다이어리 꾸미기ㅋ) 경력 2년차 여자친구에게 물어보는게 전부였다.&lt;/p&gt;
+
+&lt;p&gt;심호흡을 하고, 마음을 가다듬고 figma를 열었다.
+&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-design.png&quot; alt=&quot;werecord&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;사전에 노트로 끄적였던 UI를 하나하나 정성스래 잡으면서 작업했다. (세부적인 디자인에 신경써주신 다꾸인(?) 팀원 다*님 고생많으셨습니다👍🏼)&lt;/p&gt;
+
+&lt;p&gt;당연히~ 여러 우여곡절 끝에 만들어진 디자인이지만 그 과정을 여기에 다 거론할 수 없을 것 같아 이쯤에서 넘어가는게 좋을 것 같다.&lt;/p&gt;
+
+&lt;p&gt;(이렇게 기획과 디자인으로만 꼬박 2주라는 시간을 소요했다..)&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;-중간-점검&quot;&gt;🌱 중간 점검&lt;/h3&gt;
+
+&lt;p&gt;“처음하는 기획, 처음하는 디자인” 등 그동안 배웠던 개발 스택과는 거리가 조금 먼 친구들이지만, 이러한 과정을 직접 경험함으로 느끼는 바가 컸다.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Item foo&lt;/li&gt;
-  &lt;li&gt;Item bar&lt;/li&gt;
-  &lt;li&gt;Item baz&lt;/li&gt;
-  &lt;li&gt;Item zip&lt;/li&gt;
+  &lt;li&gt;생각했던 것과는 달리 기획이 수시로 바뀌어서 정말정말정말 “프로젝트의 중심”을 잘 잡아야한다는..&lt;/li&gt;
+  &lt;li&gt;그렇다고 기획의 기능적인 부분만 신경쓰는 것이 아니라 항상 “사용자 편의를 고려”해서 개발해야 한다는..&lt;/li&gt;
+  &lt;li&gt;앞으로 현업에서 웹 디자이너와 어떻게 소통해야할지 생각해보는..&lt;/li&gt;
+  &lt;li&gt;필수적으로 팀원들과 정기 + 수시로 “소통”해서 프로젝트 방향성을 명확하게 잡아야하는..&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;and-an-ordered-list&quot;&gt;And an ordered list:&lt;/h3&gt;
+&lt;p&gt;등등등 최대한 실제 현업에서 고민해볼 수 있는 사항들을 접하고 싶었는데.. 아마 현업에서도 이러한 고민들을 할 수 있을 것이라 생각해서 괜히 기분이 좋았다.&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;Item one&lt;/li&gt;
-  &lt;li&gt;Item two&lt;/li&gt;
-  &lt;li&gt;Item three&lt;/li&gt;
-  &lt;li&gt;Item four&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;and-a-nested-list&quot;&gt;And a nested list:&lt;/h3&gt;
+&lt;h2 id=&quot;-본격적인-개발&quot;&gt;📌 본격적인 개발!&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-내가-맡은-task&quot;&gt;🌱 내가 맡은 Task&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;level 1 item
-    &lt;ul&gt;
-      &lt;li&gt;level 2 item&lt;/li&gt;
-      &lt;li&gt;level 2 item
-        &lt;ul&gt;
-          &lt;li&gt;level 3 item&lt;/li&gt;
-          &lt;li&gt;level 3 item&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;level 1 item
-    &lt;ul&gt;
-      &lt;li&gt;level 2 item&lt;/li&gt;
-      &lt;li&gt;level 2 item&lt;/li&gt;
-      &lt;li&gt;level 2 item&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;level 1 item
-    &lt;ul&gt;
-      &lt;li&gt;level 2 item&lt;/li&gt;
-      &lt;li&gt;level 2 item&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;level 1 item&lt;/li&gt;
+  &lt;li&gt;기수 페이지&lt;/li&gt;
+  &lt;li&gt;메인페이지&lt;/li&gt;
+  &lt;li&gt;공용 모달 컴포넌트 만들기&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;small-image&quot;&gt;Small image&lt;/h3&gt;
+&lt;p&gt;팀원들과 페이지 단위로 task를 분담했다. 물론 각 페이지마다 공통으로 들어갈 컴포넌트가 있다면 재사용할 계획이었지만 각 페이지별로 구현되는 UI가 다 달라서 공용으로 사용되는 컴포넌트가 많지 않았다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://assets-cdn.github.com/images/icons/emoji/octocat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;각 페이지마다 Comment가 추가로 랜더되야하는 것들은 모달을 사용하여 랜더링시키는 것으로 이야기를 나누었다.&lt;/p&gt;
 
-&lt;h3 id=&quot;large-image&quot;&gt;Large image&lt;/h3&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://guides.github.com/activities/hello-world/branching.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;h3 id=&quot;-각-페이지-소개&quot;&gt;🌱 각 페이지 소개&lt;/h3&gt;
 
-&lt;h3 id=&quot;definition-lists&quot;&gt;Definition lists&lt;/h3&gt;
+&lt;h4 id=&quot;--기수페이지&quot;&gt;- 기수페이지&lt;/h4&gt;
 
-&lt;dl&gt;
-  &lt;dt&gt;Name&lt;/dt&gt;
-  &lt;dd&gt;Godzilla&lt;/dd&gt;
-  &lt;dt&gt;Born&lt;/dt&gt;
-  &lt;dd&gt;1952&lt;/dd&gt;
-  &lt;dt&gt;Birthplace&lt;/dt&gt;
-  &lt;dd&gt;Japan&lt;/dd&gt;
-  &lt;dt&gt;Color&lt;/dt&gt;
-  &lt;dd&gt;Green&lt;/dd&gt;
-&lt;/dl&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this. Or is it?
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The final element.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>&lt;firstname&gt; &lt;lastname&gt;</name><email>&lt;mail@domain.tld&gt;</email></author><category term="example" /><summary type="html">There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/img/blog/example-content-ii.jpg" /><media:content medium="image" url="http://localhost:4000/assets/img/blog/example-content-ii.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Example Content</title><link href="http://localhost:4000/blog/example/2012-02-07-example-content/" rel="alternate" type="text/html" title="Example Content" /><published>2012-02-07T00:00:00+09:00</published><updated>2012-02-07T00:00:00+09:00</updated><id>http://localhost:4000/blog/example/example-content</id><content type="html" xml:base="http://localhost:4000/blog/example/2012-02-07-example-content/">&lt;p&gt;Cum sociis natoque penatibus et magnis &lt;a href=&quot;#&quot;&gt;dis parturient montes&lt;/a&gt;, nascetur ridiculus mus. &lt;em&gt;Aenean eu leo quam.&lt;/em&gt; Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-batch.gif&quot; alt=&quot;werecord&quot; /&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;어려운 코드는 아니지만 이것저것 다양한 데이터를 받고 랜더링 시키는 것이 포인트이다.&lt;/li&gt;
+    &lt;li&gt;slider 라이브러리 slick를 사용하여 같은 기수 동기들의 간단한 프로필을 볼 수 있다.&lt;/li&gt;
+    &lt;li&gt;오늘 하루 start버튼을 누른 동기는 해당 프로필카드 이름 우측에 빨간 점이 파란 점으로 바뀌게 구현하였다.&lt;/li&gt;
+    &lt;li&gt;지박령 순위 단상은 div로 만들고 annimation을 주어 심심하지 않게 구현하였다.&lt;/li&gt;
+    &lt;li&gt;모달은 createPotal을 사용하여 전역으로 관리할 수 있게 설계하였다.&lt;/li&gt;
+  &lt;/ul&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Etiam porta &lt;strong&gt;sem malesuada magna&lt;/strong&gt; mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.&lt;/p&gt;
-
-&lt;h2 id=&quot;inline-html-elements&quot;&gt;Inline &lt;abbr title=&quot;HyperText Markup Language&quot;&gt;HTML&lt;/abbr&gt; elements&lt;/h2&gt;
-
-&lt;p&gt;&lt;abbr title=&quot;HyperText Markup Language&quot;&gt;HTML&lt;/abbr&gt; defines a long list of available inline tags, a complete list of which can be found on the &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/HTML/Element&quot;&gt;Mozilla Developer Network&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-batchCode.png&quot; alt=&quot;werecord&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;To bold text&lt;/strong&gt;, use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;**To bold text**&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;To italicize text&lt;/em&gt;, use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*To italicize text*&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Abbreviations, like &lt;abbr title=&quot;HyperText Markup Language&quot;&gt;HTML&lt;/abbr&gt; should be defined like this &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*[HTML]: HyperText Markup Language&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Citations, like &lt;cite&gt;— Mark otto&lt;/cite&gt;, should use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;cite&amp;gt;&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;del&gt;Deleted&lt;/del&gt; text should use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~~deleted~~&lt;/code&gt; and &lt;ins&gt;inserted&lt;/ins&gt; text should use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;ins&amp;gt;&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Superscript &lt;sup&gt;text&lt;/sup&gt; uses &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;sup&amp;gt;&lt;/code&gt; and subscript &lt;sub&gt;text&lt;/sub&gt; uses &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;sub&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;CREAM 프로젝트 모달과는 달리 closet을 활용하여 모달창 바깥에 onClick은 blur처리가 되도록 구현하였다.&lt;/li&gt;
+  &lt;li&gt;또한 모달이 필요한 컴포넌트마다 on/off를 동작하게 하는 함수를 선언하는게 아니라 모달 내부에서 해당 모달에 대한 on/off를 컨트롤할 수 있게끔 구현하여 코드를 최소화하였다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Most of these elements are styled by browsers with few modifications on our part.&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;h2 id=&quot;heading-2&quot;&gt;Heading 2&lt;/h2&gt;
-&lt;p&gt;Vivamus sagittis lacus vel augue rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.&lt;/p&gt;
+&lt;h4 id=&quot;--메인페이지&quot;&gt;- 메인페이지&lt;/h4&gt;
 
-&lt;h3 id=&quot;heading-3&quot;&gt;Heading 3&lt;/h3&gt;
-&lt;p&gt;Vivamus sagittis lacus vel augue rutrum faucibus dolor auctor.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-main.gif&quot; alt=&quot;werecord&quot; /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;heading-4&quot;&gt;Heading 4&lt;/h4&gt;
-&lt;p&gt;Vivamus sagittis lacus vel augue rutrum faucibus dolor auctor.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;현재 시간은 setInterval로 구현하여 실시간으로 변경된 시간이 랜더링 되도록 구현하였다.&lt;/li&gt;
+    &lt;li&gt;여기서 Blocker를 만나게 되는데.. setInterval로 Main 컴포넌트를 지속적으로 랜더링시키는 것이 다른 함수들 또한 컴포넌트 내에 생성하여 호출하는 것이 서로 엮여 에러를 일으켰다.&lt;/li&gt;
+    &lt;li&gt;따라서 다른 함수들은 랜더가 지속적으로 일어나도 초기 함수값을 가진 상태를 유지하여 랜더링 최적화를 진행하는 것이 효율적이라 판단하였다.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
 
-&lt;h5 id=&quot;heading-5&quot;&gt;Heading 5&lt;/h5&gt;
-&lt;p&gt;Vivamus sagittis lacus vel augue rutrum faucibus dolor auctor.&lt;/p&gt;
-
-&lt;h6 id=&quot;heading-6&quot;&gt;Heading 6&lt;/h6&gt;
-&lt;p&gt;Vivamus sagittis lacus vel augue rutrum faucibus dolor auctor.&lt;/p&gt;
-
-&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
-
-&lt;p&gt;Cum sociis natoque penatibus et magnis dis &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;code element&lt;/code&gt; montes, nascetur ridiculus mus.&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Example can be run directly in your JavaScript console&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// Create a function that takes two arguments and returns the sum of those&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// arguments&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;return a + b&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// Call the function&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// &amp;gt; 8&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;lists&quot;&gt;Lists&lt;/h2&gt;
-
-&lt;p&gt;Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-mainCode.png&quot; alt=&quot;werecord&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Praesent commodo cursus magna, vel scelerisque nisl consectetur et.&lt;/li&gt;
-  &lt;li&gt;Donec id elit non mi porta gravida at eget metus.&lt;/li&gt;
-  &lt;li&gt;Nulla vitae elit libero, a pharetra augue.&lt;/li&gt;
+  &lt;li&gt;useMemo, useCallback을 사용하여 함수로 호출된 값을 기억하여 추가적인 랜더링 시에도 새로운 함수로 만들어지지 않도록 구현하였다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;useMemo는 이미 함수로 호출된 값을, useCallback은 Callback함수로 전달할 함수들을 대상으로 React 최적화 hook을 사용했는데 추가적으로 두가지의 사용법에 대해 공부해야할 것 같다!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;조금 더 코드를 간소화하여 구현하는 방법이 있을 것 같은데 React랜더링 최적화에 대해 더 공부하여 리팩토링해야할 것 같다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;Vestibulum id ligula porta felis euismod semper.&lt;/li&gt;
-  &lt;li&gt;Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.&lt;/li&gt;
-  &lt;li&gt;Maecenas sed diam eget risus varius blandit sit amet non magna.&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h3 id=&quot;-예상치-못한-감사&quot;&gt;🌱 예상치 못한 감사&lt;/h3&gt;
 
-&lt;p&gt;Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;dl&gt;
-  &lt;dt&gt;HyperText Markup Language (&lt;abbr title=&quot;HyperText Markup Language&quot;&gt;HTML&lt;/abbr&gt;)&lt;/dt&gt;
-  &lt;dd&gt;The language used to describe and define the content of a Web page&lt;/dd&gt;
-  &lt;dt&gt;Cascading Style Sheets (&lt;abbr title=&quot;Cascading Style Sheets&quot;&gt;CSS&lt;/abbr&gt;)&lt;/dt&gt;
-  &lt;dd&gt;Used to describe the appearance of Web content&lt;/dd&gt;
-  &lt;dt&gt;JavaScript (&lt;abbr title=&quot;JavaScript&quot;&gt;JS&lt;/abbr&gt;)&lt;/dt&gt;
-  &lt;dd&gt;The programming language used to build advanced Web sites and applications&lt;/dd&gt;
-&lt;/dl&gt;
+&lt;p&gt;프로젝트를 진행하던 도중 Wecode의 멘티들을 대상으로 하는 프로젝트를 진행한다는 소문이 돌았던 것 같다. 그렇게 된 것일까.. 멘토님들께서 잘하면 실제로 Wecode 프로그램으로 사용해도 될 것 같다는 엄!청!난! 말씀을 해주셨다!!🤩&lt;/p&gt;
 
-&lt;p&gt;Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam quis risus eget urna mollis ornare vel eu leo.&lt;/p&gt;
+&lt;p&gt;팀원들끼리만 기획하고 남을 것 같던 프로젝트가 실제 서비스될 수도 있다는 생각에 정말 신기했다!
+이후로 디자인부분과 기획적인 부분을 멘토님들과 회의를 통해 수정하고 추가하고 보완하게 되었다 :)&lt;/p&gt;
 
-&lt;h2 id=&quot;images&quot;&gt;Images&lt;/h2&gt;
+&lt;p&gt;그렇게해서 프로젝트에 새롭게 멘토페이지가 추가되었다!! 멘토페이지는 멘티뿐만 아니라 멘토님들도 가입하여 멘티들을 확인할 수 있는 페이지였다.&lt;/p&gt;
 
-&lt;p&gt;Quisque consequat sapien eget quam rhoncus, sit amet laoreet diam tempus. Aliquam aliquam metus erat, a pulvinar turpis suscipit at.&lt;/p&gt;
+&lt;p&gt;그렇게 werecord 프로젝트는 시즌 2를 맞이하게 되었다!!!🔥&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://placehold.it/800x400&quot; alt=&quot;800x400&quot; title=&quot;Large example image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://placehold.it/400x200&quot; alt=&quot;400x200&quot; title=&quot;Medium example image&quot; /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;-error--fix&quot;&gt;📌 Error &amp;amp; Fix&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://placehold.it/200x200&quot; alt=&quot;200x200&quot; title=&quot;Small example image&quot; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;h2 id=&quot;tables&quot;&gt;Tables&lt;/h2&gt;
+&lt;p&gt;앞서 보여진 디자인이나 코드들은 사실 저 당시에 완성되었던 것들이 아니었다. 디자인도 조금 더 투박했고 코드 또한 버그들이 난무했다.&lt;/p&gt;
 
-&lt;p&gt;Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;
+&lt;p&gt;멘토님께서 werecord 프로젝트를 실제로 사용하는 것을 긍정적으로 검토하시고 난 이후 새로운 숙제를 주셨다..!😂 바로 멘토님들께서 찾으신 에러들, 찌그러지는 UI들을 고치는 일이었다.&lt;/p&gt;
 
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;Name&lt;/th&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;Upvotes&lt;/th&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;Downvotes&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;Alice&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;10&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;11&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;Bob&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;4&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;Charlie&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;7&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;9&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-  &lt;tfoot&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;Totals&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;21&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;23&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tfoot&gt;
-&lt;/table&gt;
+&lt;p&gt;팀원들끼리 모의로 테스트해 보았을 때 꽤나 자신만만했던 것 같다. ‘여기에 버그가 도대체 어디있지?’ 나름 버그를 수정하면서 작업했기에 버그따위.. 없을거라 생각했다. 게다가 규모도 작은 프로젝트이니 더 그렇게 생각했던 것 같다.. 하지만…&lt;/p&gt;
 
-&lt;p&gt;Nullam id dolor id nibh ultricies vehicula ut id elit. Sed posuere consectetur est at lobortis. Nullam quis risus eget urna mollis ornare vel eu leo.&lt;/p&gt;</content><author><name>&lt;firstname&gt; &lt;lastname&gt;</name><email>&lt;mail@domain.tld&gt;</email></author><category term="example" /><summary type="html">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</summary></entry></feed>
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-errorfix.png&quot; alt=&quot;werecord&quot; /&gt; - 엥..?&lt;/p&gt;
+
+&lt;p&gt;버그만 있지는 않고 새로운 페이지들과 기능도 추가되었지만 예상보다 전체적으로 보완되고 수정될 부분들이 있었다는 것이 놀라웠다. (그리고 물론 저게 다가 아니다…ㅎ)&lt;/p&gt;
+
+&lt;p&gt;새롭게 기획에 추가된 Restart버튼과 pause버튼를 구현하게 됨으로 전체적인 데이터 구조를 다시 잡아야했다. 물론 프론트쪽에서는 받는 데이터에 따라서 랜더링만 시켜주면 되겠지만.. 백엔드에서 좀 고생하셨던 것 같다.ㅠㅠ&lt;/p&gt;
+
+&lt;h2 id=&quot;-끝-그리고-시작&quot;&gt;📌 끝 그리고 시작&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;7월 2일부로 공식적인 wecode 커리큘럼이 마무리 되었다. 하지만 여기서 끝날 줄 알았던가… 멘토님께서 2주정도 추가로 디자이너를 붙여주시면 프로젝트를 이어할 마음이 있는지 여쭤보셨다..!
+당연히 werecord 프로젝트에 애착이 있던 나와 팀원들… Yes!!를 외쳤던 기억이 난다.😏&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;현재(7월 25일) 여러가지 상황들이 맞물려 프로젝트 기간이 계속 딜레이 되다가 드디어 새로운 디자인 시안이 나오게 되었다. 그런데 생각과는 달리 팀원들과 같이 만들었던 모습은 온데간데 없고 새로운(?) 웹 페이지가 있었다..ㅠㅠ (고생해서 만든건데ㅠㅠ)&lt;/p&gt;
+
+&lt;p&gt;그런데 역시 디자이너는 디자이너인가.. 휠씬 모던하고 보기 좋아서 조금 씁쓸..ㅎ
+기능적인 부분도 원래 기획과는 다르게 추가된 것들도 있었고 삭제된 것들도 있었다.
+(역시 개발은 클라이언트가 왕이지.. 라는 벌써부터 현업 마인드로 생각하는 것 같아 웃펐다 😂)&lt;/p&gt;
+
+&lt;p&gt;최종으로 수정된 기안들을 우리가 마음대로 쓸 수 있을까 조심스럽게 염려하기도 하고.. 이렇게 우리가 기획하고 디자인하고 개발까지 이어졌던 프로젝트를 남기고 싶었다.&lt;/p&gt;
+
+&lt;p&gt;기회가된다면 최종 기획에 따라 만들어진 웹페이지와 현재 페이지를 비교하고 싶기도 하다!! 리팩토링은 당연히 해야되고!! Werecord 2편에서 다시 만나길…&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="project" /><category term="project" /><category term="werecord" /><category term="React" /><category term="근태" /><summary type="html">A-Z까지 모두 경험했던 We-record 프로젝트!!</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/img/project/2021-07-25-werecord/werecord-Cover.jpeg" /><media:content medium="image" url="http://localhost:4000/assets/img/project/2021-07-25-werecord/werecord-Cover.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">2차 프로젝트 회고 (CREAM)</title><link href="http://localhost:4000/project/project-review-cream.html" rel="alternate" type="text/html" title="2차 프로젝트 회고 (CREAM)" /><published>2021-07-24T00:00:00+09:00</published><updated>2021-07-24T00:00:00+09:00</updated><id>http://localhost:4000/project/project-review-cream</id><content type="html" xml:base="http://localhost:4000/project/project-review-cream.html">&lt;blockquote&gt;
+  &lt;p&gt;Wecode 부트캠프에서 진행한 프로젝트 CREAM에 대한 회고록입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-근황&quot;&gt;근황&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-project-cream&quot;&gt;Project CREAM&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#1-기획하는-단계&quot;&gt;기획하는 단계&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#2-프로젝트-설명&quot;&gt;프로젝트 설명&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-마치며&quot;&gt;마치며…&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-근황&quot;&gt;📌 근황…&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;2차 프로젝트를 마무리하고 약 한달 반이 지났다. 그동안은 Velog를 이용해왔지만 ‘나만의 블로그를 만들어서 운영하고 싶다..’라는 단순하고도 어리석은(?) 생각으로 github를 이용한 블로깅을 해야지..해야지.. 했던게 지금까지 이어져 왔다.😂&lt;/p&gt;
+
+&lt;p&gt;Wecode 부트캠프를 수료하고 난 이후에 개인적으로 공부하는 기술 스택들을 블로깅하고 싶은 마음에 마음 단단히(?) 먹고 몇일동안 고군분토한 결과… 드디어!! 블로그가 만들어졌다!!🎉
+이제 부지런히 밀린 블로깅을 하는 일만 남았다..!&lt;/p&gt;
+
+&lt;h2 id=&quot;-project-cream&quot;&gt;📌 Project CREAM&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🚌 기간 : 5월 24일 ~ 6월 04일 &lt;br /&gt;
+👥 Front-end : 3명, Back-end : 2명
+💻 사용된 기술 스택 : React Hooks, React Router, Styled-Component, KAKAO social login, RESTful API&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;팀원들과 함께 신발 경매 사이트 Kream을 모티브로 하여 개발을 진행 &lt;br /&gt;&lt;/li&gt;
+    &lt;li&gt;사람들과의 거래 및 경매라는 플로우를 중심으로 한 개발을 목표로 선정&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;1-기획하는-단계&quot;&gt;1. 기획하는 단계🚶&lt;/h3&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;-서비스-파악하기&quot;&gt;🌱 서비스 파악하기&lt;/h4&gt;
+
+&lt;p&gt;CREAM의 특징은 물품 구매자와 판매자 모두 서비스를 이용하는 이용자들이 될 수 있다는 것이다. 그렇기 때문에 서비스를 이용하는 회원들은 물품을 판매하게 되면 물품 값을 받아야하고 구매를 하게 되면 물품 값을 내야했다.&lt;/p&gt;
+
+&lt;p&gt;프로젝트이기 때문에 실제 화폐가 아닌 팀원끼리 사용할 수 있는 가상 활페로 대체하고, 대략적인 플로우를 생각해보았다.&lt;/p&gt;
+
+&lt;p&gt;Kream은 경매로 물품에 대해 입찰만 할 수 있는 것이 아니라 상품에 대한 즉시 구매도 가능했다.
+물품에 대한 채결 거래 내역이 실시간으로 갱신되는 것도 chart를 통해서 확인할 수 있었는데, 경매 입찰 거래가와 즉시 구매가, 즉시 판매가에 대한 연결성을 파악해야했다.&lt;/p&gt;
+
+&lt;p&gt;얼마 지나지 않아서 즉시 구매가는 판매 입찰로 나온 물품 중 가장 싼 판매 희망가가 즉시 구매가로 책정이 되고, 즉시 판매가는 구매 입찰에 나온 물품 중 가장 비싼 구매 희망가로 책정된다는 것을 발견하였다.&lt;/p&gt;
+
+&lt;p&gt;또한 구매 입찰을 진행할 때, 만약 구매 입찰가가 즉시 구매가보다 높다면 자동으로 즉시 구매가로 넘어가주어야 했고, 마찬가지로 판매 입찰을 진행할 때, 만약 판매 입찰가가 즉시 판매가보다 낮으면 자동으로 즉시 판매가로 넘어가주어야 했다.&lt;/p&gt;
+
+&lt;p&gt;이러한 거래 플로우를 각 하나의 물품에 대한 여러가지의 사이즈를 고려하여 데이터를 처리해야했기 때문에 생각보다 복잡했고, 팀원들과 의논하며 구현에 집중할 기능들을 하나 둘씩 정리하였다.&lt;/p&gt;
+
+&lt;h4 id=&quot;-내가-맡은-기능&quot;&gt;🌱 내가 맡은 기능&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;제품 상세 페이지 (chart.js 라이브러리 사용, 무한 스크롤 구현)&lt;/li&gt;
+  &lt;li&gt;팀원들과 함께 사용할 공용 Modal 구현&lt;/li&gt;
+  &lt;li&gt;URLSearchParams를 사용하여 백엔드에서 받는 데이터 필터링 구현&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-프로젝트-설명&quot;&gt;2. 프로젝트 설명🙈&lt;/h3&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;-modal&quot;&gt;🌱 Modal&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;WIKEA 프로젝트 때 팀원이셨던 분께서 공용 모달로 만드셨던 기억을 떠올려 스스로 구현해보았다.&lt;/li&gt;
+  &lt;li&gt;가장 큰 모달창만 구현을 하고 모달 내부에 들어갈 데이터 요소들은 하위 컴포넌트로 구현하기로 기획하였다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;여기서 등장하는 모달들은 내부에 있는 데이터만 다르고 모두 같은 컴포넌트로 구현하였다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-modal.gif&quot; alt=&quot;modal&quot; /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-modalCode.png&quot; alt=&quot;modalCode&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;간단해보이는 modal이다. 모달의 on/off를 상위 컴포넌트의 state로 관리해주고, 내부 데이터들을 children으로 받아서 랜더링시켜준다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;-chart--infinity-scroll&quot;&gt;🌱 Chart &amp;amp; Infinity scroll&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;처음 입문한 라이브러리인 Chart.js이다. Chart.js 자체의 기능은 어렵지 않았지만… 설치하는 부분에서 꼬박 하루가 걸렸다..😂 아무리 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install chart.js&lt;/code&gt;를 실행해서 chart를 설치해도… 일부 기능들이 동작하지 않았다..&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;원인은 chart.js의 버전이었다. chart.js를 사용하는 다른 사람들의 소스코드를 계속보다가 문득 package.json은 어떻지??라는 생각에 살펴보게 되었는데, 다른 사람들은 2.9.3버전의 chart.js를 사용하고 있었고, 나는 최신 버전으로 보이는 chart.js를 사용하고 있었다. 혹시나 하는 마음에 chart.js를 다운그래이드하여 다시 설치해본 결과…!! 드디어!! chart.js의 option으로 관리되는 기능들이 동작하였다..!! 그때의 감격.. (그 이후 package.json의 존재 이유를 알게 되었다는….)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-chart.gif&quot; alt=&quot;chartGif&quot; /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-chartCode.png&quot; alt=&quot;chartCode&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;무한 스크롤은 보통 백엔드와 소통하여 offset과 limit를 사용한 무한 스크롤을 구현하는 경우가 일반적인 것 같다. 하지만 백앤드와 소통해서 구현하기에는 메인 기능이 아니라 여겼기 때문에 백엔드로부터 오는 result값은 다 받고 이벤트가 발생할 때마다 result의 범위를 slice를 통해 넓혀나가는 방법을 택했다. (랜더링 최적화에는 좋지 않은 것 같아 리팩토링이 필요한 로직이라 생각한다.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-infinity1.png&quot; alt=&quot;infinityScroll&quot; /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-infinity2.png&quot; alt=&quot;infinityScroll&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;-filter&quot;&gt;🌱 Filter&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;입찰 거래 내역에는 가격별, 사이즈별로 오름차순 내림차순 기능이 구현되어 있다.&lt;/li&gt;
+  &lt;li&gt;처음에는 데이터 영역을 다루는 것 자체가 백엔드의 역할이라는 회의 결과로 인해 백앤드분께서 일일히 해당 엔드포인트를 만들어주셨다. 그래서 URLSearchParams를 가지고 각 해당 엔드포인드로 이동하게끔 만들었다.&lt;/li&gt;
+  &lt;li&gt;하지만 오히려 이것은 버튼을 누를 때마다 불필요한 통신을 실행하기에 오버 엔지니어링이라 느꼈다. 프론트에서 자체적으로 간단하게 필터링할 수 있는 부분인 것 같아 효율적인 운용을 위해 리팩토링해야할 것 같다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-filter.gif&quot; alt=&quot;filter&quot; /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-filterCode.png&quot; alt=&quot;filterCode&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;-마치며&quot;&gt;📌 마치며..&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;현재 글을 적고 있는 시점은 이미 1달 반이라는 시간이 지났지만 아직까지 팀원들과 프로젝트를 진행했던 기억은 생생하다. 이번 프로젝트의 제일 Blocker는 chart.js의 버전의 차이로 인한 버그인 것 같다.&lt;/li&gt;
+  &lt;li&gt;하루종일 ‘왜 동작을 안하지?’ 라는 생각을 수십번도 넘게 했던… 비록 버전 넘버 바꿔주고 npm install하니까 금방 해결될 문제였지만, 현업에서 이런 Blocker를 만나면 어떻게 효율적으로 대처할 것인가에 대해 많이 생각해보았던 것 같다.&lt;/li&gt;
+  &lt;li&gt;이 프로젝트를 진행하면서 로직을 통한 문제 해결능력도 중요하지만, 필요한 시점에 적절한 문구를 사용하여 서치하는 능력 또한 중요하다는 것을 느끼는 프로젝트인 것 같다!! :)&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="project" /><category term="project" /><category term="Kream" /><category term="React" /><category term="경매" /><summary type="html">Wecode 부트캠프에서 진행한 프로젝트 CREAM에 대한 회고록입니다.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/img/project/2021-07-24-cream/2021-07-24-project-review-cream-Cover.png" /><media:content medium="image" url="http://localhost:4000/assets/img/project/2021-07-24-cream/2021-07-24-project-review-cream-Cover.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
