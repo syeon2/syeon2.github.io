@@ -138,14 +138,9 @@ defaults:
   - scope:
       type: posts
     values:
+      comment: true
       # https://applause-button.com/
       applause_button: true
-
-  # # You can use the following to enable comments on all posts.
-  # - scope:
-  #     type:            posts
-  #   values:
-  #     comments:        true
 
   # `jekyll-seo-tag` will mark collection outputs as `BlogPosting`,
   # but we want them to be `WebPage`s:
@@ -188,7 +183,7 @@ comments:
 utterances:
   repo: "ksy4568/ksy4568.github.io"
   issue-term: "pathname"
-  label: "Comments"
+  label: "Comment"
   theme: "github-light"
 
 # You must install giscus github app before use.(https://github.com/apps/giscus)
@@ -196,7 +191,7 @@ utterances:
 # https://giscus.vercel.app/
 giscus:
   repo: "ksy4568/ksy4568.github.io"
-  repo-id: "MDEwOlJlcG9zaXRvcnkzODk4NTg2MzQ"
+  repo-id: "MDEwOlJlcG9zaXRvcnkzODk4NTg2MzQ="
   category: "General"
   category-id: "DIC_kwDOFzzFSs4B-dqb"
   mapping: "pathname"
