@@ -138,7 +138,7 @@ defaults:
   - scope:
       type: posts
     values:
-      comment: true
+      comments: true
       # https://applause-button.com/
       applause_button: true
 
@@ -183,7 +183,7 @@ comments:
 utterances:
   repo: "ksy4568/ksy4568.github.io"
   issue-term: "pathname"
-  label: "Comment"
+  label: Comments"
   theme: "github-light"
 
 # You must install giscus github app before use.(https://github.com/apps/giscus)
