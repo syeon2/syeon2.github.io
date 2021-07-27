@@ -71,7 +71,7 @@ hy-drawer {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgba(000, 000, 000, 0.75);
+  color: rgba(0, 0, 0, 0.75);
   text-align: center;
   min-height: 100vh;
   &.invert {
@@ -82,8 +82,8 @@ hy-drawer {
   a {
     // <<< inline
     color: #333333;
-    border-bottom-color: rgba(000, 000, 000, 0.2);
-    text-decoration-color: rgba(000, 000, 000, 0.2);
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    text-decoration-color: rgba(0, 0, 0, 0.2);
     // >>>
     // <<< link
     &:hover {
@@ -183,12 +183,12 @@ hy-drawer.loaded .sidebar {
       border-bottom: 2px solid;
       margin: 0 auto 0.5rem;
       width: 4rem;
-      border-color: rgba(000, 000, 000, 0.2);
+      border-color: rgba(0, 0, 0, 0.2);
       transition: border-color 250ms;
     }
 
     &:hover::after {
-      border-color: rgba(000, 000, 000, 1);
+      border-color: rgba(0, 0, 0, 1);
       transition: border-color 50ms;
     }
   }
