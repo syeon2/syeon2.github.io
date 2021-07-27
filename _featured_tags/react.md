@@ -1,11 +1,11 @@
 ---
 layout: tag-list
 type: tag
-title: Algorithm
-slug: algorithm
+title: React
+slug: react
 category: devlog
 sidebar: true
-order: 1
+order: 4
 description: >
-  Algorithm study
+  React study
 ---

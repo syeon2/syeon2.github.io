@@ -1,11 +1,11 @@
 ---
 layout: tag-list
 type: tag
-title: Algorithm
-slug: algorithm
+title: HTML&CSS
+slug: html, css
 category: devlog
 sidebar: true
-order: 1
+order: 2
 description: >
-  Algorithm study
+  HTML & CSS study
 ---

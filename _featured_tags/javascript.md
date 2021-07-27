@@ -1,11 +1,11 @@
 ---
 layout: tag-list
 type: tag
-title: Algorithm
-slug: algorithm
+title: JavaScript
+slug: javasript
 category: devlog
 sidebar: true
-order: 1
+order: 3
 description: >
-  Algorithm study
+  JavaScript study
 ---

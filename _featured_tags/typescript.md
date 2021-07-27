@@ -1,11 +1,11 @@
 ---
 layout: tag-list
 type: tag
-title: Algorithm
-slug: algorithm
+title: TypeScript
+slug: typescript
 category: devlog
 sidebar: true
-order: 1
+order: 5
 description: >
-  Algorithm study
+  TypeScript study
 ---

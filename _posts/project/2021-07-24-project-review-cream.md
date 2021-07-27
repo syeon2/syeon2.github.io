@@ -10,6 +10,8 @@ image:
 
 > Wecode 부트캠프에서 진행한 프로젝트 CREAM에 대한 회고록입니다.
 
+<!--more-->
+
 - 목차
   - [근황](#-근황)
   - [Project CREAM](#-project-cream)

@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-27T21:16:14+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-27T21:41:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
 </subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">Algorithm - Brute Force</title><link href="http://localhost:4000/devlog/algorithm-bruteForce.html" rel="alternate" type="text/html" title="Algorithm - Brute Force" /><published>2021-07-26T00:00:00+09:00</published><updated>2021-07-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-bruteForce</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-bruteForce.html">&lt;blockquote&gt;
   &lt;p&gt;알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
+
+&lt;!---more---&gt;
 
 &lt;ul&gt;
   &lt;li&gt;목차&lt;/li&gt;
@@ -10,6 +12,8 @@
 &lt;h2 id=&quot;brute-force란&quot;&gt;Brute Force란?&lt;/h2&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="BruteForce" /><category term="완전탐색" /><summary type="html">알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.</summary></entry><entry><title type="html">Werecord project 🔥</title><link href="http://localhost:4000/project/project-review-werecord.html" rel="alternate" type="text/html" title="Werecord project 🔥" /><published>2021-07-25T00:00:00+09:00</published><updated>2021-07-25T00:00:00+09:00</updated><id>http://localhost:4000/project/project-review-werecord</id><content type="html" xml:base="http://localhost:4000/project/project-review-werecord.html">&lt;blockquote&gt;
   &lt;p&gt;A-Z까지 모두 경험했던 We-record 프로젝트!!&lt;/p&gt;
 &lt;/blockquote&gt;
+
+&lt;!--more--&gt;
 
 &lt;ul&gt;
   &lt;li&gt;목차
@@ -219,6 +223,8 @@
 &lt;p&gt;기회가된다면 최종 기획에 따라 만들어진 웹페이지와 현재 페이지를 비교하고 싶기도 하다!! 리팩토링은 당연히 해야되고!! Werecord 2편에서 다시 만나길…&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="project" /><category term="project" /><category term="werecord" /><category term="React" /><category term="근태" /><summary type="html">A-Z까지 모두 경험했던 We-record 프로젝트!!</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/img/project/2021-07-25-werecord/werecord-Cover.jpeg" /><media:content medium="image" url="http://localhost:4000/assets/img/project/2021-07-25-werecord/werecord-Cover.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">2차 프로젝트 회고 (CREAM)</title><link href="http://localhost:4000/project/project-review-cream.html" rel="alternate" type="text/html" title="2차 프로젝트 회고 (CREAM)" /><published>2021-07-24T00:00:00+09:00</published><updated>2021-07-24T00:00:00+09:00</updated><id>http://localhost:4000/project/project-review-cream</id><content type="html" xml:base="http://localhost:4000/project/project-review-cream.html">&lt;blockquote&gt;
   &lt;p&gt;Wecode 부트캠프에서 진행한 프로젝트 CREAM에 대한 회고록입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
+
+&lt;!--more--&gt;
 
 &lt;ul&gt;
   &lt;li&gt;목차

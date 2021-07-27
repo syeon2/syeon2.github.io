@@ -75,6 +75,7 @@ permalink: none
 # Pagination configuration (used by the `blog` layout)
 paginate: 10
 paginate_path: /blog/:num/
+excert_separator: <!--more-->
 
 # Theme
 # ---------------------------------------------------------------------------------------
