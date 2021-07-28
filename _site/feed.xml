@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-27T21:41:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-28T15:45:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
 </subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">Algorithm - Brute Force</title><link href="http://localhost:4000/devlog/algorithm-bruteForce.html" rel="alternate" type="text/html" title="Algorithm - Brute Force" /><published>2021-07-26T00:00:00+09:00</published><updated>2021-07-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-bruteForce</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-bruteForce.html">&lt;blockquote&gt;
   &lt;p&gt;알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -9,7 +9,50 @@
   &lt;li&gt;목차&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;brute-force란&quot;&gt;Brute Force란?&lt;/h2&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="BruteForce" /><category term="완전탐색" /><summary type="html">알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.</summary></entry><entry><title type="html">Werecord project 🔥</title><link href="http://localhost:4000/project/project-review-werecord.html" rel="alternate" type="text/html" title="Werecord project 🔥" /><published>2021-07-25T00:00:00+09:00</published><updated>2021-07-25T00:00:00+09:00</updated><id>http://localhost:4000/project/project-review-werecord</id><content type="html" xml:base="http://localhost:4000/project/project-review-werecord.html">&lt;blockquote&gt;
+&lt;h2 id=&quot;brute-force란&quot;&gt;Brute Force란?&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Brute Force의 Brute는 짐승, 난폭한,,이란 뜻과 Force가 만나 난폭한 힘.. 이런 느낌인 자료탐색방법인데 간단히 말하면 “너가 멀 좋아할지 몰라서 일단 다 준비해봤어..”이거다. 🤪&lt;/li&gt;
+    &lt;li&gt;Brute Force의 자료구조의 종류로는 2가지(선형구조 - 배열, 연결리스트 등, 비선형구조 - DFS, BFS)가 있다!! &lt;br /&gt;(다음엔 자료구조도 공부해보아야겠다!!)&lt;/li&gt;
+    &lt;li&gt;주어진 값을 구하기 위해서 모든 경우를 탐색하기 때문에 시간복잡도는 경우가 늘어날 때마다 기하급수적으로 늘어난다. &lt;br /&gt; 일반적으로 컴퓨터는 1초에 평균 1억번 정도의 연산이 가능하기 때문에 1000억번의 연산을 수행한다면 &lt;b&gt;17분&lt;/b&gt;이 소요된다./&lt;/li&gt;
+    &lt;li&gt;시간적인 측면에서는 비효율적이지만, 사용하기 쉽고 모든 경우를 탐색하기 때문에 &lt;b&gt;100%&lt;/b&gt; 답을 찾는 것이 가능하다.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;사용-예제-javascript&quot;&gt;사용 예제 (JavaScript)&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;간단하게 소수를 찾는 문제로 Brute Force를 알아보자! &lt;br /&gt; (자료구조는 배열을 사용하여 진행!)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const question = arr =&amp;gt; {
+   let answer = []
+
+   for(let i of arr) {     --- (1)
+       let s = []
+       for(let z = 1; z &amp;lt;= i; z++) {    --- (2)
+           if(i % z === 0) s.push(z);
+       }
+       if(s.length === 2) answer.push(s[s.length - 1])
+   }
+   return answer
+}
+
+question([3, 2, 4, 6, 9, 11, 129, 127])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h2 id=&quot;효율적인-코드인지는-잘-모르겠지만-간단하게-살펴보면&quot;&gt;효율적인 코드인지는 잘 모르겠지만.. 간단하게 살펴보면!&lt;/h2&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="BruteForce" /><category term="완전탐색" /><summary type="html">알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.</summary></entry><entry><title type="html">Werecord project 🔥</title><link href="http://localhost:4000/project/project-review-werecord.html" rel="alternate" type="text/html" title="Werecord project 🔥" /><published>2021-07-25T00:00:00+09:00</published><updated>2021-07-25T00:00:00+09:00</updated><id>http://localhost:4000/project/project-review-werecord</id><content type="html" xml:base="http://localhost:4000/project/project-review-werecord.html">&lt;blockquote&gt;
   &lt;p&gt;A-Z까지 모두 경험했던 We-record 프로젝트!!&lt;/p&gt;
 &lt;/blockquote&gt;
 

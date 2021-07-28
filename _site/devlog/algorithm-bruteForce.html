@@ -102,7 +102,7 @@
   w._search = {
     DATA_URL: '/assets/sitedata.json?no-cache',
     STORAGE_KEY: 'mini-search/',
-    INDEX_KEY: 'index--2021-07-27T21:41:10+09:00',
+    INDEX_KEY: 'index--2021-07-28T15:45:00+09:00',
   };
   w._clapButton = true;
 }(window);</script>
@@ -241,6 +241,49 @@
 </ul>
 
 <h2 id="brute-force란">Brute Force란?</h2>
+
+<hr />
+
+<blockquote>
+  <ul>
+    <li>Brute Force의 Brute는 짐승, 난폭한,,이란 뜻과 Force가 만나 난폭한 힘.. 이런 느낌인 자료탐색방법인데 간단히 말하면 “너가 멀 좋아할지 몰라서 일단 다 준비해봤어..”이거다. 🤪</li>
+    <li>Brute Force의 자료구조의 종류로는 2가지(선형구조 - 배열, 연결리스트 등, 비선형구조 - DFS, BFS)가 있다!! <br />(다음엔 자료구조도 공부해보아야겠다!!)</li>
+    <li>주어진 값을 구하기 위해서 모든 경우를 탐색하기 때문에 시간복잡도는 경우가 늘어날 때마다 기하급수적으로 늘어난다. <br /> 일반적으로 컴퓨터는 1초에 평균 1억번 정도의 연산이 가능하기 때문에 1000억번의 연산을 수행한다면 <b>17분</b>이 소요된다./</li>
+    <li>시간적인 측면에서는 비효율적이지만, 사용하기 쉽고 모든 경우를 탐색하기 때문에 <b>100%</b> 답을 찾는 것이 가능하다.</li>
+  </ul>
+</blockquote>
+
+<h2 id="사용-예제-javascript">사용 예제 (JavaScript)</h2>
+
+<hr />
+
+<ul>
+  <li>간단하게 소수를 찾는 문제로 Brute Force를 알아보자! <br /> (자료구조는 배열을 사용하여 진행!)</li>
+</ul>
+
+<blockquote>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const question = arr =&gt; {
+   let answer = []
+
+   for(let i of arr) {     --- (1)
+       let s = []
+       for(let z = 1; z &lt;= i; z++) {    --- (2)
+           if(i % z === 0) s.push(z);
+       }
+       if(s.length === 2) answer.push(s[s.length - 1])
+   }
+   return answer
+}
+
+question([3, 2, 4, 6, 9, 11, 129, 127])
+</code></pre></div>  </div>
+</blockquote>
+
+<ul>
+  <li>
+    <h2 id="효율적인-코드인지는-잘-모르겠지만-간단하게-살펴보면">효율적인 코드인지는 잘 모르겠지만.. 간단하게 살펴보면!</h2>
+  </li>
+</ul>
 
   
 </article>
