@@ -1,5 +1,186 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-29T13:54:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-29T19:58:27+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[TypeScript] 기초 개념</title><link href="http://localhost:4000/devlog/basicType.html" rel="alternate" type="text/html" title="[TypeScript] 기초 개념" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/basicType</id><content type="html" xml:base="http://localhost:4000/devlog/basicType.html">&lt;blockquote&gt;
+  &lt;p&gt;TypeScript의 기본 타입 종류에 대한 포스트입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-typescript란&quot;&gt;📌 TypeScript란?&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;기존에 사용하는 JavaScript는 Runtime 언어, 즉 동적 언어이다.&lt;br /&gt;
+동적 언어란 실행될 때 변수의 타입이 결정되기 때문에 사용자가 오류를 그대로 볼 수 있다.&lt;/li&gt;
+  &lt;li&gt;하지만 TypeScript는 정적 언어이다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;정적 언어란 컴파일될 때 변수의 타입이 결정되기 때문에 실행 전에 오류를 볼 수 있습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;언뜻보면 동적 언어가 자동으로 변수의 타입을 정해주기 때문에 정적 타입보다 동적 타입이 좋아보일 수 있지만…&lt;/li&gt;
+  &lt;li&gt;개발자가 의도하지 않았던 동작까지 동적 언어가 처리할 가능성이 있기 때문에 정적 언어로 바꾸어주어 안전하게 코드를 관리하는 것이 선호되고 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;=&amp;gt; 이러한 이유로 TypeScript를 Project에 적용시키는 것이 증가하고 있는 추세이다.📈&lt;/p&gt;
+
+&lt;h2 id=&quot;-basic&quot;&gt;📌 Basic&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-변수-지정&quot;&gt;🌱 변수 지정&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;먼저 변수를 지정하는 것은 간단하다!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const num = 1;
+=&amp;gt; const num: number = 1;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이런 식으로 변수옆에 변수가 무슨 타입의 데이터를 가지는지 명시해주는 것이다.&lt;br /&gt;
+(Boolean, string, undefined, null 등이 있을 것이다.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;-변수-지정2&quot;&gt;🌱 변수 지정2&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일반적인 기본형 데이터 타입으로 보지 못했던 것들이 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-unknown&quot;&gt;1. unknown&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a: unknown = 0;
+a = 'hello';
+a = '2';
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;아직 값이 정해지지 않았을 경우 unknown을 사용한다.&lt;/li&gt;
+  &lt;li&gt;TypeScript에서 JavaScript의 라이브러리를 사용할 경우 간혹 사용되곤 한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-any&quot;&gt;2. any&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a: any = 0;
+a = 'hello';
+a = 2;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;any도 unknown과 기능적으로는 비슷하지만 의미론적으로 다르다.&lt;/li&gt;
+  &lt;li&gt;any는 표현 그대로 ‘아무거나 다 가능!’이다.&lt;/li&gt;
+  &lt;li&gt;TypeScript 자체가 정적 언어인데 이러한 특성을 무너뜨리는(?) 특성으로 잘 사용되지 않는다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;3-void&quot;&gt;3. void&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;void는 함수에서 아무것도 리턴되지 않는 경우를 나타낸다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function hello():void {
+    return;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;hello함수는 현재 아무것도 return하고 있지 않다..!&lt;/li&gt;
+  &lt;li&gt;이럴 경우 함수의 값으로 void를 선언해주는데, void는 생략이 가능하다! 그래서 이 부분은 각 사마다의 컨벤션에 따라서!!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;4-never&quot;&gt;4. never&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;never는 함수가 에러를 리턴하거나 리턴 값 자체를 내보내지 않는 경우(무한 루프)에 사용된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function error(): never {
+    throw new Error(message);
+    while(true) {console.log('infinity loop')}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;5-object&quot;&gt;5. object&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;object는 데이터 타입이 object일 경우에 사용 가능하다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function obj(obj: object) {
+}
+obj({one: 1});
+obj({two: 2});
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-사용-예제&quot;&gt;📌 사용 예제&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function addNum(num1: number, num2: number2): number {
+    return num1 + num2
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이렇게 각 함수의 매개변수에도 number로 선언해줄수 있고 함수에 대한 return값의 타입도 지정해 줄 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;TypeScript의 함수에서는 지정된 매개변수를 일일히 선언해주지 않으면 에러가 일어난다.&lt;/li&gt;
+  &lt;li&gt;때문에 만일 함수에 매개변수의 값을 넘겨주지 않고 싶을 때는 &lt;b&gt;Optional parameter&lt;/b&gt;로 지정해준다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function printName(firstName: string, lastName?: string): string {
+    console.log(firstName);
+    console.log(lastName);
+}
+printName(SuYeon, Kim);
+printName(SuYeon)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이렇게 매개 변수 뒤에 ?를 붙여주면 그 매개변수는 전달해주지 않아도 동작하게 된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;함수의 매개변수에 전달되는 값이 없을 경우 default값도 지정해줄 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function greeting(message: string = 'hello') {
+    console.log(message);
+}
+greeting();
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;함수 매개변수의 타입이 일정할 때, 특정 개수가 지정되지 않고 여러개를 할당하고 싶으면 Rest parameter를 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function addNum(...numbers: number[]): number {
+    return numbers.reduce((a, b) =&amp;gt; a + b);
+}
+console.log(addNum(1, 2)); // 3
+console.log(addNum(1, 2, 3)); //6
+console.log(addNum(1, 2, 3, 4, 5, 6, 7)); // 28
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-정리&quot;&gt;📌 정리&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;TypeScript는 정적 언어이기 때문에 코드의 오류를 최소화하기 위한 목적을 가지고 사용한다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="basic" /><summary type="html">TypeScript의 기본 타입 종류에 대한 포스트입니다.</summary></entry><entry><title type="html">Function</title><link href="http://localhost:4000/function.html" rel="alternate" type="text/html" title="Function" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/function</id><content type="html" xml:base="http://localhost:4000/function.html"></content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><summary type="html"></summary></entry><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
   &lt;p&gt;[Core JavaScript] Data Type에 대한 개념와 작동 원리&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -207,7 +388,7 @@ console.log(a === b) // false
 &lt;ol&gt;
   &lt;li&gt;데이터 타입에는 기본형, 참조형이 있다.&lt;/li&gt;
   &lt;li&gt;기본형은 자체로 불변성을 띄지만, 참조형은 상황에 따라 불변성을 띌 수도 가변성을 띌 수도 있다.&lt;/li&gt;
-  &lt;li&gt;참조형 데이터를 불변 객체로 만들기 위해서는 그에 맞는 메소드나 라이브러리(immer.js, immutable.js, baobab.js 등)을 사용해야 한다.&lt;/li&gt;
+  &lt;li&gt;참조형 데이터를 불변 객체로 만들기 위해서는 그에 맞는 함수를 구현하거나 라이브러리(immer.js, immutable.js, baobab.js 등)을 사용해야 한다.&lt;/li&gt;
 &lt;/ol&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="Core" /><category term="JavaScript" /><category term="DataType" /><category term="mutable" /><category term="immutable" /><summary type="html">[Core JavaScript] Data Type에 대한 개념와 작동 원리</summary></entry><entry><title type="html">[Algorithm] Brute Force</title><link href="http://localhost:4000/devlog/algorithm-bruteForce.html" rel="alternate" type="text/html" title="[Algorithm] Brute Force" /><published>2021-07-26T00:00:00+09:00</published><updated>2021-07-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-bruteForce</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-bruteForce.html">&lt;blockquote&gt;
   &lt;p&gt;알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
