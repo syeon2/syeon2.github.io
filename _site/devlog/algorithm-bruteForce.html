@@ -18,9 +18,9 @@
   
     
 <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Algorithm - Brute Force | Syeon</title>
+<title>[Algorithm] Brute Force | Syeon</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="Algorithm - Brute Force" />
+<meta property="og:title" content="[Algorithm] Brute Force" />
 <meta name="author" content="SuYeon Kim" />
 <meta property="og:locale" content="ko_KR, en_US" />
 <meta name="description" content="알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다." />
@@ -31,9 +31,9 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-07-26T00:00:00+09:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Algorithm - Brute Force" />
+<meta property="twitter:title" content="[Algorithm] Brute Force" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/devlog/algorithm-bruteForce.html"},"author":{"@type":"Person","name":"SuYeon Kim"},"@type":"BlogPosting","description":"알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/me.jpg"},"name":"SuYeon Kim"},"url":"http://localhost:4000/devlog/algorithm-bruteForce.html","headline":"Algorithm - Brute Force","dateModified":"2021-07-26T00:00:00+09:00","datePublished":"2021-07-26T00:00:00+09:00","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/devlog/algorithm-bruteForce.html"},"author":{"@type":"Person","name":"SuYeon Kim"},"@type":"BlogPosting","description":"알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/me.jpg"},"name":"SuYeon Kim"},"url":"http://localhost:4000/devlog/algorithm-bruteForce.html","headline":"[Algorithm] Brute Force","dateModified":"2021-07-26T00:00:00+09:00","datePublished":"2021-07-26T00:00:00+09:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -102,7 +102,7 @@
   w._search = {
     DATA_URL: '/assets/sitedata.json?no-cache',
     STORAGE_KEY: 'mini-search/',
-    INDEX_KEY: 'index--2021-07-28T15:45:00+09:00',
+    INDEX_KEY: 'index--2021-07-29T13:54:18+09:00',
   };
   w._clapButton = true;
 }(window);</script>
@@ -203,7 +203,7 @@
   <header>
     <h1 class="post-title flip-project-title">
       
-        Algorithm - Brute Force
+        [Algorithm] Brute Force
       
     </h1>
 
@@ -237,10 +237,16 @@
 <!---more--->
 
 <ul>
-  <li>목차</li>
+  <li>목차
+    <ul>
+      <li><a href="#-brute-force란">Brute Force란?</a></li>
+      <li><a href="#-사용-예제-javascript">사용 예제</a></li>
+      <li><a href="#-정리하자면">정리하자면!</a></li>
+    </ul>
+  </li>
 </ul>
 
-<h2 id="brute-force란">Brute Force란?</h2>
+<h2 id="-brute-force란">📌 Brute Force란?</h2>
 
 <hr />
 
@@ -253,7 +259,7 @@
   </ul>
 </blockquote>
 
-<h2 id="사용-예제-javascript">사용 예제 (JavaScript)</h2>
+<h2 id="-사용-예제-javascript">📌 사용 예제 (JavaScript)</h2>
 
 <hr />
 
@@ -280,9 +286,18 @@ question([3, 2, 4, 6, 9, 11, 129, 127])
 </blockquote>
 
 <ul>
-  <li>
-    <h2 id="효율적인-코드인지는-잘-모르겠지만-간단하게-살펴보면">효율적인 코드인지는 잘 모르겠지만.. 간단하게 살펴보면!</h2>
-  </li>
+  <li>효율적인 코드인지는 잘 모르겠지만.. 간단하게 살펴보면!</li>
+  <li>(1)번과 (2)으로 의도한 것은 (1)번으로 arr에 있는 값을 하나씩 하위 for문으로 전달해주고, (2)에서는 (1)에서 받은 숫자 i를 1부터 i번까지 전부 탐색한다.</li>
+  <li>i와 i 아래의 모든 값들을 %로 구해서 0이 나오면 만들어 놓은 배열에 저장시키고, 하위 for문이 끝나면 배열의 요소를 검사해 length가 2개이면 answer 배열에 넣어서 return한다. (소수는 1과 자신만 약수로 가지기 때문!)</li>
+</ul>
+
+<h2 id="-정리하자면">📌 정리하자면!</h2>
+
+<hr />
+
+<ul>
+  <li>Brute Force(완전탐색)은 모든 경우의 수를 탐색한다.</li>
+  <li>답은 확실하지만, 시간적인 소요가 크다.</li>
 </ul>
 
   

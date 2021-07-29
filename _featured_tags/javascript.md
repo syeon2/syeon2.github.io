@@ -2,7 +2,7 @@
 layout: tag-list
 type: tag
 title: JavaScript
-slug: javasript
+slug: javascript
 category: devlog
 sidebar: true
 order: 3

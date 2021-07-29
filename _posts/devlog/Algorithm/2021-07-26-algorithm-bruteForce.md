@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Algorithm - Brute Force"
+title: "[Algorithm] Brute Force"
 subtitle: "완전탐색 브루트 포스"
 categories: devlog
 tags: algorithm BruteForce 완전탐색
@@ -11,8 +11,11 @@ tags: algorithm BruteForce 완전탐색
 <!---more--->
 
 - 목차
+  - [Brute Force란?](#-brute-force란)
+  - [사용 예제](#-사용-예제-javascript)
+  - [정리하자면!](#-정리하자면)
 
-## Brute Force란?
+## 📌 Brute Force란?
 
 ---
 
@@ -21,7 +24,7 @@ tags: algorithm BruteForce 완전탐색
 > - 주어진 값을 구하기 위해서 모든 경우를 탐색하기 때문에 시간복잡도는 경우가 늘어날 때마다 기하급수적으로 늘어난다. <br> 일반적으로 컴퓨터는 1초에 평균 1억번 정도의 연산이 가능하기 때문에 1000억번의 연산을 수행한다면 <b>17분</b>이 소요된다./
 > - 시간적인 측면에서는 비효율적이지만, 사용하기 쉽고 모든 경우를 탐색하기 때문에 <b>100%</b> 답을 찾는 것이 가능하다.
 
-## 사용 예제 (JavaScript)
+## 📌 사용 예제 (JavaScript)
 
 ---
 
@@ -48,7 +51,7 @@ tags: algorithm BruteForce 완전탐색
 - (1)번과 (2)으로 의도한 것은 (1)번으로 arr에 있는 값을 하나씩 하위 for문으로 전달해주고, (2)에서는 (1)에서 받은 숫자 i를 1부터 i번까지 전부 탐색한다.
 - i와 i 아래의 모든 값들을 %로 구해서 0이 나오면 만들어 놓은 배열에 저장시키고, 하위 for문이 끝나면 배열의 요소를 검사해 length가 2개이면 answer 배열에 넣어서 return한다. (소수는 1과 자신만 약수로 가지기 때문!)
 
-## 정리하자면!
+## 📌 정리하자면!
 
 ---
 

@@ -1,15 +1,230 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-28T15:45:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">Algorithm - Brute Force</title><link href="http://localhost:4000/devlog/algorithm-bruteForce.html" rel="alternate" type="text/html" title="Algorithm - Brute Force" /><published>2021-07-26T00:00:00+09:00</published><updated>2021-07-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-bruteForce</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-bruteForce.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-29T13:54:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
+  &lt;p&gt;[Core JavaScript] Data Type에 대한 개념와 작동 원리&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-data-type&quot;&gt;Data Type&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-data-할당-원리&quot;&gt;Data 할당 원리&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-가변성과-불변성&quot;&gt;가변성과 불변성&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-얕은-복사-깊은-복사&quot;&gt;얕은 복사와 깊은 복사&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-복사를-하는-이유&quot;&gt;복사를 하는 이유&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-그래서-얕은-복사-깊은-복사가-머야&quot;&gt;그래서 얕은 복사, 깊은 복사가 머야?&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-정리&quot;&gt;정리&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-data-type&quot;&gt;📌 Data Type&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;JavaScrip의 데이터 타입은 크게 기본형(primitive), 참조형(reference)으로 나뉜다.&lt;/li&gt;
+  &lt;li&gt;기본형에는 String, Number, Boolean, Null, undefined, Symbol 등으로 나뉜다.&lt;/li&gt;
+  &lt;li&gt;참조형에는 Object, Array, Function, Date 등으로 나뉜다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;기본형과 참조형은 가변성인지, 불변성인지에 따라 나뉘게 되는데, 가변성과 불변성을 이해하려면 약간의 컴퓨터 메모리에 대한 지식이 필요하다. (추후에 자세하게 공부할 것!)
+=&amp;gt; 결론적으로 변수와 식별자는 메모리 고유의 주소값에 저장되고 그것을 참고하는 식으로 동작한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;-data-할당-원리&quot;&gt;🌱 Data 할당 원리&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a = 6
+let b = 'hello'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;이러한 형태로 변수가 선언되면 이 메모리들은 각각 컴퓨터 메모리에 이렇게 저장된다.
+&lt;img src=&quot;/assets/img/javascript/dataType.png&quot; width=&quot;300px&quot; height=&quot;200px&quot; /&gt; (글씨 어떻할거야…💩)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;저 코드가 메모리에 영향을 끼치는 순서를 순서대로 나열하자면…&lt;/li&gt;
+  &lt;li&gt;
+    &lt;ol&gt;
+      &lt;li&gt;변수명 a가 선언된다. -&amp;gt; 메모리 주소 1001번에 a가 저장된다.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;ol&gt;
+      &lt;li&gt;변수명 a에 6이 할당된다. -&amp;gt; 기존에는 undefined, 6은 곧바로 a의 주솟값인 1001에 저장되는 것이 아니라 새로운 주소 5001에 할당되고 1001에는 a의 값으로 5001주소가 참조된다. (a가 6을 가지고 있는 메모리 영역을 검색해서 찾는 원리)&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;ol&gt;
+      &lt;li&gt;위의 순서가 변수 b에 똑같이 적용된다.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 변수 데이터가 기본형일 경우 이러한 원리로 동작한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;위에서는 데이터 타입이 기본형이었다. &lt;br /&gt;
+그렇다면 참조형 데이터는 기본형의 원리와는 다른가??&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a = {one: 1, two: 2}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;a는 객체로 할당했다. 이것은 다음과 같다. &lt;br /&gt;
+&lt;img src=&quot;/assets/img/javascript/dataType2.png&quot; width=&quot;500px&quot; height=&quot;200px&quot; /&gt; (글씨 어떻게 할거냐고…💩)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;참조형은 기본형과는 다르게 객체 데이터에 대한 주소를 한번 더 참조한다.&lt;/li&gt;
+  &lt;li&gt;a라는 변수명을 1001에 할당하고난 뒤에 값은 5001 주소에 저장하지만, 객체 안에 one, two의 변수명들은 따로 7001에 저장시킨다.&lt;/li&gt;
+  &lt;li&gt;이것으로 그치는 것이 아니라 각각 one, two에 할당된 1, 2는 아까 기본형 데이터와 같이 다른 메모리 주소에 저장되고 one, two의 값은 그 주소가 할당된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 이 기본형과 참조형의 데이터 저장 스타일이 각기 다르기 때문에 앞으로 여러 이슈들이 발생한다. (가변성과 불변성)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-가변성과-불변성&quot;&gt;📌 가변성과 불변성&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;가변성과 불변성은 한마디로 정의하면 데이터 변환의 가능여부에 따라 나뉘는 것이 아니다.&lt;/li&gt;
+  &lt;li&gt;데이터를 변환했을 때 원래 값이 해당 주소에서 다른 값으로 갱신되는지의 여부에 따라 달라진다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a = 1
+let b = a
+a = 2
+console.log(a === b) // false
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let c = {one: 1, two: 2}
+let d = c
+c.one = 3
+console.log(c === d) // true..?
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;기본형과 참조형의 개념을 모른다면 위의 코드에서 이상한 점을 느꼈을 것이다.&lt;/li&gt;
+    &lt;li&gt;각 마지막 console에서 a와 b는 false가 맞는 것 같은데 c와 d는 왜 true일까??&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이것이 불변성의 특징이다. a는 1 데이터의 주소를 할당받았고 b는 a의 1 데이터의 주소를 할당받았다.&lt;/li&gt;
+  &lt;li&gt;그리고 a는 2로 다시 재할당받았는데…! 여기서!! 중요한 점은 b는 데이터의 주소가 변경되지 않았다는 것이다.&lt;/li&gt;
+  &lt;li&gt;그렇다는 것은 b가 할당받고 있는 데이터의 주소에는 1이 있다는 것!! 1은 a가 2로 바뀌었다고 해서 사라지지 않았다!! ⭐️&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;이것으로 기본형은 모두 불변성의 특징을 가지고 있다고 할 수 있다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;마찬가지로 c와 d또한 위와같은 플로우를 가진다.&lt;/li&gt;
+  &lt;li&gt;하지만 c와 d는 한단계 더 깊게 들어간다. 위의 객체가 데이터 저장하는 원리에서 나온 것처럼 말이다.&lt;/li&gt;
+  &lt;li&gt;즉, b와 c는 객체 전체에 대한 주소를 할당받고, 객체 전체에 대한 주소에서의 프로퍼티 요소은 하나하나 다른 데이터 영역에 저장되기 때문에 참조하는 데이터 범위를 할당받는다.&lt;/li&gt;
+  &lt;li&gt;이 때!!! 객체 안에 프로퍼티들이 다른 데이터로 재할당받게 되는 경우!!(위에 c.one = 3같은…).. 이 경우는 위의 예시와는 다르게 참조하고 있는 범위 안의 데이터가 바뀌게 된다.&lt;/li&gt;
+  &lt;li&gt;하지만 처음 c와 d의 주솟값은 변하지 않았기 때문에 c와 d는 일치로 나오는 것이다! (이 부분은 추후에 공부하기..!)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;만일 참조형 데이터 안에 또 참조형 데이터가 있다면..?&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a = {one: 1, two: [1, 2, 3]}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이러한 경우는 조금 더 복잡할 뿐..! 위의 예시를 적용시키면 가능하다!&lt;/li&gt;
+  &lt;li&gt;a의 변수와 함께 객체의 주소가 함께 할당된다. -&amp;gt; 객체의 주소에는 각 데이터들을 참조하는 영역을 할당받는다. -&amp;gt; two에서는 two라는 변수와 [1, 2, 3]을 담는 배열의 주소값을 할당받는다. -&amp;gt; 각 프로퍼티의 index가 이름이 되고 그에 대한 값으로 1, 2, 3이 각각 할당된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 이러한 특징들로 보아 참조형 데이터는 프로퍼티 값들만 변경되었을 경우 데이터 주소는 변하지 않으므로 &lt;b&gt;‘가변’&lt;/b&gt;의 특징을 가지는 것이다!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h6 id=&quot;참조형-데이터가-불변일-경우&quot;&gt;참조형 데이터가 불변일 경우?&lt;/h6&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a = {one: 1, two: 2}
+let b = a
+let a = {three: 3, four: 4}
+console.log(a === b) // false
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 이 경우에는 a가 three, four라는 프로퍼티를 가진 값들의 주소를 재할당받은 것이기 때문에 &lt;b&gt;‘불변’&lt;/b&gt;의 특징을 가진다!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-얕은-복사-깊은-복사&quot;&gt;📌 얕은 복사, 깊은 복사&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-복사를-하는-이유&quot;&gt;🌱 복사를 하는 이유!&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;원본 데이터를 사용할 때 주의해야할 점이 있다. 바로 원본 데이터가 수정되는가 안되는가의 여부이다.&lt;/li&gt;
+  &lt;li&gt;‘왜? 원본 데이터가 수정되면 안되는가?’에 의문이 들 수 있지만, 사실 간단한 이유이다.&lt;/li&gt;
+  &lt;li&gt;원본 데이터를 한차례 수정하게 되었을 경우, 다음에 원본 데이터를 사용하려면 수정된 데이터를 감안하고 사용해야한다.&lt;/li&gt;
+  &lt;li&gt;그렇게 누적이 되다보면 원본데이터에 무슨 데이터가 있는지 확실하게 알지 못하게 된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;=&amp;gt; 따라서 원본데이터는 자체로 불변성을 지니는 것이 좋다!&lt;/p&gt;
+
+&lt;h3 id=&quot;-그래서-얕은-복사-깊은-복사가-머야&quot;&gt;🌱 그래서 얕은 복사, 깊은 복사가 머야?&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;얕은 복사 : 객체 프로퍼티 안에 객체 프로퍼티가 있는 경우, 제일 상위의 객체만 복사되고 하위의 객체 프로퍼티는 원래 그대로의 주솟값을 가지는 것&lt;/li&gt;
+  &lt;li&gt;깊은 복사 : 객체 프로퍼티 안에 있는 모든 경우의 값들을 새로운 주소에 할당하는 것&lt;br /&gt;
+객체 프로퍼티 내부에 하위 객체가 값으로 지정되어 있는 경우 위와 같은 가변성을 띈 객체로 되기 때문에 일일히 불변성을 가진 객체로 만들어주어야한다. (&lt;a href=&quot;#-가변성과-불변성&quot;&gt;가변성과 불변성&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;=&amp;gt; 얕은 복사, 깊은 복사에 대한 코드소개는 생략한다. 대신 불변 객체를 만들어주는 라이브러리를 소개로 마치려 한다.(immer.js, immutable.js, baobab.js)&lt;/p&gt;
+
+&lt;h2 id=&quot;-정리&quot;&gt;📌 정리&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;데이터 타입에는 기본형, 참조형이 있다.&lt;/li&gt;
+  &lt;li&gt;기본형은 자체로 불변성을 띄지만, 참조형은 상황에 따라 불변성을 띌 수도 가변성을 띌 수도 있다.&lt;/li&gt;
+  &lt;li&gt;참조형 데이터를 불변 객체로 만들기 위해서는 그에 맞는 메소드나 라이브러리(immer.js, immutable.js, baobab.js 등)을 사용해야 한다.&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="Core" /><category term="JavaScript" /><category term="DataType" /><category term="mutable" /><category term="immutable" /><summary type="html">[Core JavaScript] Data Type에 대한 개념와 작동 원리</summary></entry><entry><title type="html">[Algorithm] Brute Force</title><link href="http://localhost:4000/devlog/algorithm-bruteForce.html" rel="alternate" type="text/html" title="[Algorithm] Brute Force" /><published>2021-07-26T00:00:00+09:00</published><updated>2021-07-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-bruteForce</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-bruteForce.html">&lt;blockquote&gt;
   &lt;p&gt;알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;!---more---&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;목차&lt;/li&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-brute-force란&quot;&gt;Brute Force란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-사용-예제-javascript&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-정리하자면&quot;&gt;정리하자면!&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;brute-force란&quot;&gt;Brute Force란?&lt;/h2&gt;
+&lt;h2 id=&quot;-brute-force란&quot;&gt;📌 Brute Force란?&lt;/h2&gt;
 
 &lt;hr /&gt;
 
@@ -22,7 +237,7 @@
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;사용-예제-javascript&quot;&gt;사용 예제 (JavaScript)&lt;/h2&gt;
+&lt;h2 id=&quot;-사용-예제-javascript&quot;&gt;📌 사용 예제 (JavaScript)&lt;/h2&gt;
 
 &lt;hr /&gt;
 
@@ -49,9 +264,18 @@ question([3, 2, 4, 6, 9, 11, 129, 127])
 &lt;/blockquote&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;
-    &lt;h2 id=&quot;효율적인-코드인지는-잘-모르겠지만-간단하게-살펴보면&quot;&gt;효율적인 코드인지는 잘 모르겠지만.. 간단하게 살펴보면!&lt;/h2&gt;
-  &lt;/li&gt;
+  &lt;li&gt;효율적인 코드인지는 잘 모르겠지만.. 간단하게 살펴보면!&lt;/li&gt;
+  &lt;li&gt;(1)번과 (2)으로 의도한 것은 (1)번으로 arr에 있는 값을 하나씩 하위 for문으로 전달해주고, (2)에서는 (1)에서 받은 숫자 i를 1부터 i번까지 전부 탐색한다.&lt;/li&gt;
+  &lt;li&gt;i와 i 아래의 모든 값들을 %로 구해서 0이 나오면 만들어 놓은 배열에 저장시키고, 하위 for문이 끝나면 배열의 요소를 검사해 length가 2개이면 answer 배열에 넣어서 return한다. (소수는 1과 자신만 약수로 가지기 때문!)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-정리하자면&quot;&gt;📌 정리하자면!&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Brute Force(완전탐색)은 모든 경우의 수를 탐색한다.&lt;/li&gt;
+  &lt;li&gt;답은 확실하지만, 시간적인 소요가 크다.&lt;/li&gt;
 &lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="BruteForce" /><category term="완전탐색" /><summary type="html">알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.</summary></entry><entry><title type="html">Werecord project 🔥</title><link href="http://localhost:4000/project/project-review-werecord.html" rel="alternate" type="text/html" title="Werecord project 🔥" /><published>2021-07-25T00:00:00+09:00</published><updated>2021-07-25T00:00:00+09:00</updated><id>http://localhost:4000/project/project-review-werecord</id><content type="html" xml:base="http://localhost:4000/project/project-review-werecord.html">&lt;blockquote&gt;
   &lt;p&gt;A-Z까지 모두 경험했던 We-record 프로젝트!!&lt;/p&gt;
 &lt;/blockquote&gt;
