@@ -12,6 +12,12 @@ tags: typescript TypeScript basic
 
 - 목차
 
+  - [TypeScript란?](#-typescript란)
+  - [Basic](#-basic)
+    - [변수 지정](#-변수-지정)
+    - [변수 지정2](#-변수-지정2)
+  - [사용 예제](#-사용-예제)
+
 ## 📌 TypeScript란?
 
 ---
@@ -155,6 +161,22 @@ console.log(addNum(1, 2)); // 3
 console.log(addNum(1, 2, 3)); //6
 console.log(addNum(1, 2, 3, 4, 5, 6, 7)); // 28
 ```
+
+---
+
+- array에서도 사용할 수 있다.
+
+```
+const students: string[] = ['철수', '영희'];
+const scores: Array<number> = [1, 2, 3];
+
+function printArray(students: readonly string[]) {
+}
+```
+
+- 보통 string[]로 할 수 있지만 Array<number>같이 선언할 수도 있다.
+
+> 🎈 여기서 readonly는 선언 시, 생성자 내부에서만 값을 할당할 수 있다.(불변성을 가질 수 있다!)
 
 ## 📌 정리
 

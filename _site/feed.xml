@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-29T19:58:27+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-29T20:52:30+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
 </subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[TypeScript] 기초 개념</title><link href="http://localhost:4000/devlog/basicType.html" rel="alternate" type="text/html" title="[TypeScript] 기초 개념" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/basicType</id><content type="html" xml:base="http://localhost:4000/devlog/basicType.html">&lt;blockquote&gt;
   &lt;p&gt;TypeScript의 기본 타입 종류에 대한 포스트입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -6,7 +6,20 @@
 &lt;!--more--&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;목차&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;목차&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-typescript란&quot;&gt;TypeScript란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-basic&quot;&gt;Basic&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-변수-지정&quot;&gt;변수 지정&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-변수-지정2&quot;&gt;변수 지정2&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-사용-예제&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;-typescript란&quot;&gt;📌 TypeScript란?&lt;/h2&gt;
@@ -174,13 +187,159 @@ console.log(addNum(1, 2, 3)); //6
 console.log(addNum(1, 2, 3, 4, 5, 6, 7)); // 28
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;array에서도 사용할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const students: string[] = ['철수', '영희'];
+const scores: Array&amp;lt;number&amp;gt; = [1, 2, 3];
+
+function printArray(students: readonly string[]) {
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;보통 string[]로 할 수 있지만 Array&lt;number&gt;같이 선언할 수도 있다.&lt;/number&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 여기서 readonly는 선언 시, 생성자 내부에서만 값을 할당할 수 있다.(불변성을 가질 수 있다!)&lt;/p&gt;
+&lt;/blockquote&gt;
+
 &lt;h2 id=&quot;-정리&quot;&gt;📌 정리&lt;/h2&gt;
 
 &lt;hr /&gt;
 
 &lt;ul&gt;
   &lt;li&gt;TypeScript는 정적 언어이기 때문에 코드의 오류를 최소화하기 위한 목적을 가지고 사용한다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="basic" /><summary type="html">TypeScript의 기본 타입 종류에 대한 포스트입니다.</summary></entry><entry><title type="html">Function</title><link href="http://localhost:4000/function.html" rel="alternate" type="text/html" title="Function" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/function</id><content type="html" xml:base="http://localhost:4000/function.html"></content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><summary type="html"></summary></entry><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
+  &lt;li&gt;각 변수의 데이터 값에 맞는 타입을 선언해주어야 한다.&lt;/li&gt;
+  &lt;li&gt;함수에도 여러 가지 기능들을 활용하며 TypeScript를 사용하자!&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="basic" /><summary type="html">TypeScript의 기본 타입 종류에 대한 포스트입니다.</summary></entry><entry><title type="html">[TypeScript] Alias Union Discriminated Intersection</title><link href="http://localhost:4000/devlog/function.html" rel="alternate" type="text/html" title="[TypeScript] Alias Union Discriminated Intersection" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/function</id><content type="html" xml:base="http://localhost:4000/devlog/function.html">&lt;blockquote&gt;
+  &lt;p&gt;Alias Union Discriminated Intersection에 관한 포스트입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;-alias&quot;&gt;📌 Alias&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;기존에 number, string같은 데이터를 각 타입에 맞게 선언해주었다면(ex.&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const a:number = 1&lt;/code&gt;), Alias는 사용자가 직접 type을 만들어주는? 이라고 이해할 수 있을 것 같다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-type-alias&quot;&gt;1. Type Alias&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Greeting = string;
+type Num = number;
+
+const hi: Greeting = 'hi';
+const hello: Greeting = 'hello';
+
+// 객체에도 가능하다.
+type Greeting = {
+    time: number;
+    greeting: string;
+}
+const obj: Greeting = {
+    time: 8,
+    greeting: 'hello'
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;2-string-literal-types&quot;&gt;2. String Literal Types&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;위와 같이 타입을 지정해줄 수 있지만, 하나의 문자열을 지정해줄 수도 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type name = 'suyeon';
+let me: name;
+me = 'suyeon'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-union&quot;&gt;📌 Union&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Union은 Alias의 확장판(?)의 느낌이다.&lt;/li&gt;
+  &lt;li&gt;한가지 타입만 지정하는 String Literal Types와 달리 하나 이상의 데이터들을 지정할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Direction = 'left' | 'right' | 'up' | 'down'
+function go(direction: Direction) {
+    console.log(direction);
+}
+go('up')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;저렇게 or연산자로 여러가지를 선언해주면 Direction이라는 Alias로 지정한 up, down, left, right라는 4가지의 데이터들을 사용할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-discriminated&quot;&gt;📌 Discriminated&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일반적인 String Literal Property가 있는 경우 Discriminated라 말한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type SuccessState = {
+    result: 'success';
+    response: {
+        body: string;
+    };
+}
+type FailState = {
+    result: 'fail';
+    reason: string;
+}
+type LoginState = SuccessState | FailState;
+function printLoginState(state: LoginState) {
+    if(state.result === 'success') {
+        console.log(state.result);
+    }
+    if(state.result === 'fail') {
+        console.log(state.result);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-intersection&quot;&gt;📌 Intersection&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Intersection은 간단히 말해 Alias를 합치는 것으로 연산자 &amp;amp;을 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type wecoder1 = {
+    name1: 'sy';
+    name2: 'ym';
+    name5: 'dh';
+}
+
+type wecoder2 = {
+    name3: 'ds';
+    name4: 'mh';
+}
+
+function werecordTeam(person: wecorder1 &amp;amp; wecorder2) {
+    console.log(person.name1, person.name2, person.name3, person.name4, person.name5);
+}
+
+werecordTeam({
+    name1: 'sy',
+    name2: 'ym',
+    name3: 'ds',
+    name4: 'mh',
+    name5: 'dh',
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="Alias" /><category term="Union" /><category term="Discriminated" /><category term="Intersection" /><summary type="html">Alias Union Discriminated Intersection에 관한 포스트입니다.</summary></entry><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
   &lt;p&gt;[Core JavaScript] Data Type에 대한 개념와 작동 원리&lt;/p&gt;
 &lt;/blockquote&gt;
 
