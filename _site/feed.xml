@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-08-02T14:56:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-08-02T19:52:35+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
 </subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] Two Pointer</title><link href="http://localhost:4000/devlog/algorithm-toPointer.html" rel="alternate" type="text/html" title="[Algorithm] Two Pointer" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-toPointer</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-toPointer.html">&lt;blockquote&gt;
-  &lt;p&gt;1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘&lt;/p&gt;
+  &lt;p&gt;1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;!--more--&gt;
@@ -64,130 +64,153 @@ twoPointer(arr1, arr2)
   &lt;li&gt;간단하게 concat으로 합친다음 sort으로 정렬해도 되는 문제라고 생각이 든다.&lt;/li&gt;
   &lt;li&gt;하지만 sort는 최악의 경우 O(N&lt;sup&gt;2&lt;/sup&gt;)이 될 수 있기 때문에 시간복잡도 측면에서는 효율이 좋지 못하다.&lt;/li&gt;
   &lt;li&gt;Two Pointer 알고리즘은 포인터가 배열의 끝에 다다르면 마무리되기 때문에 시간복잡도 측면에서 sort보다 효율이 좋다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="TwoPointer" /><summary type="html">1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘</summary></entry><entry><title type="html">[TypeScript] Alias Union Discriminated Intersection</title><link href="http://localhost:4000/devlog/alias.html" rel="alternate" type="text/html" title="[TypeScript] Alias Union Discriminated Intersection" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/alias</id><content type="html" xml:base="http://localhost:4000/devlog/alias.html">&lt;blockquote&gt;
-  &lt;p&gt;Alias Union Discriminated Intersection에 관한 포스트입니다.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="TwoPointer" /><summary type="html">1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.</summary></entry><entry><title type="html">[JavaScript] 실행 컨텍스트</title><link href="http://localhost:4000/devlog/excutionContext.html" rel="alternate" type="text/html" title="[JavaScript] 실행 컨텍스트" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/excutionContext</id><content type="html" xml:base="http://localhost:4000/devlog/excutionContext.html">&lt;blockquote&gt;
+  &lt;p&gt;실행 컨텍스트(Excution context)의 개념입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;!--more--&gt;
 
-&lt;h2 id=&quot;-alias&quot;&gt;📌 Alias&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-실행-컨텍스트란&quot;&gt;실행 컨텍스트란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-실행-컨텍스트-동작-원리&quot;&gt;실행 컨텍스트 동작 원리&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-실행-컨텍스트의-구조&quot;&gt;실행 컨텍스트의 구조&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-호이스팅hoisting&quot;&gt;Hoisting&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-예제&quot;&gt;예제&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-scope&quot;&gt;Scope&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-정리&quot;&gt;정리&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-실행-컨텍스트란&quot;&gt;📌 실행 컨텍스트란?&lt;/h2&gt;
 
 &lt;hr /&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;기존에 number, string같은 데이터를 각 타입에 맞게 선언해주었다면(ex.&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const a:number = 1&lt;/code&gt;), Alias는 사용자가 직접 type을 만들어주는? 이라고 이해할 수 있을 것 같다.&lt;/li&gt;
+  &lt;li&gt;실행 컨텍스트는 실행할 코드에 제공할 변수, 함수, 매개 변수등 환경 정보들을 수집하여 모아놓은 객체&lt;/li&gt;
+  &lt;li&gt;Variable Environment, Lexical Environment, thisBinding으로 구성되어 있다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;1-type-alias&quot;&gt;1. Type Alias&lt;/h4&gt;
+&lt;h2 id=&quot;-실행-컨텍스트-동작-원리&quot;&gt;📌 실행 컨텍스트 동작 원리&lt;/h2&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Greeting = string;
-type Num = number;
+&lt;hr /&gt;
 
-const hi: Greeting = 'hi';
-const hello: Greeting = 'hello';
+&lt;h3 id=&quot;-사전에-알아야할-cs지식&quot;&gt;🌱 사전에 알아야할 CS지식&lt;/h3&gt;
 
-// 객체에도 가능하다.
-type Greeting = {
-    time: number;
-    greeting: string;
-}
-const obj: Greeting = {
-    time: 8,
-    greeting: 'hello'
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;2-string-literal-types&quot;&gt;2. String Literal Types&lt;/h4&gt;
+&lt;h4 id=&quot;-stack&quot;&gt;○ Stack&lt;/h4&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;위와 같이 타입을 지정해줄 수 있지만, 하나의 문자열을 지정해줄 수도 있다.&lt;/li&gt;
+  &lt;li&gt;Stack은 출구가 하나뿐인 데이터 구조이다.&lt;/li&gt;
+  &lt;li&gt;여러 가지 데이터를 순서대로 쌓아 저장했다면, 데이터를 꺼낼 때는 역순으로 꺼내야한다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type name = 'suyeon';
-let me: name;
-me = 'suyeon'
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/javascript/excutionContext/stack.png&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;-union&quot;&gt;📌 Union&lt;/h2&gt;
+&lt;h4 id=&quot;-queue&quot;&gt;○ Queue&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Queue는 양쪽이 모두 열려있는 데이터 구조이다.&lt;/li&gt;
+  &lt;li&gt;여러 가지 데이터를 순서대로 저장했다면, 순서대로 데이터를 꺼낼 수 있는 구조이다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/javascript/excutionContext/queue.png&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;-그래서-실행-컨텍스트는&quot;&gt;🌱 그래서 실행 컨텍스트는?&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;실행할 코드에 필요한 환경 정보들을 모아 놓은 실행 컨텍스트는 일반적으로 함수가 호출될 때 구성된다.&lt;br /&gt;
+(전역은 코드가 실행되는 즉시 전역 환경 정보들을 모아 놓는다.)&lt;/li&gt;
+  &lt;li&gt;전역을 첫번째로, 함수가 호출되면 각각 콜스택에 쌓인다.&lt;br /&gt;
+(이 때, 콜스택에 쌓이면 해당 변수나 함수를 할당하다가 또다른 실행컨텍스트가 생기면 할당하던 컨텍스트는 잠시 중지된다.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-실행-컨텍스트의-구조&quot;&gt;📌 실행 컨텍스트의 구조&lt;/h2&gt;
 
 &lt;hr /&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Union은 Alias의 확장판(?)의 느낌이다.&lt;/li&gt;
-  &lt;li&gt;한가지 타입만 지정하는 String Literal Types와 달리 하나 이상의 데이터들을 지정할 수 있다.&lt;/li&gt;
+  &lt;li&gt;실행 컨텍스트는 크게 3가지로 구성되어 있다. (ThisBinding은 다음에 공부..!)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Direction = 'left' | 'right' | 'up' | 'down'
-function go(direction: Direction) {
-    console.log(direction);
-}
-go('up')
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Variable Environment &lt;br /&gt;
+실행 컨텍스트가 환경 정보를 수집하는 최초의 값을 유지하며 담는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Lexical Environment &lt;br /&gt;
+Variable Envionment에 정보를 담은 후, Variable Environment를 토대로 Lexical Environment를 만든다. Lexical Environment는 Variable Environment와 다르게 환경 정보의 변경 값을 적용한다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;저렇게 or연산자로 여러가지를 선언해주면 Direction이라는 Alias로 지정한 up, down, left, right라는 4가지의 데이터들을 사용할 수 있다.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Variable Environment와 Lexical Environment는 또 environmentRecord, outerEnvironmentReference로 구성되어 있다.&lt;/li&gt;
+    &lt;li&gt;environmentRecord가 실행 컨텍스트의 환경 정보 수집하는 역할을 이행하는 역할을 맡고 있다&lt;/li&gt;
+    &lt;li&gt;outerEnvironmentReference는 만약 해당 컨텍스트에서 참조해야하는 정보가 없을 경우 제일 근접한 상위 컨텍스트의 Lexical environment를 참조하는 역할을 한다.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
 
-&lt;h2 id=&quot;-discriminated&quot;&gt;📌 Discriminated&lt;/h2&gt;
+&lt;h4 id=&quot;-호이스팅hoisting&quot;&gt;🎈 호이스팅(Hoisting)?&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;호이스팅은 선언한 변수들이 위치와 상관없이 제일 상단에 선언되어 변수나 함수를 호출할 수 있는 현상을 말한다.
+실제로 코드가 제일 상단에 올라가는 것이 아니라, 코드가 실행되면 실행 컨텍스트가 만들어지고 환경 정보를 수집하는데 자바스크립트 엔진은 환경 정보로 수집한 변수명들을 먼저 알게 되는 것이다. 이 과정을 호이스팅이라 한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-예제&quot;&gt;📌 예제&lt;/h2&gt;
 
 &lt;hr /&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;일반적인 String Literal Property가 있는 경우 Discriminated라 말한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type SuccessState = {
-    result: 'success';
-    response: {
-        body: string;
-    };
-}
-type FailState = {
-    result: 'fail';
-    reason: string;
-}
-type LoginState = SuccessState | FailState;
-function printLoginState(state: LoginState) {
-    if(state.result === 'success') {
-        console.log(state.result);
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var a = 1
+function b() {
+    function c() {
+        console.log(a);
+        var a = 1;
     }
-    if(state.result === 'fail') {
-        console.log(state.result);
-    }
+    c();
+    console.log(a);
 }
+b()
+console.log(a);
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;-intersection&quot;&gt;📌 Intersection&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;전역 실행 컨텍스트가 형성되고 변수 a와 함수 b를 환경 정보에 저장했다. / 콜스택에 전역 실행 컨텍스트가 쌓였다.&lt;/li&gt;
+  &lt;li&gt;변수 a에 1을 할당하고, b에 함수를 할당하고 함수를 호출한다. / 콜스택에 함수 b의 실행 컨텍스트가 쌓였다.&lt;/li&gt;
+  &lt;li&gt;함수 b의 환경 정보로 변수 c에 함수가 할당되어 저장된다.&lt;/li&gt;
+  &lt;li&gt;함수 b안에 함수 c가 호출되었다. / 콜스택에 함수 c의 실행 컨텍스트가 쌓였다.&lt;/li&gt;
+  &lt;li&gt;함수 c안에 환경 정보로 a가 선언되어 호이스팅 되었다. / c안의 console은 호이스팅된 a를 가리키기 때문에 호이스팅으로 선언만 된 a를 undefined를 가진다.&lt;/li&gt;
+  &lt;li&gt;함수 c의 실행 컨텍스트가 종료됨으로 b의 실행 컨텍스트로 넘어간다. / 함수 b의 console.log(a)는 해당 컨텍스트 안에 a가 없기 때문에, outerEnvironmentReference로 인해 a를 가지고 있는 제일 근접한 상위 컨텍스트의 Lexical Environment를 참조하려 한다. (정확히는 해당 컨텍스트가 실행되기 전 Lexical Environment를 참조한다.)&lt;/li&gt;
+  &lt;li&gt;마침 전역에 a가 있으므로 함수 b의 console.log(a)는 1값을 가진다.&lt;/li&gt;
+  &lt;li&gt;b의 실행 컨텍스트가 종료되고 전역 console.log(a)는 마지막 전역에 있는 a를 참조하여 1값을 가진다. / 전역 실행 컨텍스트가 완료되어 종료됨으로 콜스택에는 아무것도 남아있지 않다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;-scope&quot;&gt;🎈 Scope&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;scope는 쉽게 말해 변수의 유효 범위이다. 실행 컨텍스트와 가리키는 범위는 같지만, 스코프는 실행 컨텍스트가 접근할 수 있는 모든 변수와 함수에 순서를 정하는 것이 목적이다.
+위의 예시에 있는 outerEnvironmentReference가 상위 Lexical Environment를 참조하게되는 연결점, 외부 실행 컨텍스트에서 내부 실행 컨텍스트에 저장된 변수들은 접근할 수 없는 것, 이러한 것들을 스코프 체인이라 한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-정리&quot;&gt;📌 정리&lt;/h2&gt;
 
 &lt;hr /&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Intersection은 간단히 말해 Alias를 합치는 것으로 연산자 &amp;amp;을 사용한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type wecoder1 = {
-    name1: 'sy';
-    name2: 'ym';
-    name5: 'dh';
-}
-
-type wecoder2 = {
-    name3: 'ds';
-    name4: 'mh';
-}
-
-function werecordTeam(person: wecorder1 &amp;amp; wecorder2) {
-    console.log(person.name1, person.name2, person.name3, person.name4, person.name5);
-}
-
-werecordTeam({
-    name1: 'sy',
-    name2: 'ym',
-    name3: 'ds',
-    name4: 'mh',
-    name5: 'dh',
-})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="Alias" /><category term="Union" /><category term="Discriminated" /><category term="Intersection" /><summary type="html">Alias Union Discriminated Intersection에 관한 포스트입니다.</summary></entry><entry><title type="html">[TypeScript] 기초 개념</title><link href="http://localhost:4000/devlog/basicType.html" rel="alternate" type="text/html" title="[TypeScript] 기초 개념" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/basicType</id><content type="html" xml:base="http://localhost:4000/devlog/basicType.html">&lt;blockquote&gt;
+  &lt;li&gt;실행 컨텍스트는 실행할 코드에 제공할 변수나 함수같은 환경 정보들을 모아놓은 객체이다.&lt;/li&gt;
+  &lt;li&gt;실행 컨텍스트의 정보들은 순서에 따라 콜스택 형태로 저장되고 호출된다.&lt;/li&gt;
+  &lt;li&gt;호이스팅은 컨텍스트와 연관이 있으며, 코드가 실행되기 전 환경 정보를 저장하여 미리 변수명 등을 알게되는 자바스크립트 엔진에 의해 일어난다.&lt;/li&gt;
+  &lt;li&gt;스코프는 실행 컨텍스트가 접근할 수 있는 변수나 함수들에게 순서를 부여하는 역할이다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="ExcutionContext" /><category term="LexicalEnvironment" /><category term="VariableEnvironment" /><summary type="html">실행 컨텍스트(Excution context)의 개념입니다.</summary></entry><entry><title type="html">[TypeScript] 기초 개념</title><link href="http://localhost:4000/devlog/basicType.html" rel="alternate" type="text/html" title="[TypeScript] 기초 개념" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/basicType</id><content type="html" xml:base="http://localhost:4000/devlog/basicType.html">&lt;blockquote&gt;
   &lt;p&gt;TypeScript의 기본 타입 종류에 대한 포스트입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -404,7 +427,140 @@ function printArray(students: readonly string[]) {
   &lt;li&gt;TypeScript는 정적 언어이기 때문에 코드의 오류를 최소화하기 위한 목적을 가지고 사용한다.&lt;/li&gt;
   &lt;li&gt;각 변수의 데이터 값에 맞는 타입을 선언해주어야 한다.&lt;/li&gt;
   &lt;li&gt;함수에도 여러 가지 기능들을 활용하며 TypeScript를 사용하자!&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="basic" /><summary type="html">TypeScript의 기본 타입 종류에 대한 포스트입니다.</summary></entry><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="basic" /><summary type="html">TypeScript의 기본 타입 종류에 대한 포스트입니다.</summary></entry><entry><title type="html">[TypeScript] Alias Union Discriminated Intersection</title><link href="http://localhost:4000/devlog/alias.html" rel="alternate" type="text/html" title="[TypeScript] Alias Union Discriminated Intersection" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/alias</id><content type="html" xml:base="http://localhost:4000/devlog/alias.html">&lt;blockquote&gt;
+  &lt;p&gt;Alias Union Discriminated Intersection에 관한 포스트입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-alias&quot;&gt;Alias&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-union&quot;&gt;Union&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-discriminated&quot;&gt;Discriminatedd&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-alias&quot;&gt;📌 Alias&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;기존에 number, string같은 데이터를 각 타입에 맞게 선언해주었다면(ex.&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const a:number = 1&lt;/code&gt;), Alias는 사용자가 직접 type을 만들어주는? 이라고 이해할 수 있을 것 같다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-type-alias&quot;&gt;1. Type Alias&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Greeting = string;
+type Num = number;
+
+const hi: Greeting = 'hi';
+const hello: Greeting = 'hello';
+
+// 객체에도 가능하다.
+type Greeting = {
+    time: number;
+    greeting: string;
+}
+const obj: Greeting = {
+    time: 8,
+    greeting: 'hello'
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;2-string-literal-types&quot;&gt;2. String Literal Types&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;위와 같이 타입을 지정해줄 수 있지만, 하나의 문자열을 지정해줄 수도 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type name = 'suyeon';
+let me: name;
+me = 'suyeon'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-union&quot;&gt;📌 Union&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Union은 Alias의 확장판(?)의 느낌이다.&lt;/li&gt;
+  &lt;li&gt;한가지 타입만 지정하는 String Literal Types와 달리 하나 이상의 데이터들을 지정할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Direction = 'left' | 'right' | 'up' | 'down'
+function go(direction: Direction) {
+    console.log(direction);
+}
+go('up')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;저렇게 or연산자로 여러가지를 선언해주면 Direction이라는 Alias로 지정한 up, down, left, right라는 4가지의 데이터들을 사용할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-discriminated&quot;&gt;📌 Discriminated&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일반적인 String Literal Property가 있는 경우 Discriminated라 말한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type SuccessState = {
+    result: 'success';
+    response: {
+        body: string;
+    };
+}
+type FailState = {
+    result: 'fail';
+    reason: string;
+}
+type LoginState = SuccessState | FailState;
+function printLoginState(state: LoginState) {
+    if(state.result === 'success') {
+        console.log(state.result);
+    }
+    if(state.result === 'fail') {
+        console.log(state.result);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-intersection&quot;&gt;📌 Intersection&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Intersection은 간단히 말해 Alias를 합치는 것으로 연산자 &amp;amp;을 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type wecoder1 = {
+    name1: 'sy';
+    name2: 'ym';
+    name5: 'dh';
+}
+
+type wecoder2 = {
+    name3: 'ds';
+    name4: 'mh';
+}
+
+function werecordTeam(person: wecorder1 &amp;amp; wecorder2) {
+    console.log(person.name1, person.name2, person.name3, person.name4, person.name5);
+}
+
+werecordTeam({
+    name1: 'sy',
+    name2: 'ym',
+    name3: 'ds',
+    name4: 'mh',
+    name5: 'dh',
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="Alias" /><category term="Union" /><category term="Discriminated" /><category term="Intersection" /><summary type="html">Alias Union Discriminated Intersection에 관한 포스트입니다.</summary></entry><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
   &lt;p&gt;[Core JavaScript] Data Type에 대한 개념와 작동 원리&lt;/p&gt;
 &lt;/blockquote&gt;
 
