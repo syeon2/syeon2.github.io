@@ -1,5 +1,193 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-07-29T20:52:30+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[TypeScript] 기초 개념</title><link href="http://localhost:4000/devlog/basicType.html" rel="alternate" type="text/html" title="[TypeScript] 기초 개념" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/basicType</id><content type="html" xml:base="http://localhost:4000/devlog/basicType.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-08-02T14:56:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] Two Pointer</title><link href="http://localhost:4000/devlog/algorithm-toPointer.html" rel="alternate" type="text/html" title="[Algorithm] Two Pointer" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-toPointer</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-toPointer.html">&lt;blockquote&gt;
+  &lt;p&gt;1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-two-pointer란&quot;&gt;Two Poiner란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-사용-예제&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-two-pointer란&quot;&gt;📌 Two Pointer란?&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;의미 그대로 2개의 포인터를 가진다.&lt;/li&gt;
+  &lt;li&gt;1차원 배열에 포인터를 2개를 두어 각각 포인터들을 사용해 순차적으로 비교할 수 있다.&lt;/li&gt;
+  &lt;li&gt;이중 for문을 사용해도 되지만, 이중 for문은 시간복잡도가 O(N&lt;sup&gt;2&lt;/sup&gt;)이고 Two Pointer는 O(N)이어서 시간적으로 효율이 더 좋다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-사용-예제&quot;&gt;📌 사용 예제&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;간단하게 두 배열을 오름차순으로 합치는 알고리즘을 구현&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let arr1 = [1, 3, 5];
+let arr2 = [2, 3, 4, 6, 8];
+
+const twoPointer = (arr1, arr2) =&amp;gt; {
+   let answer = [];
+   let i = z = 0;
+
+    while(i &amp;lt; arr1.length &amp;amp; z &amp;lt; arr2.length) {
+       if(arr1[i] &amp;lt; arr2[z]) {
+           answer.push(arr1[i++]);
+       }
+       if(arr1[i] &amp;gt; arr2[z]) {
+           answer.push(arr2[z++]);
+       }
+       if(arr1[i] === arr2[z]) {
+        answer.push(arr1[i++], arr2[z++])
+       }
+   }
+
+   while(i &amp;lt; arr1.length) answer.push(arr1[i++]);
+   while(z &amp;lt; arr2.length) answer.push(arr2[z++]);
+
+   return answer;
+}
+
+twoPointer(arr1, arr2)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;간단하게 concat으로 합친다음 sort으로 정렬해도 되는 문제라고 생각이 든다.&lt;/li&gt;
+  &lt;li&gt;하지만 sort는 최악의 경우 O(N&lt;sup&gt;2&lt;/sup&gt;)이 될 수 있기 때문에 시간복잡도 측면에서는 효율이 좋지 못하다.&lt;/li&gt;
+  &lt;li&gt;Two Pointer 알고리즘은 포인터가 배열의 끝에 다다르면 마무리되기 때문에 시간복잡도 측면에서 sort보다 효율이 좋다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="TwoPointer" /><summary type="html">1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘</summary></entry><entry><title type="html">[TypeScript] Alias Union Discriminated Intersection</title><link href="http://localhost:4000/devlog/alias.html" rel="alternate" type="text/html" title="[TypeScript] Alias Union Discriminated Intersection" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/alias</id><content type="html" xml:base="http://localhost:4000/devlog/alias.html">&lt;blockquote&gt;
+  &lt;p&gt;Alias Union Discriminated Intersection에 관한 포스트입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;-alias&quot;&gt;📌 Alias&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;기존에 number, string같은 데이터를 각 타입에 맞게 선언해주었다면(ex.&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const a:number = 1&lt;/code&gt;), Alias는 사용자가 직접 type을 만들어주는? 이라고 이해할 수 있을 것 같다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-type-alias&quot;&gt;1. Type Alias&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Greeting = string;
+type Num = number;
+
+const hi: Greeting = 'hi';
+const hello: Greeting = 'hello';
+
+// 객체에도 가능하다.
+type Greeting = {
+    time: number;
+    greeting: string;
+}
+const obj: Greeting = {
+    time: 8,
+    greeting: 'hello'
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;2-string-literal-types&quot;&gt;2. String Literal Types&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;위와 같이 타입을 지정해줄 수 있지만, 하나의 문자열을 지정해줄 수도 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type name = 'suyeon';
+let me: name;
+me = 'suyeon'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-union&quot;&gt;📌 Union&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Union은 Alias의 확장판(?)의 느낌이다.&lt;/li&gt;
+  &lt;li&gt;한가지 타입만 지정하는 String Literal Types와 달리 하나 이상의 데이터들을 지정할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Direction = 'left' | 'right' | 'up' | 'down'
+function go(direction: Direction) {
+    console.log(direction);
+}
+go('up')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;저렇게 or연산자로 여러가지를 선언해주면 Direction이라는 Alias로 지정한 up, down, left, right라는 4가지의 데이터들을 사용할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-discriminated&quot;&gt;📌 Discriminated&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일반적인 String Literal Property가 있는 경우 Discriminated라 말한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type SuccessState = {
+    result: 'success';
+    response: {
+        body: string;
+    };
+}
+type FailState = {
+    result: 'fail';
+    reason: string;
+}
+type LoginState = SuccessState | FailState;
+function printLoginState(state: LoginState) {
+    if(state.result === 'success') {
+        console.log(state.result);
+    }
+    if(state.result === 'fail') {
+        console.log(state.result);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-intersection&quot;&gt;📌 Intersection&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Intersection은 간단히 말해 Alias를 합치는 것으로 연산자 &amp;amp;을 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type wecoder1 = {
+    name1: 'sy';
+    name2: 'ym';
+    name5: 'dh';
+}
+
+type wecoder2 = {
+    name3: 'ds';
+    name4: 'mh';
+}
+
+function werecordTeam(person: wecorder1 &amp;amp; wecorder2) {
+    console.log(person.name1, person.name2, person.name3, person.name4, person.name5);
+}
+
+werecordTeam({
+    name1: 'sy',
+    name2: 'ym',
+    name3: 'ds',
+    name4: 'mh',
+    name5: 'dh',
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="Alias" /><category term="Union" /><category term="Discriminated" /><category term="Intersection" /><summary type="html">Alias Union Discriminated Intersection에 관한 포스트입니다.</summary></entry><entry><title type="html">[TypeScript] 기초 개념</title><link href="http://localhost:4000/devlog/basicType.html" rel="alternate" type="text/html" title="[TypeScript] 기초 개념" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/basicType</id><content type="html" xml:base="http://localhost:4000/devlog/basicType.html">&lt;blockquote&gt;
   &lt;p&gt;TypeScript의 기본 타입 종류에 대한 포스트입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -216,130 +404,7 @@ function printArray(students: readonly string[]) {
   &lt;li&gt;TypeScript는 정적 언어이기 때문에 코드의 오류를 최소화하기 위한 목적을 가지고 사용한다.&lt;/li&gt;
   &lt;li&gt;각 변수의 데이터 값에 맞는 타입을 선언해주어야 한다.&lt;/li&gt;
   &lt;li&gt;함수에도 여러 가지 기능들을 활용하며 TypeScript를 사용하자!&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="basic" /><summary type="html">TypeScript의 기본 타입 종류에 대한 포스트입니다.</summary></entry><entry><title type="html">[TypeScript] Alias Union Discriminated Intersection</title><link href="http://localhost:4000/devlog/function.html" rel="alternate" type="text/html" title="[TypeScript] Alias Union Discriminated Intersection" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/function</id><content type="html" xml:base="http://localhost:4000/devlog/function.html">&lt;blockquote&gt;
-  &lt;p&gt;Alias Union Discriminated Intersection에 관한 포스트입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;-alias&quot;&gt;📌 Alias&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;기존에 number, string같은 데이터를 각 타입에 맞게 선언해주었다면(ex.&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const a:number = 1&lt;/code&gt;), Alias는 사용자가 직접 type을 만들어주는? 이라고 이해할 수 있을 것 같다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;1-type-alias&quot;&gt;1. Type Alias&lt;/h4&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Greeting = string;
-type Num = number;
-
-const hi: Greeting = 'hi';
-const hello: Greeting = 'hello';
-
-// 객체에도 가능하다.
-type Greeting = {
-    time: number;
-    greeting: string;
-}
-const obj: Greeting = {
-    time: 8,
-    greeting: 'hello'
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;2-string-literal-types&quot;&gt;2. String Literal Types&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;위와 같이 타입을 지정해줄 수 있지만, 하나의 문자열을 지정해줄 수도 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type name = 'suyeon';
-let me: name;
-me = 'suyeon'
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;-union&quot;&gt;📌 Union&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Union은 Alias의 확장판(?)의 느낌이다.&lt;/li&gt;
-  &lt;li&gt;한가지 타입만 지정하는 String Literal Types와 달리 하나 이상의 데이터들을 지정할 수 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Direction = 'left' | 'right' | 'up' | 'down'
-function go(direction: Direction) {
-    console.log(direction);
-}
-go('up')
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;저렇게 or연산자로 여러가지를 선언해주면 Direction이라는 Alias로 지정한 up, down, left, right라는 4가지의 데이터들을 사용할 수 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-discriminated&quot;&gt;📌 Discriminated&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;일반적인 String Literal Property가 있는 경우 Discriminated라 말한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type SuccessState = {
-    result: 'success';
-    response: {
-        body: string;
-    };
-}
-type FailState = {
-    result: 'fail';
-    reason: string;
-}
-type LoginState = SuccessState | FailState;
-function printLoginState(state: LoginState) {
-    if(state.result === 'success') {
-        console.log(state.result);
-    }
-    if(state.result === 'fail') {
-        console.log(state.result);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;-intersection&quot;&gt;📌 Intersection&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Intersection은 간단히 말해 Alias를 합치는 것으로 연산자 &amp;amp;을 사용한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type wecoder1 = {
-    name1: 'sy';
-    name2: 'ym';
-    name5: 'dh';
-}
-
-type wecoder2 = {
-    name3: 'ds';
-    name4: 'mh';
-}
-
-function werecordTeam(person: wecorder1 &amp;amp; wecorder2) {
-    console.log(person.name1, person.name2, person.name3, person.name4, person.name5);
-}
-
-werecordTeam({
-    name1: 'sy',
-    name2: 'ym',
-    name3: 'ds',
-    name4: 'mh',
-    name5: 'dh',
-})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="Alias" /><category term="Union" /><category term="Discriminated" /><category term="Intersection" /><summary type="html">Alias Union Discriminated Intersection에 관한 포스트입니다.</summary></entry><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="basic" /><summary type="html">TypeScript의 기본 타입 종류에 대한 포스트입니다.</summary></entry><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
   &lt;p&gt;[Core JavaScript] Data Type에 대한 개념와 작동 원리&lt;/p&gt;
 &lt;/blockquote&gt;
 
