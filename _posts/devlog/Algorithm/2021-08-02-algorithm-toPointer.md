@@ -6,7 +6,7 @@ categories: devlog
 tags: algorithm TwoPointer
 ---
 
-> 1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘
+> 1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.
 
 <!--more-->
 
