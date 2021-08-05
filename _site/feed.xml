@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-08-02T19:52:35+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] Two Pointer</title><link href="http://localhost:4000/devlog/algorithm-toPointer.html" rel="alternate" type="text/html" title="[Algorithm] Two Pointer" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-toPointer</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-toPointer.html">&lt;blockquote&gt;
-  &lt;p&gt;1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-08-05T12:05:52+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] Sliding Window</title><link href="http://localhost:4000/devlog/algorithm-slidingWindow.html" rel="alternate" type="text/html" title="[Algorithm] Sliding Window" /><published>2021-08-05T00:00:00+09:00</published><updated>2021-08-05T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-slidingWindow</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-slidingWindow.html">&lt;blockquote&gt;
+  &lt;p&gt;배열에서 일정한 간격을 유지하면서 이동하며 탐색하는 알고리즘&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;!--more--&gt;
@@ -8,63 +8,230 @@
 &lt;ul&gt;
   &lt;li&gt;목차
     &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-two-pointer란&quot;&gt;Two Poiner란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-sliding-window란&quot;&gt;Sliding Window란?&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href=&quot;#-사용-예제&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;-two-pointer란&quot;&gt;📌 Two Pointer란?&lt;/h2&gt;
+&lt;h2 id=&quot;-sliding-window란&quot;&gt;📌 Sliding Window란?&lt;/h2&gt;
 
 &lt;hr /&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;의미 그대로 2개의 포인터를 가진다.&lt;/li&gt;
-  &lt;li&gt;1차원 배열에 포인터를 2개를 두어 각각 포인터들을 사용해 순차적으로 비교할 수 있다.&lt;/li&gt;
-  &lt;li&gt;이중 for문을 사용해도 되지만, 이중 for문은 시간복잡도가 O(N&lt;sup&gt;2&lt;/sup&gt;)이고 Two Pointer는 O(N)이어서 시간적으로 효율이 더 좋다.&lt;/li&gt;
+  &lt;li&gt;배열같은 형태를 띈 자료 구조에서 일정한 간격을 유지하면서 탐색하는 알고리즘 기법이다.&lt;/li&gt;
+  &lt;li&gt;이중 for문보다 시간복잡도 측면에서 효율이 좋다.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;-사용-예제&quot;&gt;📌 사용 예제&lt;/h2&gt;
 
 &lt;hr /&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;간단하게 두 배열을 오름차순으로 합치는 알고리즘을 구현&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;🎈 배열 안에서 연속되는 3개의 수의 합 중 가장 큰 합을 구하시오.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let arr1 = [1, 3, 5];
-let arr2 = [2, 3, 4, 6, 8];
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// For문을 사용했을 경우
+const useFor = (m, arr) =&amp;gt; {
+    let answer = 0;
 
-const twoPointer = (arr1, arr2) =&amp;gt; {
-   let answer = [];
-   let i = z = 0;
+    for(let i = 0; i &amp;lt; arr.length - m + 1; i++) {
+        let sum = 0;
 
-    while(i &amp;lt; arr1.length &amp;amp; z &amp;lt; arr2.length) {
-       if(arr1[i] &amp;lt; arr2[z]) {
-           answer.push(arr1[i++]);
-       }
-       if(arr1[i] &amp;gt; arr2[z]) {
-           answer.push(arr2[z++]);
-       }
-       if(arr1[i] === arr2[z]) {
-        answer.push(arr1[i++], arr2[z++])
-       }
-   }
-
-   while(i &amp;lt; arr1.length) answer.push(arr1[i++]);
-   while(z &amp;lt; arr2.length) answer.push(arr2[z++]);
-
-   return answer;
+        for(let z = i; z &amp;lt; i + m; z++) {
+            sum += arr[z];
+            answer = Math.max(answer, sum);
+        }
+    }
+    return answer;
 }
-
-twoPointer(arr1, arr2)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;간단하게 concat으로 합친다음 sort으로 정렬해도 되는 문제라고 생각이 든다.&lt;/li&gt;
-  &lt;li&gt;하지만 sort는 최악의 경우 O(N&lt;sup&gt;2&lt;/sup&gt;)이 될 수 있기 때문에 시간복잡도 측면에서는 효율이 좋지 못하다.&lt;/li&gt;
-  &lt;li&gt;Two Pointer 알고리즘은 포인터가 배열의 끝에 다다르면 마무리되기 때문에 시간복잡도 측면에서 sort보다 효율이 좋다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="TwoPointer" /><summary type="html">1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.</summary></entry><entry><title type="html">[JavaScript] 실행 컨텍스트</title><link href="http://localhost:4000/devlog/excutionContext.html" rel="alternate" type="text/html" title="[JavaScript] 실행 컨텍스트" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/excutionContext</id><content type="html" xml:base="http://localhost:4000/devlog/excutionContext.html">&lt;blockquote&gt;
+  &lt;li&gt;이중 For문을 사용하게 되면 시간복잡도로 최대 O(N&lt;sup&gt;2&lt;/sup&gt;)가 될 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const useSliderWindow = (m, arr) =&amp;gt; {
+    let answer = 0;
+    let sum = 0;
+
+    for(let i = 0; i &amp;lt; m; i++) {
+        sum += arr[i];
+    }
+
+    for(let i = m; i &amp;lt; arr.length; i++) {
+        sum += arr[i] - arr[i - m];
+        answer = Math.max(answer, sum);
+    }
+    return answer;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이중 For문과 달리 Slider Window는 배열의 처음과 끝을 &lt;b&gt;한번만&lt;/b&gt;탐색한다. (시간 효율이 좋다);&lt;/li&gt;
+  &lt;li&gt;일정한 간격을 유지하기 때문에 범위의 앞과 뒤에서는 삭제와 삽입이 일어난다. (Deque 자료구조)&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="TwoPointer" /><summary type="html">배열에서 일정한 간격을 유지하면서 이동하며 탐색하는 알고리즘</summary></entry><entry><title type="html">[JavaScript] This</title><link href="http://localhost:4000/devlog/this.html" rel="alternate" type="text/html" title="[JavaScript] This" /><published>2021-08-03T00:00:00+09:00</published><updated>2021-08-03T00:00:00+09:00</updated><id>http://localhost:4000/devlog/this</id><content type="html" xml:base="http://localhost:4000/devlog/this.html">&lt;blockquote&gt;
+  &lt;p&gt;This의 개념과 작동 원리입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-this란&quot;&gt;📌 This란?&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;this는 간단하게 말해서 &lt;b&gt;식별자가 바라봐야할 대상&lt;/b&gt;을 의미합니다.&lt;/li&gt;
+  &lt;li&gt;이게 무슨 말이지?? 라고 할 수 있겠지만, this는 함수가 호출되어 실행 컨텍스트가 생성되면 결정됩니다.&lt;/li&gt;
+  &lt;li&gt;이 때, this가 &lt;b&gt;전역에 있을 경우&lt;/b&gt;!! 실행 컨텍스트가 생성되면서 가지게 되는 Lexical Environment(환경 정보들을 모아 놓은 객체)를 가리키게 됩니다.&lt;/li&gt;
+  &lt;li&gt;그래서 식별자가 바라봐야할 대상을 의미한다는 것은 this를 가지고 있는 함수가 호출되었을 때 해당 함수 호출 주체를 가리키게 되는 것인지, 함수 바깥의 전역을 가리키게 되는 것인지에 대한 현상들을 의미합니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;-갑자기-lexical-environment&quot;&gt;🎈 갑자기 Lexical Environment?&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;갑자기 왜 Lexical Environment일까?? 다음 예시를 보면 이해가 될 것 같다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var a = 1
+console.log(window.a) // a = 1
+console.log(this.a) // a = 1
+
+window.a = 3
+console.log(a) // a = 3
+console.log(this.a) // a = 3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;앞서 언급했던 ‘this는 전역에 있을 때 Lexical Environment를 가리킨다’라는 의미를 설명해주는 코드라고 생각한다.&lt;/li&gt;
+    &lt;li&gt;var로 a를 선언하게 되면 a라는 변수는 전역 컨텍스트의 Lexical Environment에 저장된다.&lt;/li&gt;
+    &lt;li&gt;this가 가리키는 것 또한 Lexical Environment이기 때문에 this.a로 접근이 가능함과 동시에 수정도 가능했던 것이다.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;=&amp;gt; 이와같이 this가 전역 내부에 있다면 전역 Lexical Environment를 참조하게 되지만, 만약 함수 내부에서 this를 실행시키면 그 this는 함수가 호출되었을 때 생성된 실행 컨텍스트 Lexical Environment를 가리키게 될것인가? 상황에 따라 다르다. 이제부터 그 상황을 알아보고자 한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;-함수-안의-this&quot;&gt;📌 함수 안의 This&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-함수와-메서드의-차이점&quot;&gt;🌱 함수와 메서드의 차이점&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;함수와 메서드를 나눌 수 있는 기준점은 &lt;b&gt;독립성&lt;/b&gt;이다.&lt;/li&gt;
+  &lt;li&gt;함수는 그 자체로 가지고 있는 동작을 수행하지만, 메서드는 자신을 호출하는 대상 객체에 관한 동작을 수행한다.&lt;/li&gt;
+  &lt;li&gt;여기서 포인트는 그 자체로 가지고 있는 동작을 수행하는 것과 함께 자신을 호출하는 대상 객체에 관한 동작을 수행하는 것도 메소드이다.&lt;/li&gt;
+  &lt;li&gt;쉽게말해서 함수 앞에 “.”! 이 점을 찍냐의 유무에 따라 함수인지 메소드인지 구별할 수 있을 것 같다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var func = function(a) {
+    console.log(a)
+}
+
+func(1);   ---- (1)
+
+var obj = {
+    num: func
+}
+
+obj.num(1);  ---- (2)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;(1)과 (2)는 그 자체로 사용될 수 있는 함수이다. 여기서 (1)은 자체적으로 선언하지만, (2)는 obj라는 호출 주체를 통해서 함수를 사용했다.&lt;/li&gt;
+  &lt;li&gt;이 차이가 (1)은 함수, (2)는 메소드로 구분짓는다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;-그래서-함수랑-메소드가-this랑-무슨-상관&quot;&gt;🌱 그래서 함수랑 메소드가 this랑 무슨 상관??&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;함수 내부에 있는 this는 전역을 가리킨다.&lt;/li&gt;
+  &lt;li&gt;호출 주체를 함께 명시한 함수(ex. obj.num)의 this는 호출 주체를 가리킨다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var func = function(a) {
+    console.log(this, a)
+}
+
+func(1);   ---- (1)
+
+var obj = {
+    b: 1,
+    num: func
+}
+
+obj.num(1);  ---- (2)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;위의 코드에서 func의 console.log에 this만 추가시켰다.&lt;/li&gt;
+  &lt;li&gt;(1)에서의 this는 전역을 가리키게 되지만, (2)에서는 obj를 가리키게 된다. ((2)의 값으로{b: 1, num: func()}이 된다.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;-this의-예외-케이스&quot;&gt;🌱 this의 예외 케이스&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;this가 포함된 함수를 다른 변수에 할당한 경우&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let obj = {
+    b: function () {
+        console.log(this);  --- (1)
+
+        var c = function() {
+            console.log(this);
+        }
+        c();         --- (2)
+
+        var self = this;
+        var d = function () {
+            console.log(self);
+        }
+        d();          ----- (3)
+    }
+};
+
+obj.b();
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;(1)은 b가 obj를 호출 주체를 명시하며 호출했기 때문에 this는 obj를 가리키게 된다.&lt;/li&gt;
+  &lt;li&gt;(2)는 c 자체가 호출 주체를 명시하지 않고 호출했기 때문에 전역을 가리키게 된다.&lt;/li&gt;
+  &lt;li&gt;(3)은 this를 b의 함수 안에 선언한 변수에 할당했기 때문에 이 때는 this가 상위의 호출 주체를 가리키게 된다.(여기에서는 obj)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;=&amp;gt; 이러한 현상을 ES6의 화살표 함수를 통해서도 확인할 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let obj = {
+    b: function () {
+        console.log(this);  --- (1)
+
+        var c = () =&amp;gt; {
+            console.log(this);
+        }
+        c();
+    }
+};
+
+obj.b();
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;c에 있는 this는 c가 호출했다고 해서 전역을 가리키는 것이 아니라 화살표 함수를 사용했기 때문에 위와 같은 현상이 일어난다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 또, 콜백 함수, 생성자 함수 내부에서의 this는 위와 같이 동일한 현상이 일어난다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;(apply, call, bind 추가 포스팅 예정)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="this" /><category term="call" /><category term="apply" /><category term="bind" /><summary type="html">This의 개념과 작동 원리입니다.</summary></entry><entry><title type="html">[JavaScript] 실행 컨텍스트</title><link href="http://localhost:4000/devlog/excutionContext.html" rel="alternate" type="text/html" title="[JavaScript] 실행 컨텍스트" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/excutionContext</id><content type="html" xml:base="http://localhost:4000/devlog/excutionContext.html">&lt;blockquote&gt;
   &lt;p&gt;실행 컨텍스트(Excution context)의 개념입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -210,7 +377,72 @@ console.log(a);
   &lt;li&gt;실행 컨텍스트의 정보들은 순서에 따라 콜스택 형태로 저장되고 호출된다.&lt;/li&gt;
   &lt;li&gt;호이스팅은 컨텍스트와 연관이 있으며, 코드가 실행되기 전 환경 정보를 저장하여 미리 변수명 등을 알게되는 자바스크립트 엔진에 의해 일어난다.&lt;/li&gt;
   &lt;li&gt;스코프는 실행 컨텍스트가 접근할 수 있는 변수나 함수들에게 순서를 부여하는 역할이다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="ExcutionContext" /><category term="LexicalEnvironment" /><category term="VariableEnvironment" /><summary type="html">실행 컨텍스트(Excution context)의 개념입니다.</summary></entry><entry><title type="html">[TypeScript] 기초 개념</title><link href="http://localhost:4000/devlog/basicType.html" rel="alternate" type="text/html" title="[TypeScript] 기초 개념" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/basicType</id><content type="html" xml:base="http://localhost:4000/devlog/basicType.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="ExcutionContext" /><category term="LexicalEnvironment" /><category term="VariableEnvironment" /><summary type="html">실행 컨텍스트(Excution context)의 개념입니다.</summary></entry><entry><title type="html">[Algorithm] Two Pointer</title><link href="http://localhost:4000/devlog/algorithm-toPointer.html" rel="alternate" type="text/html" title="[Algorithm] Two Pointer" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-toPointer</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-toPointer.html">&lt;blockquote&gt;
+  &lt;p&gt;1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-two-pointer란&quot;&gt;Two Poiner란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-사용-예제&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-two-pointer란&quot;&gt;📌 Two Pointer란?&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;의미 그대로 2개의 포인터를 가진다.&lt;/li&gt;
+  &lt;li&gt;1차원 배열에 포인터를 2개를 두어 각각 포인터들을 사용해 순차적으로 비교할 수 있다.&lt;/li&gt;
+  &lt;li&gt;이중 for문을 사용해도 되지만, 이중 for문은 시간복잡도가 O(N&lt;sup&gt;2&lt;/sup&gt;)이고 Two Pointer는 O(N)이어서 시간적으로 효율이 더 좋다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-사용-예제&quot;&gt;📌 사용 예제&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;간단하게 두 배열을 오름차순으로 합치는 알고리즘을 구현&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let arr1 = [1, 3, 5];
+let arr2 = [2, 3, 4, 6, 8];
+
+const twoPointer = (arr1, arr2) =&amp;gt; {
+   let answer = [];
+   let i = z = 0;
+
+    while(i &amp;lt; arr1.length &amp;amp; z &amp;lt; arr2.length) {
+       if(arr1[i] &amp;lt; arr2[z]) {
+           answer.push(arr1[i++]);
+       }
+       if(arr1[i] &amp;gt; arr2[z]) {
+           answer.push(arr2[z++]);
+       }
+       if(arr1[i] === arr2[z]) {
+        answer.push(arr1[i++], arr2[z++])
+       }
+   }
+
+   while(i &amp;lt; arr1.length) answer.push(arr1[i++]);
+   while(z &amp;lt; arr2.length) answer.push(arr2[z++]);
+
+   return answer;
+}
+
+twoPointer(arr1, arr2)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;간단하게 concat으로 합친다음 sort으로 정렬해도 되는 문제라고 생각이 든다.&lt;/li&gt;
+  &lt;li&gt;하지만 sort는 최악의 경우 O(N&lt;sup&gt;2&lt;/sup&gt;)이 될 수 있기 때문에 시간복잡도 측면에서는 효율이 좋지 못하다.&lt;/li&gt;
+  &lt;li&gt;Two Pointer 알고리즘은 포인터가 배열의 끝에 다다르면 마무리되기 때문에 시간복잡도 측면에서 sort보다 효율이 좋다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="TwoPointer" /><summary type="html">1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.</summary></entry><entry><title type="html">[TypeScript] 기초 개념</title><link href="http://localhost:4000/devlog/basicType.html" rel="alternate" type="text/html" title="[TypeScript] 기초 개념" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/basicType</id><content type="html" xml:base="http://localhost:4000/devlog/basicType.html">&lt;blockquote&gt;
   &lt;p&gt;TypeScript의 기본 타입 종류에 대한 포스트입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -561,7 +793,7 @@ werecordTeam({
     name5: 'dh',
 })
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="Alias" /><category term="Union" /><category term="Discriminated" /><category term="Intersection" /><summary type="html">Alias Union Discriminated Intersection에 관한 포스트입니다.</summary></entry><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
-  &lt;p&gt;[Core JavaScript] Data Type에 대한 개념와 작동 원리&lt;/p&gt;
+  &lt;p&gt;[Core JavaScript] Data Type에 대한 개념와 작동 원리입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;!--more--&gt;
@@ -769,7 +1001,7 @@ console.log(a === b) // false
   &lt;li&gt;데이터 타입에는 기본형, 참조형이 있다.&lt;/li&gt;
   &lt;li&gt;기본형은 자체로 불변성을 띄지만, 참조형은 상황에 따라 불변성을 띌 수도 가변성을 띌 수도 있다.&lt;/li&gt;
   &lt;li&gt;참조형 데이터를 불변 객체로 만들기 위해서는 그에 맞는 함수를 구현하거나 라이브러리(immer.js, immutable.js, baobab.js 등)을 사용해야 한다.&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="Core" /><category term="JavaScript" /><category term="DataType" /><category term="mutable" /><category term="immutable" /><summary type="html">[Core JavaScript] Data Type에 대한 개념와 작동 원리</summary></entry><entry><title type="html">[Algorithm] Brute Force</title><link href="http://localhost:4000/devlog/algorithm-bruteForce.html" rel="alternate" type="text/html" title="[Algorithm] Brute Force" /><published>2021-07-26T00:00:00+09:00</published><updated>2021-07-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-bruteForce</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-bruteForce.html">&lt;blockquote&gt;
+&lt;/ol&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="DataType" /><category term="mutable" /><category term="immutable" /><summary type="html">[Core JavaScript] Data Type에 대한 개념와 작동 원리입니다.</summary></entry><entry><title type="html">[Algorithm] Brute Force</title><link href="http://localhost:4000/devlog/algorithm-bruteForce.html" rel="alternate" type="text/html" title="[Algorithm] Brute Force" /><published>2021-07-26T00:00:00+09:00</published><updated>2021-07-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-bruteForce</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-bruteForce.html">&lt;blockquote&gt;
   &lt;p&gt;알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
