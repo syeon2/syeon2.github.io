@@ -1,5 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-08-10T12:14:14+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] Stack</title><link href="http://localhost:4000/devlog/algorithm-stack.html" rel="alternate" type="text/html" title="[Algorithm] Stack" /><published>2021-08-10T00:00:00+09:00</published><updated>2021-08-10T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-stack</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-stack.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-08-15T16:22:29+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] Queue</title><link href="http://localhost:4000/devlog/algorithm-queue.html" rel="alternate" type="text/html" title="[Algorithm] Queue" /><published>2021-08-15T00:00:00+09:00</published><updated>2021-08-15T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-queue</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-queue.html">&lt;blockquote&gt;
+  &lt;p&gt;Queue 자료구조를 활용한 알고리즘입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-queue란&quot;&gt;📌 Queue란?&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;먼저 넣은 데이터를 먼저 나오게 하는 FIFO(First in First Out) 자료구조 형식이다.&lt;/li&gt;
+  &lt;li&gt;FILO(First in Last Out) 형식인 Stack과 다르게 Queue는 한쪽에서는 삽입 연산, 다른 한쪽은 삭제 연산이 이루어지는 형식이다.
+&lt;img alt=&quot;queue&quot; src=&quot;/assets/img/algorithm/queue.png&quot; width=&quot;500px&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-사용-예제요세푸스-순열&quot;&gt;📌 사용 예제(요세푸스 순열)&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;8명의 사람들을 원형으로 세우고 순서대로 돌아가면서 1부터 번호를 부르는데 3에 해당하는 사람은 제외시킨다.&lt;/li&gt;
+  &lt;li&gt;제외가 되면 제외된 다음 사람부터 1을 부르고 마찬가지로 3에 해당되는 사람은 제외시키는 것을 반복한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const question = (n, k) =&amp;gt; {
+    let answer;
+    let queue = Array.from({length: n}, (v, i) =&amp;gt; i + 1); ----- (1)
+
+    while(queue.length) {     -------(2)
+        for(let i = 1; i &amp;lt; k; i++) queue.push(queue.shift());
+        queue.shift();
+        if(queue.length === 1) answer = queue.shift();
+    }
+    return answer;
+}
+
+question(8, 3);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;(1)에서 함수형 프로그래밍으로 1부터 8까지의 요소들을 갖는 배열을 만든다.(함수형 프로그래밍 공부해야겠다..🔥)&lt;/li&gt;
+  &lt;li&gt;(2)에서 queue.length가 0이 될 때까지 반복문을 돌린다.&lt;/li&gt;
+  &lt;li&gt;먼저 queue의 첫번째 요소, 두번째 요소를 for문을 사용하여 차례로 queue 배열 뒤에 쌓고 앞의 숫자는 제거한다.&lt;/li&gt;
+  &lt;li&gt;그 다음 queue의 첫번째 요소가 되는 숫자는 처음 queue의 3번째 숫자였으므로 뒤에 넣지 않고 제거만 한다.&lt;/li&gt;
+  &lt;li&gt;이것을 반복하여 마지막 queue의 요소가 1개가 남으면 그 요소를 answer에 할당한다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="Queue" /><summary type="html">Queue 자료구조를 활용한 알고리즘입니다.</summary></entry><entry><title type="html">[Algorithm] Stack</title><link href="http://localhost:4000/devlog/algorithm-stack.html" rel="alternate" type="text/html" title="[Algorithm] Stack" /><published>2021-08-10T00:00:00+09:00</published><updated>2021-08-10T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-stack</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-stack.html">&lt;blockquote&gt;
   &lt;p&gt;Stack 자료구조를 활용한 알고리즘입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -354,72 +404,7 @@ obj.b();
 
 &lt;hr /&gt;
 
-&lt;p&gt;(apply, call, bind 추가 포스팅 예정)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="this" /><category term="call" /><category term="apply" /><category term="bind" /><summary type="html">This의 개념과 작동 원리입니다.</summary></entry><entry><title type="html">[Algorithm] Two Pointer</title><link href="http://localhost:4000/devlog/algorithm-toPointer.html" rel="alternate" type="text/html" title="[Algorithm] Two Pointer" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-toPointer</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-toPointer.html">&lt;blockquote&gt;
-  &lt;p&gt;1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-two-pointer란&quot;&gt;Two Poiner란?&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-사용-예제&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-two-pointer란&quot;&gt;📌 Two Pointer란?&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;의미 그대로 2개의 포인터를 가진다.&lt;/li&gt;
-  &lt;li&gt;1차원 배열에 포인터를 2개를 두어 각각 포인터들을 사용해 순차적으로 비교할 수 있다.&lt;/li&gt;
-  &lt;li&gt;이중 for문을 사용해도 되지만, 이중 for문은 시간복잡도가 O(N&lt;sup&gt;2&lt;/sup&gt;)이고 Two Pointer는 O(N)이어서 시간적으로 효율이 더 좋다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-사용-예제&quot;&gt;📌 사용 예제&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;간단하게 두 배열을 오름차순으로 합치는 알고리즘을 구현&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let arr1 = [1, 3, 5];
-let arr2 = [2, 3, 4, 6, 8];
-
-const twoPointer = (arr1, arr2) =&amp;gt; {
-   let answer = [];
-   let i = z = 0;
-
-    while(i &amp;lt; arr1.length &amp;amp; z &amp;lt; arr2.length) {
-       if(arr1[i] &amp;lt; arr2[z]) {
-           answer.push(arr1[i++]);
-       }
-       if(arr1[i] &amp;gt; arr2[z]) {
-           answer.push(arr2[z++]);
-       }
-       if(arr1[i] === arr2[z]) {
-        answer.push(arr1[i++], arr2[z++])
-       }
-   }
-
-   while(i &amp;lt; arr1.length) answer.push(arr1[i++]);
-   while(z &amp;lt; arr2.length) answer.push(arr2[z++]);
-
-   return answer;
-}
-
-twoPointer(arr1, arr2)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;간단하게 concat으로 합친다음 sort으로 정렬해도 되는 문제라고 생각이 든다.&lt;/li&gt;
-  &lt;li&gt;하지만 sort는 최악의 경우 O(N&lt;sup&gt;2&lt;/sup&gt;)이 될 수 있기 때문에 시간복잡도 측면에서는 효율이 좋지 못하다.&lt;/li&gt;
-  &lt;li&gt;Two Pointer 알고리즘은 포인터가 배열의 끝에 다다르면 마무리되기 때문에 시간복잡도 측면에서 sort보다 효율이 좋다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="TwoPointer" /><summary type="html">1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.</summary></entry><entry><title type="html">[JavaScript] 실행 컨텍스트</title><link href="http://localhost:4000/devlog/excutionContext.html" rel="alternate" type="text/html" title="[JavaScript] 실행 컨텍스트" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/excutionContext</id><content type="html" xml:base="http://localhost:4000/devlog/excutionContext.html">&lt;blockquote&gt;
+&lt;p&gt;(apply, call, bind 추가 포스팅 예정)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="this" /><category term="call" /><category term="apply" /><category term="bind" /><summary type="html">This의 개념과 작동 원리입니다.</summary></entry><entry><title type="html">[JavaScript] 실행 컨텍스트</title><link href="http://localhost:4000/devlog/excutionContext.html" rel="alternate" type="text/html" title="[JavaScript] 실행 컨텍스트" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/excutionContext</id><content type="html" xml:base="http://localhost:4000/devlog/excutionContext.html">&lt;blockquote&gt;
   &lt;p&gt;실행 컨텍스트(Excution context)의 개념입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -565,8 +550,8 @@ console.log(a);
   &lt;li&gt;실행 컨텍스트의 정보들은 순서에 따라 콜스택 형태로 저장되고 호출된다.&lt;/li&gt;
   &lt;li&gt;호이스팅은 컨텍스트와 연관이 있으며, 코드가 실행되기 전 환경 정보를 저장하여 미리 변수명 등을 알게되는 자바스크립트 엔진에 의해 일어난다.&lt;/li&gt;
   &lt;li&gt;스코프는 실행 컨텍스트가 접근할 수 있는 변수나 함수들에게 순서를 부여하는 역할이다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="ExcutionContext" /><category term="LexicalEnvironment" /><category term="VariableEnvironment" /><summary type="html">실행 컨텍스트(Excution context)의 개념입니다.</summary></entry><entry><title type="html">[TypeScript] Alias Union Discriminated Intersection</title><link href="http://localhost:4000/devlog/alias.html" rel="alternate" type="text/html" title="[TypeScript] Alias Union Discriminated Intersection" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/alias</id><content type="html" xml:base="http://localhost:4000/devlog/alias.html">&lt;blockquote&gt;
-  &lt;p&gt;Alias Union Discriminated Intersection에 관한 포스트입니다.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="ExcutionContext" /><category term="LexicalEnvironment" /><category term="VariableEnvironment" /><summary type="html">실행 컨텍스트(Excution context)의 개념입니다.</summary></entry><entry><title type="html">[Algorithm] Two Pointer</title><link href="http://localhost:4000/devlog/algorithm-toPointer.html" rel="alternate" type="text/html" title="[Algorithm] Two Pointer" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-toPointer</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-toPointer.html">&lt;blockquote&gt;
+  &lt;p&gt;1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;!--more--&gt;
@@ -574,131 +559,63 @@ console.log(a);
 &lt;ul&gt;
   &lt;li&gt;목차
     &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-alias&quot;&gt;Alias&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-union&quot;&gt;Union&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-discriminated&quot;&gt;Discriminatedd&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-two-pointer란&quot;&gt;Two Poiner란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-사용-예제&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;-alias&quot;&gt;📌 Alias&lt;/h2&gt;
+&lt;h2 id=&quot;-two-pointer란&quot;&gt;📌 Two Pointer란?&lt;/h2&gt;
 
 &lt;hr /&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;기존에 number, string같은 데이터를 각 타입에 맞게 선언해주었다면(ex.&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const a:number = 1&lt;/code&gt;), Alias는 사용자가 직접 type을 만들어주는? 이라고 이해할 수 있을 것 같다.&lt;/li&gt;
+  &lt;li&gt;의미 그대로 2개의 포인터를 가진다.&lt;/li&gt;
+  &lt;li&gt;1차원 배열에 포인터를 2개를 두어 각각 포인터들을 사용해 순차적으로 비교할 수 있다.&lt;/li&gt;
+  &lt;li&gt;이중 for문을 사용해도 되지만, 이중 for문은 시간복잡도가 O(N&lt;sup&gt;2&lt;/sup&gt;)이고 Two Pointer는 O(N)이어서 시간적으로 효율이 더 좋다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;1-type-alias&quot;&gt;1. Type Alias&lt;/h4&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Greeting = string;
-type Num = number;
-
-const hi: Greeting = 'hi';
-const hello: Greeting = 'hello';
-
-// 객체에도 가능하다.
-type Greeting = {
-    time: number;
-    greeting: string;
-}
-const obj: Greeting = {
-    time: 8,
-    greeting: 'hello'
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;2-string-literal-types&quot;&gt;2. String Literal Types&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;위와 같이 타입을 지정해줄 수 있지만, 하나의 문자열을 지정해줄 수도 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type name = 'suyeon';
-let me: name;
-me = 'suyeon'
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;-union&quot;&gt;📌 Union&lt;/h2&gt;
+&lt;h2 id=&quot;-사용-예제&quot;&gt;📌 사용 예제&lt;/h2&gt;
 
 &lt;hr /&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Union은 Alias의 확장판(?)의 느낌이다.&lt;/li&gt;
-  &lt;li&gt;한가지 타입만 지정하는 String Literal Types와 달리 하나 이상의 데이터들을 지정할 수 있다.&lt;/li&gt;
+  &lt;li&gt;간단하게 두 배열을 오름차순으로 합치는 알고리즘을 구현&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Direction = 'left' | 'right' | 'up' | 'down'
-function go(direction: Direction) {
-    console.log(direction);
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let arr1 = [1, 3, 5];
+let arr2 = [2, 3, 4, 6, 8];
+
+const twoPointer = (arr1, arr2) =&amp;gt; {
+   let answer = [];
+   let i = z = 0;
+
+    while(i &amp;lt; arr1.length &amp;amp; z &amp;lt; arr2.length) {
+       if(arr1[i] &amp;lt; arr2[z]) {
+           answer.push(arr1[i++]);
+       }
+       if(arr1[i] &amp;gt; arr2[z]) {
+           answer.push(arr2[z++]);
+       }
+       if(arr1[i] === arr2[z]) {
+        answer.push(arr1[i++], arr2[z++])
+       }
+   }
+
+   while(i &amp;lt; arr1.length) answer.push(arr1[i++]);
+   while(z &amp;lt; arr2.length) answer.push(arr2[z++]);
+
+   return answer;
 }
-go('up')
+
+twoPointer(arr1, arr2)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;저렇게 or연산자로 여러가지를 선언해주면 Direction이라는 Alias로 지정한 up, down, left, right라는 4가지의 데이터들을 사용할 수 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-discriminated&quot;&gt;📌 Discriminated&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;일반적인 String Literal Property가 있는 경우 Discriminated라 말한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type SuccessState = {
-    result: 'success';
-    response: {
-        body: string;
-    };
-}
-type FailState = {
-    result: 'fail';
-    reason: string;
-}
-type LoginState = SuccessState | FailState;
-function printLoginState(state: LoginState) {
-    if(state.result === 'success') {
-        console.log(state.result);
-    }
-    if(state.result === 'fail') {
-        console.log(state.result);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;-intersection&quot;&gt;📌 Intersection&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Intersection은 간단히 말해 Alias를 합치는 것으로 연산자 &amp;amp;을 사용한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type wecoder1 = {
-    name1: 'sy';
-    name2: 'ym';
-    name5: 'dh';
-}
-
-type wecoder2 = {
-    name3: 'ds';
-    name4: 'mh';
-}
-
-function werecordTeam(person: wecorder1 &amp;amp; wecorder2) {
-    console.log(person.name1, person.name2, person.name3, person.name4, person.name5);
-}
-
-werecordTeam({
-    name1: 'sy',
-    name2: 'ym',
-    name3: 'ds',
-    name4: 'mh',
-    name5: 'dh',
-})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="Alias" /><category term="Union" /><category term="Discriminated" /><category term="Intersection" /><summary type="html">Alias Union Discriminated Intersection에 관한 포스트입니다.</summary></entry><entry><title type="html">[TypeScript] 기초 개념</title><link href="http://localhost:4000/devlog/basicType.html" rel="alternate" type="text/html" title="[TypeScript] 기초 개념" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/basicType</id><content type="html" xml:base="http://localhost:4000/devlog/basicType.html">&lt;blockquote&gt;
+  &lt;li&gt;간단하게 concat으로 합친다음 sort으로 정렬해도 되는 문제라고 생각이 든다.&lt;/li&gt;
+  &lt;li&gt;하지만 sort는 최악의 경우 O(N&lt;sup&gt;2&lt;/sup&gt;)이 될 수 있기 때문에 시간복잡도 측면에서는 효율이 좋지 못하다.&lt;/li&gt;
+  &lt;li&gt;Two Pointer 알고리즘은 포인터가 배열의 끝에 다다르면 마무리되기 때문에 시간복잡도 측면에서 sort보다 효율이 좋다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="TwoPointer" /><summary type="html">1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.</summary></entry><entry><title type="html">[TypeScript] 기초 개념</title><link href="http://localhost:4000/devlog/basicType.html" rel="alternate" type="text/html" title="[TypeScript] 기초 개념" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/basicType</id><content type="html" xml:base="http://localhost:4000/devlog/basicType.html">&lt;blockquote&gt;
   &lt;p&gt;TypeScript의 기본 타입 종류에 대한 포스트입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -915,7 +832,140 @@ function printArray(students: readonly string[]) {
   &lt;li&gt;TypeScript는 정적 언어이기 때문에 코드의 오류를 최소화하기 위한 목적을 가지고 사용한다.&lt;/li&gt;
   &lt;li&gt;각 변수의 데이터 값에 맞는 타입을 선언해주어야 한다.&lt;/li&gt;
   &lt;li&gt;함수에도 여러 가지 기능들을 활용하며 TypeScript를 사용하자!&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="basic" /><summary type="html">TypeScript의 기본 타입 종류에 대한 포스트입니다.</summary></entry><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="basic" /><summary type="html">TypeScript의 기본 타입 종류에 대한 포스트입니다.</summary></entry><entry><title type="html">[TypeScript] Alias Union Discriminated Intersection</title><link href="http://localhost:4000/devlog/alias.html" rel="alternate" type="text/html" title="[TypeScript] Alias Union Discriminated Intersection" /><published>2021-07-29T00:00:00+09:00</published><updated>2021-07-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/alias</id><content type="html" xml:base="http://localhost:4000/devlog/alias.html">&lt;blockquote&gt;
+  &lt;p&gt;Alias Union Discriminated Intersection에 관한 포스트입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-alias&quot;&gt;Alias&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-union&quot;&gt;Union&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-discriminated&quot;&gt;Discriminatedd&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-alias&quot;&gt;📌 Alias&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;기존에 number, string같은 데이터를 각 타입에 맞게 선언해주었다면(ex.&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const a:number = 1&lt;/code&gt;), Alias는 사용자가 직접 type을 만들어주는? 이라고 이해할 수 있을 것 같다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-type-alias&quot;&gt;1. Type Alias&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Greeting = string;
+type Num = number;
+
+const hi: Greeting = 'hi';
+const hello: Greeting = 'hello';
+
+// 객체에도 가능하다.
+type Greeting = {
+    time: number;
+    greeting: string;
+}
+const obj: Greeting = {
+    time: 8,
+    greeting: 'hello'
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;2-string-literal-types&quot;&gt;2. String Literal Types&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;위와 같이 타입을 지정해줄 수 있지만, 하나의 문자열을 지정해줄 수도 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type name = 'suyeon';
+let me: name;
+me = 'suyeon'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-union&quot;&gt;📌 Union&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Union은 Alias의 확장판(?)의 느낌이다.&lt;/li&gt;
+  &lt;li&gt;한가지 타입만 지정하는 String Literal Types와 달리 하나 이상의 데이터들을 지정할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Direction = 'left' | 'right' | 'up' | 'down'
+function go(direction: Direction) {
+    console.log(direction);
+}
+go('up')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;저렇게 or연산자로 여러가지를 선언해주면 Direction이라는 Alias로 지정한 up, down, left, right라는 4가지의 데이터들을 사용할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-discriminated&quot;&gt;📌 Discriminated&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일반적인 String Literal Property가 있는 경우 Discriminated라 말한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type SuccessState = {
+    result: 'success';
+    response: {
+        body: string;
+    };
+}
+type FailState = {
+    result: 'fail';
+    reason: string;
+}
+type LoginState = SuccessState | FailState;
+function printLoginState(state: LoginState) {
+    if(state.result === 'success') {
+        console.log(state.result);
+    }
+    if(state.result === 'fail') {
+        console.log(state.result);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-intersection&quot;&gt;📌 Intersection&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Intersection은 간단히 말해 Alias를 합치는 것으로 연산자 &amp;amp;을 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type wecoder1 = {
+    name1: 'sy';
+    name2: 'ym';
+    name5: 'dh';
+}
+
+type wecoder2 = {
+    name3: 'ds';
+    name4: 'mh';
+}
+
+function werecordTeam(person: wecorder1 &amp;amp; wecorder2) {
+    console.log(person.name1, person.name2, person.name3, person.name4, person.name5);
+}
+
+werecordTeam({
+    name1: 'sy',
+    name2: 'ym',
+    name3: 'ds',
+    name4: 'mh',
+    name5: 'dh',
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="typescript" /><category term="TypeScript" /><category term="Alias" /><category term="Union" /><category term="Discriminated" /><category term="Intersection" /><summary type="html">Alias Union Discriminated Intersection에 관한 포스트입니다.</summary></entry><entry><title type="html">[JavaScript] Data Type</title><link href="http://localhost:4000/devlog/dataType.html" rel="alternate" type="text/html" title="[JavaScript] Data Type" /><published>2021-07-28T00:00:00+09:00</published><updated>2021-07-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dataType</id><content type="html" xml:base="http://localhost:4000/devlog/dataType.html">&lt;blockquote&gt;
   &lt;p&gt;[Core JavaScript] Data Type에 대한 개념와 작동 원리입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -1124,72 +1174,4 @@ console.log(a === b) // false
   &lt;li&gt;데이터 타입에는 기본형, 참조형이 있다.&lt;/li&gt;
   &lt;li&gt;기본형은 자체로 불변성을 띄지만, 참조형은 상황에 따라 불변성을 띌 수도 가변성을 띌 수도 있다.&lt;/li&gt;
   &lt;li&gt;참조형 데이터를 불변 객체로 만들기 위해서는 그에 맞는 함수를 구현하거나 라이브러리(immer.js, immutable.js, baobab.js 등)을 사용해야 한다.&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="DataType" /><category term="mutable" /><category term="immutable" /><summary type="html">[Core JavaScript] Data Type에 대한 개념와 작동 원리입니다.</summary></entry><entry><title type="html">[Algorithm] Brute Force</title><link href="http://localhost:4000/devlog/algorithm-bruteForce.html" rel="alternate" type="text/html" title="[Algorithm] Brute Force" /><published>2021-07-26T00:00:00+09:00</published><updated>2021-07-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-bruteForce</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-bruteForce.html">&lt;blockquote&gt;
-  &lt;p&gt;알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-brute-force란&quot;&gt;Brute Force란?&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-사용-예제-javascript&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-정리하자면&quot;&gt;정리하자면!&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-brute-force란&quot;&gt;📌 Brute Force란?&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Brute Force의 Brute는 짐승, 난폭한,,이란 뜻과 Force가 만나 난폭한 힘.. 이런 느낌인 자료탐색방법인데 간단히 말하면 “너가 멀 좋아할지 몰라서 일단 다 준비해봤어..”이거다. 🤪&lt;/li&gt;
-    &lt;li&gt;Brute Force의 자료구조의 종류로는 2가지(선형구조 - 배열, 연결리스트 등, 비선형구조 - DFS, BFS)가 있다!! &lt;br /&gt;(다음엔 자료구조도 공부해보아야겠다!!)&lt;/li&gt;
-    &lt;li&gt;주어진 값을 구하기 위해서 모든 경우를 탐색하기 때문에 시간복잡도는 경우가 늘어날 때마다 기하급수적으로 늘어난다. &lt;br /&gt; 일반적으로 컴퓨터는 1초에 평균 1억번 정도의 연산이 가능하기 때문에 1000억번의 연산을 수행한다면 &lt;b&gt;17분&lt;/b&gt;이 소요된다./&lt;/li&gt;
-    &lt;li&gt;시간적인 측면에서는 비효율적이지만, 사용하기 쉽고 모든 경우를 탐색하기 때문에 &lt;b&gt;100%&lt;/b&gt; 답을 찾는 것이 가능하다.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-사용-예제-javascript&quot;&gt;📌 사용 예제 (JavaScript)&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;간단하게 소수를 찾는 문제로 Brute Force를 알아보자! &lt;br /&gt; (자료구조는 배열을 사용하여 진행!)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const question = arr =&amp;gt; {
-   let answer = []
-
-   for(let i of arr) {     --- (1)
-       let s = []
-       for(let z = 1; z &amp;lt;= i; z++) {    --- (2)
-           if(i % z === 0) s.push(z);
-       }
-       if(s.length === 2) answer.push(s[s.length - 1])
-   }
-   return answer
-}
-
-question([3, 2, 4, 6, 9, 11, 129, 127])
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;효율적인 코드인지는 잘 모르겠지만.. 간단하게 살펴보면!&lt;/li&gt;
-  &lt;li&gt;(1)번과 (2)으로 의도한 것은 (1)번으로 arr에 있는 값을 하나씩 하위 for문으로 전달해주고, (2)에서는 (1)에서 받은 숫자 i를 1부터 i번까지 전부 탐색한다.&lt;/li&gt;
-  &lt;li&gt;i와 i 아래의 모든 값들을 %로 구해서 0이 나오면 만들어 놓은 배열에 저장시키고, 하위 for문이 끝나면 배열의 요소를 검사해 length가 2개이면 answer 배열에 넣어서 return한다. (소수는 1과 자신만 약수로 가지기 때문!)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-정리하자면&quot;&gt;📌 정리하자면!&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Brute Force(완전탐색)은 모든 경우의 수를 탐색한다.&lt;/li&gt;
-  &lt;li&gt;답은 확실하지만, 시간적인 소요가 크다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="BruteForce" /><category term="완전탐색" /><summary type="html">알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.</summary></entry></feed>
+&lt;/ol&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="DataType" /><category term="mutable" /><category term="immutable" /><summary type="html">[Core JavaScript] Data Type에 대한 개념와 작동 원리입니다.</summary></entry></feed>
