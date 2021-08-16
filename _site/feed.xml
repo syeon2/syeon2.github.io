@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-08-15T16:22:29+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-08-16T17:25:06+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
 </subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] Queue</title><link href="http://localhost:4000/devlog/algorithm-queue.html" rel="alternate" type="text/html" title="[Algorithm] Queue" /><published>2021-08-15T00:00:00+09:00</published><updated>2021-08-15T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-queue</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-queue.html">&lt;blockquote&gt;
   &lt;p&gt;Queue 자료구조를 활용한 알고리즘입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -15,8 +15,11 @@
 
 &lt;ul&gt;
   &lt;li&gt;먼저 넣은 데이터를 먼저 나오게 하는 FIFO(First in First Out) 자료구조 형식이다.&lt;/li&gt;
-  &lt;li&gt;FILO(First in Last Out) 형식인 Stack과 다르게 Queue는 한쪽에서는 삽입 연산, 다른 한쪽은 삭제 연산이 이루어지는 형식이다.
-&lt;img alt=&quot;queue&quot; src=&quot;/assets/img/algorithm/queue.png&quot; width=&quot;500px&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;FILO(First in Last Out) 형식인 Stack과 다르게 Queue는 한쪽에서는 삽입 연산, 다른 한쪽은 삭제 연산이 이루어지는 형식이다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;img alt=&quot;queue&quot; src=&quot;/assets/img/algorithm/queue.png&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;-사용-예제요세푸스-순열&quot;&gt;📌 사용 예제(요세푸스 순열)&lt;/h2&gt;
@@ -49,7 +52,9 @@ question(8, 3);
   &lt;li&gt;먼저 queue의 첫번째 요소, 두번째 요소를 for문을 사용하여 차례로 queue 배열 뒤에 쌓고 앞의 숫자는 제거한다.&lt;/li&gt;
   &lt;li&gt;그 다음 queue의 첫번째 요소가 되는 숫자는 처음 queue의 3번째 숫자였으므로 뒤에 넣지 않고 제거만 한다.&lt;/li&gt;
   &lt;li&gt;이것을 반복하여 마지막 queue의 요소가 1개가 남으면 그 요소를 answer에 할당한다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="Queue" /><summary type="html">Queue 자료구조를 활용한 알고리즘입니다.</summary></entry><entry><title type="html">[Algorithm] Stack</title><link href="http://localhost:4000/devlog/algorithm-stack.html" rel="alternate" type="text/html" title="[Algorithm] Stack" /><published>2021-08-10T00:00:00+09:00</published><updated>2021-08-10T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-stack</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-stack.html">&lt;blockquote&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;=&amp;gt; 정리하여 앞에 숫자가 조건에 만족하면 배열 마지막 요소로 push하고 shift를 사용하여 제거하지만, 조건에 만족하지 않으면 shift만 사용하여 제거함으로 최후에 남는 데이터를 찾을 수 있는 알고리즘이다.&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="Queue" /><summary type="html">Queue 자료구조를 활용한 알고리즘입니다.</summary></entry><entry><title type="html">[Algorithm] Stack</title><link href="http://localhost:4000/devlog/algorithm-stack.html" rel="alternate" type="text/html" title="[Algorithm] Stack" /><published>2021-08-10T00:00:00+09:00</published><updated>2021-08-10T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-stack</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-stack.html">&lt;blockquote&gt;
   &lt;p&gt;Stack 자료구조를 활용한 알고리즘입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 

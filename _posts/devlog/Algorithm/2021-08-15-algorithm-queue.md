@@ -18,6 +18,7 @@ tags: algorithm Queue
 
 - 먼저 넣은 데이터를 먼저 나오게 하는 FIFO(First in First Out) 자료구조 형식이다.
 - FILO(First in Last Out) 형식인 Stack과 다르게 Queue는 한쪽에서는 삽입 연산, 다른 한쪽은 삭제 연산이 이루어지는 형식이다.
+
   <img alt='queue' src='/assets/img/algorithm/queue.png' width="500px">
 
 ## 📌 사용 예제(요세푸스 순열)
