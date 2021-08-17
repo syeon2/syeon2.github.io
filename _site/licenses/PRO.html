@@ -100,7 +100,7 @@
   w._search = {
     DATA_URL: '/assets/sitedata.json?no-cache',
     STORAGE_KEY: 'mini-search/',
-    INDEX_KEY: 'index--2021-08-17T11:35:08+09:00',
+    INDEX_KEY: 'index--2021-08-17T11:54:41+09:00',
   };
   w._clapButton = true;
 }(window);</script>
@@ -130,8 +130,15 @@
 
 </head>
 
-<body class="no-break-layout no-large-headings">
+<body class="dark-mode no-break-layout no-large-headings">
   
+<script>
+  window._sunrise = 6;
+  window._sunset =  18;
+  !function(e,s){var d="light-mode",o="dark-mode",a=(new Date).getHours();"matchMedia"in e&&e.matchMedia("(prefers-color-scheme)")||(o=(e=a<=e._sunrise||a>=e._sunset?o:d)==o?d:o,s.body.classList.add(e),s.body.classList.remove(o))}(window,document);
+
+</script>
+
 
 
 <hy-push-state
@@ -718,6 +725,14 @@ brought by Licensee against Licensor be denied, in part or in full.</p>
 </template>
 
   
+  
+    <template id="_dark-mode-template">
+  <button id="_dark-mode" class="nav-btn no-hover" >
+    <span class="sr-only">Dark Mode</span>
+    <span class="icon-brightness-contrast"></span>
+  </button>
+</template>
+
   
   
     <template id="_search-template">
