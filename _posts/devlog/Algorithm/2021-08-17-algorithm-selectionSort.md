@@ -3,7 +3,7 @@ layout: post
 title: "[Algorithm] Selection Sort"
 subtitle: "selection sort"
 categories: devlog
-tags: algorithm Selection Sort
+tags: algorithm SelectionSort
 ---
 
 > 선택 정렬 알고리즘입니다.
@@ -11,8 +11,10 @@ tags: algorithm Selection Sort
 <!--more-->
 
 - 목차
+  - [Selection Sort(버블정렬)란?](#-selection-sort버블-정렬란)
+  - [사용 예제](#-사용-예제)
 
-## 📌 Selection Sort란?
+## 📌 Selection Sort(버블 정렬)란?
 
 ---
 
