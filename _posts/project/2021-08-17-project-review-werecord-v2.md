@@ -17,7 +17,7 @@ image:
   - [각 페이지 소개](#-각-페이지-소개)
     - [Initail Setting](#-initail-setting)
     - [Global Component](#-global-component)
-    - [Rending Page](#-rending-page)
+    - [Landing Page](#-landing-page)
     - [Main Page](#-main-page)
       - [1. 실시간 타이머 기능](#1-실시간-타이머-기능)
       - [2. 스크린 캡쳐 기능](#2-스크린-캡쳐-기능)
@@ -81,13 +81,13 @@ image:
 
 ---
 
-### 🌱 Rending Page
+### 🌱 Landing Page
 
 - 수정하는데 조금 복잡했던 랜딩페이지..! 소셜 로그인을 구현안해본 나로서는 멀 건드리면 안되고 되는지.. 하나하나 손볼 때마다 조심스럽게 다뤘던 것 같다.
 - 포인트는 -v1에서는 SignIn이 모달을 통해 이루어졌는데 -v2에서는 한 페이지 내에서 구현을 해야했다..!!
 - 하나로 합치는 것까지는 어렵지 않았지만 처음보는 소셜로그인 코드를 보고 JWT를 방식에 대해 공부하면서 작업해서 시간이 조금 소요되었다.(나중에 JWT 포스팅해야지~)
 
-<img alt="rending" src="/assets/img/project/2021-08-17-werecord-v2/rending.gif"  width="500px">
+<img alt="landing" src="/assets/img/project/2021-08-17-werecord-v2/landing.gif"  width="500px">
 
 ---
 
@@ -117,7 +117,7 @@ image:
 
 #### 2. 스크린 캡쳐 기능
 
-<img alt="screenCapture" src="/assets/img/project/2021-08-17-werecord-v2/screenCapture.gif" width="500px">
+<img alt="screenCapture" src="/assets/img/project/2021-08-17-werecord-v2/snapShot.gif" width="500px">
 
 - 이것도 새로운 기능이라 신기하고 재미있었다 :)
 - html2canvas 라이브러리를 이용하여 적용했는데 처음에는 desktop영역을 지정하려 했었지만, desktop영역에는 없는 요소들도 추가되거나 desktop에는 있지만 screenCapture에는 보이지 않아야하는 요소들이 있었다.

@@ -1,5 +1,126 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2021-08-20T05:59:45+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] Bubble Sort</title><link href="http://localhost:4000/devlog/algorithm-bubbleSort.html" rel="alternate" type="text/html" title="[Algorithm] Bubble Sort" /><published>2021-08-19T00:00:00+09:00</published><updated>2021-08-19T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-bubbleSort</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-bubbleSort.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Syeon</title>
+    <description>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 26 Aug 2021 01:17:52 +0900</pubDate>
+    <lastBuildDate>Thu, 26 Aug 2021 01:17:52 +0900</lastBuildDate>
+    <generator>Jekyll v3.9.0</generator>
+    
+      <item>
+        <title>[Algorithm] Insertion Sort</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;삽입 정렬 알고리즘입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-insertion-sort란&quot;&gt;Insertion Sort란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-사용-예제&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-insertion-sort란&quot;&gt;📌 Insertion Sort란?&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;순서에 맞춰 하나의 요소를 기억한 후에 조건에 맞는 배열의 위치에 삽입시키는 알고리즘이다.&lt;/li&gt;
+  &lt;li&gt;버블 정렬과 비슷해보이지만 삽입 정렬의 핵심은 요소를 ‘기억’하는 것에 있다.&lt;/li&gt;
+  &lt;li&gt;각각 옆을 비교하는 것을 요소의 개수만큼 비교해야하는 버블 정렬과 달리 삽입 정렬은 최선의 결과로 시간복잡도 O(n)을 가질 수 있는 알고리즘이다.&lt;/li&gt;
+  &lt;li&gt;하지만 다르게 표현하면 최악으로는 역시나 O(n&lt;sup&gt;2&lt;/sup&gt;)을 가질 수도 있다는 것으로 데이터의 상태에 따라 성능차이가 심한 알고리즘이다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-사용-예제&quot;&gt;📌 사용 예제&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;주어진 배열을 오름차순으로 정렬하시오.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const question = (arr) =&amp;gt; {
+  let answer = arr;
+
+  function compareProps(arr, i) {
+    if(arr[i] &amp;gt; arr[i + 1]) {
+      [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+      i--;
+      compareProps(arr, i);
+    }
+  }
+
+  for(let i = 0; i &amp;lt; answer.length; i++) {
+    compareProps(answer, i);
+  }
+
+  return answer;
+}
+
+let arr = [11, 7, 5, 6, 10, 9];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;처음에는 양 옆이 정렬 조건에 불일치한다면 바꿔주고 다시 바뀐 요소를 한번 더 바꿔주는 것이 삽입 정렬이라고 생각했다.&lt;/li&gt;
+  &lt;li&gt;요소가 바뀌면 계속 체크를 해줘야 할 것 같아서 재귀문을 사용하여 코드를 구현해보았다.&lt;/li&gt;
+  &lt;li&gt;가만히 생각해보니 삽입보다는 버블에 가까운 듯한데.. 그렇다고 버블처럼 시간복잡도를 항상 O(n&lt;sup&gt;2&lt;/sup&gt;)를 가지지는 않는것 같아서 무슨 정렬인지 잘 모르겠다…(삽입인가..?)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let arr2 = [11, 7, 5, 6, 10, 9];
+
+const question2 = (arr) =&amp;gt; {
+  let answer = arr;
+
+  for(let i = 0; i &amp;lt; answer.length; i++) {
+    let tmp = answer[i], j
+
+    for(j = i -1; j &amp;gt;= 0; j--) {
+      if(answer[j] &amp;gt; tmp) answer[j + 1] = answer[j];
+      else break;
+    }
+    answer[j+1] = tmp;
+    console.log(answer);
+  }
+
+  return answer;
+}
+
+question2(arr2);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이 코드가 정석적인 삽입 정렬이다.&lt;/li&gt;
+  &lt;li&gt;처음에 요소를 기억한 후, 다음 for문에서 기억된 요소와 해당 요소를 비교한다.&lt;/li&gt;
+  &lt;li&gt;비교한 후 바뀌어야한다면 한단계씩 순차적으로 조건에 만족할 때까지 비교하고 바꿔준다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 지금보니까 1번째 코드와 2번째 코드의 차이로 ‘변수에 할당하는가’의 차이밖에 없는 것 같은데… 삽입에 가까운 것 같다!&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Sun, 22 Aug 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/algorithm-insertionSort.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/algorithm-insertionSort.html</guid>
+        
+        <category>algorithm</category>
+        
+        <category>InsertionSort</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[Algorithm] Bubble Sort</title>
+        <description>&lt;blockquote&gt;
   &lt;p&gt;버블 정렬 알고리즘입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -73,7 +194,24 @@ const question = arr =&amp;gt; {
 
 &lt;ul&gt;
   &lt;li&gt;가독성이 훨씬 좋아졌다. 그리고 전보다 불필요한 메서드를 사용하지 않아도 구현이 가능해졌다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="BubbleSort" /><summary type="html">버블 정렬 알고리즘입니다.</summary></entry><entry><title type="html">Werecord project -v2👨🏻‍💻</title><link href="http://localhost:4000/project/project-review-werecord-v2.html" rel="alternate" type="text/html" title="Werecord project -v2👨🏻‍💻" /><published>2021-08-17T00:00:00+09:00</published><updated>2021-08-17T00:00:00+09:00</updated><id>http://localhost:4000/project/project-review-werecord-v2</id><content type="html" xml:base="http://localhost:4000/project/project-review-werecord-v2.html">&lt;blockquote&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 19 Aug 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/algorithm-bubbleSort.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/algorithm-bubbleSort.html</guid>
+        
+        <category>algorithm</category>
+        
+        <category>BubbleSort</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>Werecord project -v2👨🏻‍💻</title>
+        <description>&lt;blockquote&gt;
   &lt;p&gt;Werecord -v2 project 후기 및 피드백입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -87,7 +225,7 @@ const question = arr =&amp;gt; {
         &lt;ul&gt;
           &lt;li&gt;&lt;a href=&quot;#-initail-setting&quot;&gt;Initail Setting&lt;/a&gt;&lt;/li&gt;
           &lt;li&gt;&lt;a href=&quot;#-global-component&quot;&gt;Global Component&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;#-rending-page&quot;&gt;Rending Page&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-landing-page&quot;&gt;Landing Page&lt;/a&gt;&lt;/li&gt;
           &lt;li&gt;&lt;a href=&quot;#-main-page&quot;&gt;Main Page&lt;/a&gt;
             &lt;ul&gt;
               &lt;li&gt;&lt;a href=&quot;#1-실시간-타이머-기능&quot;&gt;1. 실시간 타이머 기능&lt;/a&gt;&lt;/li&gt;
@@ -170,7 +308,7 @@ const question = arr =&amp;gt; {
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;-rending-page&quot;&gt;🌱 Rending Page&lt;/h3&gt;
+&lt;h3 id=&quot;-landing-page&quot;&gt;🌱 Landing Page&lt;/h3&gt;
 
 &lt;ul&gt;
   &lt;li&gt;수정하는데 조금 복잡했던 랜딩페이지..! 소셜 로그인을 구현안해본 나로서는 멀 건드리면 안되고 되는지.. 하나하나 손볼 때마다 조심스럽게 다뤘던 것 같다.&lt;/li&gt;
@@ -178,7 +316,7 @@ const question = arr =&amp;gt; {
   &lt;li&gt;하나로 합치는 것까지는 어렵지 않았지만 처음보는 소셜로그인 코드를 보고 JWT를 방식에 대해 공부하면서 작업해서 시간이 조금 소요되었다.(나중에 JWT 포스팅해야지~)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img alt=&quot;rending&quot; src=&quot;/assets/img/project/2021-08-17-werecord-v2/rending.gif&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;landing&quot; src=&quot;/assets/img/project/2021-08-17-werecord-v2/landing.gif&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -222,7 +360,7 @@ const question = arr =&amp;gt; {
 
 &lt;h4 id=&quot;2-스크린-캡쳐-기능&quot;&gt;2. 스크린 캡쳐 기능&lt;/h4&gt;
 
-&lt;p&gt;&lt;img alt=&quot;screenCapture&quot; src=&quot;/assets/img/project/2021-08-17-werecord-v2/screenCapture.gif&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;screenCapture&quot; src=&quot;/assets/img/project/2021-08-17-werecord-v2/snapShot.gif&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;이것도 새로운 기능이라 신기하고 재미있었다 :)&lt;/li&gt;
@@ -304,7 +442,28 @@ const question = arr =&amp;gt; {
 
 &lt;blockquote&gt;
   &lt;p&gt;🎈 &lt;a href=&quot;https://github.com/wecode-bootcamp-korea/werecord-frontend&quot;&gt;We-Record Github repo&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="project" /><category term="project" /><category term="werecord" /><category term="React" /><category term="근태" /><summary type="html">Werecord -v2 project 후기 및 피드백입니다.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/img/project/2021-08-17-werecord-v2/cover.jpg" /><media:content medium="image" url="http://localhost:4000/assets/img/project/2021-08-17-werecord-v2/cover.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">[Algorithm] Selection Sort</title><link href="http://localhost:4000/devlog/algorithm-selectionSort.html" rel="alternate" type="text/html" title="[Algorithm] Selection Sort" /><published>2021-08-17T00:00:00+09:00</published><updated>2021-08-17T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-selectionSort</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-selectionSort.html">&lt;blockquote&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Tue, 17 Aug 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/project/project-review-werecord-v2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/project/project-review-werecord-v2.html</guid>
+        
+        <category>project</category>
+        
+        <category>werecord</category>
+        
+        <category>React</category>
+        
+        <category>근태</category>
+        
+        
+        <category>project</category>
+        
+      </item>
+    
+      <item>
+        <title>[Algorithm] Selection Sort</title>
+        <description>&lt;blockquote&gt;
   &lt;p&gt;선택 정렬 알고리즘입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -363,7 +522,24 @@ question([13, 5, 7, 3, 9, 16, 2]);
   &lt;li&gt;이것을 첫번째 for문이 종료될 때까지 반복한다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;🎈 시간복잡도 측면에서는 O(n&lt;sup&gt;2&lt;/sup&gt;)으로 느린 속도를 가진다.&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="SelectionSort" /><summary type="html">선택 정렬 알고리즘입니다.</summary></entry><entry><title type="html">[Algorithm] Queue</title><link href="http://localhost:4000/devlog/algorithm-queue.html" rel="alternate" type="text/html" title="[Algorithm] Queue" /><published>2021-08-15T00:00:00+09:00</published><updated>2021-08-15T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-queue</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-queue.html">&lt;blockquote&gt;
+&lt;p&gt;🎈 시간복잡도 측면에서는 O(n&lt;sup&gt;2&lt;/sup&gt;)으로 느린 속도를 가진다.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 17 Aug 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/algorithm-selectionSort.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/algorithm-selectionSort.html</guid>
+        
+        <category>algorithm</category>
+        
+        <category>SelectionSort</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[Algorithm] Queue</title>
+        <description>&lt;blockquote&gt;
   &lt;p&gt;Queue 자료구조를 활용한 알고리즘입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -423,7 +599,24 @@ question(8, 3);
   &lt;li&gt;이것을 반복하여 마지막 queue의 요소가 1개가 남으면 그 요소를 answer에 할당한다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;=&amp;gt; 정리하여 앞에 숫자가 조건에 만족하면 배열 마지막 요소로 push하고 shift를 사용하여 제거하지만, 조건에 만족하지 않으면 shift만 사용하여 제거함으로 최후에 남는 데이터를 찾을 수 있는 알고리즘이다.&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="Queue" /><summary type="html">Queue 자료구조를 활용한 알고리즘입니다.</summary></entry><entry><title type="html">[Algorithm] Stack</title><link href="http://localhost:4000/devlog/algorithm-stack.html" rel="alternate" type="text/html" title="[Algorithm] Stack" /><published>2021-08-10T00:00:00+09:00</published><updated>2021-08-10T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-stack</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-stack.html">&lt;blockquote&gt;
+&lt;p&gt;=&amp;gt; 정리하여 앞에 숫자가 조건에 만족하면 배열 마지막 요소로 push하고 shift를 사용하여 제거하지만, 조건에 만족하지 않으면 shift만 사용하여 제거함으로 최후에 남는 데이터를 찾을 수 있는 알고리즘이다.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 15 Aug 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/algorithm-queue.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/algorithm-queue.html</guid>
+        
+        <category>algorithm</category>
+        
+        <category>Queue</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[Algorithm] Stack</title>
+        <description>&lt;blockquote&gt;
   &lt;p&gt;Stack 자료구조를 활용한 알고리즘입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -487,7 +680,24 @@ const question = (str) =&amp;gt; {
 &lt;ul&gt;
   &lt;li&gt;stack이라는 배열을 만들고 난 후 ‘(‘가 있으면 stack에 push하고 ‘)’가 있으면 기존에 있는 ‘(‘를 pop하는 방식이다.&lt;/li&gt;
   &lt;li&gt;이렇듯 하나의 배열에 데이터를 순서대로 쌓고 순서대로 빼는 방식이 stack 자료구조이다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="Stack" /><summary type="html">Stack 자료구조를 활용한 알고리즘입니다.</summary></entry><entry><title type="html">[Algorithm] Hash</title><link href="http://localhost:4000/devlog/algorithm-hash.html" rel="alternate" type="text/html" title="[Algorithm] Hash" /><published>2021-08-06T00:00:00+09:00</published><updated>2021-08-06T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-hash</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-hash.html">&lt;blockquote&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 10 Aug 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/algorithm-stack.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/algorithm-stack.html</guid>
+        
+        <category>algorithm</category>
+        
+        <category>Stack</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[Algorithm] Hash</title>
+        <description>&lt;blockquote&gt;
   &lt;p&gt;임의의 길이의 데이터를 고정된 길이의 데이터로 변환시키는 알고리즘입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -546,7 +756,24 @@ const question = (fruits) =&amp;gt; {
 &lt;ul&gt;
   &lt;li&gt;for문을 사용한 것은 배열 안에 있는 요소들이 map을 사용한 hash 안에 있는지 없는지 탐색하기 위함이다.&lt;/li&gt;
   &lt;li&gt;키값에 대한 데이터를 저장할 때 배열의 특징이 아닌 객체같은 특징을 보여준다.(데이터를 추가시 밀어내거나 당기는 이벤트가 발생하지 않는 부분)&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="Hash" /><summary type="html">임의의 길이의 데이터를 고정된 길이의 데이터로 변환시키는 알고리즘입니다.</summary></entry><entry><title type="html">[Algorithm] Sliding Window</title><link href="http://localhost:4000/devlog/algorithm-slidingWindow.html" rel="alternate" type="text/html" title="[Algorithm] Sliding Window" /><published>2021-08-05T00:00:00+09:00</published><updated>2021-08-05T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-slidingWindow</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-slidingWindow.html">&lt;blockquote&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 06 Aug 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/algorithm-hash.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/algorithm-hash.html</guid>
+        
+        <category>algorithm</category>
+        
+        <category>Hash</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[Algorithm] Sliding Window</title>
+        <description>&lt;blockquote&gt;
   &lt;p&gt;배열에서 일정한 간격을 유지하면서 이동하며 탐색하는 알고리즘&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -617,7 +844,24 @@ const useFor = (m, arr) =&amp;gt; {
 &lt;ul&gt;
   &lt;li&gt;이중 For문과 달리 Slider Window는 배열의 처음과 끝을 &lt;b&gt;한번만&lt;/b&gt;탐색한다. (시간 효율이 좋다);&lt;/li&gt;
   &lt;li&gt;일정한 간격을 유지하기 때문에 범위의 앞과 뒤에서는 삭제와 삽입이 일어난다. (Deque 자료구조)&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="TwoPointer" /><summary type="html">배열에서 일정한 간격을 유지하면서 이동하며 탐색하는 알고리즘</summary></entry><entry><title type="html">[JavaScript] This</title><link href="http://localhost:4000/devlog/this.html" rel="alternate" type="text/html" title="[JavaScript] This" /><published>2021-08-03T00:00:00+09:00</published><updated>2021-08-03T00:00:00+09:00</updated><id>http://localhost:4000/devlog/this</id><content type="html" xml:base="http://localhost:4000/devlog/this.html">&lt;blockquote&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 05 Aug 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/algorithm-slidingWindow.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/algorithm-slidingWindow.html</guid>
+        
+        <category>algorithm</category>
+        
+        <category>TwoPointer</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[JavaScript] This</title>
+        <description>&lt;blockquote&gt;
   &lt;p&gt;This의 개념과 작동 원리입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -778,72 +1022,32 @@ obj.b();
 
 &lt;hr /&gt;
 
-&lt;p&gt;(apply, call, bind 추가 포스팅 예정)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="this" /><category term="call" /><category term="apply" /><category term="bind" /><summary type="html">This의 개념과 작동 원리입니다.</summary></entry><entry><title type="html">[Algorithm] Two Pointer</title><link href="http://localhost:4000/devlog/algorithm-toPointer.html" rel="alternate" type="text/html" title="[Algorithm] Two Pointer" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-toPointer</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-toPointer.html">&lt;blockquote&gt;
-  &lt;p&gt;1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-two-pointer란&quot;&gt;Two Poiner란?&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-사용-예제&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-two-pointer란&quot;&gt;📌 Two Pointer란?&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;의미 그대로 2개의 포인터를 가진다.&lt;/li&gt;
-  &lt;li&gt;1차원 배열에 포인터를 2개를 두어 각각 포인터들을 사용해 순차적으로 비교할 수 있다.&lt;/li&gt;
-  &lt;li&gt;이중 for문을 사용해도 되지만, 이중 for문은 시간복잡도가 O(N&lt;sup&gt;2&lt;/sup&gt;)이고 Two Pointer는 O(N)이어서 시간적으로 효율이 더 좋다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-사용-예제&quot;&gt;📌 사용 예제&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;간단하게 두 배열을 오름차순으로 합치는 알고리즘을 구현&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let arr1 = [1, 3, 5];
-let arr2 = [2, 3, 4, 6, 8];
-
-const twoPointer = (arr1, arr2) =&amp;gt; {
-   let answer = [];
-   let i = z = 0;
-
-    while(i &amp;lt; arr1.length &amp;amp; z &amp;lt; arr2.length) {
-       if(arr1[i] &amp;lt; arr2[z]) {
-           answer.push(arr1[i++]);
-       }
-       if(arr1[i] &amp;gt; arr2[z]) {
-           answer.push(arr2[z++]);
-       }
-       if(arr1[i] === arr2[z]) {
-        answer.push(arr1[i++], arr2[z++])
-       }
-   }
-
-   while(i &amp;lt; arr1.length) answer.push(arr1[i++]);
-   while(z &amp;lt; arr2.length) answer.push(arr2[z++]);
-
-   return answer;
-}
-
-twoPointer(arr1, arr2)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;간단하게 concat으로 합친다음 sort으로 정렬해도 되는 문제라고 생각이 든다.&lt;/li&gt;
-  &lt;li&gt;하지만 sort는 최악의 경우 O(N&lt;sup&gt;2&lt;/sup&gt;)이 될 수 있기 때문에 시간복잡도 측면에서는 효율이 좋지 못하다.&lt;/li&gt;
-  &lt;li&gt;Two Pointer 알고리즘은 포인터가 배열의 끝에 다다르면 마무리되기 때문에 시간복잡도 측면에서 sort보다 효율이 좋다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="TwoPointer" /><summary type="html">1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.</summary></entry><entry><title type="html">[JavaScript] 실행 컨텍스트</title><link href="http://localhost:4000/devlog/excutionContext.html" rel="alternate" type="text/html" title="[JavaScript] 실행 컨텍스트" /><published>2021-08-02T00:00:00+09:00</published><updated>2021-08-02T00:00:00+09:00</updated><id>http://localhost:4000/devlog/excutionContext</id><content type="html" xml:base="http://localhost:4000/devlog/excutionContext.html">&lt;blockquote&gt;
+&lt;p&gt;(apply, call, bind 추가 포스팅 예정)&lt;/p&gt;
+</description>
+        <pubDate>Tue, 03 Aug 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/this.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/this.html</guid>
+        
+        <category>javascript</category>
+        
+        <category>CoreJavaScript</category>
+        
+        <category>this</category>
+        
+        <category>call</category>
+        
+        <category>apply</category>
+        
+        <category>bind</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[JavaScript] 실행 컨텍스트</title>
+        <description>&lt;blockquote&gt;
   &lt;p&gt;실행 컨텍스트(Excution context)의 개념입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -989,4 +1193,1211 @@ console.log(a);
   &lt;li&gt;실행 컨텍스트의 정보들은 순서에 따라 콜스택 형태로 저장되고 호출된다.&lt;/li&gt;
   &lt;li&gt;호이스팅은 컨텍스트와 연관이 있으며, 코드가 실행되기 전 환경 정보를 저장하여 미리 변수명 등을 알게되는 자바스크립트 엔진에 의해 일어난다.&lt;/li&gt;
   &lt;li&gt;스코프는 실행 컨텍스트가 접근할 수 있는 변수나 함수들에게 순서를 부여하는 역할이다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="javascript" /><category term="CoreJavaScript" /><category term="ExcutionContext" /><category term="LexicalEnvironment" /><category term="VariableEnvironment" /><summary type="html">실행 컨텍스트(Excution context)의 개념입니다.</summary></entry></feed>
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 02 Aug 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/excutionContext.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/excutionContext.html</guid>
+        
+        <category>javascript</category>
+        
+        <category>CoreJavaScript</category>
+        
+        <category>ExcutionContext</category>
+        
+        <category>LexicalEnvironment</category>
+        
+        <category>VariableEnvironment</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[Algorithm] Two Pointer</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;1차원의 배열에서 2개의 포인터를 주어 풀어내는 알고리즘입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-two-pointer란&quot;&gt;Two Poiner란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-사용-예제&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-two-pointer란&quot;&gt;📌 Two Pointer란?&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;의미 그대로 2개의 포인터를 가진다.&lt;/li&gt;
+  &lt;li&gt;1차원 배열에 포인터를 2개를 두어 각각 포인터들을 사용해 순차적으로 비교할 수 있다.&lt;/li&gt;
+  &lt;li&gt;이중 for문을 사용해도 되지만, 이중 for문은 시간복잡도가 O(N&lt;sup&gt;2&lt;/sup&gt;)이고 Two Pointer는 O(N)이어서 시간적으로 효율이 더 좋다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-사용-예제&quot;&gt;📌 사용 예제&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;간단하게 두 배열을 오름차순으로 합치는 알고리즘을 구현&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let arr1 = [1, 3, 5];
+let arr2 = [2, 3, 4, 6, 8];
+
+const twoPointer = (arr1, arr2) =&amp;gt; {
+   let answer = [];
+   let i = z = 0;
+
+    while(i &amp;lt; arr1.length &amp;amp; z &amp;lt; arr2.length) {
+       if(arr1[i] &amp;lt; arr2[z]) {
+           answer.push(arr1[i++]);
+       }
+       if(arr1[i] &amp;gt; arr2[z]) {
+           answer.push(arr2[z++]);
+       }
+       if(arr1[i] === arr2[z]) {
+        answer.push(arr1[i++], arr2[z++])
+       }
+   }
+
+   while(i &amp;lt; arr1.length) answer.push(arr1[i++]);
+   while(z &amp;lt; arr2.length) answer.push(arr2[z++]);
+
+   return answer;
+}
+
+twoPointer(arr1, arr2)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;간단하게 concat으로 합친다음 sort으로 정렬해도 되는 문제라고 생각이 든다.&lt;/li&gt;
+  &lt;li&gt;하지만 sort는 최악의 경우 O(N&lt;sup&gt;2&lt;/sup&gt;)이 될 수 있기 때문에 시간복잡도 측면에서는 효율이 좋지 못하다.&lt;/li&gt;
+  &lt;li&gt;Two Pointer 알고리즘은 포인터가 배열의 끝에 다다르면 마무리되기 때문에 시간복잡도 측면에서 sort보다 효율이 좋다.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 02 Aug 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/algorithm-toPointer.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/algorithm-toPointer.html</guid>
+        
+        <category>algorithm</category>
+        
+        <category>TwoPointer</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[TypeScript] 기초 개념</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;TypeScript의 기본 타입 종류에 대한 포스트입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;목차&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-typescript란&quot;&gt;TypeScript란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-basic&quot;&gt;Basic&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-변수-지정&quot;&gt;변수 지정&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-변수-지정2&quot;&gt;변수 지정2&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-사용-예제&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-typescript란&quot;&gt;📌 TypeScript란?&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;기존에 사용하는 JavaScript는 Runtime 언어, 즉 동적 언어이다.&lt;br /&gt;
+동적 언어란 실행될 때 변수의 타입이 결정되기 때문에 사용자가 오류를 그대로 볼 수 있다.&lt;/li&gt;
+  &lt;li&gt;하지만 TypeScript는 정적 언어이다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;정적 언어란 컴파일될 때 변수의 타입이 결정되기 때문에 실행 전에 오류를 볼 수 있습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;언뜻보면 동적 언어가 자동으로 변수의 타입을 정해주기 때문에 정적 타입보다 동적 타입이 좋아보일 수 있지만…&lt;/li&gt;
+  &lt;li&gt;개발자가 의도하지 않았던 동작까지 동적 언어가 처리할 가능성이 있기 때문에 정적 언어로 바꾸어주어 안전하게 코드를 관리하는 것이 선호되고 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;=&amp;gt; 이러한 이유로 TypeScript를 Project에 적용시키는 것이 증가하고 있는 추세이다.📈&lt;/p&gt;
+
+&lt;h2 id=&quot;-basic&quot;&gt;📌 Basic&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-변수-지정&quot;&gt;🌱 변수 지정&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;먼저 변수를 지정하는 것은 간단하다!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const num = 1;
+=&amp;gt; const num: number = 1;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이런 식으로 변수옆에 변수가 무슨 타입의 데이터를 가지는지 명시해주는 것이다.&lt;br /&gt;
+(Boolean, string, undefined, null 등이 있을 것이다.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;-변수-지정2&quot;&gt;🌱 변수 지정2&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일반적인 기본형 데이터 타입으로 보지 못했던 것들이 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-unknown&quot;&gt;1. unknown&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a: unknown = 0;
+a = 'hello';
+a = '2';
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;아직 값이 정해지지 않았을 경우 unknown을 사용한다.&lt;/li&gt;
+  &lt;li&gt;TypeScript에서 JavaScript의 라이브러리를 사용할 경우 간혹 사용되곤 한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-any&quot;&gt;2. any&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a: any = 0;
+a = 'hello';
+a = 2;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;any도 unknown과 기능적으로는 비슷하지만 의미론적으로 다르다.&lt;/li&gt;
+  &lt;li&gt;any는 표현 그대로 ‘아무거나 다 가능!’이다.&lt;/li&gt;
+  &lt;li&gt;TypeScript 자체가 정적 언어인데 이러한 특성을 무너뜨리는(?) 특성으로 잘 사용되지 않는다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;3-void&quot;&gt;3. void&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;void는 함수에서 아무것도 리턴되지 않는 경우를 나타낸다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function hello():void {
+    return;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;hello함수는 현재 아무것도 return하고 있지 않다..!&lt;/li&gt;
+  &lt;li&gt;이럴 경우 함수의 값으로 void를 선언해주는데, void는 생략이 가능하다! 그래서 이 부분은 각 사마다의 컨벤션에 따라서!!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;4-never&quot;&gt;4. never&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;never는 함수가 에러를 리턴하거나 리턴 값 자체를 내보내지 않는 경우(무한 루프)에 사용된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function error(): never {
+    throw new Error(message);
+    while(true) {console.log('infinity loop')}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;5-object&quot;&gt;5. object&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;object는 데이터 타입이 object일 경우에 사용 가능하다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function obj(obj: object) {
+}
+obj({one: 1});
+obj({two: 2});
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-사용-예제&quot;&gt;📌 사용 예제&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function addNum(num1: number, num2: number2): number {
+    return num1 + num2
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이렇게 각 함수의 매개변수에도 number로 선언해줄수 있고 함수에 대한 return값의 타입도 지정해 줄 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;TypeScript의 함수에서는 지정된 매개변수를 일일히 선언해주지 않으면 에러가 일어난다.&lt;/li&gt;
+  &lt;li&gt;때문에 만일 함수에 매개변수의 값을 넘겨주지 않고 싶을 때는 &lt;b&gt;Optional parameter&lt;/b&gt;로 지정해준다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function printName(firstName: string, lastName?: string): string {
+    console.log(firstName);
+    console.log(lastName);
+}
+printName(SuYeon, Kim);
+printName(SuYeon)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이렇게 매개 변수 뒤에 ?를 붙여주면 그 매개변수는 전달해주지 않아도 동작하게 된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;함수의 매개변수에 전달되는 값이 없을 경우 default값도 지정해줄 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function greeting(message: string = 'hello') {
+    console.log(message);
+}
+greeting();
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;함수 매개변수의 타입이 일정할 때, 특정 개수가 지정되지 않고 여러개를 할당하고 싶으면 Rest parameter를 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function addNum(...numbers: number[]): number {
+    return numbers.reduce((a, b) =&amp;gt; a + b);
+}
+console.log(addNum(1, 2)); // 3
+console.log(addNum(1, 2, 3)); //6
+console.log(addNum(1, 2, 3, 4, 5, 6, 7)); // 28
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;array에서도 사용할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const students: string[] = ['철수', '영희'];
+const scores: Array&amp;lt;number&amp;gt; = [1, 2, 3];
+
+function printArray(students: readonly string[]) {
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;보통 string[]로 할 수 있지만 Array&lt;number&gt;같이 선언할 수도 있다.&lt;/number&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 여기서 readonly는 선언 시, 생성자 내부에서만 값을 할당할 수 있다.(불변성을 가질 수 있다!)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-정리&quot;&gt;📌 정리&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;TypeScript는 정적 언어이기 때문에 코드의 오류를 최소화하기 위한 목적을 가지고 사용한다.&lt;/li&gt;
+  &lt;li&gt;각 변수의 데이터 값에 맞는 타입을 선언해주어야 한다.&lt;/li&gt;
+  &lt;li&gt;함수에도 여러 가지 기능들을 활용하며 TypeScript를 사용하자!&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 29 Jul 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/basicType.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/basicType.html</guid>
+        
+        <category>typescript</category>
+        
+        <category>TypeScript</category>
+        
+        <category>basic</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[TypeScript] Alias Union Discriminated Intersection</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Alias Union Discriminated Intersection에 관한 포스트입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-alias&quot;&gt;Alias&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-union&quot;&gt;Union&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-discriminated&quot;&gt;Discriminatedd&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-alias&quot;&gt;📌 Alias&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;기존에 number, string같은 데이터를 각 타입에 맞게 선언해주었다면(ex.&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const a:number = 1&lt;/code&gt;), Alias는 사용자가 직접 type을 만들어주는? 이라고 이해할 수 있을 것 같다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-type-alias&quot;&gt;1. Type Alias&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Greeting = string;
+type Num = number;
+
+const hi: Greeting = 'hi';
+const hello: Greeting = 'hello';
+
+// 객체에도 가능하다.
+type Greeting = {
+    time: number;
+    greeting: string;
+}
+const obj: Greeting = {
+    time: 8,
+    greeting: 'hello'
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;2-string-literal-types&quot;&gt;2. String Literal Types&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;위와 같이 타입을 지정해줄 수 있지만, 하나의 문자열을 지정해줄 수도 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type name = 'suyeon';
+let me: name;
+me = 'suyeon'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-union&quot;&gt;📌 Union&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Union은 Alias의 확장판(?)의 느낌이다.&lt;/li&gt;
+  &lt;li&gt;한가지 타입만 지정하는 String Literal Types와 달리 하나 이상의 데이터들을 지정할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Direction = 'left' | 'right' | 'up' | 'down'
+function go(direction: Direction) {
+    console.log(direction);
+}
+go('up')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;저렇게 or연산자로 여러가지를 선언해주면 Direction이라는 Alias로 지정한 up, down, left, right라는 4가지의 데이터들을 사용할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-discriminated&quot;&gt;📌 Discriminated&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일반적인 String Literal Property가 있는 경우 Discriminated라 말한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type SuccessState = {
+    result: 'success';
+    response: {
+        body: string;
+    };
+}
+type FailState = {
+    result: 'fail';
+    reason: string;
+}
+type LoginState = SuccessState | FailState;
+function printLoginState(state: LoginState) {
+    if(state.result === 'success') {
+        console.log(state.result);
+    }
+    if(state.result === 'fail') {
+        console.log(state.result);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-intersection&quot;&gt;📌 Intersection&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Intersection은 간단히 말해 Alias를 합치는 것으로 연산자 &amp;amp;을 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type wecoder1 = {
+    name1: 'sy';
+    name2: 'ym';
+    name5: 'dh';
+}
+
+type wecoder2 = {
+    name3: 'ds';
+    name4: 'mh';
+}
+
+function werecordTeam(person: wecorder1 &amp;amp; wecorder2) {
+    console.log(person.name1, person.name2, person.name3, person.name4, person.name5);
+}
+
+werecordTeam({
+    name1: 'sy',
+    name2: 'ym',
+    name3: 'ds',
+    name4: 'mh',
+    name5: 'dh',
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Thu, 29 Jul 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/alias.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/alias.html</guid>
+        
+        <category>typescript</category>
+        
+        <category>TypeScript</category>
+        
+        <category>Alias</category>
+        
+        <category>Union</category>
+        
+        <category>Discriminated</category>
+        
+        <category>Intersection</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[JavaScript] Data Type</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;[Core JavaScript] Data Type에 대한 개념와 작동 원리입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-data-type&quot;&gt;Data Type&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-data-할당-원리&quot;&gt;Data 할당 원리&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-가변성과-불변성&quot;&gt;가변성과 불변성&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-얕은-복사-깊은-복사&quot;&gt;얕은 복사와 깊은 복사&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-복사를-하는-이유&quot;&gt;복사를 하는 이유&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-그래서-얕은-복사-깊은-복사가-머야&quot;&gt;그래서 얕은 복사, 깊은 복사가 머야?&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-정리&quot;&gt;정리&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-data-type&quot;&gt;📌 Data Type&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;JavaScrip의 데이터 타입은 크게 기본형(primitive), 참조형(reference)으로 나뉜다.&lt;/li&gt;
+  &lt;li&gt;기본형에는 String, Number, Boolean, Null, undefined, Symbol 등으로 나뉜다.&lt;/li&gt;
+  &lt;li&gt;참조형에는 Object, Array, Function, Date 등으로 나뉜다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;기본형과 참조형은 가변성인지, 불변성인지에 따라 나뉘게 되는데, 가변성과 불변성을 이해하려면 약간의 컴퓨터 메모리에 대한 지식이 필요하다. (추후에 자세하게 공부할 것!)
+=&amp;gt; 결론적으로 변수와 식별자는 메모리 고유의 주소값에 저장되고 그것을 참고하는 식으로 동작한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;-data-할당-원리&quot;&gt;🌱 Data 할당 원리&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a = 6
+let b = 'hello'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;이러한 형태로 변수가 선언되면 이 메모리들은 각각 컴퓨터 메모리에 이렇게 저장된다.
+&lt;img src=&quot;/assets/img/javascript/dataType.png&quot; width=&quot;300px&quot; height=&quot;200px&quot; /&gt; (글씨 어떻할거야…💩)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;저 코드가 메모리에 영향을 끼치는 순서를 순서대로 나열하자면…&lt;/li&gt;
+  &lt;li&gt;
+    &lt;ol&gt;
+      &lt;li&gt;변수명 a가 선언된다. -&amp;gt; 메모리 주소 1001번에 a가 저장된다.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;ol&gt;
+      &lt;li&gt;변수명 a에 6이 할당된다. -&amp;gt; 기존에는 undefined, 6은 곧바로 a의 주솟값인 1001에 저장되는 것이 아니라 새로운 주소 5001에 할당되고 1001에는 a의 값으로 5001주소가 참조된다. (a가 6을 가지고 있는 메모리 영역을 검색해서 찾는 원리)&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;ol&gt;
+      &lt;li&gt;위의 순서가 변수 b에 똑같이 적용된다.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 변수 데이터가 기본형일 경우 이러한 원리로 동작한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;위에서는 데이터 타입이 기본형이었다. &lt;br /&gt;
+그렇다면 참조형 데이터는 기본형의 원리와는 다른가??&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a = {one: 1, two: 2}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;a는 객체로 할당했다. 이것은 다음과 같다. &lt;br /&gt;
+&lt;img src=&quot;/assets/img/javascript/dataType2.png&quot; width=&quot;500px&quot; height=&quot;200px&quot; /&gt; (글씨 어떻게 할거냐고…💩)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;참조형은 기본형과는 다르게 객체 데이터에 대한 주소를 한번 더 참조한다.&lt;/li&gt;
+  &lt;li&gt;a라는 변수명을 1001에 할당하고난 뒤에 값은 5001 주소에 저장하지만, 객체 안에 one, two의 변수명들은 따로 7001에 저장시킨다.&lt;/li&gt;
+  &lt;li&gt;이것으로 그치는 것이 아니라 각각 one, two에 할당된 1, 2는 아까 기본형 데이터와 같이 다른 메모리 주소에 저장되고 one, two의 값은 그 주소가 할당된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 이 기본형과 참조형의 데이터 저장 스타일이 각기 다르기 때문에 앞으로 여러 이슈들이 발생한다. (가변성과 불변성)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-가변성과-불변성&quot;&gt;📌 가변성과 불변성&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;가변성과 불변성은 한마디로 정의하면 데이터 변환의 가능여부에 따라 나뉘는 것이 아니다.&lt;/li&gt;
+  &lt;li&gt;데이터를 변환했을 때 원래 값이 해당 주소에서 다른 값으로 갱신되는지의 여부에 따라 달라진다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a = 1
+let b = a
+a = 2
+console.log(a === b) // false
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let c = {one: 1, two: 2}
+let d = c
+c.one = 3
+console.log(c === d) // true..?
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;기본형과 참조형의 개념을 모른다면 위의 코드에서 이상한 점을 느꼈을 것이다.&lt;/li&gt;
+    &lt;li&gt;각 마지막 console에서 a와 b는 false가 맞는 것 같은데 c와 d는 왜 true일까??&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이것이 불변성의 특징이다. a는 1 데이터의 주소를 할당받았고 b는 a의 1 데이터의 주소를 할당받았다.&lt;/li&gt;
+  &lt;li&gt;그리고 a는 2로 다시 재할당받았는데…! 여기서!! 중요한 점은 b는 데이터의 주소가 변경되지 않았다는 것이다.&lt;/li&gt;
+  &lt;li&gt;그렇다는 것은 b가 할당받고 있는 데이터의 주소에는 1이 있다는 것!! 1은 a가 2로 바뀌었다고 해서 사라지지 않았다!! ⭐️&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;이것으로 기본형은 모두 불변성의 특징을 가지고 있다고 할 수 있다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;마찬가지로 c와 d또한 위와같은 플로우를 가진다.&lt;/li&gt;
+  &lt;li&gt;하지만 c와 d는 한단계 더 깊게 들어간다. 위의 객체가 데이터 저장하는 원리에서 나온 것처럼 말이다.&lt;/li&gt;
+  &lt;li&gt;즉, b와 c는 객체 전체에 대한 주소를 할당받고, 객체 전체에 대한 주소에서의 프로퍼티 요소은 하나하나 다른 데이터 영역에 저장되기 때문에 참조하는 데이터 범위를 할당받는다.&lt;/li&gt;
+  &lt;li&gt;이 때!!! 객체 안에 프로퍼티들이 다른 데이터로 재할당받게 되는 경우!!(위에 c.one = 3같은…).. 이 경우는 위의 예시와는 다르게 참조하고 있는 범위 안의 데이터가 바뀌게 된다.&lt;/li&gt;
+  &lt;li&gt;하지만 처음 c와 d의 주솟값은 변하지 않았기 때문에 c와 d는 일치로 나오는 것이다! (이 부분은 추후에 공부하기..!)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;만일 참조형 데이터 안에 또 참조형 데이터가 있다면..?&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a = {one: 1, two: [1, 2, 3]}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이러한 경우는 조금 더 복잡할 뿐..! 위의 예시를 적용시키면 가능하다!&lt;/li&gt;
+  &lt;li&gt;a의 변수와 함께 객체의 주소가 함께 할당된다. -&amp;gt; 객체의 주소에는 각 데이터들을 참조하는 영역을 할당받는다. -&amp;gt; two에서는 two라는 변수와 [1, 2, 3]을 담는 배열의 주소값을 할당받는다. -&amp;gt; 각 프로퍼티의 index가 이름이 되고 그에 대한 값으로 1, 2, 3이 각각 할당된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 이러한 특징들로 보아 참조형 데이터는 프로퍼티 값들만 변경되었을 경우 데이터 주소는 변하지 않으므로 &lt;b&gt;‘가변’&lt;/b&gt;의 특징을 가지는 것이다!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h6 id=&quot;참조형-데이터가-불변일-경우&quot;&gt;참조형 데이터가 불변일 경우?&lt;/h6&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a = {one: 1, two: 2}
+let b = a
+let a = {three: 3, four: 4}
+console.log(a === b) // false
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🎈 이 경우에는 a가 three, four라는 프로퍼티를 가진 값들의 주소를 재할당받은 것이기 때문에 &lt;b&gt;‘불변’&lt;/b&gt;의 특징을 가진다!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-얕은-복사-깊은-복사&quot;&gt;📌 얕은 복사, 깊은 복사&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-복사를-하는-이유&quot;&gt;🌱 복사를 하는 이유!&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;원본 데이터를 사용할 때 주의해야할 점이 있다. 바로 원본 데이터가 수정되는가 안되는가의 여부이다.&lt;/li&gt;
+  &lt;li&gt;‘왜? 원본 데이터가 수정되면 안되는가?’에 의문이 들 수 있지만, 사실 간단한 이유이다.&lt;/li&gt;
+  &lt;li&gt;원본 데이터를 한차례 수정하게 되었을 경우, 다음에 원본 데이터를 사용하려면 수정된 데이터를 감안하고 사용해야한다.&lt;/li&gt;
+  &lt;li&gt;그렇게 누적이 되다보면 원본데이터에 무슨 데이터가 있는지 확실하게 알지 못하게 된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;=&amp;gt; 따라서 원본데이터는 자체로 불변성을 지니는 것이 좋다!&lt;/p&gt;
+
+&lt;h3 id=&quot;-그래서-얕은-복사-깊은-복사가-머야&quot;&gt;🌱 그래서 얕은 복사, 깊은 복사가 머야?&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;얕은 복사 : 객체 프로퍼티 안에 객체 프로퍼티가 있는 경우, 제일 상위의 객체만 복사되고 하위의 객체 프로퍼티는 원래 그대로의 주솟값을 가지는 것&lt;/li&gt;
+  &lt;li&gt;깊은 복사 : 객체 프로퍼티 안에 있는 모든 경우의 값들을 새로운 주소에 할당하는 것&lt;br /&gt;
+객체 프로퍼티 내부에 하위 객체가 값으로 지정되어 있는 경우 위와 같은 가변성을 띈 객체로 되기 때문에 일일히 불변성을 가진 객체로 만들어주어야한다. (&lt;a href=&quot;#-가변성과-불변성&quot;&gt;가변성과 불변성&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;=&amp;gt; 얕은 복사, 깊은 복사에 대한 코드소개는 생략한다. 대신 불변 객체를 만들어주는 라이브러리를 소개로 마치려 한다.(immer.js, immutable.js, baobab.js)&lt;/p&gt;
+
+&lt;h2 id=&quot;-정리&quot;&gt;📌 정리&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;데이터 타입에는 기본형, 참조형이 있다.&lt;/li&gt;
+  &lt;li&gt;기본형은 자체로 불변성을 띄지만, 참조형은 상황에 따라 불변성을 띌 수도 가변성을 띌 수도 있다.&lt;/li&gt;
+  &lt;li&gt;참조형 데이터를 불변 객체로 만들기 위해서는 그에 맞는 함수를 구현하거나 라이브러리(immer.js, immutable.js, baobab.js 등)을 사용해야 한다.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Wed, 28 Jul 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/dataType.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/dataType.html</guid>
+        
+        <category>javascript</category>
+        
+        <category>CoreJavaScript</category>
+        
+        <category>DataType</category>
+        
+        <category>mutable</category>
+        
+        <category>immutable</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>[Algorithm] Brute Force</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;알고리즘 완전 탐색 브루트 포스의 개념과 원리, 간단한 사용 예제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-brute-force란&quot;&gt;Brute Force란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-사용-예제-javascript&quot;&gt;사용 예제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-정리하자면&quot;&gt;정리하자면!&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-brute-force란&quot;&gt;📌 Brute Force란?&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Brute Force의 Brute는 짐승, 난폭한,,이란 뜻과 Force가 만나 난폭한 힘.. 이런 느낌인 자료탐색방법인데 간단히 말하면 “너가 멀 좋아할지 몰라서 일단 다 준비해봤어..”이거다. 🤪&lt;/li&gt;
+    &lt;li&gt;Brute Force의 자료구조의 종류로는 2가지(선형구조 - 배열, 연결리스트 등, 비선형구조 - DFS, BFS)가 있다!! &lt;br /&gt;(다음엔 자료구조도 공부해보아야겠다!!)&lt;/li&gt;
+    &lt;li&gt;주어진 값을 구하기 위해서 모든 경우를 탐색하기 때문에 시간복잡도는 경우가 늘어날 때마다 기하급수적으로 늘어난다. &lt;br /&gt; 일반적으로 컴퓨터는 1초에 평균 1억번 정도의 연산이 가능하기 때문에 1000억번의 연산을 수행한다면 &lt;b&gt;17분&lt;/b&gt;이 소요된다./&lt;/li&gt;
+    &lt;li&gt;시간적인 측면에서는 비효율적이지만, 사용하기 쉽고 모든 경우를 탐색하기 때문에 &lt;b&gt;100%&lt;/b&gt; 답을 찾는 것이 가능하다.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-사용-예제-javascript&quot;&gt;📌 사용 예제 (JavaScript)&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;간단하게 소수를 찾는 문제로 Brute Force를 알아보자! &lt;br /&gt; (자료구조는 배열을 사용하여 진행!)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const question = arr =&amp;gt; {
+   let answer = []
+
+   for(let i of arr) {     --- (1)
+       let s = []
+       for(let z = 1; z &amp;lt;= i; z++) {    --- (2)
+           if(i % z === 0) s.push(z);
+       }
+       if(s.length === 2) answer.push(s[s.length - 1])
+   }
+   return answer
+}
+
+question([3, 2, 4, 6, 9, 11, 129, 127])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;효율적인 코드인지는 잘 모르겠지만.. 간단하게 살펴보면!&lt;/li&gt;
+  &lt;li&gt;(1)번과 (2)으로 의도한 것은 (1)번으로 arr에 있는 값을 하나씩 하위 for문으로 전달해주고, (2)에서는 (1)에서 받은 숫자 i를 1부터 i번까지 전부 탐색한다.&lt;/li&gt;
+  &lt;li&gt;i와 i 아래의 모든 값들을 %로 구해서 0이 나오면 만들어 놓은 배열에 저장시키고, 하위 for문이 끝나면 배열의 요소를 검사해 length가 2개이면 answer 배열에 넣어서 return한다. (소수는 1과 자신만 약수로 가지기 때문!)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-정리하자면&quot;&gt;📌 정리하자면!&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Brute Force(완전탐색)은 모든 경우의 수를 탐색한다.&lt;/li&gt;
+  &lt;li&gt;답은 확실하지만, 시간적인 소요가 크다.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 26 Jul 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/algorithm-bruteForce.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/algorithm-bruteForce.html</guid>
+        
+        <category>algorithm</category>
+        
+        <category>BruteForce</category>
+        
+        <category>완전탐색</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
+    
+      <item>
+        <title>Werecord project 🔥</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;A-Z까지 모두 경험했던 We-record 프로젝트!!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-a-z까지&quot;&gt;A-Z까지&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-위대한-첫걸음-&quot;&gt;위대한(?) 첫걸음&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-we-record의-탄생-&quot;&gt;we-record의 탄생&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-blocker벌써&quot;&gt;Blocker…(벌써…?)&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-중간-점검&quot;&gt;중간 점검&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-본격적인-개발&quot;&gt;본격적인 개발&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#-내가-맡은-task&quot;&gt;내가 맡은 Task&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-각-페이지-소개&quot;&gt;각 페이지 소개&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#-예상치-못한-감사&quot;&gt;예상치 못한 감사&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-error--fix&quot;&gt;Error &amp;amp; Fix&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-끝-그리고-시작&quot;&gt;끝 그리고 시작&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-a-z까지&quot;&gt;📌 A-Z까지…&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🚌 기간 : 6월 8일 ~ 7월 16일 &lt;br /&gt;
+👥 Front-end : 3명, Back-end : 2명
+💻 사용된 기술 스택 : React Hooks, React Router, Styled-Component, KAKAO social login, RESTful API&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-위대한-첫걸음-&quot;&gt;🌱 위대한(?) 첫걸음 👣&lt;/h3&gt;
+
+&lt;p&gt;2차 프로젝트 이후 기업협업과 개인 프로젝트.. 둘중 하나를 택하는 기로에 놓였고, 당연히 기업협업으로 가게 될 것이라는 생각과는 다르게 한번 더 팀으로 프로젝트를 진행하게 되었다..😳&lt;/p&gt;
+
+&lt;p&gt;처음에는 갑작스럽게 팀 프로젝트로 바뀌어서 당황했지만, 이내 곧 마음을 다잡고 1달이라는 시간동안 어떻게 해야 알차게 보낼지 팀원들과 머리를 싸매고..(지끈..🤮) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for(let i = 0; i &amp;lt; MAX.SAFE.INTEGER; i++) {return 고민}&lt;/code&gt;을 거듭했다. (탈모 생길거 가틈)&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;-we-record의-탄생-&quot;&gt;🌱 we-record의 탄생 👶🏻&lt;/h3&gt;
+
+&lt;p&gt;그동안 배운 코딩을 사용해서 무엇을 만들어야할지… 처음으로 ‘무언가를 스스로 만든다’라는 고민을 해보았던 것 같다. 사이트를 모티브로 한 2번의 프로젝트 때와 달리 신선한 고민으로 다가왔지만, 첫 시작은 막막하기도 해서 내심 걱정이 들었다… 하지만 이런 걱정은 기우였을까?? 우려했던 것과는 달리 우리 팀은 제대로 해보겠다는 의지가 불타오르고 있었다🔥&lt;/p&gt;
+
+&lt;p&gt;프로젝트 포인트는 ‘우리 주변에 무언가가 필요했던 상황이 있었나??’를 중점으로 고민했던 것 같다. 그러던 중 마침 기업협업을 나갔던 동기분 한분이 회사 근태 사이트를 구현한다는 소식을 접하게 되면서.. “어라?? 나도 위코드에 있었을 때 출석부 필요했는데…” 생각으로 이어지고 팀원분들의 다양한 의견을 종합해본 결과!! Werecord가 탄생하게 되었다!! (두둔!🥁)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-planing.png&quot; alt=&quot;werecord&quot; /&gt; - 기획기획..끄적끄적…
+&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-planing2.jpg&quot; alt=&quot;werecord&quot; /&gt; - 팀원들 머리 속 깊숙히 박혀있는 아이디어 한톨까지 뽑아낸 결과물..! (feat.동기분들 응원 🙈)&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;-blocker벌써&quot;&gt;🌱 Blocker…(벌써..?)&lt;/h3&gt;
+
+&lt;p&gt;기획까지 너무 좋았다. 사실은 걱정도 잠시, 이것저것 아이디어를 가지고 페이지를 기획하는 과정은 생각보다 재미있었다. 그렇게 분명한 사이트의 목적에 어울리는 여러 아이디어를 뽑았다.&lt;/p&gt;
+
+&lt;p&gt;개발사전에 한번 내뱉은 말은 책임을 져야 한다..라는 말이 있었나..? 아무튼 재미있게, 그리고 진지하게 기획을 마치고 난 이후 우리는 ‘우리가 기획한 프로젝트’를 만들어야했다. ‘아 너무 재미있겠다~~’라고 외쳤던 나에게 다가온 하나의 큰 산… Design…&lt;/p&gt;
+
+&lt;p&gt;나름 전체적인 페이지의 구도를 본다고 생각했지만 이건 좀.. 다른 문제였다. 우리의 아이디어를 페이지에 어떻게 녹여내야할까???의 고민… 주변에 디자인을 전공한 친구들도 없고… 나에게는 다꾸(다꾸 = 다이어리 꾸미기ㅋ) 경력 2년차 여자친구에게 물어보는게 전부였다.&lt;/p&gt;
+
+&lt;p&gt;심호흡을 하고, 마음을 가다듬고 figma를 열었다.
+&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-design.png&quot; alt=&quot;werecord&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;사전에 노트로 끄적였던 UI를 하나하나 정성스래 잡으면서 작업했다. (세부적인 디자인에 신경써주신 다꾸인(?) 팀원 다*님 고생많으셨습니다👍🏼)&lt;/p&gt;
+
+&lt;p&gt;당연히~ 여러 우여곡절 끝에 만들어진 디자인이지만 그 과정을 여기에 다 거론할 수 없을 것 같아 이쯤에서 넘어가는게 좋을 것 같다.&lt;/p&gt;
+
+&lt;p&gt;(이렇게 기획과 디자인으로만 꼬박 2주라는 시간을 소요했다..)&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;-중간-점검&quot;&gt;🌱 중간 점검&lt;/h3&gt;
+
+&lt;p&gt;“처음하는 기획, 처음하는 디자인” 등 그동안 배웠던 개발 스택과는 거리가 조금 먼 친구들이지만, 이러한 과정을 직접 경험함으로 느끼는 바가 컸다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;생각했던 것과는 달리 기획이 수시로 바뀌어서 정말정말정말 “프로젝트의 중심”을 잘 잡아야한다는..&lt;/li&gt;
+  &lt;li&gt;그렇다고 기획의 기능적인 부분만 신경쓰는 것이 아니라 항상 “사용자 편의를 고려”해서 개발해야 한다는..&lt;/li&gt;
+  &lt;li&gt;앞으로 현업에서 웹 디자이너와 어떻게 소통해야할지 생각해보는..&lt;/li&gt;
+  &lt;li&gt;필수적으로 팀원들과 정기 + 수시로 “소통”해서 프로젝트 방향성을 명확하게 잡아야하는..&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;등등등 최대한 실제 현업에서 고민해볼 수 있는 사항들을 접하고 싶었는데.. 아마 현업에서도 이러한 고민들을 할 수 있을 것이라 생각해서 괜히 기분이 좋았다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;-본격적인-개발&quot;&gt;📌 본격적인 개발!&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-내가-맡은-task&quot;&gt;🌱 내가 맡은 Task&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;기수 페이지&lt;/li&gt;
+  &lt;li&gt;메인페이지&lt;/li&gt;
+  &lt;li&gt;공용 모달 컴포넌트 만들기&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;팀원들과 페이지 단위로 task를 분담했다. 물론 각 페이지마다 공통으로 들어갈 컴포넌트가 있다면 재사용할 계획이었지만 각 페이지별로 구현되는 UI가 다 달라서 공용으로 사용되는 컴포넌트가 많지 않았다.&lt;/p&gt;
+
+&lt;p&gt;각 페이지마다 Comment가 추가로 랜더되야하는 것들은 모달을 사용하여 랜더링시키는 것으로 이야기를 나누었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;-각-페이지-소개&quot;&gt;🌱 각 페이지 소개&lt;/h3&gt;
+
+&lt;h4 id=&quot;--기수페이지&quot;&gt;- 기수페이지&lt;/h4&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-batch.gif&quot; alt=&quot;werecord&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;어려운 코드는 아니지만 이것저것 다양한 데이터를 받고 랜더링 시키는 것이 포인트이다.&lt;/li&gt;
+    &lt;li&gt;slider 라이브러리 slick를 사용하여 같은 기수 동기들의 간단한 프로필을 볼 수 있다.&lt;/li&gt;
+    &lt;li&gt;오늘 하루 start버튼을 누른 동기는 해당 프로필카드 이름 우측에 빨간 점이 파란 점으로 바뀌게 구현하였다.&lt;/li&gt;
+    &lt;li&gt;지박령 순위 단상은 div로 만들고 annimation을 주어 심심하지 않게 구현하였다.&lt;/li&gt;
+    &lt;li&gt;모달은 createPotal을 사용하여 전역으로 관리할 수 있게 설계하였다.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-batchCode.png&quot; alt=&quot;werecord&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;CREAM 프로젝트 모달과는 달리 closet을 활용하여 모달창 바깥에 onClick은 blur처리가 되도록 구현하였다.&lt;/li&gt;
+  &lt;li&gt;또한 모달이 필요한 컴포넌트마다 on/off를 동작하게 하는 함수를 선언하는게 아니라 모달 내부에서 해당 모달에 대한 on/off를 컨트롤할 수 있게끔 구현하여 코드를 최소화하였다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;--메인페이지&quot;&gt;- 메인페이지&lt;/h4&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-main.gif&quot; alt=&quot;werecord&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;현재 시간은 setInterval로 구현하여 실시간으로 변경된 시간이 랜더링 되도록 구현하였다.&lt;/li&gt;
+    &lt;li&gt;여기서 Blocker를 만나게 되는데.. setInterval로 Main 컴포넌트를 지속적으로 랜더링시키는 것이 다른 함수들 또한 컴포넌트 내에 생성하여 호출하는 것이 서로 엮여 에러를 일으켰다.&lt;/li&gt;
+    &lt;li&gt;따라서 다른 함수들은 랜더가 지속적으로 일어나도 초기 함수값을 가진 상태를 유지하여 랜더링 최적화를 진행하는 것이 효율적이라 판단하였다.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-mainCode.png&quot; alt=&quot;werecord&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;useMemo, useCallback을 사용하여 함수로 호출된 값을 기억하여 추가적인 랜더링 시에도 새로운 함수로 만들어지지 않도록 구현하였다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;useMemo는 이미 함수로 호출된 값을, useCallback은 Callback함수로 전달할 함수들을 대상으로 React 최적화 hook을 사용했는데 추가적으로 두가지의 사용법에 대해 공부해야할 것 같다!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;조금 더 코드를 간소화하여 구현하는 방법이 있을 것 같은데 React랜더링 최적화에 대해 더 공부하여 리팩토링해야할 것 같다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;-예상치-못한-감사&quot;&gt;🌱 예상치 못한 감사&lt;/h3&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;프로젝트를 진행하던 도중 Wecode의 멘티들을 대상으로 하는 프로젝트를 진행한다는 소문이 돌았던 것 같다. 그렇게 된 것일까.. 멘토님들께서 잘하면 실제로 Wecode 프로그램으로 사용해도 될 것 같다는 엄!청!난! 말씀을 해주셨다!!🤩&lt;/p&gt;
+
+&lt;p&gt;팀원들끼리만 기획하고 남을 것 같던 프로젝트가 실제 서비스될 수도 있다는 생각에 정말 신기했다!
+이후로 디자인부분과 기획적인 부분을 멘토님들과 회의를 통해 수정하고 추가하고 보완하게 되었다 :)&lt;/p&gt;
+
+&lt;p&gt;그렇게해서 프로젝트에 새롭게 멘토페이지가 추가되었다!! 멘토페이지는 멘티뿐만 아니라 멘토님들도 가입하여 멘티들을 확인할 수 있는 페이지였다.&lt;/p&gt;
+
+&lt;p&gt;그렇게 werecord 프로젝트는 시즌 2를 맞이하게 되었다!!!🔥&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;-error--fix&quot;&gt;📌 Error &amp;amp; Fix&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;앞서 보여진 디자인이나 코드들은 사실 저 당시에 완성되었던 것들이 아니었다. 디자인도 조금 더 투박했고 코드 또한 버그들이 난무했다.&lt;/p&gt;
+
+&lt;p&gt;멘토님께서 werecord 프로젝트를 실제로 사용하는 것을 긍정적으로 검토하시고 난 이후 새로운 숙제를 주셨다..!😂 바로 멘토님들께서 찾으신 에러들, 찌그러지는 UI들을 고치는 일이었다.&lt;/p&gt;
+
+&lt;p&gt;팀원들끼리 모의로 테스트해 보았을 때 꽤나 자신만만했던 것 같다. ‘여기에 버그가 도대체 어디있지?’ 나름 버그를 수정하면서 작업했기에 버그따위.. 없을거라 생각했다. 게다가 규모도 작은 프로젝트이니 더 그렇게 생각했던 것 같다.. 하지만…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-25-werecord/werecord-errorfix.png&quot; alt=&quot;werecord&quot; /&gt; - 엥..?&lt;/p&gt;
+
+&lt;p&gt;버그만 있지는 않고 새로운 페이지들과 기능도 추가되었지만 예상보다 전체적으로 보완되고 수정될 부분들이 있었다는 것이 놀라웠다. (그리고 물론 저게 다가 아니다…ㅎ)&lt;/p&gt;
+
+&lt;p&gt;새롭게 기획에 추가된 Restart버튼과 pause버튼를 구현하게 됨으로 전체적인 데이터 구조를 다시 잡아야했다. 물론 프론트쪽에서는 받는 데이터에 따라서 랜더링만 시켜주면 되겠지만.. 백엔드에서 좀 고생하셨던 것 같다.ㅠㅠ&lt;/p&gt;
+
+&lt;h2 id=&quot;-끝-그리고-시작&quot;&gt;📌 끝 그리고 시작&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;7월 2일부로 공식적인 wecode 커리큘럼이 마무리 되었다. 하지만 여기서 끝날 줄 알았던가… 멘토님께서 2주정도 추가로 디자이너를 붙여주시면 프로젝트를 이어할 마음이 있는지 여쭤보셨다..!
+당연히 werecord 프로젝트에 애착이 있던 나와 팀원들… Yes!!를 외쳤던 기억이 난다.😏&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;현재(7월 25일) 여러가지 상황들이 맞물려 프로젝트 기간이 계속 딜레이 되다가 드디어 새로운 디자인 시안이 나오게 되었다. 그런데 생각과는 달리 팀원들과 같이 만들었던 모습은 온데간데 없고 새로운(?) 웹 페이지가 있었다..ㅠㅠ (고생해서 만든건데ㅠㅠ)&lt;/p&gt;
+
+&lt;p&gt;그런데 역시 디자이너는 디자이너인가.. 휠씬 모던하고 보기 좋아서 조금 씁쓸..ㅎ
+기능적인 부분도 원래 기획과는 다르게 추가된 것들도 있었고 삭제된 것들도 있었다.
+(역시 개발은 클라이언트가 왕이지.. 라는 벌써부터 현업 마인드로 생각하는 것 같아 웃펐다 😂)&lt;/p&gt;
+
+&lt;p&gt;최종으로 수정된 기안들을 우리가 마음대로 쓸 수 있을까 조심스럽게 염려하기도 하고.. 이렇게 우리가 기획하고 디자인하고 개발까지 이어졌던 프로젝트를 남기고 싶었다.&lt;/p&gt;
+
+&lt;p&gt;기회가된다면 최종 기획에 따라 만들어진 웹페이지와 현재 페이지를 비교하고 싶기도 하다!! 리팩토링은 당연히 해야되고!! Werecord 2편에서 다시 만나길…&lt;/p&gt;
+</description>
+        <pubDate>Sun, 25 Jul 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/project/project-review-werecord.html</link>
+        <guid isPermaLink="true">http://localhost:4000/project/project-review-werecord.html</guid>
+        
+        <category>project</category>
+        
+        <category>werecord</category>
+        
+        <category>React</category>
+        
+        <category>근태</category>
+        
+        
+        <category>project</category>
+        
+      </item>
+    
+      <item>
+        <title>2차 프로젝트 회고 (CREAM)</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Wecode 부트캠프에서 진행한 프로젝트 CREAM에 대한 회고록입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-근황&quot;&gt;근황&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-project-cream&quot;&gt;Project CREAM&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#1-기획하는-단계&quot;&gt;기획하는 단계&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#2-프로젝트-설명&quot;&gt;프로젝트 설명&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-마치며&quot;&gt;마치며…&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-근황&quot;&gt;📌 근황…&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;2차 프로젝트를 마무리하고 약 한달 반이 지났다. 그동안은 Velog를 이용해왔지만 ‘나만의 블로그를 만들어서 운영하고 싶다..’라는 단순하고도 어리석은(?) 생각으로 github를 이용한 블로깅을 해야지..해야지.. 했던게 지금까지 이어져 왔다.😂&lt;/p&gt;
+
+&lt;p&gt;Wecode 부트캠프를 수료하고 난 이후에 개인적으로 공부하는 기술 스택들을 블로깅하고 싶은 마음에 마음 단단히(?) 먹고 몇일동안 고군분토한 결과… 드디어!! 블로그가 만들어졌다!!🎉
+이제 부지런히 밀린 블로깅을 하는 일만 남았다..!&lt;/p&gt;
+
+&lt;h2 id=&quot;-project-cream&quot;&gt;📌 Project CREAM&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🚌 기간 : 5월 24일 ~ 6월 04일 &lt;br /&gt;
+👥 Front-end : 3명, Back-end : 2명
+💻 사용된 기술 스택 : React Hooks, React Router, Styled-Component, KAKAO social login, RESTful API&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;팀원들과 함께 신발 경매 사이트 Kream을 모티브로 하여 개발을 진행 &lt;br /&gt;&lt;/li&gt;
+    &lt;li&gt;사람들과의 거래 및 경매라는 플로우를 중심으로 한 개발을 목표로 선정&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;1-기획하는-단계&quot;&gt;1. 기획하는 단계🚶&lt;/h3&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;-서비스-파악하기&quot;&gt;🌱 서비스 파악하기&lt;/h4&gt;
+
+&lt;p&gt;CREAM의 특징은 물품 구매자와 판매자 모두 서비스를 이용하는 이용자들이 될 수 있다는 것이다. 그렇기 때문에 서비스를 이용하는 회원들은 물품을 판매하게 되면 물품 값을 받아야하고 구매를 하게 되면 물품 값을 내야했다.&lt;/p&gt;
+
+&lt;p&gt;프로젝트이기 때문에 실제 화폐가 아닌 팀원끼리 사용할 수 있는 가상 활페로 대체하고, 대략적인 플로우를 생각해보았다.&lt;/p&gt;
+
+&lt;p&gt;Kream은 경매로 물품에 대해 입찰만 할 수 있는 것이 아니라 상품에 대한 즉시 구매도 가능했다.
+물품에 대한 채결 거래 내역이 실시간으로 갱신되는 것도 chart를 통해서 확인할 수 있었는데, 경매 입찰 거래가와 즉시 구매가, 즉시 판매가에 대한 연결성을 파악해야했다.&lt;/p&gt;
+
+&lt;p&gt;얼마 지나지 않아서 즉시 구매가는 판매 입찰로 나온 물품 중 가장 싼 판매 희망가가 즉시 구매가로 책정이 되고, 즉시 판매가는 구매 입찰에 나온 물품 중 가장 비싼 구매 희망가로 책정된다는 것을 발견하였다.&lt;/p&gt;
+
+&lt;p&gt;또한 구매 입찰을 진행할 때, 만약 구매 입찰가가 즉시 구매가보다 높다면 자동으로 즉시 구매가로 넘어가주어야 했고, 마찬가지로 판매 입찰을 진행할 때, 만약 판매 입찰가가 즉시 판매가보다 낮으면 자동으로 즉시 판매가로 넘어가주어야 했다.&lt;/p&gt;
+
+&lt;p&gt;이러한 거래 플로우를 각 하나의 물품에 대한 여러가지의 사이즈를 고려하여 데이터를 처리해야했기 때문에 생각보다 복잡했고, 팀원들과 의논하며 구현에 집중할 기능들을 하나 둘씩 정리하였다.&lt;/p&gt;
+
+&lt;h4 id=&quot;-내가-맡은-기능&quot;&gt;🌱 내가 맡은 기능&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;제품 상세 페이지 (chart.js 라이브러리 사용, 무한 스크롤 구현)&lt;/li&gt;
+  &lt;li&gt;팀원들과 함께 사용할 공용 Modal 구현&lt;/li&gt;
+  &lt;li&gt;URLSearchParams를 사용하여 백엔드에서 받는 데이터 필터링 구현&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-프로젝트-설명&quot;&gt;2. 프로젝트 설명🙈&lt;/h3&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;-modal&quot;&gt;🌱 Modal&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;WIKEA 프로젝트 때 팀원이셨던 분께서 공용 모달로 만드셨던 기억을 떠올려 스스로 구현해보았다.&lt;/li&gt;
+  &lt;li&gt;가장 큰 모달창만 구현을 하고 모달 내부에 들어갈 데이터 요소들은 하위 컴포넌트로 구현하기로 기획하였다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;여기서 등장하는 모달들은 내부에 있는 데이터만 다르고 모두 같은 컴포넌트로 구현하였다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-modal.gif&quot; alt=&quot;modal&quot; /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-modalCode.png&quot; alt=&quot;modalCode&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;간단해보이는 modal이다. 모달의 on/off를 상위 컴포넌트의 state로 관리해주고, 내부 데이터들을 children으로 받아서 랜더링시켜준다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;-chart--infinity-scroll&quot;&gt;🌱 Chart &amp;amp; Infinity scroll&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;처음 입문한 라이브러리인 Chart.js이다. Chart.js 자체의 기능은 어렵지 않았지만… 설치하는 부분에서 꼬박 하루가 걸렸다..😂 아무리 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install chart.js&lt;/code&gt;를 실행해서 chart를 설치해도… 일부 기능들이 동작하지 않았다..&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;원인은 chart.js의 버전이었다. chart.js를 사용하는 다른 사람들의 소스코드를 계속보다가 문득 package.json은 어떻지??라는 생각에 살펴보게 되었는데, 다른 사람들은 2.9.3버전의 chart.js를 사용하고 있었고, 나는 최신 버전으로 보이는 chart.js를 사용하고 있었다. 혹시나 하는 마음에 chart.js를 다운그래이드하여 다시 설치해본 결과…!! 드디어!! chart.js의 option으로 관리되는 기능들이 동작하였다..!! 그때의 감격.. (그 이후 package.json의 존재 이유를 알게 되었다는….)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-chart.gif&quot; alt=&quot;chartGif&quot; /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-chartCode.png&quot; alt=&quot;chartCode&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;무한 스크롤은 보통 백엔드와 소통하여 offset과 limit를 사용한 무한 스크롤을 구현하는 경우가 일반적인 것 같다. 하지만 백앤드와 소통해서 구현하기에는 메인 기능이 아니라 여겼기 때문에 백엔드로부터 오는 result값은 다 받고 이벤트가 발생할 때마다 result의 범위를 slice를 통해 넓혀나가는 방법을 택했다. (랜더링 최적화에는 좋지 않은 것 같아 리팩토링이 필요한 로직이라 생각한다.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-infinity1.png&quot; alt=&quot;infinityScroll&quot; /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-infinity2.png&quot; alt=&quot;infinityScroll&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;-filter&quot;&gt;🌱 Filter&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;입찰 거래 내역에는 가격별, 사이즈별로 오름차순 내림차순 기능이 구현되어 있다.&lt;/li&gt;
+  &lt;li&gt;처음에는 데이터 영역을 다루는 것 자체가 백엔드의 역할이라는 회의 결과로 인해 백앤드분께서 일일히 해당 엔드포인트를 만들어주셨다. 그래서 URLSearchParams를 가지고 각 해당 엔드포인드로 이동하게끔 만들었다.&lt;/li&gt;
+  &lt;li&gt;하지만 오히려 이것은 버튼을 누를 때마다 불필요한 통신을 실행하기에 오버 엔지니어링이라 느꼈다. 프론트에서 자체적으로 간단하게 필터링할 수 있는 부분인 것 같아 효율적인 운용을 위해 리팩토링해야할 것 같다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-filter.gif&quot; alt=&quot;filter&quot; /&gt;
+&lt;img src=&quot;/assets/img/project/2021-07-24-cream/2021-07-24-cream-filterCode.png&quot; alt=&quot;filterCode&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;-마치며&quot;&gt;📌 마치며..&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;현재 글을 적고 있는 시점은 이미 1달 반이라는 시간이 지났지만 아직까지 팀원들과 프로젝트를 진행했던 기억은 생생하다. 이번 프로젝트의 제일 Blocker는 chart.js의 버전의 차이로 인한 버그인 것 같다.&lt;/li&gt;
+  &lt;li&gt;하루종일 ‘왜 동작을 안하지?’ 라는 생각을 수십번도 넘게 했던… 비록 버전 넘버 바꿔주고 npm install하니까 금방 해결될 문제였지만, 현업에서 이런 Blocker를 만나면 어떻게 효율적으로 대처할 것인가에 대해 많이 생각해보았던 것 같다.&lt;/li&gt;
+  &lt;li&gt;이 프로젝트를 진행하면서 로직을 통한 문제 해결능력도 중요하지만, 필요한 시점에 적절한 문구를 사용하여 서치하는 능력 또한 중요하다는 것을 느끼는 프로젝트인 것 같다!! :)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 24 Jul 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/project/project-review-cream.html</link>
+        <guid isPermaLink="true">http://localhost:4000/project/project-review-cream.html</guid>
+        
+        <category>project</category>
+        
+        <category>Kream</category>
+        
+        <category>React</category>
+        
+        <category>경매</category>
+        
+        
+        <category>project</category>
+        
+      </item>
+    
+  </channel>
+</rss>
