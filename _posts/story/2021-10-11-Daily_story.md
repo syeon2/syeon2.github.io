@@ -2,7 +2,7 @@
 layout: post
 title: "10월 11일 월요일"
 subtitle: "앞으로의 계획과 방향"
-categories: project
+categories: story
 tags: Daily
 ---
 
