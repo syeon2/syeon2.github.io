@@ -4,7 +4,7 @@ type: category
 title: Book
 slug: book
 sidebar: true
-order: 3
+order: 2
 description: >
   Read for the Record📚
 ---
