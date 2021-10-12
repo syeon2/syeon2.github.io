@@ -183,7 +183,7 @@ kramdown:
 
 # Set your Google Analytics id to receive `pageview` events.
 # To remove Google Anaylics from your page, remove the line below.
-# google_analytics:      UA-XXXXXXXX-X
+google_analytics: G-7C7T4RFTLJ
 
 # Set which comment system to use
 comments:
