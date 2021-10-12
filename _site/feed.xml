@@ -6,9 +6,41 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 12 Oct 2021 08:59:52 +0900</pubDate>
-    <lastBuildDate>Tue, 12 Oct 2021 08:59:52 +0900</lastBuildDate>
+    <pubDate>Tue, 12 Oct 2021 23:41:36 +0900</pubDate>
+    <lastBuildDate>Tue, 12 Oct 2021 23:41:36 +0900</lastBuildDate>
     <generator>Jekyll v3.9.0</generator>
+    
+      <item>
+        <title>[Refactorying2] Chapter 1 (23-51p)</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;리펙터링2 23 ~ 51 페이지&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;h2 id=&quot;-refactorying-2-시작&quot;&gt;📌 Refactorying 2 시작!&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;지금까지 리펙터링이라 생각했던 것은 전체적인 코드 컨벤션을 지키고 코드를 가독성있게 짜는 것이라고 생각했다. 하지만 가독성있는 코드란 도대체 무엇일까? 라는 의문이 들었다. 더러운 코드란 무엇일까? 무슨 의미인지 1도 모르겠는 변수명? 들여쓰기 내어쓰기? 줄바꿈?..🧐
+좋은 코드를 위해 고민하는 훈련을 하고자 Refactorying을 읽기 시작했다.📚 충분한 고민과 함께 책을 완독하였을 떄 한층 더 성장해 있을 나를 꿈꾸며 열심히 달려야겠다!!🏃🏻&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-chapter-1-리펙터링-첫번째-예시&quot;&gt;📌 Chapter 1: 리펙터링 첫번째 예시&lt;/h2&gt;
+
+&lt;hr /&gt;
+</description>
+        <pubDate>Tue, 12 Oct 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/book/page23-51.html</link>
+        <guid isPermaLink="true">http://localhost:4000/book/page23-51.html</guid>
+        
+        <category>Refactorying2</category>
+        
+        
+        <category>book</category>
+        
+      </item>
     
       <item>
         <title>10월 11일 월요일</title>

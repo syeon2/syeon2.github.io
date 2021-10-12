@@ -1,10 +1,10 @@
 ---
 layout: list
 type: category
-title: Story
-slug: story
+title: Book
+slug: book
 sidebar: true
-order: 1
+order: 3
 description: >
-  Daily story🏃🏻
+  Read for the Record📚
 ---
