@@ -4,7 +4,7 @@ type: category
 title: Story
 slug: story
 sidebar: true
-order: 4
+order: 1
 description: >
   Daily story
 ---
