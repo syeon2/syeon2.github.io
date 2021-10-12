@@ -6,5 +6,5 @@ slug: project
 sidebar: true
 order: 3
 description: >
-  Anything about Project
+  Anything about Project🔥
 ---
