@@ -71,6 +71,8 @@
 <link rel="dns-prefetch" href="https://fonts.googleapis.com"><link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
 
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
+
 
 <link rel="preload" href="/assets/img/swipe.svg" as="image" id="_hrefSwipeSVG">
 
@@ -100,7 +102,7 @@
   w._search = {
     DATA_URL: '/assets/sitedata.json?no-cache',
     STORAGE_KEY: 'mini-search/',
-    INDEX_KEY: 'index--2021-10-13T00:50:36+09:00',
+    INDEX_KEY: 'index--2021-10-13T20:10:13+09:00',
   };
   w._clapButton = true;
 }(window);</script>
@@ -214,7 +216,7 @@
 
 
 
-<h2 id="안녕하세요-개발자-김수연입니다-">안녕하세요! 개발자 김수연입니다. 🌱</h2>
+<h2 id="안녕하세요-">안녕하세요! 🌱</h2>
 
 <p>이해가 중요한 수학의 영역에도 익숙해지는 행동이 필요합니다.🏋🏻‍♀️ <br />
 어제보다 오늘 더 성장하는 개발자가 되기 위해 꾸준히 학습하고 기록합니다.📝</p>
@@ -524,6 +526,33 @@
   
 
   
+  <script>!function(w, d) {
+    w.ga=w.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+
+    /**/
+      ga('create', 'G-7C7T4RFTLJ', 'auto');
+    /**/
+
+    var pushStateEl = d.getElementById('_pushState');
+    var timeoutId;
+    pushStateEl.addEventListener('hy-push-state-load', function() {
+      w.clearTimeout(timeoutId);
+      timeoutId = w.setTimeout(function() {
+        ga('set', 'page', w.location.pathname);
+        ga('send', 'pageview');
+      }, 500);
+    });
+
+    d.addEventListener('hy--cookies-ok', function () {
+      w.ga(function(tracker) {
+        w.ga("set", "anonymizeIp", undefined);
+        localStorage && localStorage.setItem("ga--client-id", tracker.get("clientId"));
+      });
+    });
+
+    w.loadJSDeferred('https://www.google-analytics.com/analytics.js');
+  }(window, document);</script>
+
 
   <script type="module">
     if ('serviceWorker' in navigator) {
