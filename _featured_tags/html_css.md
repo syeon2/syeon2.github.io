@@ -7,5 +7,5 @@ category: devlog
 sidebar: true
 order: 2
 description: >
-  HTML & CSS study
+  HTML & CSS
 ---

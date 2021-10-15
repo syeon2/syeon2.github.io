@@ -6,5 +6,5 @@ slug: devlog
 sidebar: true
 order: 3
 description: >
-  Anything about Development👨🏻‍💻
+  기억하기 위해 기록한 개발일지👨🏻‍💻
 ---

@@ -7,5 +7,5 @@ category: devlog
 sidebar: true
 order: 5
 description: >
-  TypeScript study
+  TypeScript
 ---

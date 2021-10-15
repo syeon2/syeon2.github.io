@@ -7,5 +7,5 @@ category: devlog
 sidebar: true
 order: 1
 description: >
-  Algorithm study
+  알고리즘 및 자료구조
 ---

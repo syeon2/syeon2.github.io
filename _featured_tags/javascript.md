@@ -7,5 +7,5 @@ category: devlog
 sidebar: true
 order: 3
 description: >
-  JavaScript study
+  JavaScript
 ---

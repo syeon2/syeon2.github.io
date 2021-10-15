@@ -6,5 +6,5 @@ slug: book
 sidebar: true
 order: 2
 description: >
-  Read for the Record📚
+  책의 내용을 기억하기 위한 기록📚
 ---

@@ -7,5 +7,5 @@ category: book
 sidebar: true
 order: 1
 description: >
-  About Refactorying2
+  Refactorying2(리팩터링2) 서적
 ---

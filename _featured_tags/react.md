@@ -7,5 +7,5 @@ category: devlog
 sidebar: true
 order: 4
 description: >
-  React study
+  React
 ---

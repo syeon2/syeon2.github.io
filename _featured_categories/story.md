@@ -6,5 +6,5 @@ slug: story
 sidebar: true
 order: 1
 description: >
-  Daily story🏃🏻
+  일상 이야기🏃🏻
 ---
