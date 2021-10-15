@@ -3,7 +3,7 @@ layout: post
 title: "[Algorithm] 이진 트리 순회(DFS: 깊이 우선 탐색)"
 subtitle: "DFS 깊이 우선 탐색"
 categories: devlog
-tags: algorithm DFS 깊이우선탐색 이진트리순회
+tags: algorithm 깊이우선탐색 이진트리순회
 ---
 
 > 재귀 함수를 응용한 이진트리순회(DFS 깊이 우선 탐색) 알고리즘!
