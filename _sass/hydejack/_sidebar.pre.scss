@@ -163,6 +163,14 @@ hy-drawer.loaded .sidebar {
   max-width: $sidebar-width;
   padding: 1.5rem;
   contain: content;
+
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
+.sidebar-sticky::-webkit-scrollbar {
+  display: none;
+  width: 0 im !important;
 }
 
 .sidebar-about {
