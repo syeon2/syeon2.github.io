@@ -2,7 +2,7 @@
 layout: tag-list
 type: tag
 title: C.S
-slug: compoter_science
+slug: computer_science
 category: devlog
 sidebar: true
 order: 5
