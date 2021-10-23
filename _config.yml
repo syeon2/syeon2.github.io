@@ -27,7 +27,7 @@ description: >
   "생각하고 기록하는 습관을 익히는 중..."
 
 # A shorter description for the sidebar.
-tagline: "즐거움에 습관을 더하다👨🏻‍💻"
+tagline: "개발기억 창고👨🏻‍💻"
 
 # A list of keywords for your blog
 keywords: []
@@ -35,7 +35,7 @@ keywords: []
 # A (square) logo for your site.
 # If provided, it will be shown at the top of the sidebar.
 # It also used by the `jekyll-seo-tag` plugin.
-logo: /assets/img/me.jpg
+logo: /assets/img/character.jpg
 
 # This should be the same author as first entry in `_data/authors.yml`.
 author:
