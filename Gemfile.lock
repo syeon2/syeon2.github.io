@@ -174,8 +174,6 @@ GEM
     multipart-post (2.1.1)
     nokogiri (1.11.7-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.11.7-x86_64-darwin)
-      racc (~> 1.4)
     octokit (4.21.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
@@ -214,9 +212,11 @@ GEM
       unf_ext
     unf_ext (0.0.7.7)
     unicode-display_width (1.7.0)
+    webrick (1.7.0)
     zeitwerk (2.4.2)
 
 PLATFORMS
+  arm64-darwin-21
   universal-darwin-20
 
 DEPENDENCIES
@@ -224,6 +224,7 @@ DEPENDENCIES
   jekyll (~> 3.8)
   jekyll-compose
   jekyll-include-cache
+  webrick (~> 1.7)
 
 BUNDLED WITH
-   2.2.24
+   2.3.4

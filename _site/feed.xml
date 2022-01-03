@@ -6,9 +6,159 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 24 Oct 2021 01:36:15 +0900</pubDate>
-    <lastBuildDate>Sun, 24 Oct 2021 01:36:15 +0900</lastBuildDate>
+    <pubDate>Tue, 04 Jan 2022 00:24:52 +0900</pubDate>
+    <lastBuildDate>Tue, 04 Jan 2022 00:24:52 +0900</lastBuildDate>
     <generator>Jekyll v3.9.0</generator>
+    
+      <item>
+        <title>[Algorithm] 프로그래머스 Level 1 - 모의고사</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;프로그래머스 Level 1 모의고사 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-다른-사람-코드를-참고한-리펙터링&quot;&gt;다른 사람 코드를 참고한 리펙터링&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;수포자는 수학을 포기한 사람의 준말입니다. 수포자 삼인방은 모의고사에 수학 문제를 전부 찍으려 합니다. 수포자는 1번 문제부터 마지막 문제까지 다음과 같이 찍습니다.&lt;/p&gt;
+
+  &lt;p&gt;1번 수포자가 찍는 방식: 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, …
+2번 수포자가 찍는 방식: 2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5, …
+3번 수포자가 찍는 방식: 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, …&lt;/p&gt;
+
+  &lt;p&gt;1번 문제부터 마지막 문제까지의 정답이 순서대로 들은 배열 answers가 주어졌을 때, 가장 많은 문제를 맞힌 사람이 누구인지 배열에 담아 return 하도록 solution 함수를 작성해주세요.&lt;/p&gt;
+
+  &lt;p&gt;제한 조건
+시험은 최대 10,000 문제로 구성되어있습니다.
+문제의 정답은 1, 2, 3, 4, 5중 하나입니다.
+가장 높은 점수를 받은 사람이 여럿일 경우, return하는 값을 오름차순 정렬해주세요.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function solution(answers) {
+    let correct = {
+        1: 0,
+        2: 0,
+        3: 0
+    }
+
+    let one = [1, 2, 3, 4, 5];
+    let two = [2, 1, 2, 3, 2, 4, 2, 5];
+    let three = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5];
+
+    for(let i = 0; i &amp;lt; answers.length; i++) {
+        if(answers[i] === one[i % 5]) {
+            correct[1] += 1;
+        }
+        if(answers[i] === two[i % 8]) {
+            correct[2] += 1;
+        }
+        if(answers[i] === three[i % 10]) {
+            correct[3] += 1;
+        }
+    }
+
+    let answer = Object.entries(correct).sort((a, b) =&amp;gt; b[1] - a[1]);
+    let return1 = [];
+
+    function DFS() {
+      for(let i = 0; i &amp;lt; answer.length; i++) {
+        if(i === answer.length - 1) {
+            return return1.push(parseInt(answer[i][0]));
+        }
+        if(answer[i][1] &amp;gt; answer[i + 1][1]) {
+          return return1.push(parseInt(answer[i][0]));
+        }
+        if(answer[i][1] === answer[i + 1][1]) {
+          return1.push(parseInt(answer[i][0]));
+        }
+      }
+    }
+    DFS();
+    return return1.sort((a, b) =&amp;gt; a - b);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;참…. 봤을 때부터 드럽다…&lt;/li&gt;
+  &lt;li&gt;어찌 어찌 풀기는 했지만… 메소드를 어거지로 붙여서 완성시킨 느낌이 강하게 든다…ㅠ&lt;/li&gt;
+  &lt;li&gt;이 코드로 의도한 바는 다음과 같다.&lt;/li&gt;
+  &lt;li&gt;먼저 사람1, 사람2, 사람3에 대한 답안 패턴을 array에 담는다.&lt;/li&gt;
+  &lt;li&gt;문제의 정답이 담겨져 있는 array의 index는 문제의 번호라고 할 수 있을 것 같다. 각 문제의 번호는 각 사람들이 찍은 정답 패턴의 index와 동일할 것이다.&lt;/li&gt;
+  &lt;li&gt;사람들이 찍은 정답 패턴은 0 ~ x까지 정해졌기 때문에 문제 번호가 x를 넘어가면 다시 index 0부터 시작된다.&lt;/li&gt;
+  &lt;li&gt;이것을 통해 사람들이 찍은 정답 패턴의 나머지를 반복시켜 각 문제 번호의 정답과 비교할 수 있다.&lt;/li&gt;
+  &lt;li&gt;정답을 비교하면서 문제의 정답과 사람들의 정답이 일치하면 사람들 정답에 해당되는 correct의 키값을 +1 시켜준다.&lt;/li&gt;
+  &lt;li&gt;키값을 비교하기 위해 Object.entries를 사용하여 array로 만들고 DFS라는 함수를 통해 각 사람들의 숫자를 비교해준다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;비교한 값들을 return1 배열에 push하고 return한다…&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;참…너무 복잡하다.. 부끄럽지만 DFS라고 해놓고 재귀함수도 안썼다..(쓸 것 같았는데…)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-다른-사람-코드를-참고한-리펙터링&quot;&gt;📌 다른 사람 코드를 참고한 리펙터링&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function solution (answers) {
+  let answer = [];
+
+  let one = [1, 2, 3, 4, 5];
+  let two = [2, 1, 2, 3, 2, 4, 2, 5];
+  let three = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5];
+
+  let oneCorrect = answers.filter((a, i) =&amp;gt; a === one[i % one.length]).length;
+  let twoCorrect = answers.filter((a, i) =&amp;gt; a === two[i % two.length]).length;
+  let threeCorrect = answers.filter((a, i) =&amp;gt; a === three[i % three.length]).length;
+
+  let max = Math.max(oneCorrect, twoCorrect, threeCorrect);
+
+  max === oneCorrect &amp;amp;&amp;amp; answer.push(1);
+  max === twoCorrect &amp;amp;&amp;amp; answer.push(2);
+  max === threeCorrect &amp;amp;&amp;amp; answer.push(3);
+
+  return answer;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;와우… 완전 깔끔하다..!&lt;/li&gt;
+  &lt;li&gt;코드가 무엇을 하는건지 명확하게 파악할 수 있어서 더욱 보기 좋은 것 같다.&lt;/li&gt;
+  &lt;li&gt;첫번째로 one, two, three를 통해 각 사람들의 정답 패턴을 지정해준다.&lt;/li&gt;
+  &lt;li&gt;각 사람들의 정답패턴과 문제 정답을 filter 메소드를 통해서 걸러준다..! (filter로 return된 array의 length는 당연히 각 사람들의 정답을 맞춘 개수일 것..!)&lt;/li&gt;
+  &lt;li&gt;각 사람들 중에서 제일 높은 수를 찾아준다..! Math.max가 3개의 수도 가능한 것인지 이제 알았다..!(알았으면 뻘짓안하고 진작 사용했을텐데..)&lt;/li&gt;
+  &lt;li&gt;제일 높은 수와 각 사람들의 정답 개수가 일치하면 answer에 push해준다! (순서대로 1, 2, 3선언해주었기 때문에 굳이 sort가 필요없다.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-마치며&quot;&gt;📌 마치며…&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;아직은 알고리즘을 많이 풀어보지 않았으니 다양한 메소드를 활용하는 능력이 부족할 수 있을 것 같다.&lt;/li&gt;
+  &lt;li&gt;문제를 어떻게 하면 해결할 수 있는지.. 효율적으로, 가독성 있게.. 작성하는 코드는 무작정 머릿속에서 어떻게든 해결하려는 단계를 넘어서 고민하고 생각해봐야하는 문제인 것 같다.&lt;/li&gt;
+  &lt;li&gt;더 좋은 코드를 위해 오늘도 열심히!!&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 04 Nov 2021 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/devlog/algorithm.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devlog/algorithm.html</guid>
+        
+        <category>algorithm</category>
+        
+        <category>filter</category>
+        
+        
+        <category>devlog</category>
+        
+      </item>
     
       <item>
         <title>[DOM] DOM(document object model)</title>
@@ -176,7 +326,7 @@
 &lt;hr /&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function solution(s) {
-  let num = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  let num = [&apos;zero&apos;, &apos;one&apos;, &apos;two&apos;, &apos;three&apos;, &apos;four&apos;, &apos;five&apos;, &apos;six&apos;, &apos;seven&apos;, &apos;eight&apos;, &apos;nine&apos;];
 
   let answer = s;
 
@@ -253,12 +403,12 @@
 
 &lt;hr /&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let person = {name: 'syeon', goToWork: [true, true, true, true]};
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let person = {name: &apos;syeon&apos;, goToWork: [true, true, true, true]};
 
 function goWorkRecording(person) {
   let counting = 0;
 
-  console.log('In the morning');
+  console.log(&apos;In the morning&apos;);
 
   for(let working of person.goToWork) {
     if(working) {
@@ -285,7 +435,7 @@ goWorkRecording(person);
   &lt;li&gt;핵심은 매개 변수, 지역 변수 등의 배치를 최대한 쉽고 간결하게..이게 무슨 일을 하는 함수인지 바로 알 수 있도록 구현하는 것이라고 생각했다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let person = {name : 'syeon', goToWork: [true, true, true, true]};
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let person = {name : &apos;syeon&apos;, goToWork: [true, true, true, true]};
 
 function goWorkRecording(person) {
   alertMorning();
@@ -297,7 +447,7 @@ function goWorkRecording(person) {
   showRecords(person, counting);
 
   function alertMorning() {
-    console.log('In the Morning');
+    console.log(&apos;In the Morning&apos;);
   };
 
   function countWorking(person) {
@@ -1380,13 +1530,13 @@ question(8, 3);
   &lt;li&gt;()의 짝이 맞는 경우는 true, 안맞으면 false&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let str = '(()()(())' // false
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let str = &apos;(()()(())&apos; // false
 
 const question = (str) =&amp;gt; {
     let stack = [];
 
     for(let i of str) {
-        if(i === '(') {
+        if(i === &apos;(&apos;) {
             stack.push(i);
         }
         else {
@@ -1457,7 +1607,7 @@ const question = (str) =&amp;gt; {
   &lt;li&gt;array안에 있는 과일들 중 가장 많이 들어있는 과일을 찾으시오.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let fruits = ['사과', '바나나', '배', '사과', '사과', '배', '배', '사과', '사과']
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let fruits = [&apos;사과&apos;, &apos;바나나&apos;, &apos;배&apos;, &apos;사과&apos;, &apos;사과&apos;, &apos;배&apos;, &apos;배&apos;, &apos;사과&apos;, &apos;사과&apos;]
 const question = (fruits) =&amp;gt; {
     let answer;
     let hash = new Map();
@@ -1474,7 +1624,7 @@ const question = (fruits) =&amp;gt; {
             answer = key;
         }
     }
-    return answer; // '사과'
+    return answer; // &apos;사과&apos;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -1762,10 +1912,10 @@ obj.b();
     console.log(this, a, b, c);
 }
 
-hello('hi', 'hello', '안녕');
+hello(&apos;hi&apos;, &apos;hello&apos;, &apos;안녕&apos;);
 // -&amp;gt; Window hi hello 안녕
 
-hello({name: syeon}, 'hi', 'hello', '안녕');
+hello({name: syeon}, &apos;hi&apos;, &apos;hello&apos;, &apos;안녕&apos;);
 // -&amp;gt; {name: syeon} hi hello 안녕
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2137,8 +2287,8 @@ twoPointer(arr1, arr2)
 &lt;h4 id=&quot;1-unknown&quot;&gt;1. unknown&lt;/h4&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a: unknown = 0;
-a = 'hello';
-a = '2';
+a = &apos;hello&apos;;
+a = &apos;2&apos;;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
@@ -2149,7 +2299,7 @@ a = '2';
 &lt;h4 id=&quot;2-any&quot;&gt;2. any&lt;/h4&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a: any = 0;
-a = 'hello';
+a = &apos;hello&apos;;
 a = 2;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2183,7 +2333,7 @@ a = 2;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function error(): never {
     throw new Error(message);
-    while(true) {console.log('infinity loop')}
+    while(true) {console.log(&apos;infinity loop&apos;)}
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2237,7 +2387,7 @@ printName(SuYeon)
   &lt;li&gt;함수의 매개변수에 전달되는 값이 없을 경우 default값도 지정해줄 수 있다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function greeting(message: string = 'hello') {
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function greeting(message: string = &apos;hello&apos;) {
     console.log(message);
 }
 greeting();
@@ -2263,7 +2413,7 @@ console.log(addNum(1, 2, 3, 4, 5, 6, 7)); // 28
   &lt;li&gt;array에서도 사용할 수 있다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const students: string[] = ['철수', '영희'];
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const students: string[] = [&apos;철수&apos;, &apos;영희&apos;];
 const scores: Array&amp;lt;number&amp;gt; = [1, 2, 3];
 
 function printArray(students: readonly string[]) {
@@ -2334,8 +2484,8 @@ function printArray(students: readonly string[]) {
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Greeting = string;
 type Num = number;
 
-const hi: Greeting = 'hi';
-const hello: Greeting = 'hello';
+const hi: Greeting = &apos;hi&apos;;
+const hello: Greeting = &apos;hello&apos;;
 
 // 객체에도 가능하다.
 type Greeting = {
@@ -2344,7 +2494,7 @@ type Greeting = {
 }
 const obj: Greeting = {
     time: 8,
-    greeting: 'hello'
+    greeting: &apos;hello&apos;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2354,9 +2504,9 @@ const obj: Greeting = {
   &lt;li&gt;위와 같이 타입을 지정해줄 수 있지만, 하나의 문자열을 지정해줄 수도 있다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type name = 'suyeon';
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type name = &apos;suyeon&apos;;
 let me: name;
-me = 'suyeon'
+me = &apos;suyeon&apos;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;-union&quot;&gt;📌 Union&lt;/h2&gt;
@@ -2368,11 +2518,11 @@ me = 'suyeon'
   &lt;li&gt;한가지 타입만 지정하는 String Literal Types와 달리 하나 이상의 데이터들을 지정할 수 있다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Direction = 'left' | 'right' | 'up' | 'down'
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type Direction = &apos;left&apos; | &apos;right&apos; | &apos;up&apos; | &apos;down&apos;
 function go(direction: Direction) {
     console.log(direction);
 }
-go('up')
+go(&apos;up&apos;)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
@@ -2389,21 +2539,21 @@ go('up')
 &lt;/ul&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type SuccessState = {
-    result: 'success';
+    result: &apos;success&apos;;
     response: {
         body: string;
     };
 }
 type FailState = {
-    result: 'fail';
+    result: &apos;fail&apos;;
     reason: string;
 }
 type LoginState = SuccessState | FailState;
 function printLoginState(state: LoginState) {
-    if(state.result === 'success') {
+    if(state.result === &apos;success&apos;) {
         console.log(state.result);
     }
-    if(state.result === 'fail') {
+    if(state.result === &apos;fail&apos;) {
         console.log(state.result);
     }
 }
@@ -2418,14 +2568,14 @@ function printLoginState(state: LoginState) {
 &lt;/ul&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type wecoder1 = {
-    name1: 'sy';
-    name2: 'ym';
-    name5: 'dh';
+    name1: &apos;sy&apos;;
+    name2: &apos;ym&apos;;
+    name5: &apos;dh&apos;;
 }
 
 type wecoder2 = {
-    name3: 'ds';
-    name4: 'mh';
+    name3: &apos;ds&apos;;
+    name4: &apos;mh&apos;;
 }
 
 function werecordTeam(person: wecorder1 &amp;amp; wecorder2) {
@@ -2433,11 +2583,11 @@ function werecordTeam(person: wecorder1 &amp;amp; wecorder2) {
 }
 
 werecordTeam({
-    name1: 'sy',
-    name2: 'ym',
-    name3: 'ds',
-    name4: 'mh',
-    name5: 'dh',
+    name1: &apos;sy&apos;,
+    name2: &apos;ym&apos;,
+    name3: &apos;ds&apos;,
+    name4: &apos;mh&apos;,
+    name5: &apos;dh&apos;,
 })
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
@@ -2509,7 +2659,7 @@ werecordTeam({
 
 &lt;blockquote&gt;
   &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let a = 6
-let b = 'hello'
+let b = &apos;hello&apos;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
 &lt;/blockquote&gt;
 
