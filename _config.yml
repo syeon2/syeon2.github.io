@@ -139,13 +139,13 @@ defaults:
   - scope:
       path: google23f211341b809349.html
     values:
-      sitemap: false
+      sitemap: true
 
   # Don't include site verification file(for naver) in the sitemap
   - scope:
       path: naverb0198f7ba80202eddb4ca5a1e3c3428f.html
     values:
-      sitemap: false
+      sitemap: true
 
   # You can use the following to enable comments on all posts.
   - scope:
