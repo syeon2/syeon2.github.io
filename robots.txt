@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: http://ksy4568.github.io/sitemap.xml
