@@ -1,5 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-01-04T16:33:57+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] 프로그래머스 Level 1 - 모의고사</title><link href="http://localhost:4000/devlog/algorithm.html" rel="alternate" type="text/html" title="[Algorithm] 프로그래머스 Level 1 - 모의고사" /><published>2021-11-04T00:00:00+09:00</published><updated>2021-11-04T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-02-13T11:28:43+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[TIL] React study</title><link href="http://localhost:4000/devlog/TIL.html" rel="alternate" type="text/html" title="[TIL] React study" /><published>2022-02-13T00:00:00+09:00</published><updated>2022-02-13T00:00:00+09:00</updated><id>http://localhost:4000/devlog/TIL</id><content type="html" xml:base="http://localhost:4000/devlog/TIL.html">&lt;blockquote&gt;
+  &lt;p&gt;실행 컨텍스트(Excution context)의 개념입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-1-search-input과-btn&quot;&gt;Search Input과 Btn&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-2-memo-usecallback&quot;&gt;memo, useCallback&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-컴포넌트-역할분담mvc&quot;&gt;컴포넌트 역할분담(MVC)&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-search-input과-btn&quot;&gt;📌 Search Input과 Btn&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;searchInput과 Btn이 API Call 등 같은 기능을 수행하는 역할을 맡고 있다면 각각 요소들에게 다른 이벤트를 적용하는 것이 아니라 from으로 묶고 onSubmit 이벤트를 걸어 놓는 방법도 있다.&lt;/p&gt;
+
+    &lt;p&gt;(before)
+&lt;img src=&quot;/assets/img/react/2022-02-13-2.png&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;(after)
+&lt;img src=&quot;/assets/img/react/2022-02-13-1.png&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-memo-usecallback&quot;&gt;📌 memo, useCallback&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;memo가 컴포넌트에 사용되면 해당 컴포넌트가 받고 있는 prop의 값이 변경되었을 경우에만 리랜더링이 된다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;useCallback은 useEffect와 비슷하게 의존성 배열에 할당된 값이 변할 때만 재생성되어 랜더링이 일어날 때마다 재생성되는 것을 막는다.&lt;/li&gt;
+  &lt;li&gt;하지만 useCallback으로 할당한 변수를 prop으로 내리고 한번 더 내리게되면 useCallback의 성격을 잃어버린다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-컴포넌트-역할분담mvc&quot;&gt;📌 컴포넌트 역할분담(MVC)&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;MVC 디자인 패턴을 살짝 적용시키면 모델, 뷰, 컨트롤러를 분리시켜 하나의 컴포넌트가 맡는 역할을 잘게 쪼개어 분담시키는 것이 중요하다. Test 코드를 짤 때나 재사용성, 유지보수하기에 효과적인 기술이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;API 통신을 하는 여러가지 비즈니스 로직을 Class로 묶어두면 공통으로 사용할 수 있는 헤더나 매개변수를 일일히 할당하지 않고 사용할 수 있다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/assets/img/react/2022-02-13-3.png&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="react" /><summary type="html">실행 컨텍스트(Excution context)의 개념입니다.</summary></entry><entry><title type="html">[Algorithm] 프로그래머스 Level 1 - 모의고사</title><link href="http://localhost:4000/devlog/algorithm.html" rel="alternate" type="text/html" title="[Algorithm] 프로그래머스 Level 1 - 모의고사" /><published>2021-11-04T00:00:00+09:00</published><updated>2021-11-04T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm.html">&lt;blockquote&gt;
   &lt;p&gt;프로그래머스 Level 1 모의고사 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -132,7 +191,77 @@
   &lt;li&gt;아직은 알고리즘을 많이 풀어보지 않았으니 다양한 메소드를 활용하는 능력이 부족할 수 있을 것 같다.&lt;/li&gt;
   &lt;li&gt;문제를 어떻게 하면 해결할 수 있는지.. 효율적으로, 가독성 있게.. 작성하는 코드는 무작정 머릿속에서 어떻게든 해결하려는 단계를 넘어서 고민하고 생각해봐야하는 문제인 것 같다.&lt;/li&gt;
   &lt;li&gt;더 좋은 코드를 위해 오늘도 열심히!!&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="filter" /><summary type="html">프로그래머스 Level 1 모의고사 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 문자 숫자열과 영단어</title><link href="http://localhost:4000/devlog/algorithm.html" rel="alternate" type="text/html" title="[Algorithm] 문자 숫자열과 영단어" /><published>2021-10-23T00:00:00+09:00</published><updated>2021-10-23T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="filter" /><summary type="html">프로그래머스 Level 1 모의고사 문제입니다.</summary></entry><entry><title type="html">[DOM] DOM(document object model)</title><link href="http://localhost:4000/devlog/dom.html" rel="alternate" type="text/html" title="[DOM] DOM(document object model)" /><published>2021-10-23T00:00:00+09:00</published><updated>2021-10-23T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dom</id><content type="html" xml:base="http://localhost:4000/devlog/dom.html">&lt;blockquote&gt;
+  &lt;p&gt;여러 DOM에 대한 포스팅을 읽고 난 뒤 나름대로 정리한 포스팅입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-dom-이란&quot;&gt;DOM이란?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-event&quot;&gt;Event&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-마치며&quot;&gt;마치며&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-참고-자료&quot;&gt;참고 자료&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-dom이란&quot;&gt;📌 DOM이란?&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;DOM은 document object model의 약자로 JavaScript를 통해 HTML를 컨트롤하기 위해 도입되었다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;브라우저가 렌더링되는 과정
+&amp;lt;img src=/assets/img/c_s/dom-tree.png alt=”img” width=’700px’ /&amp;gt;&lt;/p&gt;
+
+  &lt;ol&gt;
+    &lt;li&gt;각각 HTML과 CSSOM으로부터 HTML과 CSS를 파서한 후 트리를 만든다.&lt;/li&gt;
+    &lt;li&gt;HTML트리와 스타일 규칙은 어테치먼트 과정에서 하나로 합쳐진다.&lt;/li&gt;
+    &lt;li&gt;이렇게 만들어진 랜더 트리를 통해 그려지고 브라우저에 표시된다.&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;위의 그림은 브라우저가 서버로부터 사용자가 요청한 페이지를 화면 상에 그리는 순서를 요약한 것이다.&lt;/li&gt;
+  &lt;li&gt;순서에 따르면 HTML을 파서한 이후 DOM이 개입하여 DOM트리를 구성한다.&lt;/li&gt;
+  &lt;li&gt;DOM은 HTML에 영향을 끼치지만 CSS에는 일반적으로 관여하지 않기 때문에 CSS 가상 선택자 같은 요소에 영향을 주지 못한다.&lt;/li&gt;
+  &lt;li&gt;이렇듯 DOM과 HTML은 서로 다를 수 있으며 HTML은 단순하게 화면에 보이고자 하는 모양과 구조를, DOM은 HTML을 객체화하여 유효하지 않은 HTML을 수정하기도 하고 직접 HTML에 간섭하여 조작할 수 있다.&lt;/li&gt;
+  &lt;li&gt;또한, 브라우저와 콘솔 element 텝에서 보이지 않는 테그들은(display: none같은…) DOM에는 하나의 노드로 존재한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-event&quot;&gt;📌 Event&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;DOM를 통해 HTML에 접근할 수 있게 되면서 HTML에 특정 이벤트를 원하는 HTML요소에 적용할 수 있게 되었다.&lt;/li&gt;
+  &lt;li&gt;querySelector, getElementById, getElementsByTagName, getElementsByClassName 등을 활용하여 특정 HTML 요소에 접근할 수 있다.&lt;/li&gt;
+  &lt;li&gt;접근한 요소에 addEventListener를 사용하여 특정 이벤트를 적용시킬 수 있다. (이벤트 종류: &lt;a href=&quot;https://developer.mozilla.org/ko/docs/Web/Events&quot;&gt;MDN-event&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;각 createElement, classList(add, remove, toggle), setAttribute 등 HTML 요소를 컨트롤 할 수 있는 다양한 메소드들이 존재한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-마치며&quot;&gt;📌 마치며&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Naver D2와 여러 포스팅을 읽고 나름대로 중요하다고 생각하는 것들을 요약해보았다.&lt;/li&gt;
+  &lt;li&gt;특히 Naver 포스트는 많이 어렵다고 느껴 반복적으로 읽고 학습하는 것이 중요해보였다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;-참고-자료&quot;&gt;🎈 참고 자료&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://d2.naver.com/helloworld/59361&quot;&gt;Naver D2 - 브라우저는 어떻게 동작할까?&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://velog.io/@surim014/DOM%EC%9D%B4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80&quot;&gt;DOM이란 무엇인가?&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://velog.io/@surim014/DOM%EC%9D%B4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80&quot;&gt;HTML, DOM 간단 정리&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="computer_science" /><category term="DOM" /><category term="event" /><summary type="html">여러 DOM에 대한 포스팅을 읽고 난 뒤 나름대로 정리한 포스팅입니다.</summary></entry><entry><title type="html">[Algorithm] 문자 숫자열과 영단어</title><link href="http://localhost:4000/devlog/algorithm.html" rel="alternate" type="text/html" title="[Algorithm] 문자 숫자열과 영단어" /><published>2021-10-23T00:00:00+09:00</published><updated>2021-10-23T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm.html">&lt;blockquote&gt;
   &lt;p&gt;카카오 코딩 테스트 문제 ‘문자 숫자열과 영단어’입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -207,7 +336,7 @@
 &lt;hr /&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function solution(s) {
-  let num = [&apos;zero&apos;, &apos;one&apos;, &apos;two&apos;, &apos;three&apos;, &apos;four&apos;, &apos;five&apos;, &apos;six&apos;, &apos;seven&apos;, &apos;eight&apos;, &apos;nine&apos;];
+  let num = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 
   let answer = s;
 
@@ -236,77 +365,7 @@
   &lt;li&gt;역시나 알고리즘은 재밌다!!!&lt;/li&gt;
   &lt;li&gt;여러가지 알고리즘 자료구조를 활용해 최적의 코드를 구현하는 방법! 더 연구하고 많이 사용해보아야겠다.&lt;/li&gt;
   &lt;li&gt;하지만 나도 과거에 쩔쩔매던 재귀함수를 활용해서 스스로 코드를 구현한 것에 보람을 느낀다 :)&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="재귀함수" /><category term="split" /><summary type="html">카카오 코딩 테스트 문제 ‘문자 숫자열과 영단어’입니다.</summary></entry><entry><title type="html">[DOM] DOM(document object model)</title><link href="http://localhost:4000/devlog/dom.html" rel="alternate" type="text/html" title="[DOM] DOM(document object model)" /><published>2021-10-23T00:00:00+09:00</published><updated>2021-10-23T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dom</id><content type="html" xml:base="http://localhost:4000/devlog/dom.html">&lt;blockquote&gt;
-  &lt;p&gt;여러 DOM에 대한 포스팅을 읽고 난 뒤 나름대로 정리한 포스팅입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-dom-이란&quot;&gt;DOM이란?&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-event&quot;&gt;Event&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-마치며&quot;&gt;마치며&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-참고-자료&quot;&gt;참고 자료&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-dom이란&quot;&gt;📌 DOM이란?&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;DOM은 document object model의 약자로 JavaScript를 통해 HTML를 컨트롤하기 위해 도입되었다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;브라우저가 렌더링되는 과정
-&amp;lt;img src=/assets/img/c_s/dom-tree.png alt=”img” width=’700px’ /&amp;gt;&lt;/p&gt;
-
-  &lt;ol&gt;
-    &lt;li&gt;각각 HTML과 CSSOM으로부터 HTML과 CSS를 파서한 후 트리를 만든다.&lt;/li&gt;
-    &lt;li&gt;HTML트리와 스타일 규칙은 어테치먼트 과정에서 하나로 합쳐진다.&lt;/li&gt;
-    &lt;li&gt;이렇게 만들어진 랜더 트리를 통해 그려지고 브라우저에 표시된다.&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;위의 그림은 브라우저가 서버로부터 사용자가 요청한 페이지를 화면 상에 그리는 순서를 요약한 것이다.&lt;/li&gt;
-  &lt;li&gt;순서에 따르면 HTML을 파서한 이후 DOM이 개입하여 DOM트리를 구성한다.&lt;/li&gt;
-  &lt;li&gt;DOM은 HTML에 영향을 끼치지만 CSS에는 일반적으로 관여하지 않기 때문에 CSS 가상 선택자 같은 요소에 영향을 주지 못한다.&lt;/li&gt;
-  &lt;li&gt;이렇듯 DOM과 HTML은 서로 다를 수 있으며 HTML은 단순하게 화면에 보이고자 하는 모양과 구조를, DOM은 HTML을 객체화하여 유효하지 않은 HTML을 수정하기도 하고 직접 HTML에 간섭하여 조작할 수 있다.&lt;/li&gt;
-  &lt;li&gt;또한, 브라우저와 콘솔 element 텝에서 보이지 않는 테그들은(display: none같은…) DOM에는 하나의 노드로 존재한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-event&quot;&gt;📌 Event&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;DOM를 통해 HTML에 접근할 수 있게 되면서 HTML에 특정 이벤트를 원하는 HTML요소에 적용할 수 있게 되었다.&lt;/li&gt;
-  &lt;li&gt;querySelector, getElementById, getElementsByTagName, getElementsByClassName 등을 활용하여 특정 HTML 요소에 접근할 수 있다.&lt;/li&gt;
-  &lt;li&gt;접근한 요소에 addEventListener를 사용하여 특정 이벤트를 적용시킬 수 있다. (이벤트 종류: &lt;a href=&quot;https://developer.mozilla.org/ko/docs/Web/Events&quot;&gt;MDN-event&lt;/a&gt;)&lt;/li&gt;
-  &lt;li&gt;각 createElement, classList(add, remove, toggle), setAttribute 등 HTML 요소를 컨트롤 할 수 있는 다양한 메소드들이 존재한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-마치며&quot;&gt;📌 마치며&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Naver D2와 여러 포스팅을 읽고 나름대로 중요하다고 생각하는 것들을 요약해보았다.&lt;/li&gt;
-  &lt;li&gt;특히 Naver 포스트는 많이 어렵다고 느껴 반복적으로 읽고 학습하는 것이 중요해보였다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;-참고-자료&quot;&gt;🎈 참고 자료&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://d2.naver.com/helloworld/59361&quot;&gt;Naver D2 - 브라우저는 어떻게 동작할까?&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://velog.io/@surim014/DOM%EC%9D%B4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80&quot;&gt;DOM이란 무엇인가?&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://velog.io/@surim014/DOM%EC%9D%B4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80&quot;&gt;HTML, DOM 간단 정리&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="computer_science" /><category term="DOM" /><category term="event" /><summary type="html">여러 DOM에 대한 포스팅을 읽고 난 뒤 나름대로 정리한 포스팅입니다.</summary></entry><entry><title type="html">[Refactorying2] Chapter 6-1 함수 추출하기</title><link href="http://localhost:4000/book/chaper6-1.html" rel="alternate" type="text/html" title="[Refactorying2] Chapter 6-1 함수 추출하기" /><published>2021-10-20T00:00:00+09:00</published><updated>2021-10-20T00:00:00+09:00</updated><id>http://localhost:4000/book/chaper6-1</id><content type="html" xml:base="http://localhost:4000/book/chaper6-1.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="재귀함수" /><category term="split" /><summary type="html">카카오 코딩 테스트 문제 ‘문자 숫자열과 영단어’입니다.</summary></entry><entry><title type="html">[Refactoring2] Chapter 6-1 함수 추출하기</title><link href="http://localhost:4000/book/chaper6-1.html" rel="alternate" type="text/html" title="[Refactoring2] Chapter 6-1 함수 추출하기" /><published>2021-10-20T00:00:00+09:00</published><updated>2021-10-20T00:00:00+09:00</updated><id>http://localhost:4000/book/chaper6-1</id><content type="html" xml:base="http://localhost:4000/book/chaper6-1.html">&lt;blockquote&gt;
   &lt;p&gt;chapter 6-1 함수 추출하기에 대한 생각 정리🤔&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -335,12 +394,12 @@
 
 &lt;hr /&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let person = {name: &apos;syeon&apos;, goToWork: [true, true, true, true]};
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let person = {name: 'syeon', goToWork: [true, true, true, true]};
 
 function goWorkRecording(person) {
   let counting = 0;
 
-  console.log(&apos;In the morning&apos;);
+  console.log('In the morning');
 
   for(let working of person.goToWork) {
     if(working) {
@@ -367,7 +426,7 @@ goWorkRecording(person);
   &lt;li&gt;핵심은 매개 변수, 지역 변수 등의 배치를 최대한 쉽고 간결하게..이게 무슨 일을 하는 함수인지 바로 알 수 있도록 구현하는 것이라고 생각했다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let person = {name : &apos;syeon&apos;, goToWork: [true, true, true, true]};
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let person = {name : 'syeon', goToWork: [true, true, true, true]};
 
 function goWorkRecording(person) {
   alertMorning();
@@ -379,7 +438,7 @@ function goWorkRecording(person) {
   showRecords(person, counting);
 
   function alertMorning() {
-    console.log(&apos;In the Morning&apos;);
+    console.log('In the Morning');
   };
 
   function countWorking(person) {
@@ -417,8 +476,8 @@ goWorkRecording(person);
 
 &lt;blockquote&gt;
   &lt;p&gt;🎈 생각보다 기초적이지만 처음에 등장한만큼 중요한 기법이라고 생각된다. 리팩터링을 다시 한번 생각해보게 되었고, 앞으로도 기대가 된다 😊&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactorying2" /><summary type="html">chapter 6-1 함수 추출하기에 대한 생각 정리🤔</summary></entry><entry><title type="html">[Refactorying2] Chapter 3 &amp;amp; 4 : 전반적인 코드 개선 방법</title><link href="http://localhost:4000/book/chapter3-4.html" rel="alternate" type="text/html" title="[Refactorying2] Chapter 3 &amp;amp; 4 : 전반적인 코드 개선 방법" /><published>2021-10-19T00:00:00+09:00</published><updated>2021-10-19T00:00:00+09:00</updated><id>http://localhost:4000/book/chapter3-4</id><content type="html" xml:base="http://localhost:4000/book/chapter3-4.html">&lt;blockquote&gt;
-  &lt;p&gt;Refactorying2 chapter 3과 4를 읽고..&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">chapter 6-1 함수 추출하기에 대한 생각 정리🤔</summary></entry><entry><title type="html">[Refactoring2] Chapter 3 &amp;amp; 4 : 전반적인 코드 개선 방법</title><link href="http://localhost:4000/book/chapter3-4.html" rel="alternate" type="text/html" title="[Refactoring2] Chapter 3 &amp;amp; 4 : 전반적인 코드 개선 방법" /><published>2021-10-19T00:00:00+09:00</published><updated>2021-10-19T00:00:00+09:00</updated><id>http://localhost:4000/book/chapter3-4</id><content type="html" xml:base="http://localhost:4000/book/chapter3-4.html">&lt;blockquote&gt;
+  &lt;p&gt;Refactoring2 chapter 3과 4를 읽고..&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;!---more---&gt;
@@ -433,7 +492,7 @@ goWorkRecording(person);
 
 &lt;p&gt;4단원에서도 테스트 코드를 한차례 더 강조했는데 역시나 모든 코드에 테스트를 할 수 있다면 좋겠지만 우리의 몸과 마음은 유한하니.. 중심이 되는 코드들을 중점으로 테스트를 하는 것을 권장한다. 어디선가 ‘프론트엔드는 브라우저 상으로 잘 출력이 되는지 확인할 수 있으니까 굳이 안만들어도 되지 않나?’라는 이야기를 들은 적이 있었다. 그 때는 ‘어 그런가?’라고 생각했지만, 곧 이 생각은 바뀌게 되었다. 확실히 테스트 코드는 처음에 시간이 조금 걸릴 수는 있지만, 지속적인 테스트나 디버깅에 있어서 테스트 코드가 없는 것보다 월등한 속도를 보여준다고 주변에서 먼저 경험한 동기들에게 전해들었다! 즉 누구에게나 테스트 코드는 필요하다!&lt;/p&gt;
 
-&lt;p&gt;더 나은 코드를 구현하기 위해 앞으로도 홧팅하며 달린다 🏃🏻&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactorying2" /><summary type="html">Refactorying2 chapter 3과 4를 읽고..</summary></entry><entry><title type="html">[Refactorying2] Chapter 2 : 리팩터링 원칙</title><link href="http://localhost:4000/book/chapter2.html" rel="alternate" type="text/html" title="[Refactorying2] Chapter 2 : 리팩터링 원칙" /><published>2021-10-15T00:00:00+09:00</published><updated>2021-10-15T00:00:00+09:00</updated><id>http://localhost:4000/book/chapter2</id><content type="html" xml:base="http://localhost:4000/book/chapter2.html">&lt;blockquote&gt;
+&lt;p&gt;더 나은 코드를 구현하기 위해 앞으로도 홧팅하며 달린다 🏃🏻&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">Refactoring2 chapter 3과 4를 읽고..</summary></entry><entry><title type="html">[Refactoring2] Chapter 2 : 리팩터링 원칙</title><link href="http://localhost:4000/book/chapter2.html" rel="alternate" type="text/html" title="[Refactoring2] Chapter 2 : 리팩터링 원칙" /><published>2021-10-15T00:00:00+09:00</published><updated>2021-10-15T00:00:00+09:00</updated><id>http://localhost:4000/book/chapter2</id><content type="html" xml:base="http://localhost:4000/book/chapter2.html">&lt;blockquote&gt;
   &lt;p&gt;chapter 2 리펙터링 원칙을 읽고…&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -464,7 +523,7 @@ goWorkRecording(person);
 &lt;p&gt;책에서는 여러가지 리팩토링 시 고려해야할 점들, 리팩토링의 시기들을 이야기하지만 본인이 느꼈을 때 결론은 이것인 것 같다.
 “코드의 지구력 설계를 위해서는 리팩토링이 필요하다. 리팩토링을 진행할 때 코드 테스트를 병행하고, 팀이라면 CI(지속적 통합) 방식으로 컨플릭같은 에러를 최소화하는 것이 좋다. 하지만 리팩터링 해야할 요소는 마땅한 리팩터링을 해야하는 근거가 필요하다. 기존보다 성능이 덜 좋거나, 래거시 코드 등 다양한 리팩터링 대상을 놓고, 기존 서비스를 잘 유지하는 차원에서 진행하는 것이 리팩토링의 원칙이다.”&lt;/p&gt;
 
-&lt;p&gt;위의 내용이 맞는지 틀린지 사실 잘 모르겠지만 이제 다음 단원부터 시작되는 실질적인 리팩터링 기법들을 읽고 난 뒤 다시 단원 1장과 2장을 정독해보아야겠다. :)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactorying2" /><summary type="html">chapter 2 리펙터링 원칙을 읽고…</summary></entry><entry><title type="html">[Algorithm] 이진 트리 순회(DFS: 깊이 우선 탐색)</title><link href="http://localhost:4000/devlog/algorithm.html" rel="alternate" type="text/html" title="[Algorithm] 이진 트리 순회(DFS: 깊이 우선 탐색)" /><published>2021-10-14T00:00:00+09:00</published><updated>2021-10-14T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm.html">&lt;blockquote&gt;
+&lt;p&gt;위의 내용이 맞는지 틀린지 사실 잘 모르겠지만 이제 다음 단원부터 시작되는 실질적인 리팩터링 기법들을 읽고 난 뒤 다시 단원 1장과 2장을 정독해보아야겠다. :)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">chapter 2 리펙터링 원칙을 읽고…</summary></entry><entry><title type="html">[Algorithm] 이진 트리 순회(DFS: 깊이 우선 탐색)</title><link href="http://localhost:4000/devlog/algorithm.html" rel="alternate" type="text/html" title="[Algorithm] 이진 트리 순회(DFS: 깊이 우선 탐색)" /><published>2021-10-14T00:00:00+09:00</published><updated>2021-10-14T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm.html">&lt;blockquote&gt;
   &lt;p&gt;재귀 함수를 응용한 이진트리순회(DFS 깊이 우선 탐색) 알고리즘!&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -526,7 +585,7 @@ goWorkRecording(person);
     &lt;p&gt;저 console.log가 DFS(n _ 2)와 DFS(n _ 2 ≠ 1)사이에 들어가게 되면 중위 순환이 되는 것이다. 제일 마지막에 있으면 후위 순환!&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;이렇듯 재귀함수의 호출과 종료를 이용한 DFS 이진트리 순환에 대해 알아보았다.(재밋당)&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="깊이우선탐색" /><category term="이진트리순회" /><summary type="html">재귀 함수를 응용한 이진트리순회(DFS 깊이 우선 탐색) 알고리즘!</summary></entry><entry><title type="html">[Refactorying2] Chapter 1 : 리팩터링 예시</title><link href="http://localhost:4000/book/page23-51.html" rel="alternate" type="text/html" title="[Refactorying2] Chapter 1 : 리팩터링 예시" /><published>2021-10-13T00:00:00+09:00</published><updated>2021-10-13T00:00:00+09:00</updated><id>http://localhost:4000/book/page23-51</id><content type="html" xml:base="http://localhost:4000/book/page23-51.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="깊이우선탐색" /><category term="이진트리순회" /><summary type="html">재귀 함수를 응용한 이진트리순회(DFS 깊이 우선 탐색) 알고리즘!</summary></entry><entry><title type="html">[Refactoring2] Chapter 1 : 리팩터링 예시</title><link href="http://localhost:4000/book/page23-51.html" rel="alternate" type="text/html" title="[Refactoring2] Chapter 1 : 리팩터링 예시" /><published>2021-10-13T00:00:00+09:00</published><updated>2021-10-13T00:00:00+09:00</updated><id>http://localhost:4000/book/page23-51</id><content type="html" xml:base="http://localhost:4000/book/page23-51.html">&lt;blockquote&gt;
   &lt;p&gt;chapter 1 리펙터링 : 첫번째 예시를 읽고..&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -535,7 +594,7 @@ goWorkRecording(person);
 &lt;ul&gt;
   &lt;li&gt;목차
     &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-refactorying-2-시작&quot;&gt;Refactorying 2 시작!&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-refactoring-2-시작&quot;&gt;Refactoring 2 시작!&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href=&quot;#-chapter-1-리펙터링-첫번째-예시를-읽으면서&quot;&gt;Chapter 1: 리펙터링 첫번째 예시를 읽으면서..&lt;/a&gt;
         &lt;ul&gt;
           &lt;li&gt;&lt;a href=&quot;#-테스트-코드를-작성하라&quot;&gt;테스트 코드를 작성하라!&lt;/a&gt;&lt;/li&gt;
@@ -548,13 +607,13 @@ goWorkRecording(person);
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;-refactorying-2-시작&quot;&gt;📌 Refactorying 2 시작!&lt;/h2&gt;
+&lt;h2 id=&quot;-refactoring-2-시작&quot;&gt;📌 Refactoring 2 시작!&lt;/h2&gt;
 
 &lt;hr /&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;지금까지 리펙터링이라 생각했던 것은 전체적인 코드 컨벤션을 지키고 코드를 가독성있게 짜는 것이라고 생각했다. 하지만 가독성있는 코드란 도대체 무엇일까? 라는 의문이 들었다. 더러운 코드란 무엇일까? 무슨 의미인지 1도 모르겠는 변수명? 들여쓰기 내어쓰기? 줄바꿈?..🧐
-좋은 코드를 위해 고민하는 훈련을 하고자 Refactorying을 읽기 시작했다.📚 충분한 고민과 함께 책을 완독하였을 떄 한층 더 성장해 있을 나를 꿈꾸며 열심히 달려야겠다!!🏃🏻&lt;/p&gt;
+좋은 코드를 위해 고민하는 훈련을 하고자 Refactoring을 읽기 시작했다.📚 충분한 고민과 함께 책을 완독하였을 떄 한층 더 성장해 있을 나를 꿈꾸며 열심히 달려야겠다!!🏃🏻&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h2 id=&quot;-chapter-1-리펙터링-첫번째-예시를-읽으면서&quot;&gt;📌 Chapter 1: 리펙터링 첫번째 예시를 읽으면서..&lt;/h2&gt;
@@ -589,7 +648,7 @@ goWorkRecording(person);
 
 &lt;blockquote&gt;
   &lt;p&gt;단순히 코드를 길게 쪼개서 장황해지는 코드가 아니라 명확해지는 코드를 고민하며 책을 읽어야겠다. 책을 읽고 실제 코드에 적용하게 되는 날이 빨리 왔으면 좋겠다.👨🏻‍💻&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactorying2" /><summary type="html">chapter 1 리펙터링 : 첫번째 예시를 읽고..</summary></entry><entry><title type="html">[Algorithm] Recursive Function(재귀 함수)</title><link href="http://localhost:4000/devlog/algorithm-dfs.html" rel="alternate" type="text/html" title="[Algorithm] Recursive Function(재귀 함수)" /><published>2021-10-12T00:00:00+09:00</published><updated>2021-10-12T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-dfs</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-dfs.html">&lt;blockquote&gt;
+&lt;/blockquote&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">chapter 1 리펙터링 : 첫번째 예시를 읽고..</summary></entry><entry><title type="html">[Algorithm] Recursive Function(재귀 함수)</title><link href="http://localhost:4000/devlog/algorithm-dfs.html" rel="alternate" type="text/html" title="[Algorithm] Recursive Function(재귀 함수)" /><published>2021-10-12T00:00:00+09:00</published><updated>2021-10-12T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm-dfs</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm-dfs.html">&lt;blockquote&gt;
   &lt;p&gt;삽입 정렬 알고리즘입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -663,49 +722,4 @@ function selfFunc(a) {
 
 &lt;blockquote&gt;
   &lt;p&gt;🎈 재귀함수는 스택의 개념이 중요하다!&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="RecursiveFunction" /><summary type="html">삽입 정렬 알고리즘입니다.</summary></entry><entry><title type="html">10월 11일 월요일</title><link href="http://localhost:4000/story/Daily_story.html" rel="alternate" type="text/html" title="10월 11일 월요일" /><published>2021-10-11T00:00:00+09:00</published><updated>2021-10-11T00:00:00+09:00</updated><id>http://localhost:4000/story/Daily_story</id><content type="html" xml:base="http://localhost:4000/story/Daily_story.html">&lt;blockquote&gt;
-  &lt;p&gt;10월 11일 월요일의 일상&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;-마지막-업뎃-이후&quot;&gt;📌 마지막 업뎃 이후..&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;8월 22일 이후 운영하지 못했던 블로그.. 거의 2달이 다 되어가는 시간동안 역시나 많은 일이 있었다.🗓&lt;/p&gt;
-
-&lt;p&gt;We-Record 프로젝트를 마무리했던 8월 22일 이후 본격적인 취준이 시작되었다. 지금까지 진행했던 코드들을 살펴보고, 면접 때 단골로 나오는 질문들을 서치하여 익히고.. 회사를 찾아보고.. 이런 시간들을 보냈다.&lt;/p&gt;
-
-&lt;p&gt;결국 나는 모 스타트업에 취업하게 되었고 현재 2주차인 신입 개발자로 거듭났다.🎉&lt;/p&gt;
-
-&lt;p&gt;취업하게 되면서 바뀔 줄 알았던 나의 삶은 생각보다 변한게 많이 없었다. 단지 이제부터는 개발에 대한 막중한 책임감을 가지며 ‘일’이라는 개념으로 바뀐 것이 제일 큰 변화인 것 같다.&lt;/p&gt;
-
-&lt;h2 id=&quot;-취업한-이후&quot;&gt;📌 취업한 이후..&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;취업하고 2주정도 지난 지금은 회사에서 진행하는 프로젝트를 맡아 필요한 기술 스택을 공부하며 시간을 보냈다. 그러던 중 한가지 문제점?을 발견하게 되었다.&lt;/p&gt;
-
-&lt;h3 id=&quot;문제점&quot;&gt;문제점?🙃&lt;/h3&gt;
-
-&lt;p&gt;개발자의 숙명?인 꾸준한 성장을 계속해서 하고 싶다고 생각했다. 당장 회사에 적용해야할 기술 스택 뿐 아니라 개인적으로 공부할 것들, 주변에서 사용하면 좋다고 하는 기술들을 공부하고 싶었다. 문제는 ‘방법’인데 생각보다 회사에서 ‘공부’라는 개념으로 시간을 내는 것이 쉽지 않았다.&lt;/p&gt;
-
-&lt;p&gt;당연한 이야기이지만 취업하기 전에는 하루종일 공부의 명목으로 시간의 끊김없이 이어갈 수 있었지만, 이제는 아니었다. 해야할 것들은 분명히 많았고, 배우고 싶은 기술 스택 또한 많았다. 욕심이 너무 과한 탓이었을까..? 빨리빨리 모두 다 익히고 싶은 마음은 ‘조급함’을 일으켰다.&lt;/p&gt;
-
-&lt;p&gt;최근에 동기에게 추천받은 리팩터링2 서적을 구매했는데 회사 프로젝트를 위해 필요한 스택을 공부하는 것에 당연히 시간을 할애해야했기 때문에 한번도 펼쳐보지 못했다..ㅠㅠ.. 하고 싶고, 해야한다는 강박이 나를 조급하게 만들었고 하기에 다 소화하지 못할 공부량을 무리하게 계획하여 진행하는 것을 반복했다. 그러면서 스스로를 깎아내리고 있었다.&lt;/p&gt;
-
-&lt;h2 id=&quot;-정확한-방향과-전략적인-계획의-필요성&quot;&gt;🎯 정확한 방향과 전략적인 계획의 필요성&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;이제부터는 취준생아니라 신입 개발자로서 지혜롭게 시간을 사용하는 방법을 고민해야할 것 같다. 퇴근하고 막연히 이것저것 공부하기에는 효율과 에너지 낭비가 심하다고 느꼈기 때문이다.&lt;/p&gt;
-
-&lt;p&gt;성장하고 싶다는 좋은 동기로만 움직이는 것이 아니라 성장하기 위해 어떻게 계획하고 행동할까…고민하고 난 이후 나에게 필요한 것은 ‘얄팍하고 다양한 기술 스택의 욕심을 버릴 것’이었다.&lt;/p&gt;
-
-&lt;p&gt;하루 24시간이 부족해 48시간이었으면 좋겠다는 말을 동기들과 농담삼아 이야기하곤 했다. 하지만 현실은 현실…! 내가 익혀야할 기술들에 우선순위를 매겨 ‘깊이’ 공부해야겠다는 결론에 이르렀다.
-비록 시간이 오래걸리더라도 드릴다운 방식으로 철저하게, 차근차근, 꾸준히 학습하는 것이 지금 나에게 필요한 마인드셋이지 않을까 생각했다.&lt;/p&gt;
-
-&lt;p&gt;이제는 누군가가 짜주는 커리큘럼은 존재하지 않는다. 스스로 부족한 것을 파악하고 꾸준히 개척해나가야 하는 시간이다..!
-주기적으로 내 학습 방법을 셀프 점검을 하면서 성장해야겠다🌱
-(물론 회사일도 열심히!!😋)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="story" /><category term="Daily" /><summary type="html">10월 11일 월요일의 일상</summary></entry></feed>
+&lt;/blockquote&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="RecursiveFunction" /><summary type="html">삽입 정렬 알고리즘입니다.</summary></entry></feed>
