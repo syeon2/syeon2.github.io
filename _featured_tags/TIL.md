@@ -1,11 +1,11 @@
 ---
 layout: tag-list
 type: tag
-title: HTML&CSS
-slug: html, css
+title: TIL
+slug: Today I Learn
 category: devlog
 sidebar: true
-order: 2
+order: 6
 description: >
-  HTML & CSS
+  Today I Learn
 ---
