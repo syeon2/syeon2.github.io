@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-03-16T19:03:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-03-18T10:51:39+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
 </subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">Modern JavaScript Deep Dive</title><link href="http://localhost:4000/book/total.html" rel="alternate" type="text/html" title="Modern JavaScript Deep Dive" /><published>2022-03-15T00:00:00+09:00</published><updated>2022-03-15T00:00:00+09:00</updated><id>http://localhost:4000/book/total</id><content type="html" xml:base="http://localhost:4000/book/total.html">&lt;blockquote&gt;
   &lt;p&gt;Modern JavaScript를 정독하면서..&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -280,7 +280,54 @@
   &lt;li&gt;함수의 인자를 정해진 매개변수보다 많이 전달하면 인자는 사라지는 것이 아니라 argument라는 객체에 보관된다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;22/03/16&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="javascript" /><summary type="html">Modern JavaScript를 정독하면서..</summary></entry><entry><title type="html">[TIL] 22/02/26 한주 TIL</title><link href="http://localhost:4000/devlog/TIL.html" rel="alternate" type="text/html" title="[TIL] 22/02/26 한주 TIL" /><published>2022-02-26T00:00:00+09:00</published><updated>2022-02-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/TIL</id><content type="html" xml:base="http://localhost:4000/devlog/TIL.html">&lt;blockquote&gt;
+&lt;p&gt;22/03/16&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;함수의 매개변수로 원시 값, 객체 값을 인수로 전달하고 함수 내에서 전달받은 값 자체를 변경할 때 원시는 불변성을 띄지만, 객체는 가변적이기 때문에 값이 변한다.&lt;/li&gt;
+  &lt;li&gt;함수를 즉시 실행하기 위해서는 그룹 연산자를 알맞게 사용해야한다.
+    &lt;ul&gt;
+      &lt;li&gt;최소한 함수의 코드 블럭까지 그룹 연산자로 묶어주어야 한다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;재귀 함수는 꼭! 전달받는 인수를 활용해 끝나는 지점을 정해야 한다.&lt;/li&gt;
+  &lt;li&gt;함수 내에 정의된 함수를 중첩 함수, 내부 함수라고 한다.&lt;/li&gt;
+  &lt;li&gt;함수의 매개변수를 통해 다른 함수의 내부로 전달되는 함수를 콜백함수라고 한다. 반대로 변수를 통해 함수의 외부에서 콜백함수를 전달받은 함수를 고차함수라고 한다.&lt;/li&gt;
+  &lt;li&gt;함수형 프로그래밍은 외부의 상태에 의존하지 않고 변경하지도 않는 순수 함수를 통해 최대한 오류를 피하고 프로그램의 안정성을 높이기 위한 프로그래밍 방법론이다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;22/03/17&lt;/p&gt;
+
+&lt;h1 id=&quot;스코프&quot;&gt;🌱 스코프&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;오늘의-포인트-6&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;스코프 : 식별자가 유효한 범위&lt;/li&gt;
+  &lt;li&gt;렉시컬 환경 : 코드가 어디서 실행되며 주변에 어떤 코드가 있는지..&lt;/li&gt;
+  &lt;li&gt;실행 컨텍스트 : 렉시컬 환경을 구현한 것&lt;/li&gt;
+  &lt;li&gt;Javascript는 스코프 내에서 변수를 찾을 때, 해당 스코프를 기준으로 지역 스코프 → 상위 스코프 → 전역 스코프 순으로 해당 스코프의 렉시컬 환경에서 찾고자 하는 변수를 검색한다.&lt;/li&gt;
+  &lt;li&gt;Javascript는 다른 언어들과 다르게 함수 레벨 스코프이다. 이것은 전역에서 if문이나 for문 같은 코드 블럭에서 변수를 선언 하더라도 이는 함수의 코드 블럭이 아니기 때문에 전역변수로 간주한다. 함수의 코드 블럭에서 선언하면 이 변수는 그 함수 내에서만 사용이 가능하다. (내부함수도 마찬가지)&lt;/li&gt;
+  &lt;li&gt;함수를 어디서 호출/정의 했는지에 따라 결과값이 다르게 나타난다.&lt;/li&gt;
+  &lt;li&gt;Javascript는 함수를 어디서 호출했는지는 관심없고 어디에서 정의했는지가 중요하다. 가령 전역에 a함수를 정의하고 전역에 선언되어 있는 x변수를 참조한다. a함수는 b함수의 내부 함수로 다시 호출되었을 때, b에도 전역과 같은 식별자를 가진 x변수를 선언하여 가지고 있다. 이때 b의 내부함수인 a는 b의 x를 참조하는 것이 아닌 전역에 있는 x를 참조한다. (지금까지 몰랐다.. 충격..🤮)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ex)
+var x = 1;
+
+function foo() {
+  var x = 10;
+  boo();
+}
+
+function boo() {
+  console.log(x);
+}
+
+foo() =&amp;gt; 1;
+boo() =&amp;gt; 1;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="javascript" /><summary type="html">Modern JavaScript를 정독하면서..</summary></entry><entry><title type="html">[TIL] 22/02/26 한주 TIL</title><link href="http://localhost:4000/devlog/TIL.html" rel="alternate" type="text/html" title="[TIL] 22/02/26 한주 TIL" /><published>2022-02-26T00:00:00+09:00</published><updated>2022-02-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/TIL</id><content type="html" xml:base="http://localhost:4000/devlog/TIL.html">&lt;blockquote&gt;
   &lt;p&gt;2월 4번째 주 TIL&lt;/p&gt;
 &lt;/blockquote&gt;
 
