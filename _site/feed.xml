@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-03-18T10:51:39+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-03-20T17:20:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
 </subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">Modern JavaScript Deep Dive</title><link href="http://localhost:4000/book/total.html" rel="alternate" type="text/html" title="Modern JavaScript Deep Dive" /><published>2022-03-15T00:00:00+09:00</published><updated>2022-03-15T00:00:00+09:00</updated><id>http://localhost:4000/book/total</id><content type="html" xml:base="http://localhost:4000/book/total.html">&lt;blockquote&gt;
   &lt;p&gt;Modern JavaScript를 정독하면서..&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -327,7 +327,65 @@ function boo() {
 
 foo() =&amp;gt; 1;
 boo() =&amp;gt; 1;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="javascript" /><summary type="html">Modern JavaScript를 정독하면서..</summary></entry><entry><title type="html">[TIL] 22/02/26 한주 TIL</title><link href="http://localhost:4000/devlog/TIL.html" rel="alternate" type="text/html" title="[TIL] 22/02/26 한주 TIL" /><published>2022-02-26T00:00:00+09:00</published><updated>2022-02-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/TIL</id><content type="html" xml:base="http://localhost:4000/devlog/TIL.html">&lt;blockquote&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;22/03/18&lt;/p&gt;
+
+&lt;h1 id=&quot;전역-변수의-문제점&quot;&gt;🌱 전역 변수의 문제점&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;오늘의-포인트-7&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;전역 변수는 예기치 못한 문제점을 야기할 수 있는 가능성이 크므로 지역 변수로 관리할 것을 권장한다.&lt;/li&gt;
+  &lt;li&gt;변수는 변수가 속해있는 렉시컬 환경(실행 컨텍스트)에 저장된다. 이 때, 함수 레벨 스코프에 선언된 변수는 함수 스코프에 속하는 렉시컬 환경에 저장되기 때문에 함수 스코프 안에 선언된 변수의 생명주기는 함수의 생명주기와 일치한다.
+    &lt;ul&gt;
+      &lt;li&gt;메모리는 누군가 그 메모리 값을 참조하고 있으면 소멸되지 않고 유지한다. 이것을 이용하여 함수 또한 누군가 함수 스코프를 참조하면 일반적인 함수의 생명 주기와 다르게 소멸하지 않는다. (클로저의 개념)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;var로 선언한 전역 변수는 전역 객체의 프로퍼티가 된다. 전역 객체는 Javascript 파일을 넘어 공유되는 객체인만큼 변수 값에 따른 신뢰도는 하락한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;22/03/19&lt;/p&gt;
+
+&lt;h1 id=&quot;let-const-키워드와-블록-레벨-스코프&quot;&gt;🌱 let, const 키워드와 블록 레벨 스코프&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-오늘의-포인트&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;var는 블록 레벨 스코프를 무시하고 전역 레벨 스코프 단위로 선언이 되었지만(함수 레벨 스코프 제외), let와 const는 블록 레벨 스코프 단위로 변수가 유효하다.&lt;/li&gt;
+  &lt;li&gt;그렇다고 호이스팅이 안일어나는 것은 아니다. 호이스팅은 모든 변수 선언 키워드에서 일어난다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-jsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1. not defined&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 2. 2&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 3. 1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;위의 예제에서 1번째 console는 let으로 선언한 변수가 호이스팅이 되지 않는다면 전역 hello를 참조해야되지만, not defined 에러를 발생시킨다. 즉, 호이스팅처럼 보이지 않을 뿐 호이스팅이 일어난다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;⇒ let, const, class 등은 var와 다르게 변수를 선언한 곳에서 초기화가 같이 일어나기 때문(TDZ의 영역) (var는 선언하면 실행컨텍스트의 렉시컬 환경에서 var의 정보를 수집함과 동시에 undefined로 초기화가 일어난다.)&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;const는 let과 비슷하지만, 한번 할당한 값은 바꿀수 없는 특성을 가지고 있다. (상수의 특성)
+    &lt;ul&gt;
+      &lt;li&gt;하지만 참조타입 값들의 프로퍼티들을 변경가능하다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;22/03/20&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="javascript" /><summary type="html">Modern JavaScript를 정독하면서..</summary></entry><entry><title type="html">[TIL] 22/02/26 한주 TIL</title><link href="http://localhost:4000/devlog/TIL.html" rel="alternate" type="text/html" title="[TIL] 22/02/26 한주 TIL" /><published>2022-02-26T00:00:00+09:00</published><updated>2022-02-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/TIL</id><content type="html" xml:base="http://localhost:4000/devlog/TIL.html">&lt;blockquote&gt;
   &lt;p&gt;2월 4번째 주 TIL&lt;/p&gt;
 &lt;/blockquote&gt;
 
