@@ -1,5 +1,120 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-03-20T17:20:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">Modern JavaScript Deep Dive</title><link href="http://localhost:4000/book/total.html" rel="alternate" type="text/html" title="Modern JavaScript Deep Dive" /><published>2022-03-15T00:00:00+09:00</published><updated>2022-03-15T00:00:00+09:00</updated><id>http://localhost:4000/book/total</id><content type="html" xml:base="http://localhost:4000/book/total.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-03-28T08:30:13+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">운영체제</title><link href="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html" rel="alternate" type="text/html" title="운영체제" /><published>2022-03-28T00:00:00+09:00</published><updated>2022-03-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C</id><content type="html" xml:base="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html">&lt;blockquote&gt;
+  &lt;p&gt;운영체제를 공부하고 간략하게 정리한 글입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;h2 id=&quot;-운영체제&quot;&gt;📌 운영체제&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-운영체제란&quot;&gt;🌱 운영체제란?&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;컴퓨터 시스템의 자원들을 효율적으로 관리&lt;/li&gt;
+  &lt;li&gt;사용자가 컴퓨터를 효과적으로 사용할 수 있도록 환경을 제공하는 여러 프로그램의 모임&lt;/li&gt;
+  &lt;li&gt;Window, macOS, Android 등 다양한 운영체제 존재&lt;/li&gt;
+  &lt;li&gt;운영체제가 없어도 동작은 하지만 처음에 설계한 그대로만 사용 가능(유연한 작업 X)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-운영체제의-역할&quot;&gt;🌱 운영체제의 역할&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로세스 관리 : 다양한 프로그램을 동시 실행(시분할 처리)&lt;/li&gt;
+  &lt;li&gt;메모리 관리 : 모든 응용 프로그램은 메모리 위에서 동작&lt;/li&gt;
+  &lt;li&gt;하드웨어 관리 : 사용자가 하드웨어에 대한 직접적 접근 권한 차단 -&amp;gt; 메모리 중복 사용을 방지하여 각 프로세스들의 정보들이 얽히는 상황을 방지 / 해킹으로 인한 조작 방지&lt;/li&gt;
+  &lt;li&gt;파일 시스템 관리&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-운영체제의-구조&quot;&gt;🌱 운영체제의 구조&lt;/h3&gt;
+
+&lt;h4 id=&quot;커널&quot;&gt;&lt;strong&gt;커널&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;운영체제의 핵심 기능을 담당한다. -&amp;gt; 컴퓨터의 자원을 관리(사용자와 상호작용X)&lt;/li&gt;
+  &lt;li&gt;시스템 프로그램이 사용자와 커널을 이어주는 역할&lt;/li&gt;
+  &lt;li&gt;컴퓨터 물리적 자원, 추상화 자원을 관리 -&amp;gt; 여러 자원을 추상화하여 각 하드웨어의 물리적 자원과 대응함 (CPU : task / 디스크 : File / 메모리 : page, segment / network : socket)&lt;/li&gt;
+  &lt;li&gt;커널의 기능
+    &lt;ul&gt;
+      &lt;li&gt;디바이스 관리 : 디바이스 드라이버 소프트웨어 이용&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;프로세스 관리
+    &lt;ul&gt;
+      &lt;li&gt;리눅스는 프로그램을 실행할 때 약 100여개의 프로세스가 동시에 실행&lt;/li&gt;
+      &lt;li&gt;각 프로세스의 PID를 통해 시분할 처리로 관리&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;메모리 관리
+    &lt;ul&gt;
+      &lt;li&gt;프로그램 뿐 아니라 프로그램의 데이터 영역까지 메모리에 저장 -&amp;gt; 메모리 영역 분배 / 수거&lt;/li&gt;
+      &lt;li&gt;가상 메모리 지원&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;시스템-콜&quot;&gt;&lt;strong&gt;시스템 콜&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;어플리케이션이 커널에 접근하기 위한 도구&lt;/li&gt;
+  &lt;li&gt;사용자로부터 커널을 보호하기 위한 인터페이스(저장공간을 안전하게 분배)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;user-interface&quot;&gt;&lt;strong&gt;User Interface&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;사용자는 인터페이스만을 이용해서 커널에 접근&lt;/li&gt;
+  &lt;li&gt;GUI : 그래픽 유저 인터페이스
+    &lt;ul&gt;
+      &lt;li&gt;그래픽 환경으로 시스템 제어&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;CLI : 커멘드 라인 인터페이스
+    &lt;ul&gt;
+      &lt;li&gt;명령어를 통해 시스템 제어&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-하드웨어의-구조&quot;&gt;🌱 하드웨어의 구조&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;폰 노이만 구조
+    &lt;ul&gt;
+      &lt;li&gt;CPU &amp;lt;-&amp;gt; Bus &amp;lt;-&amp;gt; Memory&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;CPU 구조
+    &lt;ul&gt;
+      &lt;li&gt;제어 장치 : 모든 장치 동작 제어&lt;/li&gt;
+      &lt;li&gt;산술 논리 연산 장치 : 데이터 연산&lt;/li&gt;
+      &lt;li&gt;레지스터 : CPU내 계산을 위한 임시 보관 장소(ex. 변수)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;메모리 구조
+    &lt;ul&gt;
+      &lt;li&gt;RAM : 메인 메모리&lt;/li&gt;
+      &lt;li&gt;ROM : 컴퓨터 부팅 바이오스 저장&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-인터럽트&quot;&gt;🌱 인터럽트&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;CPU가 입출력 관리자를 통해 각 하드웨어 및 소프트웨어의 이벤트를 확인하여 처리하는 방식&lt;/li&gt;
+  &lt;li&gt;과거에는 요청이 들어왔는지 CPU가 계속 확인하는 방식(Polling)&lt;/li&gt;
+  &lt;li&gt;오늘 날 CPU가 명령 이후 다른 작업을 진행하다가 입출력 관리자로부터 해당 작업이 완료됨을 CPU에게 알리는 방식(인터럽트 / 비동기적으로 동작)&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="computer_science" /><category term="운영체제" /><summary type="html">운영체제를 공부하고 간략하게 정리한 글입니다.</summary></entry><entry><title type="html">Modern JavaScript Deep Dive</title><link href="http://localhost:4000/book/total.html" rel="alternate" type="text/html" title="Modern JavaScript Deep Dive" /><published>2022-03-15T00:00:00+09:00</published><updated>2022-03-15T00:00:00+09:00</updated><id>http://localhost:4000/book/total</id><content type="html" xml:base="http://localhost:4000/book/total.html">&lt;blockquote&gt;
   &lt;p&gt;Modern JavaScript를 정독하면서..&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -385,7 +500,83 @@ boo() =&amp;gt; 1;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;22/03/20&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="javascript" /><summary type="html">Modern JavaScript를 정독하면서..</summary></entry><entry><title type="html">[TIL] 22/02/26 한주 TIL</title><link href="http://localhost:4000/devlog/TIL.html" rel="alternate" type="text/html" title="[TIL] 22/02/26 한주 TIL" /><published>2022-02-26T00:00:00+09:00</published><updated>2022-02-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/TIL</id><content type="html" xml:base="http://localhost:4000/devlog/TIL.html">&lt;blockquote&gt;
+&lt;p&gt;22/03/20&lt;/p&gt;
+
+&lt;h1 id=&quot;프로퍼티-어트리뷰트&quot;&gt;🌱 프로퍼티 어트리뷰트&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;오늘의-포인트-8&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로퍼티 어트리뷰트는 자바스크립트 엔진 동작 원리를 설명하기 위한 수단&lt;/li&gt;
+  &lt;li&gt;모든 객체는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[[Prototype]]&lt;/code&gt;이라는 내부 슬롯을 가지며 원칙적으로 접근할 수 없다. 하지만 &lt;strong&gt;proto&lt;/strong&gt;를 통해 간접적으로 접근할 수 있다.&lt;/li&gt;
+  &lt;li&gt;JS엔진은 프로퍼티를 생성할 때 프로퍼티의 상태를 나타내는 프로퍼티 어트리뷰트를 기본값으로 자동 정의한다. ⇒ Object.getOwnPropertyDescriptor로 확인 가능&lt;/li&gt;
+  &lt;li&gt;데이터 프로퍼티, 접근자 프로퍼티가 있다.
+    &lt;ul&gt;
+      &lt;li&gt;데이터 프로퍼티는 키와 값으로 구성된 일반적인 프로퍼티&lt;/li&gt;
+      &lt;li&gt;접근자 프로퍼티는 자체적으로 값을 가지고 있지 않고 다른 프로퍼티의 값을 읽거나 저장할 때 호출되는 접근자 함수로 구성되어 있다.(getter/setter)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Object.defineproperty로 프로퍼티 어트리뷰트를 명시적으로 정의할 수 있다.&lt;/li&gt;
+  &lt;li&gt;객체는 참조형 데이터이므로 언제든지 값을 변경하고 삭제, 갱신할 수 있다. 데이터의 불변성을 위해 객체 정보 변경을 방지하는 여러가지 메소드들이 존재한다.
+    &lt;ul&gt;
+      &lt;li&gt;Object.preventExtensions : 프로퍼티 추가 금지&lt;/li&gt;
+      &lt;li&gt;Object.seal : 읽기와 쓰기만 가능&lt;/li&gt;
+      &lt;li&gt;Object.freeze : 읽기만 가능 ⇒ Obect.freeze를 이용하여 불변객체 형성 가능(중첩 객체또한 불변객체로!)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;⇒ 프로퍼티 어트리뷰트는 자바스크립트 엔진 동작을 이해하고, getter와 setter, 프로퍼티 동결 원리를 파악할 수 있는 챕터인 것 같다.&lt;/p&gt;
+
+&lt;p&gt;22/03/21&lt;/p&gt;
+
+&lt;h1 id=&quot;생성자-함수에-의한-객체-생성&quot;&gt;🌱 생성자 함수에 의한 객체 생성&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;오늘의-포인트-9&quot;&gt;📌오늘의 포인트&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;특별한 경우가 아닌 이상은 Object 생성자 함수로 객체 생성X&lt;/li&gt;
+  &lt;li&gt;객체 리터럴로 객체를 생성하는 것은 간편하지만 재사용성이 떨어진다.&lt;/li&gt;
+  &lt;li&gt;function으로도 객체를 만들 수 있다. 함수 식별자에 new 키워드를 붙이면 객체 생성자 함수, 붙이지 않으면 함수로 호출된다. (이 때 함수가 반환하는 값이 객체이면 그 객체를 반환, 반환하는 값이 원시값등 객체가 아니면 함수에 바인딩된 this를 반환한다.)&lt;/li&gt;
+  &lt;li&gt;생성자 함수 안에 this가 있다고 가정할 때 생성자 함수가 함수로 호출하면 this는 전역객체에 바인딩되고 객체를 생성하는 생성자 함수로 호출되면 this는 해당 생성자 함수의 인스턴스를 바인딩 및 초기화한다.&lt;/li&gt;
+  &lt;li&gt;함수 객체는 호출은 Default로 동작하지만 모든 함수 객체를 생성자 함수로 호출할 수 있는 것은 아니다.
+    &lt;ul&gt;
+      &lt;li&gt;함수 선언문, 함수 표현식, 클래스 등 일반 함수로 정의된 함수는 생성자 함수로 호출 가능&lt;/li&gt;
+      &lt;li&gt;메서드, Arrow function 등으로 정의된 함수는 생성자 함수로 호출 X&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;new.target, this instanceof **&lt;/code&gt;를 이용하면 함수 객체가 new 연산자와 함께 호출되었는지의 여부를 판단할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;22/03/22&lt;/p&gt;
+
+&lt;h1 id=&quot;함수와-일급객체&quot;&gt;🌱 함수와 일급객체&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;오늘의-포인트-10&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일급 객체의 조건 4가지
+    &lt;ul&gt;
+      &lt;li&gt;무명의 리터럴로 생성할 수 있다.&lt;/li&gt;
+      &lt;li&gt;변수나 자료구조에 저장할 수 있다.&lt;/li&gt;
+      &lt;li&gt;함수의 매개변수에 전달할 수 있다.&lt;/li&gt;
+      &lt;li&gt;함수의 반환값으로 사용할 수 있다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;arguments는 객체 타입으로 보이지만 유사배열 객체이다.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__proto__&lt;/code&gt;는 직접 접근할 수 없고 접근자 프로퍼티를 통해 간접적으로 접근이 가능하다.&lt;/li&gt;
+  &lt;li&gt;prototype 프로퍼티는 constructor를 가지고 있는 객체가 가지고 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;⇒ 일급객체, 프로토타입, 객체는 서로 연관되어 있는 것 같다. 왜 사용되는지 필요가 무엇인지는 prototype을 읽고 생각해봐야겠다.&lt;/p&gt;
+
+&lt;p&gt;22/03/23&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="javascript" /><summary type="html">Modern JavaScript를 정독하면서..</summary></entry><entry><title type="html">[TIL] 22/02/26 한주 TIL</title><link href="http://localhost:4000/devlog/TIL.html" rel="alternate" type="text/html" title="[TIL] 22/02/26 한주 TIL" /><published>2022-02-26T00:00:00+09:00</published><updated>2022-02-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/TIL</id><content type="html" xml:base="http://localhost:4000/devlog/TIL.html">&lt;blockquote&gt;
   &lt;p&gt;2월 4번째 주 TIL&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -1050,66 +1241,4 @@ goWorkRecording(person);
 &lt;p&gt;책에서는 여러가지 리팩토링 시 고려해야할 점들, 리팩토링의 시기들을 이야기하지만 본인이 느꼈을 때 결론은 이것인 것 같다.
 “코드의 지구력 설계를 위해서는 리팩토링이 필요하다. 리팩토링을 진행할 때 코드 테스트를 병행하고, 팀이라면 CI(지속적 통합) 방식으로 컨플릭같은 에러를 최소화하는 것이 좋다. 하지만 리팩터링 해야할 요소는 마땅한 리팩터링을 해야하는 근거가 필요하다. 기존보다 성능이 덜 좋거나, 래거시 코드 등 다양한 리팩터링 대상을 놓고, 기존 서비스를 잘 유지하는 차원에서 진행하는 것이 리팩토링의 원칙이다.”&lt;/p&gt;
 
-&lt;p&gt;위의 내용이 맞는지 틀린지 사실 잘 모르겠지만 이제 다음 단원부터 시작되는 실질적인 리팩터링 기법들을 읽고 난 뒤 다시 단원 1장과 2장을 정독해보아야겠다. :)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">chapter 2 리펙터링 원칙을 읽고…</summary></entry><entry><title type="html">[Algorithm] 이진 트리 순회(DFS: 깊이 우선 탐색)</title><link href="http://localhost:4000/devlog/algorithm.html" rel="alternate" type="text/html" title="[Algorithm] 이진 트리 순회(DFS: 깊이 우선 탐색)" /><published>2021-10-14T00:00:00+09:00</published><updated>2021-10-14T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm.html">&lt;blockquote&gt;
-  &lt;p&gt;재귀 함수를 응용한 이진트리순회(DFS 깊이 우선 탐색) 알고리즘!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;h2 id=&quot;-이진-트리-순회란&quot;&gt;📌 이진 트리 순회란?&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;2갈래 나무 형태로 되어 있는 자료구조이다.&lt;/li&gt;
-  &lt;li&gt;부모 노드 root에는 left right 방향으로 총 2개의 자식 노드를 가진다.&lt;/li&gt;
-  &lt;li&gt;이 노드들을 차례대로 순환하는 방식이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/img/algorithm/DFS.png&quot; width=&quot;500px&quot; height=&quot;200px&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;저렇게 부모 노드가 있고 자식 노드가 있으며 각 노드에 넘버링이 된다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;각 노드들마다 접근하는 순서 및 방식에 따라 여러가지 개념들이 생기는데 &lt;b&gt;전위 순회&lt;/b&gt;, &lt;b&gt;중위 순회&lt;/b&gt;, &lt;b&gt;후위 순회&lt;/b&gt;가 있다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;전위 순회는 1-2-4-5-3-6-7 이런 순으로 노드에 접근하며 순회한다.&lt;/li&gt;
-  &lt;li&gt;중위 순회는 4-2-5-6-3-7-1 순으로 제일 왼쪽 끝 노드에 접근하고 중간 노드에 접근한 이후 다시 오른쪽 노드로 뻗어가는 방식으로 되어있다.&lt;/li&gt;
-  &lt;li&gt;후위 순회는 4-5-2-6-7-3-1 순으로 제일 왼쪽 끝에서 오른쪽 끝 노드 순으로 접근하며 순회하는 방식이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-사용-예제&quot;&gt;📌 사용 예제&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;처음에는 이러한 노드를 재귀를 사용하여 구현한다고해서 연결리스트로 해야되나 어떻게 트리 구조를 만들지?라고 생각했었는데… 재귀를 한 함수에서 2번 호출하는 방법은 생각하지도 못했다…!&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function DFS(n) {
-  if(n &amp;gt; 7) return
-  else {
-    console.log(n);
-    DFS(n * 2);
-    DFS(n * 2 + 1);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;-… 생각보다 너무 간단하다. 로직을 보는 순간 아 그렇게 되는구나 대박!! 이랬다👽&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;DFS의 매개변수인 n _ 2와 n _ 2 + 1이 의아할 수 있는데 부모와 자식노드를 잘 보면 무조건 자식노드의 왼쪽은 부모노드의 _ 2, 오른쪽은 _ 2 + 1이라는 사실..&lt;/li&gt;
-  &lt;li&gt;이것과 실행컨텍스트, 콜스텍의 개념으로 생각해보면 n _ 2를 매개변수로 가지고 있는 DFS함수는 그 안에서 또 DFS가 실행될텐데 그럼 또 그 안의 DFS함수 중 n _ 2를 매개변수로 가지고 있는 함수가 먼저 실행되는 것이 반복된다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;계속 반복되다가 n &amp;gt; 7의 조건으로 종료되면 n * 2 + 1함수가 실행이 되어 아까와의 상황이 반복될 것이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;짚고 넘어가야될 부분은 console.log의 위치이다.&lt;/li&gt;
-  &lt;li&gt;지금은 재귀 함수중 제일 위에 있기 때문에 함수를 깊게 들거가기 전 n값을 콘솔에 보여준다. 한차례 들어간 함수에서도 마찬가지..&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;저 console.log가 DFS(n _ 2)와 DFS(n _ 2 ≠ 1)사이에 들어가게 되면 중위 순환이 되는 것이다. 제일 마지막에 있으면 후위 순환!&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;이렇듯 재귀함수의 호출과 종료를 이용한 DFS 이진트리 순환에 대해 알아보았다.(재밋당)&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="깊이우선탐색" /><category term="이진트리순회" /><summary type="html">재귀 함수를 응용한 이진트리순회(DFS 깊이 우선 탐색) 알고리즘!</summary></entry></feed>
+&lt;p&gt;위의 내용이 맞는지 틀린지 사실 잘 모르겠지만 이제 다음 단원부터 시작되는 실질적인 리팩터링 기법들을 읽고 난 뒤 다시 단원 1장과 2장을 정독해보아야겠다. :)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">chapter 2 리펙터링 원칙을 읽고…</summary></entry></feed>
