@@ -1,11 +1,11 @@
 ---
 layout: tag-list
 type: tag
-title: TIL
-slug: Today I Learn
+title: Java & Kotlin
+slug: java_kotlin
 category: devlog
 sidebar: true
-order: 6
+order: 5
 description: >
-  Today I Learn
+  Java & Kotlin
 ---

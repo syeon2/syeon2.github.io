@@ -3,7 +3,7 @@ layout: post
 title: "[TIL] React study"
 subtitle: "react study"
 categories: devlog
-tags: "react"
+tags: react
 ---
 
 > 실행 컨텍스트(Excution context)의 개념입니다.
