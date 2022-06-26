@@ -1,5 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-04-06T17:44:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">운영체제</title><link href="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html" rel="alternate" type="text/html" title="운영체제" /><published>2022-03-28T00:00:00+09:00</published><updated>2022-03-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C</id><content type="html" xml:base="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-06-26T16:17:03+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] 백준 11399문제 (Greedy)</title><link href="http://localhost:4000/devlog/backjeon-11399.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11399문제 (Greedy)" /><published>2022-06-26T00:00:00+09:00</published><updated>2022-06-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/backjeon-11399</id><content type="html" xml:base="http://localhost:4000/devlog/backjeon-11399.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 11399 Greedy Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-다른-사람-코드를-참고한-리펙터링&quot;&gt;다른 사람 코드를 참고한 리펙터링&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;인하은행에는 ATM이 1대밖에 없다. 지금 이 ATM앞에 N명의 사람들이 줄을 서있다. 사람은 1번부터 N번까지 번호가 매겨져 있으며, i번 사람이 돈을 인출하는데 걸리는 시간은 Pi분이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;사람들이 줄을 서는 순서에 따라서, 돈을 인출하는데 필요한 시간의 합이 달라지게 된다. 예를 들어, 총 5명이 있고, P1 = 3, P2 = 1, P3 = 4, P4 = 3, P5 = 2 인 경우를 생각해보자. [1, 2, 3, 4, 5] 순서로 줄을 선다면, 1번 사람은 3분만에 돈을 뽑을 수 있다. 2번 사람은 1번 사람이 돈을 뽑을 때 까지 기다려야 하기 때문에, 3+1 = 4분이 걸리게 된다. 3번 사람은 1번, 2번 사람이 돈을 뽑을 때까지 기다려야 하기 때문에, 총 3+1+4 = 8분이 필요하게 된다. 4번 사람은 3+1+4+3 = 11분, 5번 사람은 3+1+4+3+2 = 13분이 걸리게 된다. 이 경우에 각 사람이 돈을 인출하는데 필요한 시간의 합은 3+4+8+11+13 = 39분이 된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;줄을 [2, 5, 1, 4, 3] 순서로 줄을 서면, 2번 사람은 1분만에, 5번 사람은 1+2 = 3분, 1번 사람은 1+2+3 = 6분, 4번 사람은 1+2+3+3 = 9분, 3번 사람은 1+2+3+3+4 = 13분이 걸리게 된다. 각 사람이 돈을 인출하는데 필요한 시간의 합은 1+3+6+9+13 = 32분이다. 이 방법보다 더 필요한 시간의 합을 최소로 만들 수는 없다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;줄을 서 있는 사람의 수 N과 각 사람이 돈을 인출하는데 걸리는 시간 Pi가 주어졌을 때, 각 사람이 돈을 인출하는데 필요한 시간의 합의 최솟값을 구하는 프로그램을 작성하시오.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 11399 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">운영체제</title><link href="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html" rel="alternate" type="text/html" title="운영체제" /><published>2022-03-28T00:00:00+09:00</published><updated>2022-03-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C</id><content type="html" xml:base="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html">&lt;blockquote&gt;
   &lt;p&gt;운영체제를 공부하고 간략하게 정리한 글입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -1689,35 +1723,4 @@ goWorkRecording(person);
 
 &lt;p&gt;4단원에서도 테스트 코드를 한차례 더 강조했는데 역시나 모든 코드에 테스트를 할 수 있다면 좋겠지만 우리의 몸과 마음은 유한하니.. 중심이 되는 코드들을 중점으로 테스트를 하는 것을 권장한다. 어디선가 ‘프론트엔드는 브라우저 상으로 잘 출력이 되는지 확인할 수 있으니까 굳이 안만들어도 되지 않나?’라는 이야기를 들은 적이 있었다. 그 때는 ‘어 그런가?’라고 생각했지만, 곧 이 생각은 바뀌게 되었다. 확실히 테스트 코드는 처음에 시간이 조금 걸릴 수는 있지만, 지속적인 테스트나 디버깅에 있어서 테스트 코드가 없는 것보다 월등한 속도를 보여준다고 주변에서 먼저 경험한 동기들에게 전해들었다! 즉 누구에게나 테스트 코드는 필요하다!&lt;/p&gt;
 
-&lt;p&gt;더 나은 코드를 구현하기 위해 앞으로도 홧팅하며 달린다 🏃🏻&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">Refactoring2 chapter 3과 4를 읽고..</summary></entry><entry><title type="html">[Refactoring2] Chapter 2 : 리팩터링 원칙</title><link href="http://localhost:4000/book/chapter2.html" rel="alternate" type="text/html" title="[Refactoring2] Chapter 2 : 리팩터링 원칙" /><published>2021-10-15T00:00:00+09:00</published><updated>2021-10-15T00:00:00+09:00</updated><id>http://localhost:4000/book/chapter2</id><content type="html" xml:base="http://localhost:4000/book/chapter2.html">&lt;blockquote&gt;
-  &lt;p&gt;chapter 2 리펙터링 원칙을 읽고…&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;[목차]
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-chapter-2-리팩터링-원칙을-읽으며&quot;&gt;Chapter 2 리팩터링 원칙을 읽으며..&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-chapter-2-리팩터링-원칙을-읽으며&quot;&gt;📌 Chapter 2 리팩터링 원칙을 읽으며..&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;이번 주제 또한 실질적인 기법을 알려주기 전에 리펙터링의 필요성과 효율 등을 이야기해주는 단원이었다.&lt;/p&gt;
-
-&lt;p&gt;궁극적으로 리팩터링은 심미적으로 코드를 아름답게하기 위해, 좋아보이기 위해 진행하는 것이 아니다. 리팩터링을 통해 개발 속도를 높이고, 더 적은 노력으로 많은 가치를 창출하는 것에 있다.&lt;/p&gt;
-
-&lt;p&gt;분명 리팩터링에는 여러가지 이점들이 존재한다. 소프트웨어를 이해하기 쉬워지고, 디버깅을 쉽게 할 수 있는 등 그밖에 여러가지 이점들을 가지고 있지만, 저자는 무턱대고 리팩터링을 하는 것을 권장하지 않는다고 말한다.&lt;/p&gt;
-
-&lt;p&gt;리팩터링의 시기에 대한 명쾌한 해답은 없다. 누군가에게는 기능 추가와 동시에 하는 것이 베스트이고, 누군가에게는 팀원들과 코드리뷰를 하면서, 누군가는 날잡고 몇일동안.. 사실 특정 누군가에게 해당 방안들이 적용되는 것이 아니라 상황에 따라 취해야할 행동이 다르다고 생각된다. 하지만 이러한 행동을 취하기 위해서는 많은 경험과 고민들을 거쳐야만 할 것이다.&lt;/p&gt;
-
-&lt;p&gt;본인은 기능을 구현함과 동시에 리팩터링을 진행하는 편이다. 비록 신입 개발자이지만.. 더 개선할 수 있을 것 같은데? 라는 마음으로 계속 고민하는 편이다. 하지만 기한이 빡빡한 새로운 프로젝트에 돌입한다면 기능을 우선적으로 구현해야지..라는 생각을 가지고 있다.&lt;/p&gt;
-
-&lt;p&gt;책에서는 여러가지 리팩토링 시 고려해야할 점들, 리팩토링의 시기들을 이야기하지만 본인이 느꼈을 때 결론은 이것인 것 같다.
-“코드의 지구력 설계를 위해서는 리팩토링이 필요하다. 리팩토링을 진행할 때 코드 테스트를 병행하고, 팀이라면 CI(지속적 통합) 방식으로 컨플릭같은 에러를 최소화하는 것이 좋다. 하지만 리팩터링 해야할 요소는 마땅한 리팩터링을 해야하는 근거가 필요하다. 기존보다 성능이 덜 좋거나, 래거시 코드 등 다양한 리팩터링 대상을 놓고, 기존 서비스를 잘 유지하는 차원에서 진행하는 것이 리팩토링의 원칙이다.”&lt;/p&gt;
-
-&lt;p&gt;위의 내용이 맞는지 틀린지 사실 잘 모르겠지만 이제 다음 단원부터 시작되는 실질적인 리팩터링 기법들을 읽고 난 뒤 다시 단원 1장과 2장을 정독해보아야겠다. :)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">chapter 2 리펙터링 원칙을 읽고…</summary></entry></feed>
+&lt;p&gt;더 나은 코드를 구현하기 위해 앞으로도 홧팅하며 달린다 🏃🏻&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">Refactoring2 chapter 3과 4를 읽고..</summary></entry></feed>
