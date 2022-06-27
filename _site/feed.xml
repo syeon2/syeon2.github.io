@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-06-26T16:17:03+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] 백준 11399문제 (Greedy)</title><link href="http://localhost:4000/devlog/backjeon-11399.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11399문제 (Greedy)" /><published>2022-06-26T00:00:00+09:00</published><updated>2022-06-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/backjeon-11399</id><content type="html" xml:base="http://localhost:4000/devlog/backjeon-11399.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 11399 Greedy Algorithm 문제입니다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-06-27T10:03:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] 백준 11047문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon11047.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11047문제 (Greedy)" /><published>2022-06-27T00:00:00+09:00</published><updated>2022-06-27T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon11047</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon11047.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 11047 Greedy Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;!---more---&gt;
@@ -10,7 +10,121 @@
     &lt;ul&gt;
       &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-다른-사람-코드를-참고한-리펙터링&quot;&gt;다른 사람 코드를 참고한 리펙터링&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;준규가 가지고 있는 동전은 총 N종류이고, 각각의 동전을 매우 많이 가지고 있다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;동전을 적절히 사용해서 그 가치의 합을 K로 만들려고 한다. 이때 필요한 동전 개수의 최솟값을 구하는 프로그램을 작성하시오.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+        Integer N = Integer.parseInt(st.nextToken());
+        Integer price = Integer.parseInt(st.nextToken());
+
+        ArrayList&amp;lt;Integer&amp;gt; coinList = new ArrayList&amp;lt;&amp;gt;();
+
+        while(N-- &amp;gt; 0) {
+            coinList.add(Integer.parseInt(br.readLine()));
+        }
+
+        int count = 0;
+
+        for(int i = coinList.size() - 1; i &amp;gt;= 0; i--) {
+            if(price / coinList.get(i) &amp;gt; 0) {
+                count += price / coinList.get(i);
+                price -= coinList.get(i) * (price / coinList.get(i));
+            }
+
+            if(price == 0) {
+                System.out.println(count);
+                return;
+            }
+        }
+
+        System.out.println(count);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;StringTokenizer를 활용하여 input을 받는다. (속도 측면에서 Scanner보다 우수)&lt;/li&gt;
+  &lt;li&gt;Collections reverse를 활용하여 coinList를 내림차순으로 변경하려고 했지만, 불필요한 for loop를 낭비할 필요없이 list index의 최대값부터 0까지 loop를 돌리는 것으로 변경하였다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ArrayList Collection을 List로 변경&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+        Integer N = Integer.parseInt(st.nextToken());
+        Integer price = Integer.parseInt(st.nextToken());
+
+        int[] coinList = new int[N];
+
+        for(int i = 0; i &amp;lt; N; i++) {
+            coinList[i] = Integer.parseInt(br.readLine());
+        }
+
+        int count = 0;
+
+        for(int i = N - 1; i &amp;gt;= 0; i--) {
+            if(price / coinList[i] &amp;gt; 0) {
+                count += price / coinList[i];
+                price -= coinList[i] * (price / coinList[i]);
+            }
+
+            if(price == 0) {
+                System.out.println(count);
+                return;
+            }
+        }
+
+        System.out.println(count);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;속도적인 측면에서 ArrayList는 120ms, List는 124ms가 걸려서 Collections를 사용하지 않는다고 해서 속도가 비약적으로 향상되는 것은 아닌 것 같다.. 그럼 Collections를 사용하는게 훨씬 유연한 대처가 가능하지 않을까?&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 11047 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 11399문제 (Greedy)</title><link href="http://localhost:4000/devlog/backjoon-11399.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11399문제 (Greedy)" /><published>2022-06-26T00:00:00+09:00</published><updated>2022-06-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/backjoon-11399</id><content type="html" xml:base="http://localhost:4000/devlog/backjoon-11399.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 11399 Greedy Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#collections-sort&quot;&gt;Collections Sort&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -33,7 +147,127 @@
   &lt;p&gt;줄을 서 있는 사람의 수 N과 각 사람이 돈을 인출하는데 걸리는 시간 Pi가 주어졌을 때, 각 사람이 돈을 인출하는데 필요한 시간의 합의 최솟값을 구하는 프로그램을 작성하시오.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 11399 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">운영체제</title><link href="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html" rel="alternate" type="text/html" title="운영체제" /><published>2022-03-28T00:00:00+09:00</published><updated>2022-03-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C</id><content type="html" xml:base="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html">&lt;blockquote&gt;
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Scanner API를 사용하는 것이 편리하지만, 속도면에서 BufferedReader가 더 빠르기 때문에 BufferedReader를 사용하는 것을 권장한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class ATMQuestion {
+
+    public static ArrayList&amp;lt;Integer&amp;gt; quickSort(ArrayList&amp;lt;Integer&amp;gt; list) {
+        if(list.size() &amp;lt;= 1) {
+            return list;
+        }
+
+        int pivot = list.get(0);
+
+        ArrayList&amp;lt;Integer&amp;gt; quickSortList = new ArrayList&amp;lt;&amp;gt;();
+
+        ArrayList&amp;lt;Integer&amp;gt; leftList = new ArrayList&amp;lt;&amp;gt;();
+        ArrayList&amp;lt;Integer&amp;gt; rightList = new ArrayList&amp;lt;&amp;gt;();
+
+        for(int i = 1; i &amp;lt; list.size(); i++) {
+            int currentValue = list.get(i);
+
+            if (pivot &amp;gt;= currentValue) {
+                leftList.add(currentValue);
+            } else if (pivot &amp;lt; currentValue) {
+                rightList.add(currentValue);
+            }
+        }
+
+        quickSortList.addAll(quickSort(leftList));
+        quickSortList.add(pivot);
+        quickSortList.addAll(quickSort(rightList));
+
+        return quickSortList;
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int size = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+        ArrayList&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+
+        while(size-- &amp;gt; 0) {
+            list.add(Integer.parseInt(st.nextToken()));
+        }
+
+        ArrayList&amp;lt;Integer&amp;gt; finalList = quickSort(value);
+
+        int timeCount = 0;
+        int totalCount = 0;
+
+        for(int i = 0; i &amp;lt; finalList.size(); i++) {
+            timeCount = finalList.get(i) + timeCount;
+
+            totalCount += timeCount;
+        }
+
+        System.out.println(totalCount);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;문제의 쟁점은 모든 ATM기기 사용자들의 각각 대기 시간을 더한 값이다.&lt;/li&gt;
+  &lt;li&gt;프로세스 스케줄링 알고리즘에 비슷한 개념이 있었던 것 같은데 다시 찾아봐야할 것 같다.&lt;/li&gt;
+  &lt;li&gt;전체적인 프로세스가 최소로 이루어져야 하기 때문에 주어지는 P1..P5까지의 값을 오름차순으로 정렬해야한다.&lt;/li&gt;
+  &lt;li&gt;정렬하기 위해 처음에는 복습 차원에서 Quick Sort를 직접 구현하여 적용해보았다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;시간은 총 240ms가 소요되었다…&lt;/p&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;다른 사람들의 코드를 보던 중 Collection에서 지원하는 sort api를 활용해보기로 했다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int size = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+        ArrayList&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+
+        while(size-- &amp;gt; 0) {
+            list.add(Integer.parseInt(st.nextToken()));
+        }
+
+        Collections.sort(list);
+
+        int timeCount = 0;
+        int totalCount = 0;
+
+        for(int i = 0; i &amp;lt; list.size(); i++) {
+            timeCount = list.get(i) + timeCount;
+
+            totalCount += timeCount;
+        }
+
+        System.out.println(totalCount);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Quick Sort를 직접 구현하지 않아서 훨씬 코드가 짧아졌다.&lt;/li&gt;
+  &lt;li&gt;Collections에서 제공하는 sort API를 사용한 결과, 시간은 140ms가 걸렸다!!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;-collections-sort&quot;&gt;📚 Collections Sort&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Collections Sort는 처음 문제에서 적용했던 Quick Sort에서 한단계 업그레이드 된 Double Pivot Quick Sort를 사용한다고 한다.&lt;/li&gt;
+  &lt;li&gt;일반적인 Quick Sort는 pivot을 한개 사용하여 정렬하지만 Double Pivot은 말 그대로 Pivot을 2개 사용하여 정렬한다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 11399 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">운영체제</title><link href="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html" rel="alternate" type="text/html" title="운영체제" /><published>2022-03-28T00:00:00+09:00</published><updated>2022-03-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C</id><content type="html" xml:base="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html">&lt;blockquote&gt;
   &lt;p&gt;운영체제를 공부하고 간략하게 정리한 글입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -1707,20 +1941,4 @@ goWorkRecording(person);
 
 &lt;blockquote&gt;
   &lt;p&gt;🎈 생각보다 기초적이지만 처음에 등장한만큼 중요한 기법이라고 생각된다. 리팩터링을 다시 한번 생각해보게 되었고, 앞으로도 기대가 된다 😊&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">chapter 6-1 함수 추출하기에 대한 생각 정리🤔</summary></entry><entry><title type="html">[Refactoring2] Chapter 3 &amp;amp; 4 : 전반적인 코드 개선 방법</title><link href="http://localhost:4000/book/chapter3-4.html" rel="alternate" type="text/html" title="[Refactoring2] Chapter 3 &amp;amp; 4 : 전반적인 코드 개선 방법" /><published>2021-10-19T00:00:00+09:00</published><updated>2021-10-19T00:00:00+09:00</updated><id>http://localhost:4000/book/chapter3-4</id><content type="html" xml:base="http://localhost:4000/book/chapter3-4.html">&lt;blockquote&gt;
-  &lt;p&gt;Refactoring2 chapter 3과 4를 읽고..&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;h2 id=&quot;-chapter-3--chapter-4&quot;&gt;📌 Chapter 3 &amp;amp; Chapter 4&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;3단원과 4단원은 어떤 코드를 점검하고 리팩토링을 고려해야하는지, 리팩토링과 테스트 코드는 구체적으로 어떤 연관을 가지는 것인지에 대해서 이야기한다. 3단원에서 소개하는 점검해야하는 리팩터링 요소들은 생각보다 엄청 많았다. 변수 이름 정하기부터 시작하여, 반복문 클래스를 어떻게 해는 것이 좋다! 라고 소개하지만… 신입인 나는 아직 경험해보지 못했던 상황들이 많이 있었다..ㅠㅠ 테스트 코드 또한 마찬가지였다..(jest를 빨리 익혀야겠다..!!)&lt;/p&gt;
-
-&lt;p&gt;3단원을 통해서 고려해야할 코드들은 생각보다 많고, 이것들은 모두 코드를 명확하게 만들어주는 도구라고 생각하니 빨리 익히고 싶은 마음이 들었지만..! 급히 먹는 밥이 체한다고..🍚 천천히 잘 씹어 먹어야겠다😊&lt;/p&gt;
-
-&lt;p&gt;4단원에서도 테스트 코드를 한차례 더 강조했는데 역시나 모든 코드에 테스트를 할 수 있다면 좋겠지만 우리의 몸과 마음은 유한하니.. 중심이 되는 코드들을 중점으로 테스트를 하는 것을 권장한다. 어디선가 ‘프론트엔드는 브라우저 상으로 잘 출력이 되는지 확인할 수 있으니까 굳이 안만들어도 되지 않나?’라는 이야기를 들은 적이 있었다. 그 때는 ‘어 그런가?’라고 생각했지만, 곧 이 생각은 바뀌게 되었다. 확실히 테스트 코드는 처음에 시간이 조금 걸릴 수는 있지만, 지속적인 테스트나 디버깅에 있어서 테스트 코드가 없는 것보다 월등한 속도를 보여준다고 주변에서 먼저 경험한 동기들에게 전해들었다! 즉 누구에게나 테스트 코드는 필요하다!&lt;/p&gt;
-
-&lt;p&gt;더 나은 코드를 구현하기 위해 앞으로도 홧팅하며 달린다 🏃🏻&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">Refactoring2 chapter 3과 4를 읽고..</summary></entry></feed>
+&lt;/blockquote&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">chapter 6-1 함수 추출하기에 대한 생각 정리🤔</summary></entry></feed>
