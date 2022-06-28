@@ -1,5 +1,176 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-06-27T10:03:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] 백준 11047문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon11047.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11047문제 (Greedy)" /><published>2022-06-27T00:00:00+09:00</published><updated>2022-06-27T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon11047</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon11047.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-06-28T16:02:43+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] 백준 1931문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-1931.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1931문제 (Greedy)" /><published>2022-06-28T00:00:00+09:00</published><updated>2022-06-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1931</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1931.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 1931 Greedy Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;한 개의 회의실이 있는데 이를 사용하고자 하는 N개의 회의에 대하여 회의실 사용표를 만들려고 한다. 각 회의 I에 대해 시작시간과 끝나는 시간이 주어져 있고, 각 회의가 겹치지 않게 하면서 회의실을 사용할 수 있는 회의의 최대 개수를 찾아보자. 단, 회의는 한번 시작하면 중간에 중단될 수 없으며 한 회의가 끝나는 것과 동시에 다음 회의가 시작될 수 있다. 회의의 시작시간과 끝나는 시간이 같을 수도 있다. 이 경우에는 시작하자마자 끝나는 것으로 생각하면 된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;첫째 줄에 회의의 수 N(1 ≤ N ≤ 100,000)이 주어진다. 둘째 줄부터 N+1 줄까지 각 회의의 정보가 주어지는데 이것은 공백을 사이에 두고 회의의 시작시간과 끝나는 시간이 주어진다. 시작 시간과 끝나는 시간은 231-1보다 작거나 같은 자연수 또는 0이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;input &lt;br /&gt;
+11 &lt;br /&gt;
+1 4 &lt;br /&gt;
+3 5 &lt;br /&gt;
+0 6 &lt;br /&gt;
+5 7 &lt;br /&gt;
+3 8 &lt;br /&gt;
+5 9 &lt;br /&gt;
+6 10 &lt;br /&gt;
+8 11 &lt;br /&gt;
+8 12 &lt;br /&gt;
+2 13 &lt;br /&gt;
+12 14 &lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class MeetingRoom1931 {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+
+        ArrayList&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+
+        // 각 받은 string token 이중 array 로 형변환
+        for(int i = 0; i &amp;lt; N; i++) {
+            String el = br.readLine();
+
+            StringTokenizer st = new StringTokenizer(el, &quot; &quot;);
+            ArrayList&amp;lt;Integer&amp;gt; timeList = new ArrayList&amp;lt;Integer&amp;gt;();
+
+            timeList.add(Integer.parseInt(st.nextToken()));
+            timeList.add(Integer.parseInt(st.nextToken()));
+
+            list.add(timeList);
+        }
+
+        Collections.sort(list, (ArrayList&amp;lt;Integer&amp;gt; a, ArrayList&amp;lt;Integer&amp;gt; b) -&amp;gt; (a.get(1) - a.get(0)) - (b.get(1) - b.get(0)));
+
+        int count = 0;
+
+        for(int i = 0; i &amp;lt; N; i++) {
+            boolean[] times = new boolean[24];
+            int curCount = 1;
+
+            for(int x = list.get(i).get(0); x &amp;lt; list.get(i).get(1); x++) {
+                times[x] = true;
+            }
+
+            for(int y = 0; y &amp;lt; N; y++) {
+                int leftPivot = list.get(y).get(0);
+                int rightPivot = list.get(y).get(1);
+
+                boolean hasTime = false;
+
+                for(int z = leftPivot; z &amp;lt; rightPivot; z++) {
+                    if(times[z]) {
+                        hasTime = true;
+                        break;
+                    }
+                }
+
+                if(!hasTime) {
+                    for(int z = leftPivot; z &amp;lt; rightPivot; z++) {
+                        times[z] = true;
+                    }
+                    curCount++;
+                }
+            }
+
+            count = Math.max(count, curCount);
+        }
+
+        System.out.println(count);
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;위에는 없지만 전에 풀던 것과 마찬가지로 quickSort를 직접 구현하여 풀어보았다.&lt;/li&gt;
+  &lt;li&gt;처음에는 quickSort의 문제라기보다 sorting한 이후의 로직의 문제인 줄 알았다.&lt;/li&gt;
+  &lt;li&gt;다른 IDE로는 값이 잘 출력되었지만, 백준에서는 계속 시간초과가 나왔다.&lt;/li&gt;
+  &lt;li&gt;sorting 이후의 로직을 최대한 간결하게 하려고 했지만 이중, 삼중 for문이 반필수적으로 들어갔다. (처음 sorting할 때의 기준은 각 node마다의 (끝나는 시간 - 시작하는 시간)의 값을 기준으로 오름차순 정렬하였다.)&lt;/li&gt;
+  &lt;li&gt;sorting된 시간을 비교하려면 추가적인 자료구조 및 O(n)을 초과하는 로직이 필수적이었다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;sorting할 때 기준을 끝나는 시간에 맞추어 sorting한다. (끝나는 시간이 같다면 시작 시간을 기준으로 오름차순 정렬한다.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public static void main(String[] args) throws IOException {
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    int N = Integer.parseInt(br.readLine());
+
+    ArrayList&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+
+    for(int i = 0; i &amp;lt; N; i++) {
+        String el = br.readLine();
+
+        StringTokenizer st = new StringTokenizer(el, &quot; &quot;);
+        ArrayList&amp;lt;Integer&amp;gt; timeList = new ArrayList&amp;lt;Integer&amp;gt;();
+
+        timeList.add(Integer.parseInt(st.nextToken()));
+        timeList.add(Integer.parseInt(st.nextToken()));
+
+        list.add(timeList);
+    }
+
+    Collections.sort(list, new Comparator&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt;() {
+        @Override
+        public int compare(ArrayList&amp;lt;Integer&amp;gt; o1, ArrayList&amp;lt;Integer&amp;gt; o2) {
+            if(o1.get(1) == o2.get(1)) {
+                return o1.get(0) - o2.get(0);
+            } else {
+                return o1.get(1) - o2.get(1);
+            }
+        }
+    });
+
+    int count = 0;
+
+    int end = 0;
+
+    for(int i = 0; i &amp;lt; N; i++) {
+        if(list.get(i).get(0) &amp;gt;= end) {
+            count++;
+            end = list.get(i).get(1);
+        }
+    }
+
+    System.out.println(count);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Collections.sort 하나만으로 for문을 하나만 들려서 정답을 도출할 수 있게 되었다.&lt;/li&gt;
+  &lt;li&gt;무작정 알고리즘을 사용하는 것보다 어떻게 알고리즘을 사용해야하는지에 대한 고민이 중요하다고 생각되었다.&lt;/li&gt;
+  &lt;li&gt;추가로 시간복잡도, 공간복잡도도 함께 고려하여 사전에 설계하는 습관을 들여야겠다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1931 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 11047문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon11047.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11047문제 (Greedy)" /><published>2022-06-27T00:00:00+09:00</published><updated>2022-06-27T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon11047</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon11047.html">&lt;blockquote&gt;
   &lt;p&gt;백준 11047 Greedy Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -10,6 +181,7 @@
     &lt;ul&gt;
       &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -75,39 +247,11 @@ public class Main {
   &lt;li&gt;ArrayList Collection을 List로 변경&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    int[] coinList = new int[N];
 
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-        Integer N = Integer.parseInt(st.nextToken());
-        Integer price = Integer.parseInt(st.nextToken());
-
-        int[] coinList = new int[N];
-
-        for(int i = 0; i &amp;lt; N; i++) {
-            coinList[i] = Integer.parseInt(br.readLine());
-        }
-
-        int count = 0;
-
-        for(int i = N - 1; i &amp;gt;= 0; i--) {
-            if(price / coinList[i] &amp;gt; 0) {
-                count += price / coinList[i];
-                price -= coinList[i] * (price / coinList[i]);
-            }
-
-            if(price == 0) {
-                System.out.println(count);
-                return;
-            }
-        }
-
-        System.out.println(count);
+    for(int i = 0; i &amp;lt; N; i++) {
+        coinList[i] = Integer.parseInt(br.readLine());
     }
-}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
@@ -121,10 +265,10 @@ public class Main {
 &lt;ul&gt;
   &lt;li&gt;목차
     &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#collections-sort&quot;&gt;Collections Sort&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-collections-sort&quot;&gt;Collections Sort&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -1830,115 +1974,4 @@ bind는 호출이 아니라 this에 바인딩할 객체를 매개변수로 받�
   &lt;li&gt;역시나 알고리즘은 재밌다!!!&lt;/li&gt;
   &lt;li&gt;여러가지 알고리즘 자료구조를 활용해 최적의 코드를 구현하는 방법! 더 연구하고 많이 사용해보아야겠다.&lt;/li&gt;
   &lt;li&gt;하지만 나도 과거에 쩔쩔매던 재귀함수를 활용해서 스스로 코드를 구현한 것에 보람을 느낀다 :)&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="재귀함수" /><category term="split" /><summary type="html">카카오 코딩 테스트 문제 ‘문자 숫자열과 영단어’입니다.</summary></entry><entry><title type="html">[Refactoring2] Chapter 6-1 함수 추출하기</title><link href="http://localhost:4000/book/chaper6-1.html" rel="alternate" type="text/html" title="[Refactoring2] Chapter 6-1 함수 추출하기" /><published>2021-10-20T00:00:00+09:00</published><updated>2021-10-20T00:00:00+09:00</updated><id>http://localhost:4000/book/chaper6-1</id><content type="html" xml:base="http://localhost:4000/book/chaper6-1.html">&lt;blockquote&gt;
-  &lt;p&gt;chapter 6-1 함수 추출하기에 대한 생각 정리🤔&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-함수-추출하기&quot;&gt;함수 추출하기&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-예시-및-생각-정리&quot;&gt;예시 및 생각 정리&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-함수-추출하기&quot;&gt;📌 함수 추출하기??&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;함수 추출하기는 하나의 코드를 여러 조각으로 나누는 작업이다.&lt;/li&gt;
-  &lt;li&gt;각각 독립적인 함수로 만들기 위해서는 함수의 목적을 파악하고 분리하기!!(목적이 명확하다면 변수명 짓는 것도 보다 수월해질 것🤩)&lt;/li&gt;
-  &lt;li&gt;사람마다, 팀마다 목적에 맞게 나누는 정도는 다 다르지만..(저자는 reverse메소드 하나 사용하기 위해 함수를 만든 적도 있다고..), 상황에 맞는 유연함을 보여야할 필요가 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-예시-및-생각-정리&quot;&gt;📌 예시 및 생각 정리&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let person = {name: 'syeon', goToWork: [true, true, true, true]};
-
-function goWorkRecording(person) {
-  let counting = 0;
-
-  console.log('In the morning');
-
-  for(let working of person.goToWork) {
-    if(working) {
-      counting += 1;
-    }
-  };
-
-  const today = new Date();
-  person.date = `${today.getFullYear()}/${today.getMonth()}/${today.getDate()}`;
-
-  console.log(`이름 : ${person.name}`);
-  console.log(`오늘 날짜 : ${person.date}`);
-  console.log(`출근 횟수 : ${counting}`);
-}
-
-goWorkRecording(person);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;서적에 소개된 예시와 비슷한 함수를 만들어보았다.(이제 직장인이어서 출근으로 비유한 새내기 개발지🌱)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;함수 추출하기 에서는 이정도로???라고 할 정도로 함수를 나누며 설명한다.&lt;/li&gt;
-  &lt;li&gt;핵심은 매개 변수, 지역 변수 등의 배치를 최대한 쉽고 간결하게..이게 무슨 일을 하는 함수인지 바로 알 수 있도록 구현하는 것이라고 생각했다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let person = {name : 'syeon', goToWork: [true, true, true, true]};
-
-function goWorkRecording(person) {
-  alertMorning();
-
-  const counting = countWorking(person);
-
-  getToday();
-
-  showRecords(person, counting);
-
-  function alertMorning() {
-    console.log('In the Morning');
-  };
-
-  function countWorking(person) {
-    let result = 0;
-
-    for(let working of person.goToWork) {
-      if(working) result += 1;
-    }
-    return result;
-
-  };
-
-  function getToday() {
-    let today = new Date();
-    return `${today.getFullYear()}/${today.getMonth()}/${today.getDate()}`;
-  }
-
-  function showRecords(person, counting) {
-    console.log(`이름 : ${person.name}`);
-    console.log(`오늘 날짜 : ${person.date}`);
-    console.log(`출근 횟수 : ${counting}`);
-  }
-}
-goWorkRecording(person);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;코드가 생각보다 많이 길어졌다.&lt;/li&gt;
-  &lt;li&gt;하지만 이 goWorkRecording이라는 함수가 무엇을 하려는지는 좀더 명확하게 보인다.&lt;/li&gt;
-  &lt;li&gt;책에서는 나오지 않았지만, 본인은 중복 함수인 함수 선언문들을 제일 아래로 내려 놓은게 인사이트였다.&lt;/li&gt;
-  &lt;li&gt;별거 아닌것처럼 보여도 무심결 함수 선언하고 함수 호출하고의 생각이 당연한 것처럼 여겼는데 이렇게보니 더 깔끔하다는 생각이 들었다.&lt;/li&gt;
-  &lt;li&gt;alertMorning함수는 goWorkRecording에서 참조하는 지역변수가 없으므로 바깥으로 빼서 재사용성을 높일 수도 있다.&lt;/li&gt;
-  &lt;li&gt;countWorking함수도 본래 goWorkRecording의 지역변수였던 counting을 함수 내부로 넣고 결과 값을 result으로 뺀 점, 그리고 그 결과값 result는 결국 couting 변수에 할당되어 다른 함수에서 사용할 수 있게 만든 것…이런 것이 바로 코드를 섬세하게 다룬다 라고 하는 것임을 알았다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;🎈 생각보다 기초적이지만 처음에 등장한만큼 중요한 기법이라고 생각된다. 리팩터링을 다시 한번 생각해보게 되었고, 앞으로도 기대가 된다 😊&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="refactoring2" /><summary type="html">chapter 6-1 함수 추출하기에 대한 생각 정리🤔</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="재귀함수" /><category term="split" /><summary type="html">카카오 코딩 테스트 문제 ‘문자 숫자열과 영단어’입니다.</summary></entry></feed>
