@@ -1,5 +1,1030 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-06-28T16:02:43+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] 백준 1931문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-1931.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1931문제 (Greedy)" /><published>2022-06-28T00:00:00+09:00</published><updated>2022-06-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1931</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1931.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-07-11T10:24:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] 백준 1541문제</title><link href="http://localhost:4000/devlog/baekjoon-1541.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1541문제" /><published>2022-07-11T00:00:00+09:00</published><updated>2022-07-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1541</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1541.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 1541 Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;세준이는 양수와 +, -, 그리고 괄호를 가지고 식을 만들었다. 그리고 나서 세준이는 괄호를 모두 지웠다.
+그리고 나서 세준이는 괄호를 적절히 쳐서 이 식의 값을 최소로 만들려고 한다.
+괄호를 적절히 쳐서 이 식의 값을 최소로 만드는 프로그램을 작성하시오.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Input / Output
+55-50+40 / -35
+10+20+30+40 / 100
+0009 - 0009 / 0&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        String input = br.readLine();
+
+        // + 만 있는 경우
+        if (!input.contains(&quot;-&quot;) &amp;amp;&amp;amp; input.contains(&quot;+&quot;)) {
+            String[] indexes = input.split(&quot;\\+&quot;);
+
+            int result = 0;
+            for (int i = 0; i &amp;lt; indexes.length; i++) {
+                result += Integer.parseInt(indexes[i]);
+            }
+
+            System.out.println(result);
+        } else if (input.contains(&quot;-&quot;) &amp;amp;&amp;amp; !input.contains(&quot;+&quot;)) {
+            // - 만 있는 경우
+            String[] indexes = input.split(&quot;-&quot;);
+
+            int result = Integer.parseInt(indexes[0]);
+            for (int i = 1; i &amp;lt; indexes.length; i++) {
+                result -= Integer.parseInt(indexes[i]);
+            }
+
+            System.out.println(result);
+        } else if (input.contains(&quot;-&quot;) &amp;amp;&amp;amp; input.contains(&quot;+&quot;)) {
+            // 두개 다 있는 경우
+            String[] minusList = input.split(&quot;-&quot;);
+
+            int result = 0;
+            // first Value
+            if (minusList[0].contains(&quot;+&quot;)) {
+                String[] firstList = minusList[0].split(&quot;\\+&quot;);
+
+                for (int i = 0; i &amp;lt; firstList.length; i++) {
+                    result += Integer.parseInt(firstList[i]);
+                }
+            } else {
+                result = Integer.parseInt(minusList[0]);
+            }
+
+            for (int i = 1; i &amp;lt; minusList.length; i++) {
+                if (minusList[i].contains(&quot;+&quot;)) {
+                    String[] indexValues = minusList[i].split(&quot;\\+&quot;);
+
+                    for (int x = 0; x &amp;lt; indexValues.length; x++) {
+                        result -= Integer.parseInt(indexValues[x]);
+                    }
+                } else {
+                    result -= Integer.parseInt(minusList[i]);
+                }
+            }
+
+            System.out.println(result);
+        } else {
+            System.out.println(Integer.parseInt(input));
+        }
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이번 문제는 생각보다 쉬웠다. (정답률 50%이니 당연한건가..?)&lt;/li&gt;
+  &lt;li&gt;임의의 괄호를 추가하여 식이 최솟값이 되려면 -를 기준으로 +하여 한꺼번에 빼면 된다고 생각하였다.&lt;/li&gt;
+  &lt;li&gt;그래서 식에 +만 있는 경우, -만 있는 경우, +,-만 있는 경우 3가지로 나누어 코드를 설계하였다.&lt;/li&gt;
+  &lt;li&gt;+만 있으면 + split하여 값을 모두 더하면 끝!&lt;/li&gt;
+  &lt;li&gt;-만 있으면 처음 값만 양수로 지정하고 나머지를 모두 빼면 끝!&lt;/li&gt;
+  &lt;li&gt;+, -가 모두 있으면 먼저 -를 기준으로 split한다. 그리고 각 index에 +가 있는 경우 값을 더해주고 아니면 그대로 둔다.&lt;/li&gt;
+  &lt;li&gt;그리고 index 0을 양수로 두고 나머지를 모두 빼면 최솟값을 구할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;처음에 NumberFormat 에러가 발생하기에 이게 머지라는 생각을 했다.&lt;/li&gt;
+  &lt;li&gt;Integer.parseInt 할 때, 안의 값에 숫자 이외에 다른 타입의 문자가 섞여있으면 발생하는 에러였다.&lt;/li&gt;
+  &lt;li&gt;그래서 +, -가 모두 있을 때는 index 하나하나에 문자들이 섞여있는지 모두 검사해주어 해결하였다. (다행히 시간초과는 아니었다.)&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1541 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 4796문제</title><link href="http://localhost:4000/devlog/baekjoon-4796.html" rel="alternate" type="text/html" title="[Algorithm] 백준 4796문제" /><published>2022-07-09T00:00:00+09:00</published><updated>2022-07-09T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-4796</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-4796.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 4796 Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;등산가 김강산은 가족들과 함께 캠핑을 떠났다. 하지만, 캠핑장에는 다음과 같은 경고문이 쓰여 있었다.
+캠핑장은 연속하는 20일 중 10일동안만 사용할 수 있습니다.
+강산이는 이제 막 28일 휴가를 시작했다. 이번 휴가 기간 동안 강산이는 캠핑장을 며칠동안 사용할 수 있을까?
+강산이는 조금 더 일반화해서 문제를 풀려고 한다.
+캠핑장을 연속하는 P일 중, L일동안만 사용할 수 있다. 강산이는 이제 막 V일짜리 휴가를 시작했다. 강산이가 캠핑장을 최대 며칠동안 사용할 수 있을까? (1 &amp;lt; L &amp;lt; P &amp;lt; V)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Input / Output
+5 8 20 / Case 1: 14
+5 8 17 / Case 2: 11
+0 0 0&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int count = 1;
+
+        ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+
+        while(true) {
+            StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+
+            int L = Integer.parseInt(st.nextToken());
+            int P = Integer.parseInt(st.nextToken());
+            int V = Integer.parseInt(st.nextToken());
+
+            if (L == 0 &amp;amp;&amp;amp; P == 0 &amp;amp;&amp;amp; V == 0) {
+                break;
+            }
+
+            int result = ((V / P) * L) + (V % P);
+
+            list.add(&quot;Case &quot; + count + &quot;: &quot; + result);
+            count++;
+        }
+
+        list.forEach(System.out::println);
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;처음 문제를 봤을 때 ‘어? 이거 쉬운데 왜 정답률이 30%대지??’ 라는 생각이 들었다.&lt;/li&gt;
+  &lt;li&gt;막상 백준에서 제시해준 test case들을 기준으로 식을 세워 코드를 짰다. 그리고 제출을 한 결과..Fail..😂 그럼그렇지..&lt;/li&gt;
+  &lt;li&gt;그런데 아무리 생각해봐도 저기에서 예외 케이스가 먼지 도통 알 수가 없었다..그저 빨리 풀고 싶었을 뿐..&lt;/li&gt;
+  &lt;li&gt;조급한 마음에 다른 사람들이 썼던 풀이법을 살짝 봤는데.. 머리를 한대 맞은 느낌이었다.&lt;/li&gt;
+  &lt;li&gt;V % P가 L보다 클 경우가 있다는 것… 예를 들어 5 8 15 케이스이다.&lt;/li&gt;
+  &lt;li&gt;15 % 8 * 5는 문제없이 5이다. 여기서 내가 만든 코드를 넣으면 15 % 8 = 7 =&amp;gt; 5 + 7이 되는데.. 이 문제에서는 한번 연속된 값을 더할때는 분명 5(L)을 넘으면 안되는데… 중얼거리며 바로 수정하니 정답…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    int result = ((V / P) * L) + (V % P);
+
+    =&amp;gt;
+
+    int result1 = (V / P) * L;
+    int result2;
+    if (V % P &amp;gt; L) {
+        result2 = L;
+    } else {
+        result2 = V % P;
+    }
+
+    int result = result1 + result2;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;누가 그랬던 것 같은데..? 개발은 겸손해야한다고..&lt;/li&gt;
+  &lt;li&gt;더 문제에 대해 고민해볼 수 있었지만, 깊이 생각하고 싶지 않고 내 코드가 왜 이상이 있지? 라고 생각했던 것이 이번 문제의 오답의 요인이 되었던 것 같다.&lt;/li&gt;
+  &lt;li&gt;주어진 테스트 케이스 뿐아니라 다양한 상황에서 예외를 가질 수 있는 테스트 케이스가 있을 수 있고 이런 케이스들을 잘 찾아내는 능력도 중요하겠구나 라는 생각도 들었다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 4796 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1946문제</title><link href="http://localhost:4000/devlog/baekjoon-1946.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1946문제" /><published>2022-07-08T00:00:00+09:00</published><updated>2022-07-08T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1946</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1946.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 1946 Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;언제나 최고만을 지향하는 굴지의 대기업 진영 주식회사가 신규 사원 채용을 실시한다. 인재 선발 시험은 1차 서류심사와 2차 면접시험으로 이루어진다. 최고만을 지향한다는 기업의 이념에 따라 그들은 최고의 인재들만을 사원으로 선발하고 싶어 한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;그래서 진영 주식회사는, 다른 모든 지원자와 비교했을 때 서류심사 성적과 면접시험 성적 중 적어도 하나가 다른 지원자보다 떨어지지 않는 자만 선발한다는 원칙을 세웠다. 즉, 어떤 지원자 A의 성적이 다른 어떤 지원자 B의 성적에 비해 서류 심사 결과와 면접 성적이 모두 떨어진다면 A는 결코 선발되지 않는다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;이러한 조건을 만족시키면서, 진영 주식회사가 이번 신규 사원 채용에서 선발할 수 있는 신입사원의 최대 인원수를 구하는 프로그램을 작성하시오.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int T = Integer.parseInt(br.readLine());
+
+        while(T-- &amp;gt; 0) {
+
+            int N = Integer.parseInt(br.readLine());
+
+            int[][] list = new int[N][2];
+
+            for(int i = 0; i &amp;lt; N; i++) {
+                StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+                list[i][0] = Integer.parseInt(st.nextToken());
+                list[i][1] = Integer.parseInt(st.nextToken());
+            }
+
+            Arrays.sort(list, (o1, o2) -&amp;gt; {
+                return o1[0] - o2[0];
+            });
+
+            int count = 0;
+            int pivot = list[0][1];
+
+            for(int i = 1; i &amp;lt; N; i++) {
+                if(pivot &amp;lt; list[i][1]) {
+                    count++;
+                } else {
+                    pivot = list[i][1];
+                }
+            }
+
+            System.out.println(N - count);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2일에 걸쳐 푼 문제…😂&lt;/li&gt;
+  &lt;li&gt;어제는 생각을 쥐어짜내도 풀어지지가 않던데..(배탈나서 그런가..) 오늘은 앉아서 문제를 보자마자 술술 풀렸다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;사실 술술 풀리기보다는 array sort만 오름차순으로 바꿨을뿐인데 풀이 방법이 생각났다…&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;처음에는 이중 for문으로 하나하나 비교해서 값을 찾을까 했지만.. 아니나 다를까 시간초과가 떳다..&lt;/li&gt;
+  &lt;li&gt;다른 자료구조를 사용해야하나 어떻게 해야하나 문제를 읽고 읽어서 요구하는 것을 파악하는데 시간이 좀 걸린 것 같다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;이번 문제는 알고리즘이나 자료구조의 사용법보다 풀이 전략을 잘 세우는 것이 중요한 것 같다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;먼저 서류심사 기준으로 sorting을 한다. 1순위부터 n순위까지 sorting을 하면 면접 순위만 비교하면 된다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;서류 1순위가 면접 4순위라면, 그 다음 서류 2순위는 📌무조건!! 면접 4순위보다 높아야한다.&lt;/li&gt;
+  &lt;li&gt;서류 2순위가 면접 4순위보다 낮은 순위라면 서류 1순위보다 두개 다 낮기 때문에 탈락되기 때문..!&lt;/li&gt;
+  &lt;li&gt;이런 식으로 서류 1순위의 면접 순위를 pivot으로 정하고 서류 2순위가 서류 1순위보다 면접 순위가 높으면 pivot은 서류 2순의의 면접 순위로 재할당한다.&lt;/li&gt;
+  &lt;li&gt;이렇게 비교하면 전체 count는 탈락한 사람들의 숫자가 나올텐데 여기서 전체(N) - 탈락인원(pivot)을 하면 값을 구할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1946 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 13458문제</title><link href="http://localhost:4000/devlog/baekjoon-13458.html" rel="alternate" type="text/html" title="[Algorithm] 백준 13458문제" /><published>2022-07-06T00:00:00+09:00</published><updated>2022-07-06T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-13458</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-13458.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 13458 Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;총 N개의 시험장이 있고, 각각의 시험장마다 응시자들이 있다. i번 시험장에 있는 응시자의 수는 Ai명이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;감독관은 총감독관과 부감독관으로 두 종류가 있다. 총감독관은 한 시험장에서 감시할 수 있는 응시자의 수가 B명이고, 부감독관은 한 시험장에서 감시할 수 있는 응시자의 수가 C명이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;각각의 시험장에 총감독관은 오직 1명만 있어야 하고, 부감독관은 여러 명 있어도 된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;각 시험장마다 응시생들을 모두 감시해야 한다. 이때, 필요한 감독관 수의 최솟값을 구하는 프로그램을 작성하시오.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Input / Output
+1
+1
+1 1 / 1&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;3
+3 4 5
+2 2 / 7&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;5
+1000000 1000000 1000000 1000000 1000000
+5 7 / 714290&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;5
+10 9 10 9 10
+7 20 / 10&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;5
+10 9 10 9 10
+7 2 / 13&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+
+        int[] place = new int[N];
+
+        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+        for (int i = 0; i &amp;lt; place.length; i++) {
+            place[i] = Integer.parseInt(st.nextToken());
+        }
+
+        StringTokenizer person = new StringTokenizer(br.readLine(), &quot; &quot;);
+        int B = Integer.parseInt(person.nextToken());
+        int C = Integer.parseInt(person.nextToken());
+
+        int count = 0;
+
+        for (int i = 0; i &amp;lt; place.length; i++) {
+            // 총감독관 counting
+            int remain = place[i] - B;
+            count++;
+
+            // 부감독관 counting
+            // remain 이 0 이하일 경우
+            if (remain &amp;lt;= 0) {
+                continue;
+            }
+
+            // remain 이 C 보다 작을 경우
+            if (remain &amp;lt;= C) {
+                count++;
+                continue;
+            }
+
+            // remain 이 C 보다 클 경우
+            if (remain &amp;gt; C) {
+                if(remain % C == 0) {
+                    count += remain / C;
+                } else {
+                    count += (remain / C) + 1;
+                }
+            }
+        }
+
+        System.out.println(count);
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;풀이전략&lt;/li&gt;
+  &lt;li&gt;각 시험장마다 총감독관은 1명씩 무조건 필요하므로 총감독관의 감독가능 학생 수를 뺀 나머지 값을 부감독관 감독 가능 수로 나누어 count한다.&lt;/li&gt;
+  &lt;li&gt;총감독관 무조건 한명 =&amp;gt; (total 학생 - 총감독 가능 인원 = a) -&amp;gt; a / 부감독 가능 인원 -&amp;gt; 만약 a와 부감독 가능 인원의 나눈 값에 나머지가 있다면 count + 1 한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    Scanner sc = new Scanner(System.in);
+    int N = sc.nextInt();
+    long count = 0;
+
+    int[] place = new int[N];
+    for(int i = 0; i &amp;lt; N; i++) {
+        place[i] = sc.nextInt();
+    }
+
+    int B = sc.nextInt();
+    int C = sc.nextInt();
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이 문제는 쉬운 것 같은데 왜 정답률이 20%인지 잘 몰랐다.&lt;/li&gt;
+  &lt;li&gt;막상 풀어보니 풀이 방법은 맞는 것 같은데 계속 틀리는 이유가 무엇인지 모르겠다..&lt;/li&gt;
+  &lt;li&gt;IDE로 풀어보았을 때 테스트 코드는 모두 통과했지만 백준에서는 계속 제출하자마자 틀렸다는 문구가 나왔다…&lt;/li&gt;
+  &lt;li&gt;혹시나 싶어서 BufferedReader 대신 Scanner를 사용해보았는데 성공.. (차이가 머지..?)&lt;/li&gt;
+  &lt;li&gt;일단 Scanner 사용방법을 알게 되어 좋긴했지만.. 소요된 시간이 아깝..ㅠ&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 13458 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 2217문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-2217.html" rel="alternate" type="text/html" title="[Algorithm] 백준 2217문제 (Greedy)" /><published>2022-07-05T00:00:00+09:00</published><updated>2022-07-05T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-2217</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-2217.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 2217 Greedy Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;N(1 ≤ N ≤ 100,000)개의 로프가 있다. 이 로프를 이용하여 이런 저런 물체를 들어올릴 수 있다. 각각의 로프는 그 굵기나 길이가 다르기 때문에 들 수 있는 물체의 중량이 서로 다를 수도 있다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;하지만 여러 개의 로프를 병렬로 연결하면 각각의 로프에 걸리는 중량을 나눌 수 있다. k개의 로프를 사용하여 중량이 w인 물체를 들어올릴 때, 각각의 로프에는 모두 고르게 w/k 만큼의 중량이 걸리게 된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;각 로프들에 대한 정보가 주어졌을 때, 이 로프들을 이용하여 들어올릴 수 있는 물체의 최대 중량을 구해내는 프로그램을 작성하시오. 모든 로프를 사용해야 할 필요는 없으며, 임의로 몇 개의 로프를 골라서 사용해도 된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Input / Output
+2
+10
+15 / 20&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+        ArrayList&amp;lt;Integer&amp;gt; ropes = new ArrayList&amp;lt;&amp;gt;();
+
+        for(int i = 0; i &amp;lt; N; i++) {
+            int rope = Integer.parseInt(br.readLine());
+
+            ropes.add(rope);
+        }
+
+        ropes.sort((o1, o2) -&amp;gt; {
+            return o1 - o2;
+        });
+
+        int result = 0;
+
+        for (int i = 0; i &amp;lt; ropes.size(); i++) {
+            int curWeight = ropes.get(i) * N;
+
+            result = Math.max(result, curWeight);
+            N--;
+        }
+
+        System.out.println(result);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;풀이전략&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;처음에는 주어진 ropes들을 Des sorting하여 제일 앞에 있는 rope에 N을 곱하여 최대 중량을 구하는 문제라고 생각했다. 하지만 그렇게 간단한..?(너무 간단한가..?) 문제는 아니었다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;ropes에 많은 좋은 rope들이 있더라도 index 0에 있는 줄의 최대 중량이 1이라면 1 * N밖에 되지 않는 최대 중량이 될 것이다.&lt;/li&gt;
+  &lt;li&gt;그래서 로프가 N–일 때 그에 맞는 최대 중량이 다 다를 것이고 값도 규칙성을 가지지 않기 때문에 하나하나 Math.max하여 비교한 값을 return 하였다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;처음으로 다른 분들의 코드와 비슷했다. (뿌듯)&lt;/li&gt;
+  &lt;li&gt;문제의 난이도가 쉽다고 하지만 이것을 기점으로 더 알고리즘 성장을 이뤄내고 싶다🔥&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 2217 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 11000문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-11000.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11000문제 (Greedy)" /><published>2022-07-04T00:00:00+09:00</published><updated>2022-07-04T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-11000</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-11000.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 11000 Greedy Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;수강신청의 마스터 김종혜 선생님에게 새로운 과제가 주어졌다.
+김종혜 선생님한테는 Si에 시작해서 Ti에 끝나는 N개의 수업이 주어지는데, 최소의 강의실을 사용해서 모든 수업을 가능하게 해야 한다.
+참고로, 수업이 끝난 직후에 다음 수업을 시작할 수 있다. (즉, Ti ≤ Sj 일 경우 i 수업과 j 수업은 같이 들을 수 있다.)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Input / Output
+3
+1 3
+2 4
+3 5 / 2&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+
+        ArrayList&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+        while(N-- &amp;gt; 0) {
+            ArrayList&amp;lt;Integer&amp;gt; classes = new ArrayList&amp;lt;&amp;gt;();
+
+            StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+            int startClass = Integer.parseInt(st.nextToken());
+            int endClass = Integer.parseInt(st.nextToken());
+
+            classes.add(startClass);
+            classes.add(endClass);
+
+            list.add(classes);
+        }
+
+        list.sort((o1, o2) -&amp;gt; {
+          if(o1.get(1) == o2.get(1)) {
+            return o1.get(1) - o2.get(1);
+          }
+
+          return o1.get(0) - o2.get(0);
+        });
+
+
+        // 시간초과
+//        ArrayList&amp;lt;Integer&amp;gt; endList = new ArrayList&amp;lt;&amp;gt;();
+//        endList.add(list.get(0).get(1));
+//
+//        for (int i = 1; i &amp;lt; list.size(); i++) {
+//            boolean isChanged = false;
+//
+//            for (int x = 0; x &amp;lt; endList.size(); x++) {
+//
+//                if (list.get(i).get(0) &amp;gt;= endList.get(x)) {
+//                    endList.set(x, list.get(i).get(1));
+//                    isChanged = true;
+//                    break;
+//                }
+//            }
+//
+//            if(!isChanged) {
+//                endList.add(list.get(i).get(1));
+//            }
+//        }
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;풀이전략&lt;/li&gt;
+  &lt;li&gt;저번에 풀었던 회의실 문제랑 비슷한 문제라고 생각했다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;주어진 강의 시간들을 잘 정렬하는 것이 이 문제의 키포인트 중 하나이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;강의 시간을 정렬할 때 기본적으로 시작시간 기준으로 오름차순으로 정렬하되, 만약 시작시간이 같을 경우 끝나는 시간을 오름차순으로 정렬한다.&lt;/li&gt;
+  &lt;li&gt;이렇게 시간을 정렬하고나면 시간을 for문으로 각각 비교하였을 때 오름차순 순으로 시간들을 비교할 수 있어서 이중, 삼중으로 비교하고 값을 할당하지 않아도 된다.&lt;/li&gt;
+  &lt;li&gt;그렇게 최소한의 비교를 위해 전체 시간 정렬 list와 끝나는 시간 list를 만들어 비교하려고 했..으나.. 계속 ‘시간초과’가 발생하였다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    PriorityQueue&amp;lt;Integer&amp;gt; pq = new PriorityQueue&amp;lt;&amp;gt;();
+    pq.add(list.get(0).get(1));
+
+    for (int i = 1; i &amp;lt; list.size(); i++) {
+        if(pq.peek() &amp;lt;= list.get(i).get(0)) {
+            pq.poll();
+        }
+
+        pq.add(list.get(i).get(1));
+    }
+
+    System.out.println(pq.size());
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;로직이 잘못된 것인지, for loop 하나로 해결할 수 있는 방법이 있는지 계속 고민했지만 결국 해결하지 못했다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;하루 이틀 고민해봤지만 무엇이 문제인지 알수가 없어서 결국 다른 사람들이 어떻게 풀이하였는지 참고하였다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;참고해보니 접근법은 비슷했다. 다만, 이 접근법을 통해 더 효율적인 방안을 사용하는 것…&lt;/li&gt;
+  &lt;li&gt;Java로 알고리즘 문제들을 풀이할 때 지금까지 알고리즘 방법에서 막혔었다면.. 이번에는 자료구조에 실패의 요인이 있었다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ArrayList는 get 메소드 경우 O(1)로 복잡하지 않지만, add, remove 등의 메소드는 O(n)의 시간이 소요된다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;그럴 때 사용하는 자료구조가 우선순위 큐(최대 / 최소 힙)이다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;우선순위 큐는 시간복잡도가 O(logN)으로 이 문제에서 요구하는 각 시간들을 비교할 때 최적의 자료구조라고 생각되었다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;자료구조를 ArrayList에서 PrioityQueue로 바꾸니 정답이었다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;이번 문제를 통해 각 문제마다 접근할 수 있는 것이 알고리즘뿐 아니라 자료구조에 대해 고민해보게 되었다… 점점 고려할 사항들이 많아지니 언제 한번 문제 접근 방법에 대해 고민해보는 시간을 가져야겠다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 11000 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1783문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-1783.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1783문제 (Greedy)" /><published>2022-07-01T00:00:00+09:00</published><updated>2022-07-01T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1783</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1783.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 1783 Greedy Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;병든 나이트가 N × M 크기 체스판의 가장 왼쪽아래 칸에 위치해 있다. 병든 나이트는 건강한 보통 체스의 나이트와 다르게 4가지로만 움직일 수 있다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;2칸 위로, 1칸 오른쪽
+1칸 위로, 2칸 오른쪽
+1칸 아래로, 2칸 오른쪽
+2칸 아래로, 1칸 오른쪽
+병든 나이트는 여행을 시작하려고 하고, 여행을 하면서 방문한 칸의 수를 최대로 하려고 한다. 병든 나이트의 이동 횟수가 4번보다 적지 않다면, 이동 방법을 모두 한 번씩 사용해야 한다. 이동 횟수가 4번보다 적은 경우(방문한 칸이 5개 미만)에는 이동 방법에 대한 제약이 없다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;체스판의 크기가 주어졌을 때, 병든 나이트가 여행에서 방문할 수 있는 칸의 최대 개수를 구해보자.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;100 50 =&amp;gt; 48
+1 1 =&amp;gt; 1
+17 5 =&amp;gt; 4
+2 4 =&amp;gt; 2
+20 4 =&amp;gt; 4&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+
+        int count = 1;
+        int moveM = 1;
+
+        // 최대 칸이 4이상일 최소 경우의 수
+        if (N &amp;gt;= 3 &amp;amp;&amp;amp; M &amp;gt;= 7) {
+            count = 5;
+            moveM = 7;
+
+            while (M &amp;gt;= moveM + 1) {
+                moveM++;
+                count++;
+            }
+
+            System.out.println(count);
+        } else {
+            // 최대 칸이 4미만이며, 말이 위 아래로 왔다갔다할 수 있는 경우
+            // 세로칸이 3칸일 경우 오른쪽으로 1씩 이동 가능
+            if (N &amp;gt; 2) {
+                while (M &amp;gt;= moveM + 1) {
+                    count++;
+                    moveM++;
+                }
+
+                System.out.println(Math.min(count, 4));
+                return;
+            }
+
+            // 세로칸이 2칸일 경우 오른쪽으로 2씩 이동 가능
+            if (N &amp;gt; 1) {
+                while (M &amp;gt;= moveM + 2) {
+                    count++;
+                    moveM += 2;
+                }
+
+                System.out.println(Math.min(count, 4));
+                return;
+            }
+
+            System.out.println(count);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;풀이전략&lt;/li&gt;
+  &lt;li&gt;문제에서 체스말이 움직일 수 있는 방법은 4가지이지만, 제약을 기준으로 코드를 설계하는 것이 좋을 것 같다고 판단했다.&lt;/li&gt;
+  &lt;li&gt;체스말이 최대 4번 이상 움직일 수 있으면 무조건 4가지 이동방법을 다 사용해야하는 제약을 통해 알 수 있는 것이 있다.&lt;/li&gt;
+  &lt;li&gt;체스말의 이동 방법의 특징은 상하로는 언제든지 움직일 수 있지만, 좌우로는 무조건 오른쪽으로 이동한다는 특징이다.&lt;/li&gt;
+  &lt;li&gt;이 특징을 활용하여 세로칸이 3이상, 가로칸이 7이상인 경우 위에서 언급한 제약사항을 적용한다.&lt;/li&gt;
+  &lt;li&gt;제약사항에 적용되지 않는 상황일 때는 각 세로칸에서(2 or 1) 가로칸으로 움직일 수 있는 상황을 구한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+
+        if(N == 1) { System.out.println(1); }
+
+        if(N == 2) {
+            int result = Math.min(4, 1 + ((M - 1) / 2));
+            System.out.println(result);
+        }
+
+        if(N &amp;gt;= 3) {
+            if(M &amp;gt;= 7) {
+                System.out.println(5 + (M - 7));
+            } else {
+                System.out.println(Math.min(4, M));
+            }
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;특징을 다시 잘 살펴보면, 세로칸이 1일 경우, 2일 경우, 3이상일 경우로 나누어 코드를 단축시킬 수 있다.&lt;/li&gt;
+  &lt;li&gt;세로가 1일 경우에는 당연히 움직이지 못하기 때문에 (1, 1)하나로 return 1&lt;/li&gt;
+  &lt;li&gt;세로가 2일 경우에는 체스말이 상하로 1씩밖에 움직이지 못하기 때문에 오른쪽으로 무조건 2씩 이동해야한다.&lt;/li&gt;
+  &lt;li&gt;세로가 3 이상일 경우에는 제약 사항을 적용해야한다.&lt;/li&gt;
+  &lt;li&gt;즉, 세로가 3이상이면서 가로가 7이상이면 4가지 방식을 다 적용한 이후의 좌표 (3, 7)부터 오른쪽으로 가능한 한 움직인다.&lt;/li&gt;
+  &lt;li&gt;가로가 7 미만이면 제약사항을 적용시키지 못하므로 무조건 최대값은 4가 된다. (4 이상이려면 제약사항을 적용해야하므로)&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;그렇기 때문에 상하로는 계속 움직일 수 있지만 가로로는 4와 M 중 최소값을 return하면 된다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;코드를 설계할 때 문제를 잘 파악하여, 기준점을 잘 세우는 것이 중요할 것 같다.&lt;/li&gt;
+  &lt;li&gt;문제를 잘 파악하는 능력을 길러야겠다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1783 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 10610문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-10610.html" rel="alternate" type="text/html" title="[Algorithm] 백준 10610문제 (Greedy)" /><published>2022-06-30T00:00:00+09:00</published><updated>2022-06-30T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-10610</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-10610.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 10610 Greedy Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;어느 날, 미르코는 우연히 길거리에서 양수 N을 보았다. 미르코는 30이란 수를 존경하기 때문에, 그는 길거리에서 찾은 수에 포함된 숫자들을 섞어 30의 배수가 되는 가장 큰 수를 만들고 싶어한다.
+미르코를 도와 그가 만들고 싶어하는 수를 계산하는 프로그램을 작성하라.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;N을 입력받는다. N는 최대 105개의 숫자로 구성되어 있으며, 0으로 시작하지 않는다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Thirty10610 {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String fullText = br.readLine();
+        int N = fullText.length();
+
+        ArrayList&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+
+        for (int i = 0; i &amp;lt; N; i++) {
+            list.add(Integer.parseInt(fullText.substring(i, i + 1)));
+        }
+
+        list.sort((o1, o2) -&amp;gt; o2 - o1);
+
+        StringBuilder sb = new StringBuilder();
+        list.forEach(sb::append);
+
+        String value = sb.toString();
+
+        Integer finalValue = Integer.parseInt(value);
+
+        if(finalValue % 30 != 0) {
+            System.out.println(-1);
+        } else {
+            System.out.println(finalValue);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;풀이전략&lt;/li&gt;
+  &lt;li&gt;30의 배수에 대한 특징을 살펴보아 10의 자리의 수 특성에 따라 뒤에 무조건 0이 있어야하는 것,&lt;/li&gt;
+  &lt;li&gt;또한 각 자리의 숫자를 모두 더한 값이 3의 배수여야했다. (수학적으로 알아볼 필요가 있을 것 같…)&lt;/li&gt;
+  &lt;li&gt;이러한 특징들을 고려하여 알고리즘을 만들었으나…IDE에서는 자가 테스트로 통과되었지만 백준에서는 계속 NumberFormat 에러가 발생하였다..&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String fullText = br.readLine();
+        int N = fullText.length();
+
+        ArrayList&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+        int total = 0;
+
+        for (int i = 0; i &amp;lt; N; i++) {
+            int parseInt = Integer.parseInt(fullText.substring(i, i + 1));
+
+            list.add(parseInt);
+            total += parseInt;
+        }
+
+        if(total % 3 != 0 || !list.contains(0)) {
+            System.out.println(-1);
+            return;
+        }
+
+        list.sort((o1, o2) -&amp;gt; o2 - o1);
+
+        list.forEach(System.out::print);
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;문제를 다시 잘 읽어보니 N은 10^5 개의 숫자들이라고 한다.&lt;/li&gt;
+  &lt;li&gt;사실 저게 무슨 의미인지 아직 이해가 잘 가지 않지만, 다른 분들의 설명을 들은 결과 N의 결과를 Integer는 물론이거니와 Long으로도 형변환할 수 없다는 것이었다…&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;그럼 어떻게 풀어내지 고민했는데 각각 값들을 System.out.print하면 하나로 보이지 않을까 해서 해봤는데.. 통과!!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;문제들을 풀어보니 여러가지 고려사항들이 하나씩 늘어가기 시작한다. 시간/공간 복잡도, 주어지는 input을 어떻게 찰떡같이 받아내서 output으로 내보낼 수 있을지.. 등등..&lt;/li&gt;
+  &lt;li&gt;이번 풀이에서 소요된 시간이 1000ms이 걸렸는데 다른 사람들은 100~200ms으로 푼 사람들도 있었다.&lt;/li&gt;
+  &lt;li&gt;문제 접근 방식은 같지만 loop를 유발하는 메소드, BufferedReader, StringBuffer 같은 API 활용이 시간을 더 단축시킬 수 있다는 생각에 이러한 툴들을 적재적소에 사용하는 것이 중요할 것 같다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 10610 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 2875문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-2875.html" rel="alternate" type="text/html" title="[Algorithm] 백준 2875문제 (Greedy)" /><published>2022-06-29T00:00:00+09:00</published><updated>2022-06-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-2875</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-2875.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 2875 Greedy Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;백준대학교에서는 대회에 나갈 때 2명의 여학생과 1명의 남학생이 팀을 결성해서 나가는 것이 원칙이다. (왜인지는 총장님께 여쭈어보는 것이 좋겠다.)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;백준대학교는 뛰어난 인재들이 많아 올해에도 N명의 여학생과 M명의 남학생이 팀원을 찾고 있다. 대회에 참여하려는 학생들 중 K명은 반드시 인턴쉽 프로그램에 참여해야 한다. 인턴쉽에 참여하는 학생은 대회에 참여하지 못한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;백준대학교에서는 뛰어난 인재들이 많기 때문에, 많은 팀을 만드는 것이 최선이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;여러분은 여학생의 수 N, 남학생의 수 M, 인턴쉽에 참여해야하는 인원 K가 주어질 때 만들 수 있는 최대의 팀 수를 구하면 된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Input
+6 3 2 =&amp;gt; 2
+2 1 1 =&amp;gt; 0
+6 10 3 =&amp;gt; 3&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+
+        Integer N = Integer.parseInt(st.nextToken());
+        Integer M = Integer.parseInt(st.nextToken());
+        Integer K = Integer.parseInt(st.nextToken());
+
+        int teamCount;
+
+        while(K != 0) {
+            if(N &amp;gt;= M * 2) {
+                N--;
+                K--;
+                continue;
+            }
+
+            if(N &amp;lt; M * 2) {
+                M--;
+                K--;
+                continue;
+            }
+        }
+
+        if(N &amp;gt;= M * 2) {
+            teamCount = M;
+            System.out.println(teamCount);
+            return;
+        }
+
+        if(N &amp;lt; M * 2) {
+            teamCount = N / 2;
+            System.out.println(teamCount);
+            return;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;풀이전략&lt;/li&gt;
+  &lt;li&gt;N은 2때 M은 1이 필요하다. 즉 N이 M의 2배보다 많으면 N에서 인턴쉽을 보내고 그렇지 않은 경우에는 M에서 인턴쉽을 보낸다.&lt;/li&gt;
+  &lt;li&gt;while문으로 인턴쉽 인원이 다 보내질 때까지 반복하다가 K가 0이 되면, N과 M을 비교하여 teamCount를 할당한다.&lt;/li&gt;
+  &lt;li&gt;N이 M의 2배보다 많으면 M을 기준으로 teamCount가 만들어지고 반대 경우에는 N이 기준이 되어 teamCount를 만들어 output한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;while(N &amp;gt;= 2 &amp;amp;&amp;amp; M &amp;gt;= 1 &amp;amp;&amp;amp; N + M &amp;gt;= K + 3) {
+    N -= 2;
+    M--;
+    teamCount++;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;위의 풀이로 문제를 해결하고 난 이후에 그리디를 제대로 활용하지 않은것 같은 느낌이 들어 다른 사람들의 풀이를 참고하였다.&lt;/li&gt;
+  &lt;li&gt;나의 풀이는 K의 상태에 focus를 맞췄지만 다른 사람들의 풀이는 teamCount가 focus된 느낌이었다.&lt;/li&gt;
+  &lt;li&gt;속도측면에서는 비슷비슷한 것 같았다. (나의 풀이 132ms, 다른 사람 풀이 136ms)&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 2875 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1931문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-1931.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1931문제 (Greedy)" /><published>2022-06-28T00:00:00+09:00</published><updated>2022-06-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1931</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1931.html">&lt;blockquote&gt;
   &lt;p&gt;백준 1931 Greedy Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -170,1808 +1195,4 @@
   &lt;li&gt;Collections.sort 하나만으로 for문을 하나만 들려서 정답을 도출할 수 있게 되었다.&lt;/li&gt;
   &lt;li&gt;무작정 알고리즘을 사용하는 것보다 어떻게 알고리즘을 사용해야하는지에 대한 고민이 중요하다고 생각되었다.&lt;/li&gt;
   &lt;li&gt;추가로 시간복잡도, 공간복잡도도 함께 고려하여 사전에 설계하는 습관을 들여야겠다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1931 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 11047문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon11047.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11047문제 (Greedy)" /><published>2022-06-27T00:00:00+09:00</published><updated>2022-06-27T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon11047</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon11047.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 11047 Greedy Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;준규가 가지고 있는 동전은 총 N종류이고, 각각의 동전을 매우 많이 가지고 있다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;동전을 적절히 사용해서 그 가치의 합을 K로 만들려고 한다. 이때 필요한 동전 개수의 최솟값을 구하는 프로그램을 작성하시오.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import java.io.*;
-import java.util.*;
-
-public class Main {
-
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-        Integer N = Integer.parseInt(st.nextToken());
-        Integer price = Integer.parseInt(st.nextToken());
-
-        ArrayList&amp;lt;Integer&amp;gt; coinList = new ArrayList&amp;lt;&amp;gt;();
-
-        while(N-- &amp;gt; 0) {
-            coinList.add(Integer.parseInt(br.readLine()));
-        }
-
-        int count = 0;
-
-        for(int i = coinList.size() - 1; i &amp;gt;= 0; i--) {
-            if(price / coinList.get(i) &amp;gt; 0) {
-                count += price / coinList.get(i);
-                price -= coinList.get(i) * (price / coinList.get(i));
-            }
-
-            if(price == 0) {
-                System.out.println(count);
-                return;
-            }
-        }
-
-        System.out.println(count);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;StringTokenizer를 활용하여 input을 받는다. (속도 측면에서 Scanner보다 우수)&lt;/li&gt;
-  &lt;li&gt;Collections reverse를 활용하여 coinList를 내림차순으로 변경하려고 했지만, 불필요한 for loop를 낭비할 필요없이 list index의 최대값부터 0까지 loop를 돌리는 것으로 변경하였다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;ArrayList Collection을 List로 변경&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    int[] coinList = new int[N];
-
-    for(int i = 0; i &amp;lt; N; i++) {
-        coinList[i] = Integer.parseInt(br.readLine());
-    }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;속도적인 측면에서 ArrayList는 120ms, List는 124ms가 걸려서 Collections를 사용하지 않는다고 해서 속도가 비약적으로 향상되는 것은 아닌 것 같다.. 그럼 Collections를 사용하는게 훨씬 유연한 대처가 가능하지 않을까?&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 11047 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 11399문제 (Greedy)</title><link href="http://localhost:4000/devlog/backjoon-11399.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11399문제 (Greedy)" /><published>2022-06-26T00:00:00+09:00</published><updated>2022-06-26T00:00:00+09:00</updated><id>http://localhost:4000/devlog/backjoon-11399</id><content type="html" xml:base="http://localhost:4000/devlog/backjoon-11399.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 11399 Greedy Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-collections-sort&quot;&gt;Collections Sort&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;인하은행에는 ATM이 1대밖에 없다. 지금 이 ATM앞에 N명의 사람들이 줄을 서있다. 사람은 1번부터 N번까지 번호가 매겨져 있으며, i번 사람이 돈을 인출하는데 걸리는 시간은 Pi분이다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;사람들이 줄을 서는 순서에 따라서, 돈을 인출하는데 필요한 시간의 합이 달라지게 된다. 예를 들어, 총 5명이 있고, P1 = 3, P2 = 1, P3 = 4, P4 = 3, P5 = 2 인 경우를 생각해보자. [1, 2, 3, 4, 5] 순서로 줄을 선다면, 1번 사람은 3분만에 돈을 뽑을 수 있다. 2번 사람은 1번 사람이 돈을 뽑을 때 까지 기다려야 하기 때문에, 3+1 = 4분이 걸리게 된다. 3번 사람은 1번, 2번 사람이 돈을 뽑을 때까지 기다려야 하기 때문에, 총 3+1+4 = 8분이 필요하게 된다. 4번 사람은 3+1+4+3 = 11분, 5번 사람은 3+1+4+3+2 = 13분이 걸리게 된다. 이 경우에 각 사람이 돈을 인출하는데 필요한 시간의 합은 3+4+8+11+13 = 39분이 된다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;줄을 [2, 5, 1, 4, 3] 순서로 줄을 서면, 2번 사람은 1분만에, 5번 사람은 1+2 = 3분, 1번 사람은 1+2+3 = 6분, 4번 사람은 1+2+3+3 = 9분, 3번 사람은 1+2+3+3+4 = 13분이 걸리게 된다. 각 사람이 돈을 인출하는데 필요한 시간의 합은 1+3+6+9+13 = 32분이다. 이 방법보다 더 필요한 시간의 합을 최소로 만들 수는 없다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;줄을 서 있는 사람의 수 N과 각 사람이 돈을 인출하는데 걸리는 시간 Pi가 주어졌을 때, 각 사람이 돈을 인출하는데 필요한 시간의 합의 최솟값을 구하는 프로그램을 작성하시오.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Scanner API를 사용하는 것이 편리하지만, 속도면에서 BufferedReader가 더 빠르기 때문에 BufferedReader를 사용하는 것을 권장한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class ATMQuestion {
-
-    public static ArrayList&amp;lt;Integer&amp;gt; quickSort(ArrayList&amp;lt;Integer&amp;gt; list) {
-        if(list.size() &amp;lt;= 1) {
-            return list;
-        }
-
-        int pivot = list.get(0);
-
-        ArrayList&amp;lt;Integer&amp;gt; quickSortList = new ArrayList&amp;lt;&amp;gt;();
-
-        ArrayList&amp;lt;Integer&amp;gt; leftList = new ArrayList&amp;lt;&amp;gt;();
-        ArrayList&amp;lt;Integer&amp;gt; rightList = new ArrayList&amp;lt;&amp;gt;();
-
-        for(int i = 1; i &amp;lt; list.size(); i++) {
-            int currentValue = list.get(i);
-
-            if (pivot &amp;gt;= currentValue) {
-                leftList.add(currentValue);
-            } else if (pivot &amp;lt; currentValue) {
-                rightList.add(currentValue);
-            }
-        }
-
-        quickSortList.addAll(quickSort(leftList));
-        quickSortList.add(pivot);
-        quickSortList.addAll(quickSort(rightList));
-
-        return quickSortList;
-    }
-
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        int size = Integer.parseInt(br.readLine());
-        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-        ArrayList&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
-
-        while(size-- &amp;gt; 0) {
-            list.add(Integer.parseInt(st.nextToken()));
-        }
-
-        ArrayList&amp;lt;Integer&amp;gt; finalList = quickSort(value);
-
-        int timeCount = 0;
-        int totalCount = 0;
-
-        for(int i = 0; i &amp;lt; finalList.size(); i++) {
-            timeCount = finalList.get(i) + timeCount;
-
-            totalCount += timeCount;
-        }
-
-        System.out.println(totalCount);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;문제의 쟁점은 모든 ATM기기 사용자들의 각각 대기 시간을 더한 값이다.&lt;/li&gt;
-  &lt;li&gt;프로세스 스케줄링 알고리즘에 비슷한 개념이 있었던 것 같은데 다시 찾아봐야할 것 같다.&lt;/li&gt;
-  &lt;li&gt;전체적인 프로세스가 최소로 이루어져야 하기 때문에 주어지는 P1..P5까지의 값을 오름차순으로 정렬해야한다.&lt;/li&gt;
-  &lt;li&gt;정렬하기 위해 처음에는 복습 차원에서 Quick Sort를 직접 구현하여 적용해보았다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;시간은 총 240ms가 소요되었다…&lt;/p&gt;
-
-&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;다른 사람들의 코드를 보던 중 Collection에서 지원하는 sort api를 활용해보기로 했다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
-
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        int size = Integer.parseInt(br.readLine());
-        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-        ArrayList&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
-
-        while(size-- &amp;gt; 0) {
-            list.add(Integer.parseInt(st.nextToken()));
-        }
-
-        Collections.sort(list);
-
-        int timeCount = 0;
-        int totalCount = 0;
-
-        for(int i = 0; i &amp;lt; list.size(); i++) {
-            timeCount = list.get(i) + timeCount;
-
-            totalCount += timeCount;
-        }
-
-        System.out.println(totalCount);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Quick Sort를 직접 구현하지 않아서 훨씬 코드가 짧아졌다.&lt;/li&gt;
-  &lt;li&gt;Collections에서 제공하는 sort API를 사용한 결과, 시간은 140ms가 걸렸다!!&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;-collections-sort&quot;&gt;📚 Collections Sort&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Collections Sort는 처음 문제에서 적용했던 Quick Sort에서 한단계 업그레이드 된 Double Pivot Quick Sort를 사용한다고 한다.&lt;/li&gt;
-  &lt;li&gt;일반적인 Quick Sort는 pivot을 한개 사용하여 정렬하지만 Double Pivot은 말 그대로 Pivot을 2개 사용하여 정렬한다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 11399 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">운영체제</title><link href="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html" rel="alternate" type="text/html" title="운영체제" /><published>2022-03-28T00:00:00+09:00</published><updated>2022-03-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C</id><content type="html" xml:base="http://localhost:4000/devlog/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.html">&lt;blockquote&gt;
-  &lt;p&gt;운영체제를 공부하고 간략하게 정리한 글입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;h2 id=&quot;-운영체제&quot;&gt;📌 운영체제&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-운영체제란&quot;&gt;🌱 운영체제란?&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;컴퓨터 시스템의 자원들을 효율적으로 관리&lt;/li&gt;
-  &lt;li&gt;사용자가 컴퓨터를 효과적으로 사용할 수 있도록 환경을 제공하는 여러 프로그램의 모임&lt;/li&gt;
-  &lt;li&gt;Window, macOS, Android 등 다양한 운영체제 존재&lt;/li&gt;
-  &lt;li&gt;운영체제가 없어도 동작은 하지만 처음에 설계한 그대로만 사용 가능(유연한 작업 X)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-운영체제의-역할&quot;&gt;🌱 운영체제의 역할&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스 관리 : 다양한 프로그램을 동시 실행(시분할 처리)&lt;/li&gt;
-  &lt;li&gt;메모리 관리 : 모든 응용 프로그램은 메모리 위에서 동작&lt;/li&gt;
-  &lt;li&gt;하드웨어 관리 : 사용자가 하드웨어에 대한 직접적 접근 권한 차단 -&amp;gt; 메모리 중복 사용을 방지하여 각 프로세스들의 정보들이 얽히는 상황을 방지 / 해킹으로 인한 조작 방지&lt;/li&gt;
-  &lt;li&gt;파일 시스템 관리&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-운영체제의-구조&quot;&gt;🌱 운영체제의 구조&lt;/h3&gt;
-
-&lt;h4 id=&quot;커널&quot;&gt;&lt;strong&gt;커널&lt;/strong&gt;&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;운영체제의 핵심 기능을 담당한다. -&amp;gt; 컴퓨터의 자원을 관리(사용자와 상호작용X)&lt;/li&gt;
-  &lt;li&gt;시스템 프로그램이 사용자와 커널을 이어주는 역할&lt;/li&gt;
-  &lt;li&gt;컴퓨터 물리적 자원, 추상화 자원을 관리 -&amp;gt; 여러 자원을 추상화하여 각 하드웨어의 물리적 자원과 대응함 (CPU : task / 디스크 : File / 메모리 : page, segment / network : socket)&lt;/li&gt;
-  &lt;li&gt;커널의 기능
-    &lt;ul&gt;
-      &lt;li&gt;디바이스 관리 : 디바이스 드라이버 소프트웨어 이용&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;프로세스 관리
-    &lt;ul&gt;
-      &lt;li&gt;리눅스는 프로그램을 실행할 때 약 100여개의 프로세스가 동시에 실행&lt;/li&gt;
-      &lt;li&gt;각 프로세스의 PID를 통해 시분할 처리로 관리&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;메모리 관리
-    &lt;ul&gt;
-      &lt;li&gt;프로그램 뿐 아니라 프로그램의 데이터 영역까지 메모리에 저장 -&amp;gt; 메모리 영역 분배 / 수거&lt;/li&gt;
-      &lt;li&gt;가상 메모리 지원&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;시스템-콜&quot;&gt;&lt;strong&gt;시스템 콜&lt;/strong&gt;&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;어플리케이션이 커널에 접근하기 위한 도구&lt;/li&gt;
-  &lt;li&gt;사용자로부터 커널을 보호하기 위한 인터페이스(저장공간을 안전하게 분배)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;user-interface&quot;&gt;&lt;strong&gt;User Interface&lt;/strong&gt;&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;사용자는 인터페이스만을 이용해서 커널에 접근&lt;/li&gt;
-  &lt;li&gt;GUI : 그래픽 유저 인터페이스
-    &lt;ul&gt;
-      &lt;li&gt;그래픽 환경으로 시스템 제어&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;CLI : 커멘드 라인 인터페이스
-    &lt;ul&gt;
-      &lt;li&gt;명령어를 통해 시스템 제어&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-하드웨어의-구조&quot;&gt;🌱 하드웨어의 구조&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;폰 노이만 구조
-    &lt;ul&gt;
-      &lt;li&gt;CPU &amp;lt;-&amp;gt; Bus &amp;lt;-&amp;gt; Memory&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;CPU 구조
-    &lt;ul&gt;
-      &lt;li&gt;제어 장치 : 모든 장치 동작 제어&lt;/li&gt;
-      &lt;li&gt;산술 논리 연산 장치 : 데이터 연산&lt;/li&gt;
-      &lt;li&gt;레지스터 : CPU내 계산을 위한 임시 보관 장소(ex. 변수)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;메모리 구조
-    &lt;ul&gt;
-      &lt;li&gt;RAM : 메인 메모리&lt;/li&gt;
-      &lt;li&gt;ROM : 컴퓨터 부팅 바이오스 저장&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-인터럽트&quot;&gt;🌱 인터럽트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;CPU가 입출력 관리자를 통해 각 하드웨어 및 소프트웨어의 이벤트를 확인하여 처리하는 방식&lt;/li&gt;
-  &lt;li&gt;과거에는 요청이 들어왔는지 CPU가 계속 확인하는 방식(Polling)&lt;/li&gt;
-  &lt;li&gt;오늘 날 CPU가 명령 이후 다른 작업을 진행하다가 입출력 관리자로부터 해당 작업이 완료됨을 CPU에게 알리는 방식(인터럽트 / 비동기적으로 동작)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-프로세스--쓰레드&quot;&gt;📌 프로세스 / 쓰레드&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-프로그램과-프로세스&quot;&gt;🌱 프로그램과 프로세스&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로그램 : 저장 장치에 저장된 명령문의 집합체(어플리케이션, *.exe)&lt;/li&gt;
-  &lt;li&gt;프로세스 : 실행 중인 프로그램
-    &lt;ul&gt;
-      &lt;li&gt;하드 디스크에 저장된 프로그램이 메모리에 올라온 것이 실행 중인 프로그램 즉 프로세스라고 정의한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;프로그램은 저장장치만 사용하지만 프로세스는 RAM, CPU등을 사용한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-프로세스의-구조&quot;&gt;🌱 프로세스의 구조&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;CODE 영역 : 실행하는 코드가 저장된다.&lt;/li&gt;
-  &lt;li&gt;DATA 영역 : 전역변수 / 정적변수가 저장된다.&lt;/li&gt;
-  &lt;li&gt;HEAP 영역 : 사용자가 동적으로 메모리를 할당 가능한 영역이다.&lt;/li&gt;
-  &lt;li&gt;STACK 영역 : 지역변수 / 함수 호출 시 매개변수 / 주소를 저장한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-코드가-실행되는-과정-ex-c언어&quot;&gt;🌱 코드가 실행되는 과정 (ex. c언어)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;컴파일 과정&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;test.c파일이 전처리기를 거쳐 매크로로 정의한 숫자를 치환하고 필요한 파일을 불러온 뒤에 test.i 파일로 변경&lt;/li&gt;
-  &lt;li&gt;test.i는 컴파일러를 거쳐 고수준 C언어를 저수준 어셈블리어로 변환하며 test.s인 파일로 변경&lt;/li&gt;
-  &lt;li&gt;test.s는 어셈블러를 거쳐 기계어로 구성된 test.o파일로 변환한다.&lt;/li&gt;
-  &lt;li&gt;test.s를 링커가 링킹을 한다. 링킹을 마치면 test.s는 test.exe파일로 변환된다.
-=&amp;gt; exe 파일을 실행시키면 코드가 메모리에 올라가 프로세스가 된다. 프로세스가 되면 운영체제가 프로세스를 관리한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;CPU가 코드를 실행시키는 과정&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;CPU내의 제어장치가 코드의 값을 메모리에 저장시킨다.&lt;/li&gt;
-  &lt;li&gt;메모리에 저장된 값을 레지스터로 가져와 산술 논리 연산장치에 의해 처리된다.&lt;/li&gt;
-  &lt;li&gt;처리된 결과값을 레지스터에 저장하면 제어 장치가 레지스터에 저장된 값을 메모리에 저장시킨다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-멀티프로그래밍--멀티프로세싱&quot;&gt;🌱 멀티프로그래밍 / 멀티프로세싱&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;유니프로그래밍 : 메모리에 1개의 프로세스를 올려 파일을 실행시킬 수 있다.
-    &lt;ul&gt;
-      &lt;li&gt;스와핑이라는 동작을 통해 저장장치와 메모리가 프로세스를 주고받으며 프로그램을 실행시킨다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;멀티프로그래밍 : 메모리 내에 여러 개의 프로세스를 올려 실행시킬 수 있다.&lt;/li&gt;
-  &lt;li&gt;멀티프로세싱 : CPU가 여러개의 프로세스를 동시에 처리할 수 있다.(시분할 처리)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-pcbprocess-control-block&quot;&gt;🌱 PCB(Process Control Block)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스가 만들어지면 운영체제가 해당 프로세스의 정보를 가지고 있는 PCB를 생성한다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;PCB들은 Linked-list 형태로 저장되어 있다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;PCB의 구조
-    &lt;ul&gt;
-      &lt;li&gt;포인터 : 부모와 자식 프로세스에 대한 포인터 / 할당된 자원에 대한 포인터 등이 있으며, 프로세스의 한 상태에서 다른 상태로 전환될 때 저장하는 포인터를 가지고 있다.&lt;/li&gt;
-      &lt;li&gt;프로세스 상태 : 5가지의 프로세스 상태가 있다.(생성, 준비, 대기, 실행, 완료)&lt;/li&gt;
-      &lt;li&gt;프로세스 ID : 프로세스를 식별하는 숫자이며 CPU가 시분할 처리로 여러 프로세스를 처리할 때 기억하는 숫자이다.&lt;/li&gt;
-      &lt;li&gt;프로그램 카운터 : 다른 프로세스로 전환되었다가 다시 해당 프로세스가 실행될 때 어디서부터 실행시킬 것인지에 대한 명령어 주소를 저장한다.&lt;/li&gt;
-      &lt;li&gt;레지스터 정보 : 프로세스가 다시 실행될 때 전까지 가지고 있었던 레지스터 값들이 저장된다.&lt;/li&gt;
-      &lt;li&gt;메모리 관련 정보 : 프로세스가 메모리에 있는 위치 정보, 메모리 침범 방지하는 경계 레지스터 값이 저장되어 있다.&lt;/li&gt;
-      &lt;li&gt;CPU 스케줄링 정보 : CPU 스케줄링에 필요한 우선순위, 최종 실행 시간, CPU 점유시간이 저장된다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-프로세스-상태시분할-처리&quot;&gt;🌱 프로세스 상태(시분할 처리)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;생성 : PCB를 생성, 메모리에 프로그램 적재 요청 / 완료되면 준비 단계로 넘어간다.&lt;/li&gt;
-  &lt;li&gt;준비 : CPU를 사용하기 위해 준비 / CPU 스케줄러에 의해 CPU 할당 -&amp;gt; 할당 완료되면 실행 단계로 넘어간다.&lt;/li&gt;
-  &lt;li&gt;실행 : CPU가 할당되어 프로세스가 실행된다. 여기서 실행을 마치면 완료단계, CPU스케줄링에 의해 CPU를 강제로 빼앗기면 준비상태, I/O 입출력 처리 요청을 발생시키면 대기 상태로 넘어간다.&lt;/li&gt;
-  &lt;li&gt;대기 : I/O 입출력 요청을 받아 요청을 완료하면 준비상태로 넘어간다.&lt;/li&gt;
-  &lt;li&gt;완료 : 프로세스가 종료된 상태&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-컨텍스트-스위칭&quot;&gt;🌱 컨텍스트 스위칭&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스를 실행 중에 다른 프로세스를 실행하기 위해 실행 중인 프로세스의 상태를 저장하고 다른 프로세스의 상태값으로 교체하는 동작&lt;/li&gt;
-  &lt;li&gt;운영체제는 CPU가 할당받는 PCB를 교체하여 실행중인 프로세스를 변경한다.&lt;/li&gt;
-  &lt;li&gt;CPU의 점유 시간 초과, 입출력 발생, 다른 인터럽트 등에 의해 발생한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-프로세스-생성과-종료&quot;&gt;🌱 프로세스 생성과 종료&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;프로세스 생성 과정&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;프로그램을 실행하면 운영체제는 프로그램을 메모리에 올리는데 프로그램의 코드 영역, 데이터 영역을 메모리에 로드하고, 빈 스태과 빈 힙을 만들어 공간을 확보한다.&lt;/li&gt;
-      &lt;li&gt;운영체제는 이후에 PCB를 만들어서 init한다.
-=&amp;gt; 이 과정은 컴퓨터가 부팅된 이후 1번만 실행한다. 이후의 모든 프로세스들은 위의 과정을 거친 프로세스로부터 복제되어 생성된다. (복제가 더 빠르기 때문, fork()를 이용하여..)
-=&amp;gt; 복제의 주체가 된 프로세스를 부모 프로세스, 복제된 프로세스를 자식 프로세스라고 한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;부모와 자식 프로세스를 각각 pid를 할당받는데 자식은 0을 부모는 0이 아닌 값을 할당받는다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  #include &amp;lt;stdio.h&amp;gt;
-  #include &amp;lt;unistd.h&amp;gt;
-
-  int main()
-  {
-    int pid; // 부모는 != 0, 자식은 = 0
-    pid = fork();
-
-    if(pid == 0) // 자식 프로세스
-    {
-      execlp(&quot;InternetBrowser&quot;, &quot;0&quot;, NULL); // 부모 pcb를 복제하여 exec함수로 오버로딩하여 동작을 덮어씀
-
-      exit(0); // exit을 하면 자식프로세스에서 부모프로세스로 동작이 넘어간다.
-    }
-    else
-    {
-      // 자식 프로세스에게 exit 함수가 호출될 때까지 기다리는 함수
-      wait(NULL);
-      printf(&quot;인터넷 브라우저 닫힘&quot;);
-      exit(0);
-    }
-  }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;부모 프로세스가 자식 프로세스보다 먼저 종료되거나 자식 프로세스가 비정상적으로 종료되어 exit함수를 호출하지 못하여 메모리에 계속 데이터가 남아있는 프로세스를 좀비 프로세스라고 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-쓰레드&quot;&gt;🌱 쓰레드&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스는 메모리를 많이 차지하는 것으로부터 고안된 것이 쓰레드이다.&lt;/li&gt;
-  &lt;li&gt;쓰레드는 프로세스 내에 있는 CODE, DATA, HEAP영역을 공유하고 각각 한개씩 STACK영역을 가지고 있다.&lt;/li&gt;
-  &lt;li&gt;쓰레드는 TCB(Thread control block을 통해 관리된다.)&lt;/li&gt;
-  &lt;li&gt;프로세스는 각각 가지고 있는 데이터가 독립적이기 때문에 안정성 측면에서는 쓰레드보다 우수하다. 쓰레드는 하나의 프로세스가 이상이 생기면 공유하는 자원으로부터 다른 쓰레드에도 영향을 줄 수 있어 안정성이 떨어진다.&lt;/li&gt;
-  &lt;li&gt;프로세스는 각 프로세스 간 데이터를 주고 받을 때마다 IPC라는 통신작업을 해야해서 속도와 자원이 크고 느리지만 쓰레드는 공유 자원과 하나의 프로세스 안에 형성되어 있어 속도와 자원이 작고 빠르다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&quot;-cpu-스케줄링&quot;&gt;📌 CPU 스케줄링&lt;/h1&gt;
-
-&lt;h3 id=&quot;-cpu-스케줄링-1&quot;&gt;🌱 CPU 스케줄링&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스들은 운영체제의 명령에 의해 CPU에게 작업을 요청한다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;어떤 프로세스에게 CPU 리소스를 할당해야하는지, CPU를 할당받은 프로세스가 얼마의 시간동안 CPU를 사용해야하는지 운영체제가 판단하는 작업을 CPU 스케줄링이라고 한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;프로세스가 실행되고 있는 상태에서 CPU에 의해 강제로 준비상태로 되거나 I/O 요청이 발생해 대기 상태로 넘어간다. 이때 준비 상태와 대기상태는 다중큐라는 자료구조로 관리한다.&lt;/li&gt;
-  &lt;li&gt;프로세스가 실행에서 준비로 갈 때 CPU는 프로세스의 우선순위에 따라 알맞는 준비큐에 PCB를 할당한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-cpu-스케줄링의-목표&quot;&gt;🌱 CPU 스케줄링의 목표&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;리소스 사용률 : CPU 사용률을 높이고 I/O 사용률을 높인다.&lt;/li&gt;
-  &lt;li&gt;오버헤드 최소화 : 컨텍스트 스위칭 등 오버헤드를 일으킬 수 있는 요인을 최소화한다.&lt;/li&gt;
-  &lt;li&gt;공평성 : 프로세스들에게 중요도 등 여러가지 요인에 따라 알맞게 CPU를 할당한다.&lt;/li&gt;
-  &lt;li&gt;처리량 : 많은 처리량을 가질 수 있도록 한다.&lt;/li&gt;
-  &lt;li&gt;대기 시간 : 짧은 대기 시간을 가질 수 있도록 한다.&lt;/li&gt;
-  &lt;li&gt;응답 시간 : 짧은 응답 시간을 가질 수 있도록 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;-cpu-스케줄링-자료구조&quot;&gt;🌱 CPU 스케줄링 자료구조&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;CPU 성능은 프로세스들의 평균 대기 시간으로 평가한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;FIFO(First in First out) : I/O같은 작업이 있다면 오래걸린다.&lt;/li&gt;
-  &lt;li&gt;SJF(Shortest Job First) : 이론적으로 FIFO보다 빠르지만(작은 프로세스들을 큐의 제일 앞에 할당하여 실행시키는 방법)&lt;/li&gt;
-  &lt;li&gt;RR(Round Robin)
-    &lt;ul&gt;
-      &lt;li&gt;프로세스마다 일정 시간(타임 슬라이스)동안 CPU를 할당한다.&lt;/li&gt;
-      &lt;li&gt;끝나지 않았으면 강제로 프로세스를 전환한다.(오버헤드 발생)&lt;/li&gt;
-      &lt;li&gt;컨텍스트 스위칭이 일어나 전환 자원이 크다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;MLFQ(Multi level Feadback Queue)
-    &lt;ul&gt;
-      &lt;li&gt;프로세스가 종료되는 시점을 파악하여 강제로 전환되는 CPU는 타임슬라이스를 조금씩 크게 준다.&lt;/li&gt;
-      &lt;li&gt;CPU에서 정한 타임슬라이스보다 빨리 끝난 프로세스는 계속 그대로의 실행시간이 반영되어 실행된다.
-=&amp;gt; 타임 슬라이스보다 빨리 완료되는 프로세스는 그대로 실행시키고 타임슬라이스보다 작동 시간이 커서 강제로 뺏기는 프로세스는 타임슬라이스를 조금씩 크게주어 컨텍스트 스위칭이 덜 나도록(오버헤드가 작아지도록) 한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&quot;-프로세스-동기화&quot;&gt;📌 프로세스 동기화&lt;/h1&gt;
-
-&lt;h3 id=&quot;-프로세스-동기화-1&quot;&gt;🌱 프로세스 동기화&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;프로세스 간 자원을 공유하기 위해 통신을 하는 경우가 있다.&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;하나의 파일을 통해 자원을 공유&lt;/li&gt;
-      &lt;li&gt;운영체제가 생성한 파이프를 통해 자원을 공유&lt;/li&gt;
-      &lt;li&gt;한 프로세스 내의 쓰레드 간의 자원을 공유(DATA / HEAP영역)&lt;/li&gt;
-      &lt;li&gt;타 컴퓨터의 프로세스와 통신을 하는 경우에는 네트워크(소켓, RPC)를 통해 자원을 공유&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;프로세스 간 공유되는 자원(파일, 변수 등)을 공유자원이라고 한다.&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;각 프로세스들이 접근 순서에 따라 결과가 달라질 수 있다.&lt;/li&gt;
-      &lt;li&gt;컨텍스트 스위칭에 의한 시분할 처리로 인해 프로세스 실행 순서 예측이 어렵다.&lt;/li&gt;
-      &lt;li&gt;이에 발생되는 문제를 동기화 문제라고 한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;여러 프로세스들이 공유하면 안되는 자원을 임계구역이라고 한다.&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;임계 구역은 상호 배제 매커니즘이 필요하다.&lt;/li&gt;
-      &lt;li&gt;임계 영역에는 동시에 1개의 프로세스만 접근이 가능하다.&lt;/li&gt;
-      &lt;li&gt;여러가지의 요청이 있어도 하나의 프로세스만 진입을 허용한다.&lt;/li&gt;
-      &lt;li&gt;임계 구역에 들어가는 프로세스는 빠르게 나와야 한다.(임계 구역에 들어가면 임계 구역을 필요로 하는 다른 프로세스들이 기다리기 때문)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;새마포어(상호 배제 매커니즘 중 한가지)&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;하나의 공유 자원을 필요로 하는 프로세스들을 경쟁 조건이라고 한다.&lt;/li&gt;
-      &lt;li&gt;경쟁 조건에 만족하는 프로세스들은 대기큐에서 공유자원을 할당받기 위해 기다린다.&lt;/li&gt;
-      &lt;li&gt;공유 자원을 큐의 순서대로 할당받기 전 운영체제에 의해 세마포어라는 인증키를 받는다.&lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;세마포어를 가지고 있는 프로세스만이 공유 자원을 사용할 수 있는 방식이다.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;wait과 signal함수를 사용한다.&lt;/li&gt;
-      &lt;li&gt;wait 함수에 세마포어가 들어가면 세마포어를 받은 프로세스에서 다른 프로세스로 컨텍스트 스위칭이 일어나서 같은 공유자원을 사용하려해도 이미 세마포어가 컨텍스트 스위칭이 일어나기 전 프로세스에게 있기 때문에 코드를 실행하지 못하고 다시 넘어간다.&lt;/li&gt;
-      &lt;li&gt;세마포어가 있는 프로세스에게 CPU가 할당되면 남은 코드들을 싫행하고 signal함수를 호출하여 세마포어를 반납한다.&lt;/li&gt;
-      &lt;li&gt;반납된 세마포어로 다른 프로세스가 사용해 공유 자원을 사용한다.
-=&amp;gt; wait과 signal함수를 잘 선언하지 않으면 코드가 꼬이는 경우가 발생한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;모니터(세마포어의 단점들을 해결한 상호배제 매커니즘)&lt;/p&gt;
-    &lt;ul&gt;
-      &lt;li&gt;Java를 예로 들면 syncronized의 키워드가 붙을 시 키워드가 붙은 함수는 다른 곳에서 동시에 호출하는 것이 불가능하다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&quot;-데드락&quot;&gt;📌 데드락&lt;/h1&gt;
-
-&lt;h3 id=&quot;-교착상태&quot;&gt;🌱 교착상태&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;다른 프로세스가 끝나기까지 기다리다 끝이 안나는 경우를 뜻한다.&lt;/li&gt;
-  &lt;li&gt;교착상태가 일어나는 필요조건 4가지
-    &lt;ul&gt;
-      &lt;li&gt;상호배제 : 어떤 프로세스가 한 자원을 점유했다면 다른 프로세스에게 공유가 되면 안된다.&lt;/li&gt;
-      &lt;li&gt;비선점 : 프로세스 간에서는 자원을 뺏지 못하고 기다린다.&lt;/li&gt;
-      &lt;li&gt;점유와 대기 : 한 자원을 가지고 있는 상태에서 다른 자원을 요청한다.&lt;/li&gt;
-      &lt;li&gt;원형 대기 : A -&amp;gt; B -&amp;gt; C -&amp;gt; A같은 원형구조로 요청을 하는 상황&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-데드락-해결&quot;&gt;🌱 데드락 해결&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;교착상태 회피 : 프로세스들에게 자원을 할당할 때 어느정도를 할당하면 교착상태가 발생하는지 먼저 파악한다.&lt;/li&gt;
-  &lt;li&gt;교착상태가 발생하지 않을 정도로만 자원을 할당한다.&lt;/li&gt;
-  &lt;li&gt;운영체제는 프로세스들에게 자원을 할당하기 전에 가지가 가지고 있는 전체 자원의 수를 파악한다. (시스템의 총 자원)&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;프로세스들은 각자 자기가 필요한 자원의 최대 숫자를 운영체제에게 알려줘야 한다.(최대 요구 자원)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;가벼운 교착상태 검출 : 타이머를 사용하여 프로세스가 실행되지 않는 일정시간이 지난 이후 운영체제가 마지막 체크포인트로 롤백하는 방법&lt;/li&gt;
-  &lt;li&gt;무거운 교착상태 검출 : 자원 할당 그래프를 이용하며 운영체제가 제어한다. 교착상태를 일으킨 프로세스를 강제 종료시키고 다시 실행할 때 체크포인트로 롤백한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&quot;-메모리&quot;&gt;📌 메모리&lt;/h1&gt;
-
-&lt;h3 id=&quot;-메모리-종류&quot;&gt;🌱 메모리 종류&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;레지스터
-    &lt;ul&gt;
-      &lt;li&gt;CPU가 메인 메모리에서 연산할 값을 레지스터에 불러와 연산을 하고 다시 메인 메모리에 저장하는 용도로 사용된다.&lt;/li&gt;
-      &lt;li&gt;캐시와 함께 메모리 중 가장 빠르다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;캐시
-    &lt;ul&gt;
-      &lt;li&gt;메인 메모리에서 레지스터로 값을 옮길 때 미리 옮겨놓은 값을 저장하는 공간이다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;메인 메모리
-    &lt;ul&gt;
-      &lt;li&gt;컴퓨터가 실행되고 먼저 운영체제가 메인 메모리에 올라와 실행하며 프로그램을 관리한다. 관리되는 프로그램은 실행될 때 메인메모리에 올라와 프로세스라는 이름으로 실행된다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;HDD, SSD
-    &lt;ul&gt;
-      &lt;li&gt;하드디스크는 위의 메모리들과 달리 비휘발성 메모리이기 때문에 컴퓨터를 종료시켜도 정보를 저장할 수 있다. 하지만 다른 메모리들보다 속도가 느리다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-메모리-주소&quot;&gt;🌱 메모리 주소&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;물리주소 공간
-    &lt;ul&gt;
-      &lt;li&gt;메모리 관리자는 상대주소(논리주소 공간)의 값에서 실제로 정보가 저장되어 있는 공간으로 주소값을 변경하는데 정보가 실제로 저장되어 있는 공간을 물리주소 공간이라고 한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;논리주소 공간&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;프로그램 실행에 따라 저장되는 주소값이 바뀐다. 논리주소 공간은 프로그램이 실행될 때마다 비어있는 물리주소공간을 파악하여 저장하는 것은 비효율적이고 안전하지 않기 때문에 사용자가 볼 수 있는 주소 값을 따로 둔 공간이다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;메모리 영역에 운영체제를 위한 공간을 따로 만든다. 경계 레지스터로 운영체제를 보호&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-메모리-할당-방법&quot;&gt;🌱 메모리 할당 방법&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;메모리 오버레이 : 과거 메모리보다 프로그램이 클 경우에는 프로그램을 분할하여 메모리에 일부분씩 옮겨 실행하는 방법이다.&lt;/li&gt;
-  &lt;li&gt;가변분할 방식 : 프로세스 크기에 따라 저장 공간을 나눈다.(연속 메모리 할당)
-    &lt;ul&gt;
-      &lt;li&gt;외부 단편화가 일어난다.(세그멘테이션) : 프로세스가 종료 이후 남은 메모리를 합칠 때 발생하는 문제&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;고정분할 방식 : 메모리를 정해진 크기로 나눈다.(비연속 메모리 할당)
-    &lt;ul&gt;
-      &lt;li&gt;내부 단편화가 일어난다.(페이징) : 정해진 크기로 나누다보니 한 공간에 용량이 남는 경우가 발생한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;버디 시스템 : 2의 승수로 메모리를 나누어 가변 분할, 고정 분할의 단점을 보완했다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="computer_science" /><category term="운영체제" /><summary type="html">운영체제를 공부하고 간략하게 정리한 글입니다.</summary></entry><entry><title type="html">Modern JavaScript Deep Dive</title><link href="http://localhost:4000/book/total.html" rel="alternate" type="text/html" title="Modern JavaScript Deep Dive" /><published>2022-03-15T00:00:00+09:00</published><updated>2022-03-15T00:00:00+09:00</updated><id>http://localhost:4000/book/total</id><content type="html" xml:base="http://localhost:4000/book/total.html">&lt;blockquote&gt;
-  &lt;p&gt;Modern JavaScript를 정독하면서..&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&quot;variable-변수&quot;&gt;🌱 Variable (변수)&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;변수란&quot;&gt;📌 변수란?&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;JavaScript는 필요한 연산을 하기 위해 저장해야하는 값들을 메모리에 저장할 때 개발자가 직접 메모리에 접근하지 못하므로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;변수&lt;/code&gt; 를 이용해 메모리에 접근하여 값들을 저장할 수 있다. → 즉 변수는 메모리에 접근할 수 있는 ‘값’이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;변수의-특징&quot;&gt;📌 변수의 특징&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;호이스팅 : JavaScript는 변수를 Runtime에 실행하여 저장하지 않고 Runtime이 일어나기 직전에 선언되어 있는 변수의 식별자를 수집하여 실행 컨텍스트에 저장한다.(할당은 Runtime 순으로..)&lt;/li&gt;
-  &lt;li&gt;식별자가 수집되어 저장될 때 undefined를 변수의 값으로 할당되어 저장된다. 이 과정을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;초기화&lt;/code&gt;라고 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/08&lt;/p&gt;
-
-&lt;h1 id=&quot;expression--statement표현식과-문&quot;&gt;🌱 Expression / Statement(표현식과 문)&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;표현식-용어-정리&quot;&gt;📌 표현식 용어 정리&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;값 : 표현식이 평가되어 생성된 결과
-    &lt;ul&gt;
-      &lt;li&gt;모든 값은 데이터 타입을 가지며 메모리에 2진수로 저장된다. 같은 2진수로 저장되었다 하더라도 어떤 데이터 타입을 저장했는지에 따라 다른 값을 가진다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;리터럴 : 사람이 이해할 수 있는 문자 또는 기호를 사용 → 값을 생성하는 표기법&lt;/li&gt;
-  &lt;li&gt;표현식 : &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;값&lt;/code&gt;으로 평가될 수 있는 문
-    &lt;ul&gt;
-      &lt;li&gt;ex) 변수 선언문 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;var a&lt;/code&gt;는 값을 평가할 수 없기 때문에 표현식 X&lt;/li&gt;
-      &lt;li&gt;ex) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x = 1 + 2&lt;/code&gt;는 식 자체로 값을 평가할 수 있기 때문에 표현식 O&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;문 : 문은 프로그램을 구성하는 기본 단위이자 최소 실행 단위
-    &lt;ul&gt;
-      &lt;li&gt;문은 조건문, 반복문, 할당문, 선언문 등으로 구분 가능&lt;/li&gt;
-      &lt;li&gt;문이라고 해서 모두 표현식은 아니다. (선언문)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;토큰 : 문법적으로 더 이상 나눌 수 없는 기본 요소&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/09&lt;/p&gt;
-
-&lt;h1 id=&quot;data-type-데이터-타입&quot;&gt;🌱 Data Type (데이터 타입)&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;데이터-타입의-종류&quot;&gt;📌 데이터 타입의 종류&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;원시 타입
-    &lt;ul&gt;
-      &lt;li&gt;숫자(number), 문자열(string), 불리언(boolean), undefined, null, Symbol&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;객체 타입
-    &lt;ul&gt;
-      &lt;li&gt;객체(Object), 배열(array), 함수(function)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;숫자number&quot;&gt;📌 숫자(Number)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;정적 타입 언어와 다르게 JavaScript(동적 타입 언어)는 하나의 숫자 타입(실수)을 가진다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;문자열string&quot;&gt;📌 문자열(String)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;문자열을 객체로 표현하는 Java와 다르게 JavaScript에서 문자열은 원시타입이다.&lt;/li&gt;
-  &lt;li&gt;일반 문자열에서 개행 허용X → escape sequence 사용
-    &lt;ul&gt;
-      &lt;li&gt;window는 /r/n, macOS는 /n을 개행 방식으로 사용한다. (/r/n은 과거 타자기의 개행 방식)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;템플릿 리터럴을 사용하면 개행, 표현식을 쉽게 사용 가능하다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;불리언boolean&quot;&gt;📌 불리언(Boolean)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;참, 거짓 분별 - 논리적인 값&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;undefined&quot;&gt;📌 undefined&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;변수가 선언되어 초기화될 때 제일 먼저 할당되는 값&lt;/li&gt;
-  &lt;li&gt;아무 것도 할당되지 않은, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;정의되지 않은&lt;/code&gt;의 의미&lt;/li&gt;
-  &lt;li&gt;초기화 시 할당되는 값인 만큼 개발자가 의도적으로 undefined를 할당하는 것은 권장하지 않는다. (undefined 값을 통해 변수에 값 할당 유무를 파악하기 용이)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;null&quot;&gt;📌 null&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;undefined는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;정의되지 않은&lt;/code&gt;의 의미를 갖지만, null은 의도적으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;비어있다&lt;/code&gt;라는 의미를 가지는 값으로 사용&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;etcsymbol-object-array-등&quot;&gt;📌 ETC(Symbol, Object, Array 등)&lt;/h3&gt;
-
-&lt;h3 id=&quot;데이터-타입이-필요한-이유&quot;&gt;📌 데이터 타입이 필요한 이유&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;값을 저장할 때 확보해야 하는 메모리 공간의 크기를 결정&lt;/li&gt;
-  &lt;li&gt;값을 참조할 때 한 번에 읽어 들여야 할 메모리 공간 크기 결정&lt;/li&gt;
-  &lt;li&gt;메모리에서 읽어 들인 2진수를 어떻게 해석할지 결정&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;동적-타이핑&quot;&gt;📌 동적 타이핑&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;정적 타입 언어는 변수에도 타입을 선언해야 한다.&lt;/li&gt;
-  &lt;li&gt;동적 타입 언어는 변수에 할당된 값에 따라 타입이 동적으로 변할 수 있다.
-    &lt;ul&gt;
-      &lt;li&gt;복잡한 프로그래밍에서는 개발자의 의도와 다르게 JavaScript엔진이 암묵적으로 타입을 변환할 가능성이 있다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;정적 타입 언어 = 안정성 ⬆️  / 코드의 양 ⬆️
-동적 타입 언어 = 안정성 ⬇️  / 코드의 양 ⬇️&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;⇒ 가독성 좋은 코드가 👍🏻&lt;/p&gt;
-
-&lt;blockquote&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;22/03/10&lt;/p&gt;
-
-&lt;h1 id=&quot;연산자&quot;&gt;🌱 연산자&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;그 자체를 값으로 표현할 수 있으면 표현식! 값이 아니면 문!&lt;/li&gt;
-  &lt;li&gt;삼항 연산자는 조건’문’이자 표현’식’이다.&lt;/li&gt;
-  &lt;li&gt;NaN === NaN은 false이다.&lt;/li&gt;
-  &lt;li&gt;typeof null은 Object이다.(JavaScript의 버그)&lt;/li&gt;
-  &lt;li&gt;ES7에서 등장한 지수 연산자 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ex) 2 ** 2 === 4&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/11&lt;/p&gt;
-
-&lt;h1 id=&quot;제어문&quot;&gt;🌱 제어문&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트-1&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;break와 continue를 활용하면 가독성있는 프로그래밍이 될 수 있을 것 같다.&lt;/li&gt;
-  &lt;li&gt;forEach, map, filter 등 특정 반복 메소드를 사용하는 것이 단순 for문을 사용하는 것보다 가독성 측면에서 좋다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/12&lt;/p&gt;
-
-&lt;h1 id=&quot;타입-변환과-단축-평가&quot;&gt;🌱 타입 변환과 단축 평가&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트-2&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;개발자가 의도적으로 타입을 변환하는 것 : 명시적 타입 변환, 타입 캐스팅
-    &lt;ul&gt;
-      &lt;li&gt;ex) toString()&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;JavaScript 엔진이 암묵적으로 타입을 변환하는 것 : 암묵적 타입 변환, 타입 강제 변환
-    &lt;ul&gt;
-      &lt;li&gt;ex) ‘10’ + 2 = ‘102’&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;모든 타입 변환은 기존의 원시 값을 갱신하여 재할당하는 것이 아닌 새로운 값을 생성한다.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;+&lt;/code&gt;는 문자열 연결 연산자, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-, *, /&lt;/code&gt;는 산술 연산자&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/13&lt;/p&gt;
-
-&lt;h1 id=&quot;객체-리터럴&quot;&gt;🌱 객체 리터럴&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트-3&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;C, Java와 같은 Class 기반 객체 지향언어는 Class를 사전에 정의하고 필요한 시점에 new연산자와 constructor 생성자를 호출하여 인스턴스를 생성&lt;/li&gt;
-  &lt;li&gt;그러나 JavaScript는 프로토타입 기반 객체지향 언어이기 때문에 다양한 방법을 통해 객체를 생성한다.
-    &lt;ul&gt;
-      &lt;li&gt;객체 리터럴&lt;/li&gt;
-      &lt;li&gt;Object 생성자 함수&lt;/li&gt;
-      &lt;li&gt;생성자 함수(new)&lt;/li&gt;
-      &lt;li&gt;Object.create 메서드&lt;/li&gt;
-      &lt;li&gt;클래스&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;프로퍼티 키의 타입은 무조건 문자열&lt;/li&gt;
-  &lt;li&gt;프로퍼티 값이 함수일 경우 메서드라고 부른다&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/14&lt;/p&gt;
-
-&lt;h1 id=&quot;원시-값과-객체의-비교&quot;&gt;🌱 원시 값과 객체의 비교&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트-4&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;원시 타입 값은 변동이 생겼을 시 원래 있던 메모리 주소에 갱신되는 것이 아니라 새로운 메모리 주소에 생성되고 그 주소를 변수가 기억한다.&lt;/li&gt;
-  &lt;li&gt;유사 배열 객체 : 배열처럼 인덱스로 프로퍼티 값에 접근할 수 있고, length값을 가질 수 있는 객체를 의미한다.
-    &lt;ul&gt;
-      &lt;li&gt;ex) String은 문자 하나마다 index로 접근 가능하고, length로 글자 수까지 알아낼 수 있으니 유사 배열 객체이다.&lt;/li&gt;
-      &lt;li&gt;하지만 JavaScript에서 String은 원시 값이기 때문에 index로 접근하여 값을 재할당하더라도 변하지 않는다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;원시 값들은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;두가지의 값을 평가하는 방식&lt;/code&gt;이 존재한다.
-    &lt;ol&gt;
-      &lt;li&gt;a의 값을 b에 할당한다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ex) let b = a&lt;/code&gt; 첫번째의 경우 할당 시점에 두 변수가 기억하는 메모리 주소가 다르다. (할당 시점에 a의 메모리 주소에 있던 값이 b의 메모리 주소에 할당되는 의미)&lt;/li&gt;
-      &lt;li&gt;a의 값을 b에 할당한다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ex) let b = a&lt;/code&gt; 두번째의 경우 할당 시점에 두 변수가 기억하는 메모리 주소가 같다. (할당 시점에 b는 a의 값이 할당되어 있는 메모리 주소를 할당받는다.)&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;⇒ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;값의 의한 전달&lt;/code&gt;도 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;값을 참조&lt;/code&gt;하는 것이 아니라 값을 가지고 있는 메모리 주소를 할당받는다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;참조 타입 값은 값이 변한다.(mutable)
-    &lt;ul&gt;
-      &lt;li&gt;ex) let a = { name: ‘suyeon’ }; let b = a 상황에서 a의 name을 바꾸면 b도 동일하게 바뀐다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;한 변수가 참조 타입 값을 할당받았을 때 변수는 참조 타입 값안에 있는 프로퍼티들의 값 주소들을 모아놓은 주소를 할당받는다.&lt;/li&gt;
-  &lt;li&gt;형태가 같더라도 따로 할당한 참조 타입 값은 일치 연산자로 비교하면 false를 출력한다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ex) let a = { name: ‘suyeon }; let b = { name: ‘suyeon’ }; a === b ⇒ false&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;⇒ 변수에 할당되는 값은 실제로는 값이 아닌 값을 가지고 있는 메모리 주소가 할당된다고 생각하면 이해하기 수월해지는 것 같다 🙂&lt;/p&gt;
-
-&lt;p&gt;22/03/15&lt;/p&gt;
-
-&lt;h1 id=&quot;함수&quot;&gt;🌱 함수&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트-5&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;함수는 일련의 과정을 문으로 구현하고 코드 블록으로 감싸서 하나의 실행 단위로 정의한 것이다.&lt;/li&gt;
-  &lt;li&gt;함수는 객체 타입의 값이다. 함수 리터럴도 평가되어 값을 생성한다.&lt;/li&gt;
-  &lt;li&gt;하지만 일반 객체는 호출할 수 없지만, 함수는 호출할 수 있다.&lt;/li&gt;
-  &lt;li&gt;함수 선언문은 함수가 평가됨과 동시에 Javascript에서 암묵적으로 함수 이름을 식별자로 생성하고 함수 객체가 할당된다. ⇒ 함수는 선언이 아닌 정의한다고 표현한다.&lt;/li&gt;
-  &lt;li&gt;함수 선언문으로 함수를 생성하면 함수 호이스팅이 일어나지만 함수 표현식으로 함수를 생성하면 변수 호이스팅이 발생한다.
-    &lt;ul&gt;
-      &lt;li&gt;함수 선언문은 런타임 전에 생성과 동시에 암묵적으로 함수 이름을 식별자로 생성해 함수 객체를 할당하기 때문에 호이스팅이 일어난다.&lt;/li&gt;
-      &lt;li&gt;함수 표현식은 변수에 할당된 값이 함수 리터럴이다. 그렇기 때문에 일반적으로 변수에 값을 할당하는 것과 동일하게 동작한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;함수의 인자를 정해진 매개변수보다 많이 전달하면 인자는 사라지는 것이 아니라 argument라는 객체에 보관된다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/16&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;함수의 매개변수로 원시 값, 객체 값을 인수로 전달하고 함수 내에서 전달받은 값 자체를 변경할 때 원시는 불변성을 띄지만, 객체는 가변적이기 때문에 값이 변한다.&lt;/li&gt;
-  &lt;li&gt;함수를 즉시 실행하기 위해서는 그룹 연산자를 알맞게 사용해야한다.
-    &lt;ul&gt;
-      &lt;li&gt;최소한 함수의 코드 블럭까지 그룹 연산자로 묶어주어야 한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;재귀 함수는 꼭! 전달받는 인수를 활용해 끝나는 지점을 정해야 한다.&lt;/li&gt;
-  &lt;li&gt;함수 내에 정의된 함수를 중첩 함수, 내부 함수라고 한다.&lt;/li&gt;
-  &lt;li&gt;함수의 매개변수를 통해 다른 함수의 내부로 전달되는 함수를 콜백함수라고 한다. 반대로 변수를 통해 함수의 외부에서 콜백함수를 전달받은 함수를 고차함수라고 한다.&lt;/li&gt;
-  &lt;li&gt;함수형 프로그래밍은 외부의 상태에 의존하지 않고 변경하지도 않는 순수 함수를 통해 최대한 오류를 피하고 프로그램의 안정성을 높이기 위한 프로그래밍 방법론이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/17&lt;/p&gt;
-
-&lt;h1 id=&quot;스코프&quot;&gt;🌱 스코프&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트-6&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;스코프 : 식별자가 유효한 범위&lt;/li&gt;
-  &lt;li&gt;렉시컬 환경 : 코드가 어디서 실행되며 주변에 어떤 코드가 있는지..&lt;/li&gt;
-  &lt;li&gt;실행 컨텍스트 : 렉시컬 환경을 구현한 것&lt;/li&gt;
-  &lt;li&gt;Javascript는 스코프 내에서 변수를 찾을 때, 해당 스코프를 기준으로 지역 스코프 → 상위 스코프 → 전역 스코프 순으로 해당 스코프의 렉시컬 환경에서 찾고자 하는 변수를 검색한다.&lt;/li&gt;
-  &lt;li&gt;Javascript는 다른 언어들과 다르게 함수 레벨 스코프이다. 이것은 전역에서 if문이나 for문 같은 코드 블럭에서 변수를 선언 하더라도 이는 함수의 코드 블럭이 아니기 때문에 전역변수로 간주한다. 함수의 코드 블럭에서 선언하면 이 변수는 그 함수 내에서만 사용이 가능하다. (내부함수도 마찬가지)&lt;/li&gt;
-  &lt;li&gt;함수를 어디서 호출/정의 했는지에 따라 결과값이 다르게 나타난다.&lt;/li&gt;
-  &lt;li&gt;Javascript는 함수를 어디서 호출했는지는 관심없고 어디에서 정의했는지가 중요하다. 가령 전역에 a함수를 정의하고 전역에 선언되어 있는 x변수를 참조한다. a함수는 b함수의 내부 함수로 다시 호출되었을 때, b에도 전역과 같은 식별자를 가진 x변수를 선언하여 가지고 있다. 이때 b의 내부함수인 a는 b의 x를 참조하는 것이 아닌 전역에 있는 x를 참조한다. (지금까지 몰랐다.. 충격..🤮)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ex)
-var x = 1;
-
-function foo() {
-  var x = 10;
-  boo();
-}
-
-function boo() {
-  console.log(x);
-}
-
-foo() =&amp;gt; 1;
-boo() =&amp;gt; 1;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;22/03/18&lt;/p&gt;
-
-&lt;h1 id=&quot;전역-변수의-문제점&quot;&gt;🌱 전역 변수의 문제점&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트-7&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;전역 변수는 예기치 못한 문제점을 야기할 수 있는 가능성이 크므로 지역 변수로 관리할 것을 권장한다.&lt;/li&gt;
-  &lt;li&gt;변수는 변수가 속해있는 렉시컬 환경(실행 컨텍스트)에 저장된다. 이 때, 함수 레벨 스코프에 선언된 변수는 함수 스코프에 속하는 렉시컬 환경에 저장되기 때문에 함수 스코프 안에 선언된 변수의 생명주기는 함수의 생명주기와 일치한다.
-    &lt;ul&gt;
-      &lt;li&gt;메모리는 누군가 그 메모리 값을 참조하고 있으면 소멸되지 않고 유지한다. 이것을 이용하여 함수 또한 누군가 함수 스코프를 참조하면 일반적인 함수의 생명 주기와 다르게 소멸하지 않는다. (클로저의 개념)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;var로 선언한 전역 변수는 전역 객체의 프로퍼티가 된다. 전역 객체는 Javascript 파일을 넘어 공유되는 객체인만큼 변수 값에 따른 신뢰도는 하락한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/19&lt;/p&gt;
-
-&lt;h1 id=&quot;let-const-키워드와-블록-레벨-스코프&quot;&gt;🌱 let, const 키워드와 블록 레벨 스코프&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-오늘의-포인트&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;var는 블록 레벨 스코프를 무시하고 전역 레벨 스코프 단위로 선언이 되었지만(함수 레벨 스코프 제외), let와 const는 블록 레벨 스코프 단위로 변수가 유효하다.&lt;/li&gt;
-  &lt;li&gt;그렇다고 호이스팅이 안일어나는 것은 아니다. 호이스팅은 모든 변수 선언 키워드에서 일어난다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-jsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1. not defined&lt;/span&gt;
-	&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 2. 2&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 3. 1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;위의 예제에서 1번째 console는 let으로 선언한 변수가 호이스팅이 되지 않는다면 전역 hello를 참조해야되지만, not defined 에러를 발생시킨다. 즉, 호이스팅처럼 보이지 않을 뿐 호이스팅이 일어난다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;⇒ let, const, class 등은 var와 다르게 변수를 선언한 곳에서 초기화가 같이 일어나기 때문(TDZ의 영역) (var는 선언하면 실행컨텍스트의 렉시컬 환경에서 var의 정보를 수집함과 동시에 undefined로 초기화가 일어난다.)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;const는 let과 비슷하지만, 한번 할당한 값은 바꿀수 없는 특성을 가지고 있다. (상수의 특성)
-    &lt;ul&gt;
-      &lt;li&gt;하지만 참조타입 값들의 프로퍼티들을 변경가능하다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/20&lt;/p&gt;
-
-&lt;h1 id=&quot;프로퍼티-어트리뷰트&quot;&gt;🌱 프로퍼티 어트리뷰트&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트-8&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로퍼티 어트리뷰트는 자바스크립트 엔진 동작 원리를 설명하기 위한 수단&lt;/li&gt;
-  &lt;li&gt;모든 객체는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[[Prototype]]&lt;/code&gt;이라는 내부 슬롯을 가지며 원칙적으로 접근할 수 없다. 하지만 &lt;strong&gt;proto&lt;/strong&gt;를 통해 간접적으로 접근할 수 있다.&lt;/li&gt;
-  &lt;li&gt;JS엔진은 프로퍼티를 생성할 때 프로퍼티의 상태를 나타내는 프로퍼티 어트리뷰트를 기본값으로 자동 정의한다. ⇒ Object.getOwnPropertyDescriptor로 확인 가능&lt;/li&gt;
-  &lt;li&gt;데이터 프로퍼티, 접근자 프로퍼티가 있다.
-    &lt;ul&gt;
-      &lt;li&gt;데이터 프로퍼티는 키와 값으로 구성된 일반적인 프로퍼티&lt;/li&gt;
-      &lt;li&gt;접근자 프로퍼티는 자체적으로 값을 가지고 있지 않고 다른 프로퍼티의 값을 읽거나 저장할 때 호출되는 접근자 함수로 구성되어 있다.(getter/setter)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Object.defineproperty로 프로퍼티 어트리뷰트를 명시적으로 정의할 수 있다.&lt;/li&gt;
-  &lt;li&gt;객체는 참조형 데이터이므로 언제든지 값을 변경하고 삭제, 갱신할 수 있다. 데이터의 불변성을 위해 객체 정보 변경을 방지하는 여러가지 메소드들이 존재한다.
-    &lt;ul&gt;
-      &lt;li&gt;Object.preventExtensions : 프로퍼티 추가 금지&lt;/li&gt;
-      &lt;li&gt;Object.seal : 읽기와 쓰기만 가능&lt;/li&gt;
-      &lt;li&gt;Object.freeze : 읽기만 가능 ⇒ Obect.freeze를 이용하여 불변객체 형성 가능(중첩 객체또한 불변객체로!)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;⇒ 프로퍼티 어트리뷰트는 자바스크립트 엔진 동작을 이해하고, getter와 setter, 프로퍼티 동결 원리를 파악할 수 있는 챕터인 것 같다.&lt;/p&gt;
-
-&lt;p&gt;22/03/21&lt;/p&gt;
-
-&lt;h1 id=&quot;생성자-함수에-의한-객체-생성&quot;&gt;🌱 생성자 함수에 의한 객체 생성&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트-9&quot;&gt;📌오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;특별한 경우가 아닌 이상은 Object 생성자 함수로 객체 생성X&lt;/li&gt;
-  &lt;li&gt;객체 리터럴로 객체를 생성하는 것은 간편하지만 재사용성이 떨어진다.&lt;/li&gt;
-  &lt;li&gt;function으로도 객체를 만들 수 있다. 함수 식별자에 new 키워드를 붙이면 객체 생성자 함수, 붙이지 않으면 함수로 호출된다. (이 때 함수가 반환하는 값이 객체이면 그 객체를 반환, 반환하는 값이 원시값등 객체가 아니면 함수에 바인딩된 this를 반환한다.)&lt;/li&gt;
-  &lt;li&gt;생성자 함수 안에 this가 있다고 가정할 때 생성자 함수가 함수로 호출하면 this는 전역객체에 바인딩되고 객체를 생성하는 생성자 함수로 호출되면 this는 해당 생성자 함수의 인스턴스를 바인딩 및 초기화한다.&lt;/li&gt;
-  &lt;li&gt;함수 객체는 호출은 Default로 동작하지만 모든 함수 객체를 생성자 함수로 호출할 수 있는 것은 아니다.
-    &lt;ul&gt;
-      &lt;li&gt;함수 선언문, 함수 표현식, 클래스 등 일반 함수로 정의된 함수는 생성자 함수로 호출 가능&lt;/li&gt;
-      &lt;li&gt;메서드, Arrow function 등으로 정의된 함수는 생성자 함수로 호출 X&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;new.target, this instanceof **&lt;/code&gt;를 이용하면 함수 객체가 new 연산자와 함께 호출되었는지의 여부를 판단할 수 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/22&lt;/p&gt;
-
-&lt;h1 id=&quot;함수와-일급객체&quot;&gt;🌱 함수와 일급객체&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트-10&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;일급 객체의 조건 4가지
-    &lt;ul&gt;
-      &lt;li&gt;무명의 리터럴로 생성할 수 있다.&lt;/li&gt;
-      &lt;li&gt;변수나 자료구조에 저장할 수 있다.&lt;/li&gt;
-      &lt;li&gt;함수의 매개변수에 전달할 수 있다.&lt;/li&gt;
-      &lt;li&gt;함수의 반환값으로 사용할 수 있다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;arguments는 객체 타입으로 보이지만 유사배열 객체이다.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__proto__&lt;/code&gt;는 직접 접근할 수 없고 접근자 프로퍼티를 통해 간접적으로 접근이 가능하다.&lt;/li&gt;
-  &lt;li&gt;prototype 프로퍼티는 constructor를 가지고 있는 객체가 가지고 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;⇒ 일급객체, 프로토타입, 객체는 서로 연관되어 있는 것 같다. 왜 사용되는지 필요가 무엇인지는 prototype을 읽고 생각해봐야겠다.&lt;/p&gt;
-
-&lt;p&gt;22/03/23&lt;/p&gt;
-
-&lt;h1 id=&quot;-프로토타입&quot;&gt;🌱 프로토타입&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-객체-지향-프로그래밍과-프로토타입&quot;&gt;📌 객체 지향 프로그래밍과 프로토타입&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;객체는 상태 데이터와 동작을 하나의 논리적인 단위로 묶은 복합적인 자료구조이다.&lt;/li&gt;
-  &lt;li&gt;프로토타입은 객체지향 프로그래밍 중 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;상속&lt;/code&gt;이라는 개념을 적용시킨 기능이다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;생성자 함수, 클래스 등으로 만든 인스턴스는 각 인스턴스마다 형태는 같지만 레퍼런스적으로 동일하지는 않는다. 이 의미는 각 인스턴스마다 같은 프로퍼티를 중복 소유하게 됨으로써 불필요한 데이터 저장공간을 낭비한다는 것이다.&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;프로토타입은 이러한 중복 소유의 문제점을 근본적으로 해결해주는 역할을 담당한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;모든 객체는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[[Prototype]]&lt;/code&gt;이라는 내부 슬롯을 가지며 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[[Prototype]]&lt;/code&gt;에 저장되는 프로토타입은 객체 생성 방식에 따라 달라진다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;객체 리터럴로 생성한 객체는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[[Prototype]]&lt;/code&gt;에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Object.prototype&lt;/code&gt;이 저장되지만, 생성자 함수를 통해 생성된 객체는 그 생성자 자신의 prototype으로 저장된다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[[Prototype]]&lt;/code&gt;은 내부슬롯으로 사용자가 직접 접근할 수 없는 구조이지만, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__proto__&lt;/code&gt; 접근자 프로퍼티를 사용하여 간접적으로 접근할 수 있다. -&amp;gt; 상호 참조로 인한 프로토타입 체인 생성 방지(무한루프 방지)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;주의점은 함수 객체만은 prototype 프로퍼티를 가지고 있으며, 이 프로퍼티는 생성자 함수가 생성할 인스턴스의 프로토타입을 가리킨다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;-객체-생성-방식과-프로토타입의-결정&quot;&gt;📌 객체 생성 방식과 프로토타입의 결정&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;객체 리터럴, Object.create로 객체를 생성할 때 추상연산 함수를 호출하면 Object.prototype이 전달되어 객체 리터럴에 의해 생성된 객체의 프로토타입은 Object.prototype이 된다.&lt;/li&gt;
-  &lt;li&gt;생성자 함수로 객체를 생성하면 추상연산 함수에 생성자 함수의 prototype 프로퍼티에 바인딩되어 있는 객체이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;-프로포타입-체인&quot;&gt;📌 프로포타입 체인&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;생성자 함수로 생성된 인스턴스 객체는 생성자 함수 내에 있는 프로퍼티뿐 아니라 Object.prototype에 있는 프로퍼티도 호출할 수 있다. -&amp;gt; 이것은 생성자 함수의 프로토타입에는 Object.prototype이 상속되어 있다는 의미이다.&lt;/li&gt;
-  &lt;li&gt;JS는 객체의 프로퍼티에 접근할 때, 접근하려는 해당 프로퍼티가 없는 경우 내부 슬롯 참조에 따라 자신의 부모 역할을 하는 프로토타입의 프로퍼티를 순차적으로 검색한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/28&lt;/p&gt;
-
-&lt;h1 id=&quot;-strict-mode&quot;&gt;🌱 Strict mode&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-오늘의-포인트-1&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;strict mode는 전역으로 선언할 시 non-strict mode인 라이브러리까지 적용되어 에러를 유발할 수 있기 때문에 조심히 사용할 것!&lt;/li&gt;
-  &lt;li&gt;lint를 활용하자!&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;-빌트인-객체&quot;&gt;🌱 빌트인 객체&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-오늘의-포인트-2&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;표준 빌트인 객체는 40여가지이며 Math, Reflect, JSON을 제외하고는 모두 인스턴스를 만들 수 있다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;원시값은 객체가 아니지만 메서드를 사용할 수 있는 이유는&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(ex. “1”.toString())&lt;/code&gt; 원시값을 객체처럼 사용하면 JS엔진이 암묵적으로 연관된 객체를 생성하여 메서드를 호출하고 처리가 완료되면 원시값으로 되돌리면서 객체는 GC로 수거된다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/29&lt;/p&gt;
-
-&lt;h1 id=&quot;this&quot;&gt;🌱 This&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;오늘의-포인트-11&quot;&gt;📌 오늘의 포인트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;this는 자신이 속한 객체 또는 자신이 생성할 인스턴스를 가리키는 자기 참조 변수이다.&lt;/li&gt;
-  &lt;li&gt;this를 통해 자신이 속한 객체 또는 자신이 생성할 인스턴스의 프로퍼티나 메서드를 참조할 수 있다.&lt;/li&gt;
-  &lt;li&gt;this의 바인딩은 함수 호출 방식에 의해 동적으로 결정된다.
-    &lt;ul&gt;
-      &lt;li&gt;일반 함수 호출 : 전역 window 객체가 this에 바인딩 된다. 또한 콜백 함수의 this도 전역 객체를 바인딩한다. → call, bind, apply 등의 메소드 사용으로 해결&lt;/li&gt;
-      &lt;li&gt;메서드 호출 : 메서드를 호출한 객체에 this가 바인딩된다.&lt;/li&gt;
-      &lt;li&gt;생성자 함수 호출 : 생성자 함수 내부의 this는 생성자 함수가 미래에 생성할 인스턴스가 바인딩 된다.&lt;/li&gt;
-      &lt;li&gt;strict mode : strict mode가 활성화되어 있는 일반 함수는 undefined를 바인딩한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;call, apply, bind 메서드 : call과 apply는 기본적으로 함수의 호출을 위한 메서드이다. 다만 call과 apply는 첫번째 매개변수로 함수의 this에 바인딩할 객체를 인자로 받고 두번째 매개변수로는 호출할 함수의 인자들을 받는다.(call은 ,로 구분하고 apply는 Array에 담는다.)
-bind는 호출이 아니라 this에 바인딩할 객체를 매개변수로 받고 객체를 바인딩한 함수를 반환한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;22/03/30&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="book" /><category term="javascript" /><summary type="html">Modern JavaScript를 정독하면서..</summary></entry><entry><title type="html">Android Kotlin 입문기</title><link href="http://localhost:4000/story/android.html" rel="alternate" type="text/html" title="Android Kotlin 입문기" /><published>2022-02-26T00:00:00+09:00</published><updated>2022-02-26T00:00:00+09:00</updated><id>http://localhost:4000/story/android</id><content type="html" xml:base="http://localhost:4000/story/android.html">&lt;blockquote&gt;
-  &lt;p&gt;2월 4번째 주 TIL&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-til이-필요하다고-생각한-이유&quot;&gt;🤔 TIL이 필요하다고 생각한 이유?&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-우당탕-kotlin-스터디&quot;&gt;📌 우당탕 Kotlin 스터디&lt;/a&gt;
-        &lt;ul&gt;
-          &lt;li&gt;&lt;a href=&quot;#-kotlin&quot;&gt;🌱 Kotlin&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;#-kotlin-첫-도입기&quot;&gt;🌱 Kotlin 첫 도입기&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;#-과제-이후-느낀-점&quot;&gt;🌱 과제 이후 느낀 점&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-알고리즘-및-cs&quot;&gt;📌 알고리즘 및 CS&lt;/a&gt;
-        &lt;ul&gt;
-          &lt;li&gt;&lt;a href=&quot;#-동적계획법&quot;&gt;🌱 동적계획법&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;#-quick-sort&quot;&gt;🌱 Quick Sort&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;#-http&quot;&gt;🌱 HTTP&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-한주-마무리&quot;&gt;📌 한주 마무리&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-til이-필요하다고-생각한-이유&quot;&gt;🤔 TIL이 필요하다고 생각한 이유??&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;취업을 하고 난 이후 벌써 5개월 차에 접어들었다.. 작은 스타트업이라 개발자가 소수였기에 회사 코드에 적용할 코드나 알고리즘, 기술에 대한 고민은 많았지만 실질적인 가이드를 받을 수 있는 상황이 아니었다.😂&lt;/p&gt;
-
-&lt;p&gt;‘목마른 사람이 우물을 파라고 했던가..?’💦 회사 래거시 코드들과 지저분하게 짜여져 있는 것 같은 느낌을 주는 코드들은 나를 충분히 목마르게 만들었기에 개인적으로 스터디를 시작했다. (신입 개발자라면 당연하지만!!😜)&lt;/p&gt;
-
-&lt;p&gt;나름 이것저것 강의도 듣고 여러 서적을 구매해서 읽기도 했지만… 지금 와서 생각해보면 ‘음…머지..?’, ‘열심히 공부한 것 같은데 먼가 찜찜한 이 기분…?’ 이런 생각을 떨쳐버릴 수 없었다.&lt;/p&gt;
-
-&lt;p&gt;이번 2월은 회사에 주어진 프로젝트 데드라인이 많이 짧아서 밤이나 낮이나 기능 구현하기 바빴다..ㅠㅠ😭
-게다가.. 회사에 CTO님이 합류하시게 되어 한껏 ‘드디어 나도 혼나면서? 내 코드가 효율적인지 비효율적인지 판단할 수 있게 되었구나!!’라고 생각하며 기대에 부풀었으나.. 어디선가 들려오는 이야기.. ‘회사에서 앞으로 필요하게 될 기술 중 앱 기술도 많이 필요할 것 같으니, 수연님은 코틀린으로 안드로이드 개발을 맡아주세요.’ 청천벽력같은 이야기..🌩😱🌩&lt;/p&gt;
-
-&lt;p&gt;일주일 간 코틀린으로 간단한 앱을 구현하는 과제를 받아 밤낮으로 구현하기 바빴다..😵‍💫&lt;/p&gt;
-
-&lt;p&gt;결론적으로는 꽤 나쁘지 않았다..! 물론 웹 지식은 물론, 운영체제, 네트워크 등등등.. 많고 많은 스터디 리스트 중에 앱 공부가 추가되었지만, 코틀린을 사용하여 회사 앱에 적용시키면 정말 ‘객체 지향적인 프로그래밍’을 익힐 수 있을 것 같다는 새로운 기대감이 생겼다.&lt;/p&gt;
-
-&lt;p&gt;이번에 새로운 기술까지 공부하면서 느낀 바.. 주간에 업무와 열심히 스터디하고 남은 주말에 지난 한주를 되돌아보면&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ol&gt;
-    &lt;li&gt;내가 시간을 효율적으로 사용하며 스터디했는지에 대한 척도를 세울 수 있는 이점,&lt;/li&gt;
-    &lt;li&gt;새로운 지식들을 머리 속에 쑤셔 넣기만 바빠서 미처 되돌아보지 못했던 지식들을 다시 한번 살펴볼 수 있는 이점,&lt;/li&gt;
-    &lt;li&gt;평일에 일하거나 계획했던 스터디하기 바빠 미처 하지 못했던 독서나 운동을 함으로써 삶의 완급조절에 대한 이점&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;을 얻을 수 있을거라고 생각했다.&lt;/p&gt;
-
-&lt;p&gt;지금까지는 단순한 지식 기록용으로 블로그 글을 작성했다면, 이번 기점으로부터는 좀더 역동적이고 생동감있는 글들을 쓰는 것이 목표이다.🎯 (글도 잘쓰고 싶은 욕심에..ㅎㅎ)&lt;/p&gt;
-
-&lt;p&gt;이런 시도를 통해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;딱딱하고 형식적인 지식 전달보다 왜?를 생각하는 자세&lt;/code&gt;를 가질 수 있는 마인드를 가질 수 있을 것이라 생각한다.&lt;/p&gt;
-
-&lt;h2 id=&quot;-우당탕-kotlin-스터디&quot;&gt;📌 우당탕 Kotlin 스터디&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-kotlin&quot;&gt;🌱 Kotlin???&lt;/h3&gt;
-
-&lt;p&gt;Kotlin은 모두 아시겠지만, 안드로이드 앱 개발에 사용되는 대표적인 언어이다. 처음에 Kotlin에 대한 인식은 ‘Kotlin은 안드로이드 어플만 만드는 언어 아닌가?’라는 생각을 가지고 있었지만, 그것은 오해였다.&lt;/p&gt;
-
-&lt;p&gt;Kotlin은 Java기반으로 만들어진 언어이다보니 Javascript와 다르게 굉장이 까탈시러운 언어였지만, Kotlin으로 안드로이드 앱 개발뿐 아니라 서버 개발에도 쓰이는 언어라고 한다.&lt;/p&gt;
-
-&lt;p&gt;당연히 서버 개발에도 흥미가 있고, 언젠가 자바 스프링도 접해보고 싶은 나로써는 지금 Kotlin 언어를 익혀두면 나중에 요긴하게 쓰일 수 있지 않을까? 라는 매우 좋은 마음을 심어주었다.&lt;/p&gt;
-
-&lt;h3 id=&quot;-kotlin-첫-도입기&quot;&gt;🌱 Kotlin 첫 도입기&lt;/h3&gt;
-
-&lt;p&gt;서론에 이야기했듯이 이번 한주동안 Kotlin으로 간단한 앱을 구현해보라는 과제를 받았다. ‘머 앱도 리엑트처럼 개발하면 되는거 아니야? 생각했지만.. 역시 우물안 개구리였을까.. 목록형식 페이지를 구현하는 것부터 쉽지 않았다.. 리엑트로 컴포넌트 하나 만들고 거기에 array 데이터 map돌리면 되었던 시절이 너무 그리워지는 순간이었다..🤮&lt;/p&gt;
-
-&lt;p&gt;물론 jetpack compose라는 안드로이드 UI 라이브러리가 존재했지만.. 회사에서 일하는 개발자로서 어떻게 편법만 사용한단 말인가.. 정면돌파를 시도했던 나는 너덜너덜해지기 시작했다…&lt;/p&gt;
-
-&lt;h3 id=&quot;-과제-이후-느낀-점&quot;&gt;🌱 과제 이후 느낀 점&lt;/h3&gt;
-
-&lt;p&gt;결국 과제에 필요한 기능들을 시간 내에 모두 구현하였다. Kotlin으로 개발하면서 느꼈던 점은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;좀 더 타이트한 객체 지향적인 프로그래밍&lt;/code&gt;에 대한 가능성을 느꼈다. 자유도?가 높은 위험한 언어라고 불리는 JavaScript이다보니 Kotlin을 처음 사용할 때 어려움이 있었지만, 이내 조금씩 익숙해졌다.&lt;/p&gt;
-
-&lt;p&gt;Kotlin으로 개발할 때는 mvvm 디자인 패턴을 사용한다나?(어디서 주워들은 말..).. 또 핸드폰이다보니 메모리, 쓰레드 관리에 많은 집중이 필요하다고 한다. Kotlin을 공부하면서 기존 JavaScript, TypeScript와 차이점을 비교해가며 지식을 축적해가면 좋지 않을까 싶다!&lt;/p&gt;
-
-&lt;h2 id=&quot;-알고리즘-및-cs&quot;&gt;📌 알고리즘 및 CS&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;회사에 출근하기 전 알고리즘에 대한 개념 강의를 들었던 것이 벌써 한달이 넘어갔다. 처음에는 너무 졸리고 힘들었지만, 이젠 꽤나 익숙해졌다😆 (이젠 나도 아침형 인간?!?!)&lt;/p&gt;
-
-&lt;h3 id=&quot;-동적계획법&quot;&gt;🌱 동적계획법&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;특정 범위까지 값을 구하기 위해 그것과 다른 범위까지의 값을 이용하여 효율적으로 값을 구하는 기법(나무위키)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;그 전에 재귀 함수를 이용한 피보나치 수열을 통해 동적계획법 기초를 익혔다. 피보나치 수열 한정인지는 모르겠지만 결국 점화식을 파악하여 규칙을 찾아내는 것이 관건이었다. 예를 들어서 1, 1, 2, 2, 3, 4, 5, 7, 9, 12… 순으로 추가되는 규칙이 있다면 이에 대한 ‘점화식’을 찾아야한다. 1 ~ 4번째 순서에 있는 숫자는 1과 2이지만 3부터 추가되는 숫자는 자세히보면 해당 숫자의 2번째 전과 3번째 전 숫자가 더한 값이라는 것을 알 수 있다. a&lt;sub&gt;n-3&lt;/sub&gt; + a&lt;sub&gt;n-2&lt;/sub&gt; 이 규칙을 가지고 코드를 구현하면 된다. &lt;a href=&quot;https://github.com/ksy4568/algorithm-structure/blob/main/algorithm/%EB%8F%99%EC%A0%81%EA%B3%84%ED%9A%8D%EB%B2%95.js&quot;&gt;(간단구현)&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;-quick-sort&quot;&gt;🌱 Quick Sort&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;비균등한 분할 정렬 기법&lt;/li&gt;
-  &lt;li&gt;기준을 정하고 기준과 비교하여 왼쪽, 오른쪽 열로 나누는 작업을 반복하여 정렬한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;[3, 2, 6, 5, 4]라는 배열이 있다면, 3을 기준으로 3보다 작은 수는 left 배열, 큰 수는 right 배열에 모아놓는 작업을 재귀함수로 반복하다보면 어느새 제일 작은 단위(array.length === 1)로 되어 있을 것이다. 그 때 재귀함수를 종료하고 하나의 array에 담으면 정렬 끝! &lt;a href=&quot;https://github.com/ksy4568/algorithm-structure/blob/main/algorithm/Quick-Sort.js&quot;&gt;(간단구현)&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;-http&quot;&gt;🌱 HTTP&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Hypertext Transfer protocol의 약자로 정보를 주고 받을 수 있는 프로토콜(컴퓨터 사이에서 데이터의 교환 방식을 정의하는 규칙체계)이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Https는 암호화된 방식으로 client와 server가 통신을 주고 받는다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;client가 server에게 특정 데이터에 대해 request하면, server는 그에 맞는 response를 client에게 보내준다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;status code는 server에서 request에 대한 처리 상태를 숫자 형식으로 함께 보내주는 것이다.&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;1xx, 2xx, 3xx, 4xx, 5xx로 앞자리 숫자에 따라 대표적인 상태를, 뒤에 xx의 숫자에 따라 세부적인 상태를 나타낸다. &lt;a href=&quot;https://developer.mozilla.org/ko/docs/Web/HTTP/Status&quot;&gt;(MDN)&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Request의 URL은 protocol, hostname, pathname, query로 나눌 수 있으며, request method로는 GET, POST, PUT, DELETE, PATCH 등이 대표적이다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-한주-마무리&quot;&gt;📌 한주 마무리&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;스터디에 대한 계획은 철저하게 세우는 편이지만, 계속 배우고 싶어하는 마음때문에 정리하고 돌아보는 시간을 아깝게 생각했었다. 요즘도 IT열풍인지는 모르겠지만 나보다 늦은 나이에 프로그래밍에 입문하는 분들도 많지만, 나 또한 그렇게 이른 나이에 프로그래밍을 입문했다고 생각하지는 않기에 빨리 배우고 습득하여 성장하고 싶은 마음이 크다.🤓&lt;/p&gt;
-
-&lt;p&gt;하지만 이런 생각이 가득하게 되면 어느센가 본질을 흐리고 단순히 ‘익혀보는’ 행동으로 변질되기 마련.. 한주동안 있었던 일을 기록하는 지금같은 시간은 내 행동을 분석하고 본질을 기억하게 해주는 시간이 될 것 같은 긍정적인 생각을 주게 되는 것 같다 :)&lt;/p&gt;
-
-&lt;p&gt;앞으로는 조금 더 일기 형식으로 작성해도 재미있을 것 같다. node.js를 공부하는 중인데 대략적인 api생성하는 공부를 마치면 전부터 기획했던 toy project도 기록해볼 생각이다.📝 벌써부터 마음이 두근거린다ㅎㅎ&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="story" /><summary type="html">2월 4번째 주 TIL</summary></entry><entry><title type="html">[TIL] React study</title><link href="http://localhost:4000/devlog/reactStudy.html" rel="alternate" type="text/html" title="[TIL] React study" /><published>2022-02-13T00:00:00+09:00</published><updated>2022-02-13T00:00:00+09:00</updated><id>http://localhost:4000/devlog/reactStudy</id><content type="html" xml:base="http://localhost:4000/devlog/reactStudy.html">&lt;blockquote&gt;
-  &lt;p&gt;실행 컨텍스트(Excution context)의 개념입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-1-search-input과-btn&quot;&gt;Search Input과 Btn&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-2-memo-usecallback&quot;&gt;memo, useCallback&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-컴포넌트-역할분담mvc&quot;&gt;컴포넌트 역할분담(MVC)&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-search-input과-btn&quot;&gt;📌 Search Input과 Btn&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;searchInput과 Btn이 API Call 등 같은 기능을 수행하는 역할을 맡고 있다면 각각 요소들에게 다른 이벤트를 적용하는 것이 아니라 from으로 묶고 onSubmit 이벤트를 걸어 놓는 방법도 있다.&lt;/p&gt;
-
-    &lt;p&gt;(before)
-&lt;img src=&quot;/assets/img/react/2022-02-13-2.png&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-    &lt;p&gt;(after)
-&lt;img src=&quot;/assets/img/react/2022-02-13-1.png&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-memo-usecallback&quot;&gt;📌 memo, useCallback&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;memo가 컴포넌트에 사용되면 해당 컴포넌트가 받고 있는 prop의 값이 변경되었을 경우에만 리랜더링이 된다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;useCallback은 useEffect와 비슷하게 의존성 배열에 할당된 값이 변할 때만 재생성되어 랜더링이 일어날 때마다 재생성되는 것을 막는다.&lt;/li&gt;
-  &lt;li&gt;하지만 useCallback으로 할당한 변수를 prop으로 내리고 한번 더 내리게되면 useCallback의 성격을 잃어버린다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-컴포넌트-역할분담mvc&quot;&gt;📌 컴포넌트 역할분담(MVC)&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;MVC 디자인 패턴을 살짝 적용시키면 모델, 뷰, 컨트롤러를 분리시켜 하나의 컴포넌트가 맡는 역할을 잘게 쪼개어 분담시키는 것이 중요하다. Test 코드를 짤 때나 재사용성, 유지보수하기에 효과적인 기술이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;API 통신을 하는 여러가지 비즈니스 로직을 Class로 묶어두면 공통으로 사용할 수 있는 헤더나 매개변수를 일일히 할당하지 않고 사용할 수 있다.&lt;/p&gt;
-
-    &lt;p&gt;&lt;img src=&quot;/assets/img/react/2022-02-13-3.png&quot; width=&quot;500px&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="react" /><summary type="html">실행 컨텍스트(Excution context)의 개념입니다.</summary></entry><entry><title type="html">[Algorithm] 프로그래머스 Level 1 - 모의고사</title><link href="http://localhost:4000/devlog/algorithm.html" rel="alternate" type="text/html" title="[Algorithm] 프로그래머스 Level 1 - 모의고사" /><published>2021-11-04T00:00:00+09:00</published><updated>2021-11-04T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm.html">&lt;blockquote&gt;
-  &lt;p&gt;프로그래머스 Level 1 모의고사 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-다른-사람-코드를-참고한-리펙터링&quot;&gt;다른 사람 코드를 참고한 리펙터링&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;수포자는 수학을 포기한 사람의 준말입니다. 수포자 삼인방은 모의고사에 수학 문제를 전부 찍으려 합니다. 수포자는 1번 문제부터 마지막 문제까지 다음과 같이 찍습니다.&lt;/p&gt;
-
-  &lt;p&gt;1번 수포자가 찍는 방식: 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, …
-2번 수포자가 찍는 방식: 2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5, …
-3번 수포자가 찍는 방식: 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, …&lt;/p&gt;
-
-  &lt;p&gt;1번 문제부터 마지막 문제까지의 정답이 순서대로 들은 배열 answers가 주어졌을 때, 가장 많은 문제를 맞힌 사람이 누구인지 배열에 담아 return 하도록 solution 함수를 작성해주세요.&lt;/p&gt;
-
-  &lt;p&gt;제한 조건
-시험은 최대 10,000 문제로 구성되어있습니다.
-문제의 정답은 1, 2, 3, 4, 5중 하나입니다.
-가장 높은 점수를 받은 사람이 여럿일 경우, return하는 값을 오름차순 정렬해주세요.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function solution(answers) {
-    let correct = {
-        1: 0,
-        2: 0,
-        3: 0
-    }
-
-    let one = [1, 2, 3, 4, 5];
-    let two = [2, 1, 2, 3, 2, 4, 2, 5];
-    let three = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5];
-
-    for(let i = 0; i &amp;lt; answers.length; i++) {
-        if(answers[i] === one[i % 5]) {
-            correct[1] += 1;
-        }
-        if(answers[i] === two[i % 8]) {
-            correct[2] += 1;
-        }
-        if(answers[i] === three[i % 10]) {
-            correct[3] += 1;
-        }
-    }
-
-    let answer = Object.entries(correct).sort((a, b) =&amp;gt; b[1] - a[1]);
-    let return1 = [];
-
-    function DFS() {
-      for(let i = 0; i &amp;lt; answer.length; i++) {
-        if(i === answer.length - 1) {
-            return return1.push(parseInt(answer[i][0]));
-        }
-        if(answer[i][1] &amp;gt; answer[i + 1][1]) {
-          return return1.push(parseInt(answer[i][0]));
-        }
-        if(answer[i][1] === answer[i + 1][1]) {
-          return1.push(parseInt(answer[i][0]));
-        }
-      }
-    }
-    DFS();
-    return return1.sort((a, b) =&amp;gt; a - b);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;참…. 봤을 때부터 드럽다…&lt;/li&gt;
-  &lt;li&gt;어찌 어찌 풀기는 했지만… 메소드를 어거지로 붙여서 완성시킨 느낌이 강하게 든다…ㅠ&lt;/li&gt;
-  &lt;li&gt;이 코드로 의도한 바는 다음과 같다.&lt;/li&gt;
-  &lt;li&gt;먼저 사람1, 사람2, 사람3에 대한 답안 패턴을 array에 담는다.&lt;/li&gt;
-  &lt;li&gt;문제의 정답이 담겨져 있는 array의 index는 문제의 번호라고 할 수 있을 것 같다. 각 문제의 번호는 각 사람들이 찍은 정답 패턴의 index와 동일할 것이다.&lt;/li&gt;
-  &lt;li&gt;사람들이 찍은 정답 패턴은 0 ~ x까지 정해졌기 때문에 문제 번호가 x를 넘어가면 다시 index 0부터 시작된다.&lt;/li&gt;
-  &lt;li&gt;이것을 통해 사람들이 찍은 정답 패턴의 나머지를 반복시켜 각 문제 번호의 정답과 비교할 수 있다.&lt;/li&gt;
-  &lt;li&gt;정답을 비교하면서 문제의 정답과 사람들의 정답이 일치하면 사람들 정답에 해당되는 correct의 키값을 +1 시켜준다.&lt;/li&gt;
-  &lt;li&gt;키값을 비교하기 위해 Object.entries를 사용하여 array로 만들고 DFS라는 함수를 통해 각 사람들의 숫자를 비교해준다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;비교한 값들을 return1 배열에 push하고 return한다…&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;참…너무 복잡하다.. 부끄럽지만 DFS라고 해놓고 재귀함수도 안썼다..(쓸 것 같았는데…)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-다른-사람-코드를-참고한-리펙터링&quot;&gt;📌 다른 사람 코드를 참고한 리펙터링&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function solution (answers) {
-  let answer = [];
-
-  let one = [1, 2, 3, 4, 5];
-  let two = [2, 1, 2, 3, 2, 4, 2, 5];
-  let three = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5];
-
-  let oneCorrect = answers.filter((a, i) =&amp;gt; a === one[i % one.length]).length;
-  let twoCorrect = answers.filter((a, i) =&amp;gt; a === two[i % two.length]).length;
-  let threeCorrect = answers.filter((a, i) =&amp;gt; a === three[i % three.length]).length;
-
-  let max = Math.max(oneCorrect, twoCorrect, threeCorrect);
-
-  max === oneCorrect &amp;amp;&amp;amp; answer.push(1);
-  max === twoCorrect &amp;amp;&amp;amp; answer.push(2);
-  max === threeCorrect &amp;amp;&amp;amp; answer.push(3);
-
-  return answer;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;와우… 완전 깔끔하다..!&lt;/li&gt;
-  &lt;li&gt;코드가 무엇을 하는건지 명확하게 파악할 수 있어서 더욱 보기 좋은 것 같다.&lt;/li&gt;
-  &lt;li&gt;첫번째로 one, two, three를 통해 각 사람들의 정답 패턴을 지정해준다.&lt;/li&gt;
-  &lt;li&gt;각 사람들의 정답패턴과 문제 정답을 filter 메소드를 통해서 걸러준다..! (filter로 return된 array의 length는 당연히 각 사람들의 정답을 맞춘 개수일 것..!)&lt;/li&gt;
-  &lt;li&gt;각 사람들 중에서 제일 높은 수를 찾아준다..! Math.max가 3개의 수도 가능한 것인지 이제 알았다..!(알았으면 뻘짓안하고 진작 사용했을텐데..)&lt;/li&gt;
-  &lt;li&gt;제일 높은 수와 각 사람들의 정답 개수가 일치하면 answer에 push해준다! (순서대로 1, 2, 3선언해주었기 때문에 굳이 sort가 필요없다.)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-마치며&quot;&gt;📌 마치며…&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;아직은 알고리즘을 많이 풀어보지 않았으니 다양한 메소드를 활용하는 능력이 부족할 수 있을 것 같다.&lt;/li&gt;
-  &lt;li&gt;문제를 어떻게 하면 해결할 수 있는지.. 효율적으로, 가독성 있게.. 작성하는 코드는 무작정 머릿속에서 어떻게든 해결하려는 단계를 넘어서 고민하고 생각해봐야하는 문제인 것 같다.&lt;/li&gt;
-  &lt;li&gt;더 좋은 코드를 위해 오늘도 열심히!!&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="filter" /><summary type="html">프로그래머스 Level 1 모의고사 문제입니다.</summary></entry><entry><title type="html">[DOM] DOM(document object model)</title><link href="http://localhost:4000/devlog/dom.html" rel="alternate" type="text/html" title="[DOM] DOM(document object model)" /><published>2021-10-23T00:00:00+09:00</published><updated>2021-10-23T00:00:00+09:00</updated><id>http://localhost:4000/devlog/dom</id><content type="html" xml:base="http://localhost:4000/devlog/dom.html">&lt;blockquote&gt;
-  &lt;p&gt;여러 DOM에 대한 포스팅을 읽고 난 뒤 나름대로 정리한 포스팅입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-dom-이란&quot;&gt;DOM이란?&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-event&quot;&gt;Event&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-마치며&quot;&gt;마치며&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-참고-자료&quot;&gt;참고 자료&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-dom이란&quot;&gt;📌 DOM이란?&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;DOM은 document object model의 약자로 JavaScript를 통해 HTML를 컨트롤하기 위해 도입되었다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;브라우저가 렌더링되는 과정
-&amp;lt;img src=/assets/img/c_s/dom-tree.png alt=”img” width=’700px’ /&amp;gt;&lt;/p&gt;
-
-  &lt;ol&gt;
-    &lt;li&gt;각각 HTML과 CSSOM으로부터 HTML과 CSS를 파서한 후 트리를 만든다.&lt;/li&gt;
-    &lt;li&gt;HTML트리와 스타일 규칙은 어테치먼트 과정에서 하나로 합쳐진다.&lt;/li&gt;
-    &lt;li&gt;이렇게 만들어진 랜더 트리를 통해 그려지고 브라우저에 표시된다.&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;위의 그림은 브라우저가 서버로부터 사용자가 요청한 페이지를 화면 상에 그리는 순서를 요약한 것이다.&lt;/li&gt;
-  &lt;li&gt;순서에 따르면 HTML을 파서한 이후 DOM이 개입하여 DOM트리를 구성한다.&lt;/li&gt;
-  &lt;li&gt;DOM은 HTML에 영향을 끼치지만 CSS에는 일반적으로 관여하지 않기 때문에 CSS 가상 선택자 같은 요소에 영향을 주지 못한다.&lt;/li&gt;
-  &lt;li&gt;이렇듯 DOM과 HTML은 서로 다를 수 있으며 HTML은 단순하게 화면에 보이고자 하는 모양과 구조를, DOM은 HTML을 객체화하여 유효하지 않은 HTML을 수정하기도 하고 직접 HTML에 간섭하여 조작할 수 있다.&lt;/li&gt;
-  &lt;li&gt;또한, 브라우저와 콘솔 element 텝에서 보이지 않는 테그들은(display: none같은…) DOM에는 하나의 노드로 존재한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-event&quot;&gt;📌 Event&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;DOM를 통해 HTML에 접근할 수 있게 되면서 HTML에 특정 이벤트를 원하는 HTML요소에 적용할 수 있게 되었다.&lt;/li&gt;
-  &lt;li&gt;querySelector, getElementById, getElementsByTagName, getElementsByClassName 등을 활용하여 특정 HTML 요소에 접근할 수 있다.&lt;/li&gt;
-  &lt;li&gt;접근한 요소에 addEventListener를 사용하여 특정 이벤트를 적용시킬 수 있다. (이벤트 종류: &lt;a href=&quot;https://developer.mozilla.org/ko/docs/Web/Events&quot;&gt;MDN-event&lt;/a&gt;)&lt;/li&gt;
-  &lt;li&gt;각 createElement, classList(add, remove, toggle), setAttribute 등 HTML 요소를 컨트롤 할 수 있는 다양한 메소드들이 존재한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-마치며&quot;&gt;📌 마치며&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Naver D2와 여러 포스팅을 읽고 나름대로 중요하다고 생각하는 것들을 요약해보았다.&lt;/li&gt;
-  &lt;li&gt;특히 Naver 포스트는 많이 어렵다고 느껴 반복적으로 읽고 학습하는 것이 중요해보였다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;-참고-자료&quot;&gt;🎈 참고 자료&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://d2.naver.com/helloworld/59361&quot;&gt;Naver D2 - 브라우저는 어떻게 동작할까?&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://velog.io/@surim014/DOM%EC%9D%B4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80&quot;&gt;DOM이란 무엇인가?&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://velog.io/@surim014/DOM%EC%9D%B4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80&quot;&gt;HTML, DOM 간단 정리&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="computer_science" /><category term="DOM" /><category term="event" /><summary type="html">여러 DOM에 대한 포스팅을 읽고 난 뒤 나름대로 정리한 포스팅입니다.</summary></entry><entry><title type="html">[Algorithm] 문자 숫자열과 영단어</title><link href="http://localhost:4000/devlog/algorithm.html" rel="alternate" type="text/html" title="[Algorithm] 문자 숫자열과 영단어" /><published>2021-10-23T00:00:00+09:00</published><updated>2021-10-23T00:00:00+09:00</updated><id>http://localhost:4000/devlog/algorithm</id><content type="html" xml:base="http://localhost:4000/devlog/algorithm.html">&lt;blockquote&gt;
-  &lt;p&gt;카카오 코딩 테스트 문제 ‘문자 숫자열과 영단어’입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;네오와 프로도가 숫자놀이를 하고 있습니다. 네오가 프로도에게 숫자를 건넬 때 일부 자릿수를 영단어로 바꾼 카드를 건네주면 프로도는 원래 숫자를 찾는 게임입니다.
-다음은 숫자의 일부 자릿수를 영단어로 바꾸는 예시입니다.&lt;/p&gt;
-
-  &lt;p&gt;1478 → “one4seveneight”
-10203 → “1zerotwozero3”
-234567 → “23four5six7”&lt;/p&gt;
-
-  &lt;p&gt;이렇게 숫자의 일부 자릿수가 영단어로 바뀌어졌거나, 혹은 바뀌지 않고 그대로인 문자열 s가 매개변수로 주어집니다. s가 의미하는 원래 숫자를 return 하도록 solution 함수를 완성해주세요.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function solution(s) {
-    let answer = s;
-    let numObj = {
-        zero: 0,
-        one: 1,
-        two: 2,
-        three: 3,
-        four: 4,
-        five: 5,
-        six: 6,
-        seven: 7,
-        eight: 8,
-        nine: 9,
-    };
-
-    function DFS() {
-        for(let i in numObj) {
-            let answer2 = answer;
-            answer2 = answer2.replace(i, numObj[i]);
-
-            if(answer2 !== answer) {
-                answer = answer2;
-                DFS();
-            }
-        }
-    }
-
-    DFS();
-
-    return parseInt(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;처음에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;replaceAll&lt;/code&gt;을 사용하여 문제를 풀 마음이었지만 프로그래머스는 replaceAll을 지원하지 않는다고…ㅠ&lt;/li&gt;
-  &lt;li&gt;어떻게 할까 고민하다가 replace를 상황에 따라 계속 해주면 되는거 아닌가? 싶은 생각이 들었다.&lt;/li&gt;
-  &lt;li&gt;상황이라함은 중복되는 숫자가 한 문자열에 존재할 경우였다.&lt;/li&gt;
-  &lt;li&gt;기존 수를 변수로 할당하고 replace하여 기존 값과 replace하여 변하는 값이 있다면 다시 검사하는 방식으로 로직을 구현했다.&lt;/li&gt;
-  &lt;li&gt;어떤 방법으로 다시 검사할까 고민하다가 최근에 배운 DFS (재귀함수)를 사용하여 구현해보았다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;=&amp;gt; 이렇게 하니 모든 테스트케이스에는 통과했지만, 속도는 한 테스트케이스당 0.2s ~ 0.3s정도 나오는 것 같았다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;-다른-풀이&quot;&gt;📌 다른 풀이&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function solution(s) {
-  let num = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-
-  let answer = s;
-
-  for(let i = 0; i &amp;lt; num.length; i++) {
-    let arr = answer.split(num[i]);
-    answer = arr.join(i);
-  }
-
-  return parseInt(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;풀이 중에서 제일 좋아요? 수를 많이 받는 코드이다.&lt;/li&gt;
-  &lt;li&gt;잘 살펴보면 num 배열을 for문으로 돌리는 것까지는 내 코드와 비슷하지만, 필자는 DFS를 사용함으로서 이중 삼중으로 반복 로직을 실행시켰다.&lt;/li&gt;
-  &lt;li&gt;하지만 이 로직에서는 for하나로 split를 사용함으로서 전체 string을 for가 돌때마다 한번씩만 호출하면 된다.&lt;/li&gt;
-  &lt;li&gt;역시나 테스트 코드는 모두 통과임과 함께 속도도 하나의 테스트 코드당 0.06s ~ 0.07s가 걸린다.&lt;/li&gt;
-  &lt;li&gt;시간복잡도 측면에서 훨씬 좋은 코드인 것이다..!!ㅠㅠ&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-마치며&quot;&gt;📌 마치며&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;역시나 알고리즘은 재밌다!!!&lt;/li&gt;
-  &lt;li&gt;여러가지 알고리즘 자료구조를 활용해 최적의 코드를 구현하는 방법! 더 연구하고 많이 사용해보아야겠다.&lt;/li&gt;
-  &lt;li&gt;하지만 나도 과거에 쩔쩔매던 재귀함수를 활용해서 스스로 코드를 구현한 것에 보람을 느낀다 :)&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="재귀함수" /><category term="split" /><summary type="html">카카오 코딩 테스트 문제 ‘문자 숫자열과 영단어’입니다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1931 Greedy Algorithm 문제입니다.</summary></entry></feed>
