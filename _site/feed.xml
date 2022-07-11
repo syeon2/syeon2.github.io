@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-07-11T10:27:04+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-07-11T10:28:15+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
 </subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] 백준 1541문제</title><link href="http://localhost:4000/devlog/baekjoon-1541.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1541문제" /><published>2022-07-11T00:00:00+09:00</published><updated>2022-07-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1541</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1541.html">&lt;blockquote&gt;
   &lt;p&gt;백준 1541 Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -110,7 +110,7 @@
 &lt;ul&gt;
   &lt;li&gt;처음에 NumberFormat 에러가 발생하기에 이게 머지라는 생각을 했다.&lt;/li&gt;
   &lt;li&gt;Integer.parseInt 할 때, 안의 값에 숫자 이외에 다른 타입의 문자가 섞여있으면 발생하는 에러였다.&lt;/li&gt;
-  &lt;li&gt;그래서 +, -가 모두 있을 때는 index 하나하나에 문자들이 섞여있는지 모두 검사해주어 해결하였다. (다행히 시간초과는 아니었다.)&lt;/li&gt;
+  &lt;li&gt;그래서 +, -가 모두 있을 때는 index 하나하나에 문자들이 섞여있는지 모두 검사해주어 해결하였다. (다행히 시간초과는 아니었다.)!!&lt;/li&gt;
 &lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1541 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 4796문제</title><link href="http://localhost:4000/devlog/baekjoon-4796.html" rel="alternate" type="text/html" title="[Algorithm] 백준 4796문제" /><published>2022-07-09T00:00:00+09:00</published><updated>2022-07-09T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-4796</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-4796.html">&lt;blockquote&gt;
   &lt;p&gt;백준 4796 Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
