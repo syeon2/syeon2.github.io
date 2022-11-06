@@ -5,7 +5,7 @@ subtitle: "Wecode 멘티를 포커싱한 근태 프로젝트 -v2"
 categories: project
 tags: project werecord React 근태
 image:
-  path: /assets/img/project/2021-08-17-werecord-v2/cover.jpg
+  path: https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/cover.jpg
 ---
 
 > Werecord -v2 project 후기 및 피드백입니다.
@@ -31,7 +31,7 @@ image:
 
 ---
 
-[💁🏻‍♂️ 버전1 - WeRecord 후기](https://ksy4568.github.io/project/project-review-werecord.html) <br />
+[💁🏻‍♂️ 버전1 - WeRecord 후기](https://syeon2.github.io/project/project-review-werecord.html) <br />
 [💁🏻‍♂️ 버전1 - WeRecord 영상](https://youtu.be/TtY8FGlqDuw)
 
 팀원들과 함께 한 We Record project가 마무리 된지 어느덧 한달이 지나고 있는 것 같다..(시간이 진짜 빠르다..🚗) 함께했던 팀원들도 각자도생..?의 느낌으로 흩어져 자신만의 스타일, 방식대로 취업을 준비하는 시간을 보내게 될 것 같았다.
@@ -45,7 +45,7 @@ image:
 
 이제는 개인 프로젝트로 바뀌었지만 컨벤션과 trello를 활용하여 할일을 체크하고 기록을 남겨두어 스스로 피드백을 하고 싶었다. 컨벤션은 최대한 이전 프로젝트를 따라가고 trello를 활용하여 blocker와 백앤드분께 추가적으로 요청해야될 부분들을 티켓으로 만들어 보관했다.
 
-<img alt="trello" src="/assets/img/project/2021-08-17-werecord-v2/trelloImg.png" width="600px">
+<img alt="trello" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/trelloImg.png" width="600px">
 
 ## 📌 각 페이지 소개
 
@@ -57,10 +57,10 @@ image:
 - 1차 프로젝트 당시에 사용했던 초기세팅의 기억을 되살려 폰트 색상, 반응형 breakpoint 등등을 다시 작업했다.
 - 초기 세팅에서 제일 신경썼던 기능은 background였다!! 페이지 뒤에 보이는 산같은 실루엣들이 옆으로 계속 움직이는 것과 시간에 따라 색상이 변하는 기능이었다.(와우!!)
 
-<img alt="morning" src="/assets/img/project/2021-08-17-werecord-v2/morning.png" width="250px"> 아침
-<img alt="afternoon" src="/assets/img/project/2021-08-17-werecord-v2/afternoon.png" width="250px"> 점심
-<img alt="evening" src="/assets/img/project/2021-08-17-werecord-v2/evening.png" width="250px"> 저녁
-<img alt="dawn" src="/assets/img/project/2021-08-17-werecord-v2/dawn.png" width="250px"> 새벽
+<img alt="morning" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/morning.png" width="250px"> 아침
+<img alt="afternoon" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/afternoon.png" width="250px"> 점심
+<img alt="evening" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/evening.png" width="250px"> 저녁
+<img alt="dawn" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/dawn.png" width="250px"> 새벽
 
 - 어떻게 구현할까 고민하다가 global css에 dayjs를 import시키고 시간 값에 따라서 background를 지정해주어 간단하게 끝냈다! (styled component 짱이다!! 👍🏼)
 
@@ -74,8 +74,8 @@ image:
 - 또한 기존에 해당 페이지에 있으면 그 버튼이 안보이게 되었던 것과 다르게, 바뀐 GNB는 각 페이지에 있을 때 폰트 색상이 흰색으로 바뀌어야했다.
 - location.pathname을 사용해 조건부 랜더링으로 되어있던 코드를 styled component에 넘겨주어 유동적으로 바뀌도록 코드를 짰다.
 
-<img alt="GNB" src="/assets/img/project/2021-08-17-werecord-v2/GNB.png" width="250px" title="desktop"> desktop
-<img alt="GNB" src="/assets/img/project/2021-08-17-werecord-v2/GNB2.png" width="250px"> mobile
+<img alt="GNB" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/GNB.png" width="250px" title="desktop"> desktop
+<img alt="GNB" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/GNB2.png" width="250px"> mobile
 
 - 기존의 modal도 다시 작업했다! 이제는 start를 눌렀을 때 또한 모달창이 떠야했고 모달 크기는 일정해야하지만 내부 컨텐츠 크기가 제각각이어서 내부에 padding을 주기보단 width와 height를 직접 설정해주는 방법으로 변경했다.
 
@@ -87,7 +87,7 @@ image:
 - 포인트는 -v1에서는 SignIn이 모달을 통해 이루어졌는데 -v2에서는 한 페이지 내에서 구현을 해야했다..!!
 - 하나로 합치는 것까지는 어렵지 않았지만 처음보는 소셜로그인 코드를 보고 JWT를 방식에 대해 공부하면서 작업해서 시간이 조금 소요되었다.(나중에 JWT 포스팅해야지~)
 
-<img alt="landing" src="/assets/img/project/2021-08-17-werecord-v2/landing.gif"  width="500px">
+<img alt="landing" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/landing.gif"  width="500px">
 
 ---
 
@@ -98,7 +98,7 @@ image:
 
 #### 1. 실시간 타이머 기능
 
-<img alt="timer" src="/assets/img/project/2021-08-17-werecord-v2/timer.gif" width="500px">
+<img alt="timer" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/timer.gif" width="500px">
 
 - 기존에 없던 기능이라 고민을 많이 했다. 마이 페이지에도 실시간으로 근태 시간이 반영되는 기능이 있지만 그것은 시간만 따로 빼내어 랜더링 시킨 것이라면, 이 기능은 flipClock기능도 추가시켜야 했다.
 - npm을 구석구석 찾다가 페이지 컨셉과 잘 맞을 것 같은 라이브러리를 찾았다. react-simple-flipClock이 바로 그것이지만 문제점이 하나 있었는데... 시간이 0으로 가는 타이머 기능만 있었고 정교한 스타일링을 지원을 하지 않았고,, pause를 눌러 멈추고 다시 가게하는 기능이 없었던 것.. 너무나 pure한 타이머였다. 👶🏻
@@ -117,7 +117,7 @@ image:
 
 #### 2. 스크린 캡쳐 기능
 
-<img alt="screenCapture" src="/assets/img/project/2021-08-17-werecord-v2/snapShot.gif" width="500px">
+<img alt="screenCapture" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/snapShot.gif" width="500px">
 
 - 이것도 새로운 기능이라 신기하고 재미있었다 :)
 - html2canvas 라이브러리를 이용하여 적용했는데 처음에는 desktop영역을 지정하려 했었지만, desktop영역에는 없는 요소들도 추가되거나 desktop에는 있지만 screenCapture에는 보이지 않아야하는 요소들이 있었다.
@@ -127,7 +127,7 @@ image:
 
 ### 🌱 My Page
 
-<img alt="myPage" src="/assets/img/project/2021-08-17-werecord-v2/myPage.png" width="500px">
+<img alt="myPage" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/myPage.png" width="500px">
 
 - 마이페이지는 전체적인 UI를 수정하는 것이 주 작업이었다.
 - 앞서 소개한 랜딩 페이지와 마이 페이지를 수정하면서 느낀 것이 있다라면,, 다른 사람 코드도 내 코드처럼 보는 능력을 기르는 것!! 굉장히 중요한 능력인 것 같다고 생각되었다!🥸
@@ -137,7 +137,7 @@ image:
 
 ### 🌱 Mate Page
 
-<img alt="matePage" src="/assets/img/project/2021-08-17-werecord-v2/matePage.png" width="500px">
+<img alt="matePage" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/matePage.png" width="500px">
 
 - 기수페이지 또한 빠르게 작업한 페이지였다.
 - 전체적인 UI부분을 바꾸는 것이 주 작업이었다.
@@ -147,7 +147,7 @@ image:
 
 ### 🌱 Responsive Web (반응형 웹)
 
-<img alt="responsiveWeb" src="/assets/img/project/2021-08-17-werecord-v2/responsive.gif" width="500px">
+<img alt="responsiveWeb" src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/responsive.gif" width="500px">
 
 - 반응형은 최대 1440px, 모바일 1024px로 지정하여 적용하였다.
 - styled에 media를 적용하여 해당 breakPoint별로 변화가 있다면 각 component에 선언해주어야 하는 방식으로 코드를 짰다.

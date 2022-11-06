@@ -5,7 +5,7 @@ subtitle: "2차 프로젝트를 돌아보며.."
 categories: project
 tags: project Kream React 경매
 image:
-  path: /assets/img/project/2021-07-24-cream/2021-07-24-project-review-cream-Cover.png
+  path: https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-cream/2021-07-24-project-review-cream-Cover.png
 ---
 
 > Wecode 부트캠프에서 진행한 프로젝트 CREAM에 대한 회고록입니다.
@@ -76,8 +76,8 @@ Kream은 경매로 물품에 대해 입찰만 할 수 있는 것이 아니라 �
 - 가장 큰 모달창만 구현을 하고 모달 내부에 들어갈 데이터 요소들은 하위 컴포넌트로 구현하기로 기획하였다.
 - 여기서 등장하는 모달들은 내부에 있는 데이터만 다르고 모두 같은 컴포넌트로 구현하였다.
 
-  ![modal](/assets/img/project/2021-07-24-cream/2021-07-24-cream-modal.gif)
-  ![modalCode](/assets/img/project/2021-07-24-cream/2021-07-24-cream-modalCode.png)
+  ![modal](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-cream/2021-07-24-cream-modal.gif)
+  ![modalCode](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-cream/2021-07-24-cream-modalCode.png)
 
 - 간단해보이는 modal이다. 모달의 on/off를 상위 컴포넌트의 state로 관리해주고, 내부 데이터들을 children으로 받아서 랜더링시켜준다.
 
@@ -89,15 +89,15 @@ Kream은 경매로 물품에 대해 입찰만 할 수 있는 것이 아니라 �
 
 - 원인은 chart.js의 버전이었다. chart.js를 사용하는 다른 사람들의 소스코드를 계속보다가 문득 package.json은 어떻지??라는 생각에 살펴보게 되었는데, 다른 사람들은 2.9.3버전의 chart.js를 사용하고 있었고, 나는 최신 버전으로 보이는 chart.js를 사용하고 있었다. 혹시나 하는 마음에 chart.js를 다운그래이드하여 다시 설치해본 결과...!! 드디어!! chart.js의 option으로 관리되는 기능들이 동작하였다..!! 그때의 감격.. (그 이후 package.json의 존재 이유를 알게 되었다는....)
 
-![chartGif](/assets/img/project/2021-07-24-cream/2021-07-24-cream-chart.gif)
-![chartCode](/assets/img/project/2021-07-24-cream/2021-07-24-cream-chartCode.png)
+![chartGif](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-cream/2021-07-24-cream-chart.gif)
+![chartCode](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-cream/2021-07-24-cream-chartCode.png)
 
 ---
 
 - 무한 스크롤은 보통 백엔드와 소통하여 offset과 limit를 사용한 무한 스크롤을 구현하는 경우가 일반적인 것 같다. 하지만 백앤드와 소통해서 구현하기에는 메인 기능이 아니라 여겼기 때문에 백엔드로부터 오는 result값은 다 받고 이벤트가 발생할 때마다 result의 범위를 slice를 통해 넓혀나가는 방법을 택했다. (랜더링 최적화에는 좋지 않은 것 같아 리팩토링이 필요한 로직이라 생각한다.)
 
-![infinityScroll](/assets/img/project/2021-07-24-cream/2021-07-24-cream-infinity1.png)
-![infinityScroll](/assets/img/project/2021-07-24-cream/2021-07-24-cream-infinity2.png)
+![infinityScroll](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-cream/2021-07-24-cream-infinity1.png)
+![infinityScroll](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-cream/2021-07-24-cream-infinity2.png)
 
 <br>
 
@@ -107,8 +107,8 @@ Kream은 경매로 물품에 대해 입찰만 할 수 있는 것이 아니라 �
 - 처음에는 데이터 영역을 다루는 것 자체가 백엔드의 역할이라는 회의 결과로 인해 백앤드분께서 일일히 해당 엔드포인트를 만들어주셨다. 그래서 URLSearchParams를 가지고 각 해당 엔드포인드로 이동하게끔 만들었다.
 - 하지만 오히려 이것은 버튼을 누를 때마다 불필요한 통신을 실행하기에 오버 엔지니어링이라 느꼈다. 프론트에서 자체적으로 간단하게 필터링할 수 있는 부분인 것 같아 효율적인 운용을 위해 리팩토링해야할 것 같다.
 
-![filter](/assets/img/project/2021-07-24-cream/2021-07-24-cream-filter.gif)
-![filterCode](/assets/img/project/2021-07-24-cream/2021-07-24-cream-filterCode.png)
+![filter](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-cream/2021-07-24-cream-filter.gif)
+![filterCode](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-cream/2021-07-24-cream-filterCode.png)
 
 <br>
 

@@ -1,5 +1,189 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2022-07-11T10:28:15+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><entry><title type="html">[Algorithm] 백준 1541문제</title><link href="http://localhost:4000/devlog/baekjoon-1541.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1541문제" /><published>2022-07-11T00:00:00+09:00</published><updated>2022-07-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1541</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1541.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2023-04-23T15:26:32+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><entry><title type="html">[Algorithm] 프로그래머스 신고결과받기</title><link href="http://localhost:4000/devlog/programmers.html" rel="alternate" type="text/html" title="[Algorithm] 프로그래머스 신고결과받기" /><published>2022-07-20T00:00:00+09:00</published><updated>2022-07-20T00:00:00+09:00</updated><id>http://localhost:4000/devlog/programmers</id><content type="html" xml:base="http://localhost:4000/devlog/programmers.html">&lt;blockquote&gt;
+  &lt;p&gt;프로그래머스 신고결과받기(카카오)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#https://school.programmers.co.kr/learn/courses/30/lessons/92334&quot;&gt;문제 링크&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    public int[] solution(String[] id_list, String[] report, int k) {
+
+        HashMap&amp;lt;String, ArrayList&amp;lt;String&amp;gt;&amp;gt; notice = new HashMap&amp;lt;&amp;gt;();
+        HashMap&amp;lt;String, Integer&amp;gt; personState = new HashMap&amp;lt;&amp;gt;();
+
+        for (int i = 0; i &amp;lt; id_list.length; i++) {
+            ArrayList&amp;lt;String&amp;gt; init = new ArrayList&amp;lt;&amp;gt;();
+            notice.put(id_list[i], init);
+
+            personState.put(id_list[i], 0);
+        }
+
+
+        for(int i = 0; i &amp;lt; report.length; i++) {
+            StringTokenizer st = new StringTokenizer(report[i], &quot; &quot;);
+
+            String reporter = st.nextToken();
+            String reported = st.nextToken();
+
+            if(notice.get(reporter).contains(reported)) {
+                continue;
+            }
+
+            personState.put(reported, personState.get(reported) + 1);
+
+            notice.get(reporter).add(reported);
+        }
+
+        int[] answer = new int[id_list.length];
+        for(int i = 0; i &amp;lt; id_list.length; i++) {
+            ArrayList&amp;lt;String&amp;gt; last = notice.get(id_list[i]);
+
+            for (int x = 0; x &amp;lt; last.size(); x++) {
+                if  (personState.get(last.get(x)) &amp;gt;= k) {
+                    answer[i]++;
+                }
+            }
+        }
+
+        return answer;
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;📌 피드백 포인트&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;백준 풀이 방식에 익숙해져있다보니 StringTokenizer를 자주 쓰게 되는 것 같다. (split도 있으니 사용해보기)&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;for문 index를 정직하게 모두 사용하는 경우는 for(String i : list) 문법을 사용하여 좀 더 간결하게 만드는 것도 좋을 것 같다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;계속 틀렸던 부분이 contains로 해당 값이 있나 없나 검증하는 코드였다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;원래 처음에는 report를 sorting하고 한 reporter가 같은 reported 사람을 신고하면 1번만 처리되게하는 코드였는데 sorting으로 데이터를 나열하여 같은 값을 찾는건 위험하다는 것을 알게 된 것 같다. (ex. neo, neos일 경우)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;다른 사람의 풀이를 보니 User라는 class를 만들고 report관련된 데이터를 class instance에 저장하는 방법을 사용한 것 같은데 신박했다. 새로운 api를 사용하고 method를 사용하는 것도 신기했지만, 객체지향 관점을 알고리즘에 적용하여 풀어내는 부분이 인상깊었다. 도전해봐야겠다!&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><summary type="html">프로그래머스 신고결과받기(카카오)</summary></entry><entry><title type="html">[Algorithm] 백준 12845문제</title><link href="http://localhost:4000/devlog/baekjoon-12845.html" rel="alternate" type="text/html" title="[Algorithm] 백준 12845문제" /><published>2022-07-12T00:00:00+09:00</published><updated>2022-07-12T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-12845</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-12845.html">&lt;blockquote&gt;
+  &lt;p&gt;백준 12845 Algorithm 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;목차
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;영관이는 게임을 좋아한다. 별의별 게임을 다 하지만 그 중에서 제일 좋아하는 게임은 모두의 마블이다. 어김없이 오늘도 영관이는 학교 가는 버스에서 캐릭터 합성 이벤트를 참여했다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;이번 이벤트는 다음과 같다. 순서가 매겨진 여러 장의 카드가 있다. 각각의 카드는 저마다 레벨이 있다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;카드 A에 카드 B를 덧붙일 수 있다. 이때 붙이는 조건은 다음과 같다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;두 카드는 인접한 카드여야 한다.
+업그레이드 된 카드 A의 레벨은 변하지 않는다.
+카드 합성을 할 때마다 두 카드 레벨의 합만큼 골드를 받는다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;영관이가 골드를 최대한 많이 받을 수 있게 여러분이 도와주자.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;예를 들어, c1, c2, c3로 연속된 카드 3개가 있고 각각 레벨이 40,30,30 이라고 하자.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;이 카드들을 합치는 과정에서, 먼저 c3에 c2를 합쳐 임시 카드 x1을 만든다. x1의 레벨은 30이고 획득 골드는 60이다. 그 다음엔 c1에 x1을 합쳐 카드 x2를 만들면 레벨이 40이고 70만큼의 골드를 획득할 수 있다. 이때, 영관이가 획득한 골드는 70+60 = 130이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;다른 방법으로 c1에 c2를 덧붙인 카드 x1을 만들면, x1의 레벨은 40이고 획득한 골드는 70이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;x1에 c3를 덧붙인 카드 x2의 레벨은 40이고 획득 골드는 70이다. 이때, 영관이가 획득한 골드는 70 + 70 = 140이다. 이외에 더 많은 골드를 받는 방법이 없으므로 140이 획득할 수 있는 최대 골드이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Input / Output
+3
+40 30 30 / 140&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+
+        Integer[] list = new Integer[N];
+
+        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
+
+        for (int i = 0; i &amp;lt; N; i++) {
+            list[i] = Integer.parseInt(st.nextToken());
+        }
+
+        Arrays.sort(list, Collections.reverseOrder());
+
+        int result = 0;
+        for (int i = 1; i &amp;lt; N; i++) {
+            result += list[0] + list[i];
+        }
+
+        System.out.println(result);
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;오랜만에 시간초과나 런타임 에러 없이 한번에 문제를 풀었다! (쉬운 문제지만..ㅎ)&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;문제에서 이것 저것 정보를 주지만, 문제의 핵심 요약은 나열되어 있는 수들을 짝을 지어 더하면 한 카드는 사라지고 두 카드의 레벨만큼 골드를 획득하는데 이 골드의 수가 가장 큰 경우를 구하는 것이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;생각해보면 문제에서는 인접한 카드의 합이라고 했지만 가장 레벨을 가지고 있는 카드를 기준으로 레벨을 더하면 결국 모든 카드가 가장 레벨이 높은 카드와 합해진다는 것을 의미할 수 있다.&lt;/li&gt;
+  &lt;li&gt;따라서 내림차순으로 sorting한 다음 index 0을 기준으로 나머지 값들과 더한 값을 더한 값(result += list[0] + list[i] / 0 &amp;lt; i &amp;lt; N)이 정답이 되는 것이다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;문제가 쉽기는 했지만 결국 문제를 푼다는 것은 대충 해당 알고리즘만 갔다가 끼워맞추는 것이 아니라 요구하는 바를 파악하고 문제에 맞는 알고리즘을 파악하고 최적의 방법을 생각하는 것이라 느꼈다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 12845 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1541문제</title><link href="http://localhost:4000/devlog/baekjoon-1541.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1541문제" /><published>2022-07-11T00:00:00+09:00</published><updated>2022-07-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1541</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1541.html">&lt;blockquote&gt;
   &lt;p&gt;백준 1541 Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -111,7 +295,7 @@
   &lt;li&gt;처음에 NumberFormat 에러가 발생하기에 이게 머지라는 생각을 했다.&lt;/li&gt;
   &lt;li&gt;Integer.parseInt 할 때, 안의 값에 숫자 이외에 다른 타입의 문자가 섞여있으면 발생하는 에러였다.&lt;/li&gt;
   &lt;li&gt;그래서 +, -가 모두 있을 때는 index 하나하나에 문자들이 섞여있는지 모두 검사해주어 해결하였다. (다행히 시간초과는 아니었다.)!!&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1541 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 4796문제</title><link href="http://localhost:4000/devlog/baekjoon-4796.html" rel="alternate" type="text/html" title="[Algorithm] 백준 4796문제" /><published>2022-07-09T00:00:00+09:00</published><updated>2022-07-09T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-4796</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-4796.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1541 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 4796문제</title><link href="http://localhost:4000/devlog/baekjoon-4796.html" rel="alternate" type="text/html" title="[Algorithm] 백준 4796문제" /><published>2022-07-09T00:00:00+09:00</published><updated>2022-07-09T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-4796</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-4796.html">&lt;blockquote&gt;
   &lt;p&gt;백준 4796 Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -207,7 +391,7 @@
   &lt;li&gt;누가 그랬던 것 같은데..? 개발은 겸손해야한다고..&lt;/li&gt;
   &lt;li&gt;더 문제에 대해 고민해볼 수 있었지만, 깊이 생각하고 싶지 않고 내 코드가 왜 이상이 있지? 라고 생각했던 것이 이번 문제의 오답의 요인이 되었던 것 같다.&lt;/li&gt;
   &lt;li&gt;주어진 테스트 케이스 뿐아니라 다양한 상황에서 예외를 가질 수 있는 테스트 케이스가 있을 수 있고 이런 케이스들을 잘 찾아내는 능력도 중요하겠구나 라는 생각도 들었다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 4796 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1946문제</title><link href="http://localhost:4000/devlog/baekjoon-1946.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1946문제" /><published>2022-07-08T00:00:00+09:00</published><updated>2022-07-08T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1946</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1946.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 4796 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1946문제</title><link href="http://localhost:4000/devlog/baekjoon-1946.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1946문제" /><published>2022-07-08T00:00:00+09:00</published><updated>2022-07-08T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1946</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1946.html">&lt;blockquote&gt;
   &lt;p&gt;백준 1946 Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -298,7 +482,7 @@
   &lt;li&gt;서류 2순위가 면접 4순위보다 낮은 순위라면 서류 1순위보다 두개 다 낮기 때문에 탈락되기 때문..!&lt;/li&gt;
   &lt;li&gt;이런 식으로 서류 1순위의 면접 순위를 pivot으로 정하고 서류 2순위가 서류 1순위보다 면접 순위가 높으면 pivot은 서류 2순의의 면접 순위로 재할당한다.&lt;/li&gt;
   &lt;li&gt;이렇게 비교하면 전체 count는 탈락한 사람들의 숫자가 나올텐데 여기서 전체(N) - 탈락인원(pivot)을 하면 값을 구할 수 있다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1946 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 13458문제</title><link href="http://localhost:4000/devlog/baekjoon-13458.html" rel="alternate" type="text/html" title="[Algorithm] 백준 13458문제" /><published>2022-07-06T00:00:00+09:00</published><updated>2022-07-06T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-13458</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-13458.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1946 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 13458문제</title><link href="http://localhost:4000/devlog/baekjoon-13458.html" rel="alternate" type="text/html" title="[Algorithm] 백준 13458문제" /><published>2022-07-06T00:00:00+09:00</published><updated>2022-07-06T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-13458</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-13458.html">&lt;blockquote&gt;
   &lt;p&gt;백준 13458 Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -450,7 +634,7 @@ public class Main {
   &lt;li&gt;IDE로 풀어보았을 때 테스트 코드는 모두 통과했지만 백준에서는 계속 제출하자마자 틀렸다는 문구가 나왔다…&lt;/li&gt;
   &lt;li&gt;혹시나 싶어서 BufferedReader 대신 Scanner를 사용해보았는데 성공.. (차이가 머지..?)&lt;/li&gt;
   &lt;li&gt;일단 Scanner 사용방법을 알게 되어 좋긴했지만.. 소요된 시간이 아깝..ㅠ&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 13458 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 2217문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-2217.html" rel="alternate" type="text/html" title="[Algorithm] 백준 2217문제 (Greedy)" /><published>2022-07-05T00:00:00+09:00</published><updated>2022-07-05T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-2217</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-2217.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 13458 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 2217문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-2217.html" rel="alternate" type="text/html" title="[Algorithm] 백준 2217문제 (Greedy)" /><published>2022-07-05T00:00:00+09:00</published><updated>2022-07-05T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-2217</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-2217.html">&lt;blockquote&gt;
   &lt;p&gt;백준 2217 Greedy Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -535,7 +719,7 @@ public class Main {
 &lt;ul&gt;
   &lt;li&gt;처음으로 다른 분들의 코드와 비슷했다. (뿌듯)&lt;/li&gt;
   &lt;li&gt;문제의 난이도가 쉽다고 하지만 이것을 기점으로 더 알고리즘 성장을 이뤄내고 싶다🔥&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 2217 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 11000문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-11000.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11000문제 (Greedy)" /><published>2022-07-04T00:00:00+09:00</published><updated>2022-07-04T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-11000</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-11000.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 2217 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 11000문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-11000.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11000문제 (Greedy)" /><published>2022-07-04T00:00:00+09:00</published><updated>2022-07-04T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-11000</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-11000.html">&lt;blockquote&gt;
   &lt;p&gt;백준 11000 Greedy Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -670,7 +854,7 @@ public class Main {
     &lt;p&gt;자료구조를 ArrayList에서 PrioityQueue로 바꾸니 정답이었다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;이번 문제를 통해 각 문제마다 접근할 수 있는 것이 알고리즘뿐 아니라 자료구조에 대해 고민해보게 되었다… 점점 고려할 사항들이 많아지니 언제 한번 문제 접근 방법에 대해 고민해보는 시간을 가져야겠다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 11000 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1783문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-1783.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1783문제 (Greedy)" /><published>2022-07-01T00:00:00+09:00</published><updated>2022-07-01T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1783</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1783.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 11000 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1783문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-1783.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1783문제 (Greedy)" /><published>2022-07-01T00:00:00+09:00</published><updated>2022-07-01T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1783</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1783.html">&lt;blockquote&gt;
   &lt;p&gt;백준 1783 Greedy Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -814,7 +998,7 @@ public class Main {
   &lt;/li&gt;
   &lt;li&gt;코드를 설계할 때 문제를 잘 파악하여, 기준점을 잘 세우는 것이 중요할 것 같다.&lt;/li&gt;
   &lt;li&gt;문제를 잘 파악하는 능력을 길러야겠다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1783 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 10610문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-10610.html" rel="alternate" type="text/html" title="[Algorithm] 백준 10610문제 (Greedy)" /><published>2022-06-30T00:00:00+09:00</published><updated>2022-06-30T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-10610</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-10610.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1783 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 10610문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-10610.html" rel="alternate" type="text/html" title="[Algorithm] 백준 10610문제 (Greedy)" /><published>2022-06-30T00:00:00+09:00</published><updated>2022-06-30T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-10610</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-10610.html">&lt;blockquote&gt;
   &lt;p&gt;백준 10610 Greedy Algorithm 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -918,281 +1102,4 @@ public class Main {
   &lt;li&gt;문제들을 풀어보니 여러가지 고려사항들이 하나씩 늘어가기 시작한다. 시간/공간 복잡도, 주어지는 input을 어떻게 찰떡같이 받아내서 output으로 내보낼 수 있을지.. 등등..&lt;/li&gt;
   &lt;li&gt;이번 풀이에서 소요된 시간이 1000ms이 걸렸는데 다른 사람들은 100~200ms으로 푼 사람들도 있었다.&lt;/li&gt;
   &lt;li&gt;문제 접근 방식은 같지만 loop를 유발하는 메소드, BufferedReader, StringBuffer 같은 API 활용이 시간을 더 단축시킬 수 있다는 생각에 이러한 툴들을 적재적소에 사용하는 것이 중요할 것 같다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 10610 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 2875문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-2875.html" rel="alternate" type="text/html" title="[Algorithm] 백준 2875문제 (Greedy)" /><published>2022-06-29T00:00:00+09:00</published><updated>2022-06-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-2875</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-2875.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 2875 Greedy Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;백준대학교에서는 대회에 나갈 때 2명의 여학생과 1명의 남학생이 팀을 결성해서 나가는 것이 원칙이다. (왜인지는 총장님께 여쭈어보는 것이 좋겠다.)&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;백준대학교는 뛰어난 인재들이 많아 올해에도 N명의 여학생과 M명의 남학생이 팀원을 찾고 있다. 대회에 참여하려는 학생들 중 K명은 반드시 인턴쉽 프로그램에 참여해야 한다. 인턴쉽에 참여하는 학생은 대회에 참여하지 못한다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;백준대학교에서는 뛰어난 인재들이 많기 때문에, 많은 팀을 만드는 것이 최선이다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;여러분은 여학생의 수 N, 남학생의 수 M, 인턴쉽에 참여해야하는 인원 K가 주어질 때 만들 수 있는 최대의 팀 수를 구하면 된다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Input
-6 3 2 =&amp;gt; 2
-2 1 1 =&amp;gt; 0
-6 10 3 =&amp;gt; 3&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
-
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-
-        Integer N = Integer.parseInt(st.nextToken());
-        Integer M = Integer.parseInt(st.nextToken());
-        Integer K = Integer.parseInt(st.nextToken());
-
-        int teamCount;
-
-        while(K != 0) {
-            if(N &amp;gt;= M * 2) {
-                N--;
-                K--;
-                continue;
-            }
-
-            if(N &amp;lt; M * 2) {
-                M--;
-                K--;
-                continue;
-            }
-        }
-
-        if(N &amp;gt;= M * 2) {
-            teamCount = M;
-            System.out.println(teamCount);
-            return;
-        }
-
-        if(N &amp;lt; M * 2) {
-            teamCount = N / 2;
-            System.out.println(teamCount);
-            return;
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;풀이전략&lt;/li&gt;
-  &lt;li&gt;N은 2때 M은 1이 필요하다. 즉 N이 M의 2배보다 많으면 N에서 인턴쉽을 보내고 그렇지 않은 경우에는 M에서 인턴쉽을 보낸다.&lt;/li&gt;
-  &lt;li&gt;while문으로 인턴쉽 인원이 다 보내질 때까지 반복하다가 K가 0이 되면, N과 M을 비교하여 teamCount를 할당한다.&lt;/li&gt;
-  &lt;li&gt;N이 M의 2배보다 많으면 M을 기준으로 teamCount가 만들어지고 반대 경우에는 N이 기준이 되어 teamCount를 만들어 output한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;while(N &amp;gt;= 2 &amp;amp;&amp;amp; M &amp;gt;= 1 &amp;amp;&amp;amp; N + M &amp;gt;= K + 3) {
-    N -= 2;
-    M--;
-    teamCount++;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;위의 풀이로 문제를 해결하고 난 이후에 그리디를 제대로 활용하지 않은것 같은 느낌이 들어 다른 사람들의 풀이를 참고하였다.&lt;/li&gt;
-  &lt;li&gt;나의 풀이는 K의 상태에 focus를 맞췄지만 다른 사람들의 풀이는 teamCount가 focus된 느낌이었다.&lt;/li&gt;
-  &lt;li&gt;속도측면에서는 비슷비슷한 것 같았다. (나의 풀이 132ms, 다른 사람 풀이 136ms)&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 2875 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1931문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-1931.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1931문제 (Greedy)" /><published>2022-06-28T00:00:00+09:00</published><updated>2022-06-28T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1931</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1931.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 1931 Greedy Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;한 개의 회의실이 있는데 이를 사용하고자 하는 N개의 회의에 대하여 회의실 사용표를 만들려고 한다. 각 회의 I에 대해 시작시간과 끝나는 시간이 주어져 있고, 각 회의가 겹치지 않게 하면서 회의실을 사용할 수 있는 회의의 최대 개수를 찾아보자. 단, 회의는 한번 시작하면 중간에 중단될 수 없으며 한 회의가 끝나는 것과 동시에 다음 회의가 시작될 수 있다. 회의의 시작시간과 끝나는 시간이 같을 수도 있다. 이 경우에는 시작하자마자 끝나는 것으로 생각하면 된다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;첫째 줄에 회의의 수 N(1 ≤ N ≤ 100,000)이 주어진다. 둘째 줄부터 N+1 줄까지 각 회의의 정보가 주어지는데 이것은 공백을 사이에 두고 회의의 시작시간과 끝나는 시간이 주어진다. 시작 시간과 끝나는 시간은 231-1보다 작거나 같은 자연수 또는 0이다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;input &lt;br /&gt;
-11 &lt;br /&gt;
-1 4 &lt;br /&gt;
-3 5 &lt;br /&gt;
-0 6 &lt;br /&gt;
-5 7 &lt;br /&gt;
-3 8 &lt;br /&gt;
-5 9 &lt;br /&gt;
-6 10 &lt;br /&gt;
-8 11 &lt;br /&gt;
-8 12 &lt;br /&gt;
-2 13 &lt;br /&gt;
-12 14 &lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class MeetingRoom1931 {
-
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        int N = Integer.parseInt(br.readLine());
-
-        ArrayList&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
-
-        // 각 받은 string token 이중 array 로 형변환
-        for(int i = 0; i &amp;lt; N; i++) {
-            String el = br.readLine();
-
-            StringTokenizer st = new StringTokenizer(el, &quot; &quot;);
-            ArrayList&amp;lt;Integer&amp;gt; timeList = new ArrayList&amp;lt;Integer&amp;gt;();
-
-            timeList.add(Integer.parseInt(st.nextToken()));
-            timeList.add(Integer.parseInt(st.nextToken()));
-
-            list.add(timeList);
-        }
-
-        Collections.sort(list, (ArrayList&amp;lt;Integer&amp;gt; a, ArrayList&amp;lt;Integer&amp;gt; b) -&amp;gt; (a.get(1) - a.get(0)) - (b.get(1) - b.get(0)));
-
-        int count = 0;
-
-        for(int i = 0; i &amp;lt; N; i++) {
-            boolean[] times = new boolean[24];
-            int curCount = 1;
-
-            for(int x = list.get(i).get(0); x &amp;lt; list.get(i).get(1); x++) {
-                times[x] = true;
-            }
-
-            for(int y = 0; y &amp;lt; N; y++) {
-                int leftPivot = list.get(y).get(0);
-                int rightPivot = list.get(y).get(1);
-
-                boolean hasTime = false;
-
-                for(int z = leftPivot; z &amp;lt; rightPivot; z++) {
-                    if(times[z]) {
-                        hasTime = true;
-                        break;
-                    }
-                }
-
-                if(!hasTime) {
-                    for(int z = leftPivot; z &amp;lt; rightPivot; z++) {
-                        times[z] = true;
-                    }
-                    curCount++;
-                }
-            }
-
-            count = Math.max(count, curCount);
-        }
-
-        System.out.println(count);
-    }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;위에는 없지만 전에 풀던 것과 마찬가지로 quickSort를 직접 구현하여 풀어보았다.&lt;/li&gt;
-  &lt;li&gt;처음에는 quickSort의 문제라기보다 sorting한 이후의 로직의 문제인 줄 알았다.&lt;/li&gt;
-  &lt;li&gt;다른 IDE로는 값이 잘 출력되었지만, 백준에서는 계속 시간초과가 나왔다.&lt;/li&gt;
-  &lt;li&gt;sorting 이후의 로직을 최대한 간결하게 하려고 했지만 이중, 삼중 for문이 반필수적으로 들어갔다. (처음 sorting할 때의 기준은 각 node마다의 (끝나는 시간 - 시작하는 시간)의 값을 기준으로 오름차순 정렬하였다.)&lt;/li&gt;
-  &lt;li&gt;sorting된 시간을 비교하려면 추가적인 자료구조 및 O(n)을 초과하는 로직이 필수적이었다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;sorting할 때 기준을 끝나는 시간에 맞추어 sorting한다. (끝나는 시간이 같다면 시작 시간을 기준으로 오름차순 정렬한다.)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public static void main(String[] args) throws IOException {
-
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-    int N = Integer.parseInt(br.readLine());
-
-    ArrayList&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
-
-    for(int i = 0; i &amp;lt; N; i++) {
-        String el = br.readLine();
-
-        StringTokenizer st = new StringTokenizer(el, &quot; &quot;);
-        ArrayList&amp;lt;Integer&amp;gt; timeList = new ArrayList&amp;lt;Integer&amp;gt;();
-
-        timeList.add(Integer.parseInt(st.nextToken()));
-        timeList.add(Integer.parseInt(st.nextToken()));
-
-        list.add(timeList);
-    }
-
-    Collections.sort(list, new Comparator&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt;() {
-        @Override
-        public int compare(ArrayList&amp;lt;Integer&amp;gt; o1, ArrayList&amp;lt;Integer&amp;gt; o2) {
-            if(o1.get(1) == o2.get(1)) {
-                return o1.get(0) - o2.get(0);
-            } else {
-                return o1.get(1) - o2.get(1);
-            }
-        }
-    });
-
-    int count = 0;
-
-    int end = 0;
-
-    for(int i = 0; i &amp;lt; N; i++) {
-        if(list.get(i).get(0) &amp;gt;= end) {
-            count++;
-            end = list.get(i).get(1);
-        }
-    }
-
-    System.out.println(count);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Collections.sort 하나만으로 for문을 하나만 들려서 정답을 도출할 수 있게 되었다.&lt;/li&gt;
-  &lt;li&gt;무작정 알고리즘을 사용하는 것보다 어떻게 알고리즘을 사용해야하는지에 대한 고민이 중요하다고 생각되었다.&lt;/li&gt;
-  &lt;li&gt;추가로 시간복잡도, 공간복잡도도 함께 고려하여 사전에 설계하는 습관을 들여야겠다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>gsy4568@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1931 Greedy Algorithm 문제입니다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 10610 Greedy Algorithm 문제입니다.</summary></entry></feed>

@@ -5,7 +5,7 @@ subtitle: "Wecode 멘티를 포커싱한 근태 프로젝트"
 categories: project
 tags: project werecord React 근태
 image:
-  path: /assets/img/project/2021-07-25-werecord/werecord-Cover.jpeg
+  path: https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/werecord-Cover.jpeg
 ---
 
 > A-Z까지 모두 경험했던 We-record 프로젝트!!
@@ -47,8 +47,8 @@ image:
 
 프로젝트 포인트는 '우리 주변에 무언가가 필요했던 상황이 있었나??'를 중점으로 고민했던 것 같다. 그러던 중 마침 기업협업을 나갔던 동기분 한분이 회사 근태 사이트를 구현한다는 소식을 접하게 되면서.. "어라?? 나도 위코드에 있었을 때 출석부 필요했는데..." 생각으로 이어지고 팀원분들의 다양한 의견을 종합해본 결과!! Werecord가 탄생하게 되었다!! (두둔!🥁)
 
-![werecord](/assets/img/project/2021-07-25-werecord/werecord-planing.png) - 기획기획..끄적끄적...
-![werecord](/assets/img/project/2021-07-25-werecord/werecord-planing2.jpg) - 팀원들 머리 속 깊숙히 박혀있는 아이디어 한톨까지 뽑아낸 결과물..! (feat.동기분들 응원 🙈)
+![werecord](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/werecord-planing.png) - 기획기획..끄적끄적...
+![werecord](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/werecord-planing2.jpg) - 팀원들 머리 속 깊숙히 박혀있는 아이디어 한톨까지 뽑아낸 결과물..! (feat.동기분들 응원 🙈)
 
 <br>
 
@@ -61,7 +61,7 @@ image:
 나름 전체적인 페이지의 구도를 본다고 생각했지만 이건 좀.. 다른 문제였다. 우리의 아이디어를 페이지에 어떻게 녹여내야할까???의 고민... 주변에 디자인을 전공한 친구들도 없고... 나에게는 다꾸(다꾸 = 다이어리 꾸미기ㅋ) 경력 2년차 여자친구에게 물어보는게 전부였다.
 
 심호흡을 하고, 마음을 가다듬고 figma를 열었다.
-![werecord](/assets/img/project/2021-07-25-werecord/werecord-design.png)
+![werecord](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/werecord-design.png)
 
 사전에 노트로 끄적였던 UI를 하나하나 정성스래 잡으면서 작업했다. (세부적인 디자인에 신경써주신 다꾸인(?) 팀원 다\*님 고생많으셨습니다👍🏼)
 
@@ -105,7 +105,7 @@ image:
 #### - 기수페이지
 
 <br>
-![werecord](/assets/img/project/2021-07-25-werecord/werecord-batch.gif)
+![werecord](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/werecord-batch.gif)
 
 > - 어려운 코드는 아니지만 이것저것 다양한 데이터를 받고 랜더링 시키는 것이 포인트이다.
 > - slider 라이브러리 slick를 사용하여 같은 기수 동기들의 간단한 프로필을 볼 수 있다.
@@ -113,7 +113,7 @@ image:
 > - 지박령 순위 단상은 div로 만들고 annimation을 주어 심심하지 않게 구현하였다.
 > - 모달은 createPotal을 사용하여 전역으로 관리할 수 있게 설계하였다.
 
-![werecord](/assets/img/project/2021-07-25-werecord/werecord-batchCode.png)
+![werecord](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/werecord-batchCode.png)
 
 - CREAM 프로젝트 모달과는 달리 closet을 활용하여 모달창 바깥에 onClick은 blur처리가 되도록 구현하였다.
 - 또한 모달이 필요한 컴포넌트마다 on/off를 동작하게 하는 함수를 선언하는게 아니라 모달 내부에서 해당 모달에 대한 on/off를 컨트롤할 수 있게끔 구현하여 코드를 최소화하였다.
@@ -123,14 +123,14 @@ image:
 #### - 메인페이지
 
 <br>
-![werecord](/assets/img/project/2021-07-25-werecord/werecord-main.gif)
+![werecord](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/werecord-main.gif)
 
 > - 현재 시간은 setInterval로 구현하여 실시간으로 변경된 시간이 랜더링 되도록 구현하였다.
 > - 여기서 Blocker를 만나게 되는데.. setInterval로 Main 컴포넌트를 지속적으로 랜더링시키는 것이 다른 함수들 또한 컴포넌트 내에 생성하여 호출하는 것이 서로 엮여 에러를 일으켰다.
 > - 따라서 다른 함수들은 랜더가 지속적으로 일어나도 초기 함수값을 가진 상태를 유지하여 랜더링 최적화를 진행하는 것이 효율적이라 판단하였다.
 
 <br>
-![werecord](/assets/img/project/2021-07-25-werecord/werecord-mainCode.png)
+![werecord](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/werecord-mainCode.png)
 
 - useMemo, useCallback을 사용하여 함수로 호출된 값을 기억하여 추가적인 랜더링 시에도 새로운 함수로 만들어지지 않도록 구현하였다.
 - useMemo는 이미 함수로 호출된 값을, useCallback은 Callback함수로 전달할 함수들을 대상으로 React 최적화 hook을 사용했는데 추가적으로 두가지의 사용법에 대해 공부해야할 것 같다!
@@ -164,7 +164,7 @@ image:
 
 팀원들끼리 모의로 테스트해 보았을 때 꽤나 자신만만했던 것 같다. '여기에 버그가 도대체 어디있지?' 나름 버그를 수정하면서 작업했기에 버그따위.. 없을거라 생각했다. 게다가 규모도 작은 프로젝트이니 더 그렇게 생각했던 것 같다.. 하지만...
 
-![werecord](/assets/img/project/2021-07-25-werecord/werecord-errorfix.png) - 엥..?
+![werecord](https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/werecord-errorfix.png) - 엥..?
 
 버그만 있지는 않고 새로운 페이지들과 기능도 추가되었지만 예상보다 전체적으로 보완되고 수정될 부분들이 있었다는 것이 놀라웠다. (그리고 물론 저게 다가 아니다...ㅎ)
 

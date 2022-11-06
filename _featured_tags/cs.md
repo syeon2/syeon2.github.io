@@ -1,11 +1,11 @@
 ---
 layout: tag-list
 type: tag
-title: Algorithm
-slug: algorithm
+title: C.S
+slug: computer_science
 category: devlog
 sidebar: true
-order: 3
+order: 2
 description: >
-  알고리즘 및 자료구조
+  Computer Science
 ---

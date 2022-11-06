@@ -1,11 +1,11 @@
 ---
 layout: tag-list
 type: tag
-title: Algorithm
-slug: algorithm
+title: Front & Android
+slug: front_android
 category: devlog
 sidebar: true
-order: 3
+order: 4
 description: >
-  알고리즘 및 자료구조
+  Front-end & Android
 ---

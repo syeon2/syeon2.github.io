@@ -3,7 +3,7 @@
 
 # Uncomment and set the URL of your site (with protocol, e.g. `https://`)
 # NOTE: You don't need to provide this property when hosting on GitHub Pages or Netlify.
-url: https://ksy4568.github.io
+url: https://syeon2.github.io
 
 # Uncomment and set the "base URL" of your site.
 # When your site is in a subdirectory, set to `/<name of directory>`,
@@ -27,7 +27,7 @@ description: >
   "생각하고 기록하는 습관을 익히는 중..."
 
 # A shorter description for the sidebar.
-tagline: "개발기억 창고📦"
+tagline: "경험을 기록합니다📝"
 
 # A list of keywords for your blog
 keywords: []
@@ -41,7 +41,7 @@ logo: /assets/img/character.png
 author:
   # Used by `jekyll-feed`:
   name: SuYeon Kim
-  email: gsy4568@gmail.com
+  email: waterkite94@gmail.com
   # # Used by `jekyll-seo-tag`:
   # twitter:             <username>
 
@@ -194,7 +194,7 @@ comments:
 # Make sure all variables are set properly. Check below link for detail.
 # https://utteranc.es/
 utterances:
-  repo: "ksy4568/ksy4568.github.io"
+  repo: "syeon2/syeon2.github.io"
   issue-term: "pathname"
   label: Comments"
   theme: "github-dark"
@@ -203,7 +203,7 @@ utterances:
 # Make sure all variables are set properly. Check below link for detail.
 # https://giscus.vercel.app/
 giscus:
-  repo: "ksy4568/ksy4568.github.io"
+  repo: "syeon2/syeon2.github.io"
   repo-id: "MDEwOlJlcG9zaXRvcnkzODk4NTg2MzQ="
   category: "General"
   category-id: "DIC_kwDOFzzFSs4B-dqb"
