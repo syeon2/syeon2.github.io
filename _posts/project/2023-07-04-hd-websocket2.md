@@ -34,8 +34,8 @@ Stomp 프로토콜로 WebSocket 연결을 하게 되면 다양한 커멘드를 �
 ## 🌱 테스트 결과
 1번, 1000번 5000번까지는 결과가 동일했다. 서버 어플리케이션도 잘 동작했고 요청도 잘 처리되었다. 문제는 5000번 이상의 요청 시나리오를 1초에 처리할 때 발생하였다.
 
-<img src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/hot-dealicious/websocket-jmeter.png">
-<img src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/hot-dealicious/websocket-jemter2.png">
+<img src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/project/hot-dealicious/websocket-jmeter.png">
+<img src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/project/hot-dealicious/websocket-jemter2.png">
 
 적은?량의 처리할 때와는 다르게 10000건 이상의 요청을 처리할 때는 Error 발생률이 증가했다. 위의 상황만보더라도 거의 3분의 1이 요청 실패로 이어저 대책을 마련해야했다.
 먼저 에러가 발생할 상황들을 가정해보았다.
@@ -48,7 +48,7 @@ Stomp 프로토콜로 WebSocket 연결을 하게 되면 다양한 커멘드를 �
 
 ### 🟤 서버의 메모리/Thread/CPU 확인
 1. 먼저 VisualVM을 통해 서버의 여러 리소스를 확인해보았다.
-<img src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/hot-dealicious/websocket-vm.png" />
+<img src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/project/hot-dealicious/websocket-vm.png" />
 당시 상황을 캡쳐한 메트릭이다. CPU를 먼저 보자. 만일 Race Condition으로 발생한 이슈라면 CPU 가용률이 순간적으로 올라가고 jvm thread의 상태는 lock이 되어야 한다. 하지만 위의 상황을 보았을 때 처리를 위해 CPU 처리량이 
 높아진 것은 확인할 수 있지만, fastThread를 통해 dump를 떠서 Thread 상태를 확인해보았을 때는 lock이 걸린 thread는 존재하지 않았다.
 <br />
@@ -58,10 +58,7 @@ Stomp 프로토콜로 WebSocket 연결을 하게 되면 다양한 커멘드를 �
 <br />
 
 2. 혹여나 서버의 처리량이 많아 GC에 hang이 걸린 것은 아닌지 확인해보았다.
-<img src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/hot-dealicious/websocket-fastthread.png">
+<img src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/project/hot-dealicious/websocket-fastthread.png">
 thread dump를 뜨고 fastThread로 메트릭을 확인해보았다. 여러 GC Thread들이 눈에 들어왔지만 모두 상태가 RUNNABLE인 것을 확인할 수 있었다. 이것을 통해 gc에 hang이 걸린 문제도 아니라고 판단이 되었다.
 
-이것을 통해 위의 1, 2, 3번 가정 모두 현 상황과 맞지 않음을 알 수 있었다...(그럼 뭘까..?🤔)
-
----
-## 🌱
+이것을 통해 위의 1, 2, 3번 가정 모두 현 상황과 맞지 않음을 알 수 있었다...(그럼 뭘까..?🤔 이후 계속...)

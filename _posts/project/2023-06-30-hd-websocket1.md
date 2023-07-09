@@ -50,7 +50,7 @@ WebSocket을 사용하게 되면 위의 요소들을 해소할 수 있게 된다
 ---
 
 ### 🟤 필요한 기술 다음에 고려할 것은 어떻게 현 아키택처에 적용할지 고민하는 것!
-<img src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/hot-dealicious/webSocekt-architecture.jpeg" />
+<img src="https://wkblog-images.s3.ap-northeast-2.amazonaws.com/project/hot-dealicious/webSocekt-architecture.jpeg" />
 
 여러가지 고민을 하면서 설계해보았다. 현재 서버의 상황은 이렇다.
 1. WebSocket을 처리할 서버는 분산 처리를 위한 다중화가 되어 있다.
