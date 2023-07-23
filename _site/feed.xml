@@ -1,5 +1,851 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2023-04-29T21:35:42+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><entry><title type="html">(Server) Listen Socket과 Accept 이후의 Socket의 변화</title><link href="http://localhost:4000/devlog/socket.html" rel="alternate" type="text/html" title="(Server) Listen Socket과 Accept 이후의 Socket의 변화" /><published>2023-04-29T00:00:00+09:00</published><updated>2023-04-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/socket</id><content type="html" xml:base="http://localhost:4000/devlog/socket.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2023-07-23T20:53:41+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><entry><title type="html">[스스로 정리해보는 CS] #2 프로세스</title><link href="http://localhost:4000/devlog/operation2.html" rel="alternate" type="text/html" title="[스스로 정리해보는 CS] #2 프로세스" /><published>2023-07-23T00:00:00+09:00</published><updated>2023-07-23T00:00:00+09:00</updated><id>http://localhost:4000/devlog/operation2</id><content type="html" xml:base="http://localhost:4000/devlog/operation2.html">&lt;blockquote&gt;
+  &lt;p&gt;컴퓨터가 동작하는 원리부터 시작해 OS, Network, Database 등이 어떻게 상호작용하며 동작하는지 스스로 정리하기 위한 시리즈입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;-프로세스란&quot;&gt;🌱 프로세스란?&lt;/h2&gt;
+&lt;p&gt;프로그램은 컴퓨터 상에서 어떤 목적을 이루고자 하는 명령어들의 집합이다. 그렇다면 프로세스는 무엇일까?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;프로그램이 실행되고 있는 것을 프로세스라고 한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;조금 더 자세히 설명하자면 프로그램을 사용하기 위해서는 프로그램의 명령어들이 메인 메모리 적재되어 실행되어야한다. 이 때 메모리에 올라온 프로그램을 프로세스라고 한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;-프로세스와-cpu의-연관-관계&quot;&gt;🟤 프로세스와 CPU의 연관 관계&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://syeon2.github.io/devlog/operation1.html&quot;&gt;앞의 포스팅&lt;/a&gt;에서 CPU의 동작 방식에 대해서 설명했지만 간략하게 프로세스 관점해서 이해해보려고 한다. 프로세스는 
+크게 커널의 프로세스, 사용자 프로세스로 나뉠 수 있다. 커널의 프로세스는 운영체제가 상시 실행되어야 하는 것들의 집합체이며, 사용자 프로세스는 커널 이외에 실행되는 모든 프로세스를 의미한다.&lt;/p&gt;
+
+&lt;p&gt;프로세스가 실행되기 위해서는 CPU의 도움이 필요하다. 프로세스는 자신이 가지고 있는 코드를 CPU를 통해서 실행시키게 되는데 이 때 여러가지 방면으로 분석해볼 수 있다.&lt;/p&gt;
+
+&lt;h4 id=&quot;--프로세스의-컨텍스트-스위칭&quot;&gt;- 프로세스의 컨텍스트 스위칭&lt;/h4&gt;
+&lt;p&gt;현대에 사용되는 PC는 일반적으로 시분할 처리가 가능하다. 이는 여러 프로세스를 동시적으로 실행할 수 있다는 의미이다. 싱글 코어 관점에서 시분할 처리를 하기 위해서는 한번에 처리할 수 있는 프로세스는 
+1개밖에 없기 때문에 짧은 텀을 두어 각 프로세스들이 번갈아가며 실행되어야 한다. 이 과정을 컨텍스트 스위칭이라고 한다.&lt;/p&gt;
+
+&lt;p&gt;컨텍스트 스위칭은 여러 이유로 발생하곤 한다. 그 중 하나는 타이머 인터럽트를 통해 강제적으로 프로세스의 실행이 다른 프로세스의 실행으로 전환되는 것이다. 타이머라는 장치를 통해 프로세스가 CPU를 점유해서 
+자신의 명령어를 실행하게 되면 그 순간부터 지정된 시간동안 동작하도록 한다. 지정된 시간을 모두 소모하면 타이머는 인터럽트를 세팅하여 현재 실행하고 있는 프로세스를 전환한다.&lt;/p&gt;
+
+&lt;p&gt;다른 이유도 있다. 프로세스는 I/O 요청(시스템 콜 인터럽트)을 하여 디스크, NIC 같은 외부 장치에 간접적으로(운영체제의 도움) 접근할 수 있다. 이 프로세스가 동기식 입출력 방식을 사용한다면 프로세스는 
+I/O 요청이 완료될 때까지 Blocked 상태가 된다. CPU는 Blocked된 프로세스를 처리할 수 없으니 이 때 다른 프로세스를 처리하는 것이 CPU 사용률에서 이득이기 때문에 기존에 실행되던 프로세스에서 새로운 
+프로세스로 컨텍스트 스위칭된다.&lt;/p&gt;
+
+&lt;p&gt;이렇듯 프로세스의 컨텍스트 스위칭은 CPU의 사용률을 늘리고자 하는 목적과 멀티 테스킹의 목적을 가지고 있다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;❗️ 프로세스와 스레드의 컨텍스트 스위칭 &lt;br /&gt;&lt;/p&gt;
+
+  &lt;p&gt;프로세스와 스레드는 각각 CPU를 점유하여 실행되어야하는 관점에서 서로 비슷한 실행 방식을 가지고 있다. 그저 프로세스는 프로그램 단위에서의 변경이고 스레드는 프로세스 내에서 발생하는 기능의 단위로 컨텍스트 
+스위칭을 하게 된다. 하지만 둘 다 컨텍스트 스위칭을 한다고 해서 그 비용마저 같은 것은 아니다.&lt;/p&gt;
+
+  &lt;p&gt;프로세스가 컨텍스트 스위칭을 하기 위해서는 CPU가 참조하고 있던 프로세스의 가상 메모리 정보를 초기화하여야 한다.(그래야 다른 프로세스의 메모리 정보로 업데이트하여 실행해야하기 때문이다.) 그래서 메모리 영역인 
+MMU와 TLB (메모리를 다룰 때 언급할 예정이다.)를 초기화 해주어야하는 오버헤드가 있다. 반면 스레드는 하나의 프로세스에서 데이터를 공유하기 때문에 메모리 정보를 초기화할 필요가 없다. 따라서 프로세스의 컨텍스트 스위칭이 
+조금 더 비용이 많이 발생하게 된다. (물론 스레드는 Race condition, Deadlock 같은 문제들이 발생할 수 있다.)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-프로세스의-구조&quot;&gt;🟤 프로세스의 구조&lt;/h3&gt;
+&lt;p&gt;프로세스는 코드, 데이터(+ 힙), 스택으로 구분할 수 있다. 코드는 프로세스가 실행을 위해 가지고 있는 코드를 저장하고 있는 공간이다. 데이터는 프로세스가 실행될 때 필요한 전역 변수 등을 저장하는 공간이며
+(힙 영역은 프로세스가 동적으로 할당되는 메모리(로컬 변수, 실행되는 메소드 정보)를 저장하는 공간이다.), 스택은 메소드가 실행되면서 내부적으로 실행되는 다른 메소드가 있다면 현재 메소드를 스택 자료구조에 
+저장한 이후 다른 메소드가 종료되면 다시 원래의 메소드가 이어서 실행될 수 있도록 주소를 보관하고 있는 공간이다.&lt;/p&gt;
+
+&lt;p&gt;프로세스는 이러한 구조들을 메모리에 저장할 때 프로그램 내에 있는 모든 데이터들을 메모리에 적재하지 않는다.&lt;/p&gt;
+
+&lt;p&gt;프로그램의 모든 데이터를 한꺼번에 메인 메모리에 올리게 되면 함께 실행할 수 있는 다른 프로세스가 할당될 수 있는 메모리의 영역은 줄어들게 된다.
+게다가 주어진 메인 메모리 용량보다 프로그램의 메모리 크기가 더 크다면 애초에 실행할 수도 없는 상황이 발생할 수도 있을 것 같다.&lt;/p&gt;
+
+&lt;p&gt;이러한 상황을 해결하기 위해 프로세스는 사용되는 일정 부분만을 메인 메모리에 올리고 나머지는 디스크 영역에 보관하여 필요할 때마다 스왑인/스왑아웃 처리하여 프로세스르 동작시킨다. 
+여기서 또 발생할 수 있는 이슈가 있는데, 프로세스가 많이 실행되고 있는 상황이라면 실행되는 프로세스를 메모리에 올려야하기 때문에 하나당 부여되는 메모리 공간이 작아지게 된다. 
+메인 메모리에 올라갈 수 있는 공간이 작아지게 되면 프로세스가 디스크에 있는 데이터를 불러와야하는 횟수가 잦아지는데 이는 모두 디스크 I/O이다. I/O의 특징은 CPU의 연산 속도보다 훨씬 느리기 때문에 
+CPU가 프로세스를 처리하다 디스크 I/O가 발생하고, 그렇게 되면 CPU는 다른 프로세스를 처리하기 위해 컨텍스트 스위칭을 하게 되고.. 그 프로세스 또한 동일하기 때문에 또 디스크에 있는 I/O…. 무한 루프..
+결국 CPU 사용률이 매우 떨어지고 I/O 요청으로 발생하는 비용, 컨텍스트 스위칭 비용 등 매우 비효율적인 처리를 야기한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;❗️ 서버 어플리케이션에서 무리하게 스레드를 생성하지 않아야하는 이유도 비슷하다. 하나의 제한된 메모리 영역을 사용해야하는 서버 메모리 안에서 
+무차별적으로 스레드를 생성하여 처리를 요청하게 되면 스레드들끼리 CPU를 차지하기 위한 경합이 발생하게 되고 이는 불필요한 오버헤드를 유발하게 된다. 
+또한 스레드를 생성한다는 것은 하나의 메모리 영역을 스레드에게 할당한다는 의미이기도 해서 매우 많은 스레드가 발생할 경우 OOME(OutofMemoryException)가 발생할 수도 있다.
+이에 대한 문제 해결 방안으로 Thread Pool을 사용하여 서버에서 생성할 수 있는 스레드의 개수를 제한하는 것이다. (즉, 프로세스든 스레드든 많이 생성하는 것만이 능사가 아니다.😅)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-프로세스-상태&quot;&gt;🟤 프로세스 상태&lt;/h3&gt;
+&lt;p&gt;컨텍스트 스위칭이 발생하는 과정을 살펴보면 프로세스 상태와 PCB 등의 개념을 당연하게 접하게 된다. 프로세스 상태는 말그대로 현재 프로세스가 어떤 상태에 있는지를 나타낸다.
+&lt;img src=&quot;https://i.ibb.co/jkhgRyh/3-C0-EE55-A-F817-411-C-9-AB2-88-AC7-F8-BDD81.jpg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;전반적으로 프로세스가 가질 수 있는 상태가 존재한다. (각 언어에 따라서 프로세스가 가질 수 있는 상태가 조금씩 다를 수 있다.)&lt;/p&gt;
+
+&lt;p&gt;프로세스가 최초 실행되면 New 단계를 거치게 되는데, New 상태의 프로세는 프로세스가 실행되기 위해 데이터를 메모리에 적재하는 단계하는 등의 준비를 한다.&lt;br /&gt;
+New 상태를 거쳐 프로세스는 Ready 상태로 가 CPU 스케줄러(단기 스케줄러)로부터 CPU를 할당받기까지 기다리게 된다. CPU 스케줄러에 의해 CPU를 점유하게 된 프로세스는 Running 상태가 되어 
+자신의 명령어들을 실행한다. 이 때 타이머로부터 인터럽트가 발생하게 되면 다시 Ready로 되돌아가게 되고, Blocked I/O 요청을 하게 되면 Blocked 상태가 된다.&lt;/p&gt;
+
+&lt;p&gt;Blocked 상태의 프로세스는 I/O 요청 등 Blocked 상태를 유발한 원인에 대한 결과가 발생할 때까지 대기하게 되는데 이 경우에도 여러가지 상황으로 전개될 수 있다. 
+Blocked 상태로 대기하다가 메인 메모리의 공간이 부족하게 되면 현재 실행하지 않는 Blocked 상태의 프로세스는 중기 스케줄러에 의해 디스크의 스왑영역에 적재하게 된다.(중지 봉쇄 - 메인 메모리의 공간을 확보하기 위해)&lt;/p&gt;
+
+&lt;p&gt;디스크 영역에 스왑아웃된 프로세스는 중간에 I/O 요청이 완료되게 되면 중지 봉쇄 단계에서 중지 준비 단계로 변경된다. 중지 준비는 중지 봉쇄ㄲ 단계에서뿐만 아니라 Ready에서 CPU 스케줄러를 기다리고 있던 
+프로세스도 중지 준비 단계로 변경될 수 있는데, 이 때의 실행 우선순위가 가장 낮은 프로세스 등의 기준을 가지고 디스크로 스왑 아웃하게 된다.&lt;/p&gt;
+
+&lt;p&gt;프로세스는 이와 같은 과정 통해 실행되기도, 대기하기도, 저장 영역이 옮겨지기도 한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-pcbprocess-control-block&quot;&gt;🟤 PCB(Process Control Block)&lt;/h3&gt;
+&lt;p&gt;준비 단계와 실행 단계의 사이에는 언터럽트에 의한 컨텍스트 스위칭이 발생한다. 컨텍스트 스위칭은 CPU가 커널에 있는 인터럽트 핸들링(시스템 콜)을 통해서 발생하게 되는데 프로세스는 자신이 실행하고 있던 상태를, 즉 프로세스를 실행하고 있던 
+CPU의 레지스터 내역을 어딘가에 저장해야할 필요가 생긴다. 그래야 추후 다시 해당 프로세스가 실행될 때 전의 실행 내역 이후부터 실행할 수 있기 때문이다. 그래서 인터럽트를 통해 컨텍스트 스위칭이 발생할 때 CPU 레지스터에 있던 
+프로세스의 실행 정보를 커널 메모리 영역의 PCB 자료구조 형태로 저장한다.&lt;/p&gt;
+
+&lt;p&gt;PCB 자료구조는 다음과 같이 구성되어 있다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;프로세스 번호&lt;/li&gt;
+  &lt;li&gt;프로세스 상태&lt;/li&gt;
+  &lt;li&gt;프로그램 카운터 &amp;amp; CPU 레지스터&lt;/li&gt;
+  &lt;li&gt;CPU 스케줄링 정보&lt;/li&gt;
+  &lt;li&gt;메모리 관리, 자원 사용, 입출력 상태 정보&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;##&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="computer_science" /><category term="os" /><category term="process" /><summary type="html">컴퓨터가 동작하는 원리부터 시작해 OS, Network, Database 등이 어떻게 상호작용하며 동작하는지 스스로 정리하기 위한 시리즈입니다.</summary></entry><entry><title type="html">[스스로 정리해보는 CS] #1 컴퓨터 구조 &amp;amp; CPU</title><link href="http://localhost:4000/devlog/operation1.html" rel="alternate" type="text/html" title="[스스로 정리해보는 CS] #1 컴퓨터 구조 &amp;amp; CPU" /><published>2023-07-21T00:00:00+09:00</published><updated>2023-07-21T00:00:00+09:00</updated><id>http://localhost:4000/devlog/operation1</id><content type="html" xml:base="http://localhost:4000/devlog/operation1.html">&lt;blockquote&gt;
+  &lt;p&gt;컴퓨터가 동작하는 원리부터 시작해 OS, Network, Database 등이 어떻게 상호작용하며 동작하는지 스스로 정리하기 위한 시리즈입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;-cs를-정리해보고자-하는-이유&quot;&gt;🟤 CS를 정리해보고자 하는 이유&lt;/h3&gt;
+&lt;p&gt;지난 몇개월동안 CS 위주로 스터디했었다. 그 때까지는 책만 펴면 새로운 개념들이 등장했기 때문에 개념을 익히고 간단하게 어떤 역할을 하는지만 대략적으로 아는 상황이었다. 
+주변 상황이 여의치 않아 빠르게 습득하고 넘어가고자 했지만 지금 시점에서 보니 정리되지 않은 개념들이 뒤죽박죽하게 얽혀있었다.&lt;/p&gt;
+
+&lt;p&gt;또한, OS나 network 등 여러가지 CS 개념들을 단편적으로 스터디하다보니 서로에게 줄 수 있는 영향력을 간과하는 것 같았다. 
+OS에서 등장하는 프로세스의 I/O 요청에서 Network 통신, Database 등이 있고. 여기에서 어떤 처리를 하고난 이후 다시 인터럽트를 통해 CPU에게 전달하는 등 CS의 개념들을 연관짓고 싶었다.&lt;br /&gt;
+이에 더해 현재 내가 무엇을 모르고 있는지 객관적으로 파악할 수 있는 것이 블로그 작성이라는 생각이 들었다.&lt;/p&gt;
+
+&lt;p&gt;그래서 이번 기회에 CS의 큰 틀인 OS, Database, Network 순으로 그동안 스터디했던 것들을 정리해볼 예정이다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-내가-생각하고-있는-전반적인-컴퓨터-시스템의-흐름&quot;&gt;🌱 내가 생각하고 있는 전반적인 컴퓨터 시스템의 흐름&lt;/h2&gt;
+&lt;p&gt;보통 OS를 공부하면 OS가 어떻게 되어 있는지의 간단한 설명과 함께 그림자료를 보여준다. 이것에 더해 조금 더 큰 범위 내에서의 흐름을 생각해보고 싶었다.
+&lt;img src=&quot;https://i.ibb.co/rQVVKvR/cs-operation1.jpg&quot; alt=&quot;cs-operation1&quot; border=&quot;0&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;간단한 그림이지만 하나의 PC에서 다른 PC에 통신하기 위해서의 Network, 데이터를 저장하기 위한 Database 등이 있다. 사실 NIC를 통해 데이터를 서버 등에 전달하기 위해서 OS의 처리가 필요하고, 
+데이터베이스를 통해 disk에 데이터를 영구 저장하기 위해서도 Database의 프로세스를 통해 디스크에 영구 저장하는 과정이 필요하다.&lt;/p&gt;
+
+&lt;p&gt;이번 파트는 컴퓨터 내부 구조와 OS를 집중적으로 파헤쳐보고자 한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;-주제-1-컴퓨터-시스템과-io-입출력-과정&quot;&gt;🟤 주제 1: 컴퓨터 시스템과 I/O 입출력 과정&lt;/h3&gt;
+&lt;p&gt;컴퓨터 시스템은 내부구조와 외부구조로 나뉠 수 있다. 내부 구조는 CPU, 메모리 등이 내부 구조에 속하고, NIC(Network Interface Card), 디스크, 마우스, 키보드 등을 외부구조라고 한다. 
+이 내부 구조에서 외부 구조로, 외부 구조에서 내부 구조로 데이터를 요청하고 응답하는 과정을 I/O 입출력 과정이라고 한다. I/O 입출력 과정에서 컴퓨터의 각 영역들은 각자 자신들이 가지고 있는 역할을 수행함으로써 최종 목표인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;프로그램을 실행하는 것&lt;/code&gt;에 도달할 수 있다.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-cpu&quot;&gt;1. CPU&lt;/h4&gt;
+&lt;p&gt;CPU는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;수동적인 역할을 수행하는 기계장치이다.&lt;/code&gt; 이것이 무슨 의미인가 하면, CPU는 스스로 자신이 어떤 일을 수행해야하는지 알지 못한다. 단지 메모리에 올라와 있는 프로세스의 명령들을 처리하는 장치이다. 즉, CPU는 프로세스가 가지고 있는 
+명령들을 연산 처리하여 프로세스의 목적을 이루는 장치인 것이다. 그리고 CPU가 프로세스의 명령을 처리하게끔 하는 역할을 OS가 담당하게 된다. OS는 PCB라는 프로세스의 실행상태를 저장하는 자료구조를 가지고 있는데, 이 데이터를 활용하여 CPU가 프로세스를 어떻게 
+실행해야할지에 대한 정보를 제공한다. CPU는 프로그램 카운터를 통해 프로세스의 어떤 코드를 실행해야는지에 대한 주소를 가지고 실행하게 된다.&lt;/p&gt;
+
+&lt;p&gt;CPU 관점에서 I/O 입출력 과정을 생각해보자. CPU는 프로세스의 명령어들을 연산하고 있다. 이 때, 프로세스로부터 외부장치에 데이터 등을 요청하는 인터럽트(트랩)를 요청하게 되면 OS가 “CPU야 너 잠깐 프로세스 처리하던거 멈추고 내꺼 인터럽트 함수 처리해줘”라고 하면서 
+CPU 레지스터(저장 장치)를 OS의 커널 함수가 실행될 수 있게끔 세팅이 된다.(기존에 처리하고 있던 프로세스의 정보는 커널의 데이터 영역에 있는 PCB에 저장한다.) 이 후 명령 중 외부 장치로부터 데이터를 수집하여 요청하기 위해서 CPU는 외부 장치에 접근한다. 하지만, CPU가 외부장치로부터 직접 연산과정을 거쳐 데이터를 모으는 것이 아니라 외부 장치에 있는 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;컨트롤러&lt;/code&gt;라고 하는 작은 CPU에게 명령을 이양한다. 컨트롤러는 CPU의 명령을 받아 외부장치에서 데이터를 처리 및 연산하게 되는데 이 때 발생하는 데이터들을 저장하는 공간을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;로컬 버퍼&lt;/code&gt;라고 한다.(로컬버퍼는 네트워크 때 중요하게 등장하는 개념이다.)&lt;/p&gt;
+
+&lt;p&gt;이 때 CPU는 컨트롤러에게 명령처리를 이양한 후 끝날 때까지 대기 상태에 있는 것이 아니라 CPU 스케줄러에 의해 준비 큐에 있는 다른 프로세스를 할당받아 처리하게 된다.(시분할 처리) 컨트롤러가 요청한 명령을 모두 수행하면 CPU에 있는 인터럽트 라인에 인터럽트를 세팅하게 된다. 
+CPU는 자신이 수행하고 있는 명령 1개 단위로 명령을 완료하면 인터럽트 라인을 확인하게 되는데 이 때 발생된 인터럽트가 있다면 그 즉시 인터럽트를 처리하기 위해 인터럽트 백터(다양한 인터럽트 처리들을 모아놓은 자료구조)에서 해당 인터럽트 핸들러를 탐색하고 처리하게 된다.&lt;/p&gt;
+
+&lt;p&gt;인터럽트를 처리하면서 수행하는 동작 중에는 처리된 데이터가 있는 로컬버퍼에서 데이터를 가지고 와 해당 요청을 수행한 프로세스에 저장하게 된다. 이와 같이 CPU는 외부장치와의 교류가 잦은데 CPU가 매번 외부장치로부터 인터럽트를 받아 이같은 과정을 반복하게 되면 CPU가 프로세스를 
+처리하게 되는 효율이 떨어지게 된다.(프로세스의 대기시간이 증가하게 된다.) 그래서 DMA라는 컨트롤러 장치를 마련하여 외부장치 컨트롤러는 로컬버퍼의 데이터를 DMA에 적재하게 되고 일정 범위(Block 단위)가 되거나 조건에 만족하게 되면 DMA가 CPU에게 인터럽트를 세팅하여 
+한번에 많은 양의 외부장치로부터의 데이터를 처리하게끔 한다.&lt;/p&gt;
+
+&lt;p&gt;인터럽트를 처리한 CPU는 다시 CPU 스케줄러에 의해 처리할 프로세스를 받아 처리하게 되는데, 지금까지의 과정이 CPU가 컴퓨터 시스템에서 수행하는 역할들을 간략하게 정리한 것이다.&lt;/p&gt;
+
+&lt;p&gt;이 과정을 통해 간단하게 CPU 사용량 메트릭을 보고 원인을 분석해보자.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.ibb.co/zrQC7nB/Screenshot-2023-07-21-at-2-45-37-PM.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이건 Spring으로 API를 호출할 때마다 while로 무한 루프를 돌게 한 프로세스의 CPU 사용량이다. 해당 메소드가 호출되면 값을 끝내지 못하고 계속 무한으로 처리하기 때문에 해당 메소드를 처리하는 메소드가 늘어갈 때마다 가파르게 CPU를 사용하고 있다는 것을 보여준다. 
+즉, 외부 장치나 다른 연산없이 CPU을 사용하는 연산 위주로 수행하게 된다면 CPU의 사용량이 증가하게 된다.&lt;/p&gt;
+
+&lt;p&gt;서버 어플리케이션의 효율을 높이기 위해서는 이 경계를 잘 다스려야 할 것이다. 너무 CPU 사용량이 낮다면 그만큼 CPU를 사용하지 못하고 CPU가 놀고 있는 수준에 그쳐 CPU 자원이 아까울 수 있다. 그래서 최대한 서버 어플리케이션이 CPU가 받아드릴 수 있는 수준에서 사용할 수 있도록 
+하는 것이 중요할 것이다. (서버 어플리케이션 입장에서 CPU 사용량이 늘게되면 그만큼 처리해야하는 I/O 요청이 많아질 수 있기 때문에 대용량 트래픽에서는 분산환경을 잘 고려해야 한다.)
+한편, 별 기능이 없는데도 CPU의 사용량이 많다면 어디선가 병목 현상이 일어나고 있는지 의심해보아야 한다. 그러나 이 그래프만으로는 어디에서 병목이 일어났는지 확인할 수 없고 그에 대한 근거도 부족하기 때문에 여러 모니터링 도구를 활용하는 것이 필요하다.&lt;/p&gt;
+
+&lt;h4 id=&quot;2-cpu의-입장에서의-보안&quot;&gt;2. CPU의 입장에서의 보안&lt;/h4&gt;
+&lt;p&gt;CPU는 OS로부터 프로세스의 명령어들을 처리하는 수동적인 존재이다. 그런데 만약 프로세스의 명령어를 처리하다 프로세스에게 할당되지 않은 다른 중요한 메모리에 접근을 시도하는 경우에는 어떻게 될까? 이러한 공격 등으로부터 보안을 유지시키기 위해 CPU에 장치를 마련한다. 
+모드비트(mode bit)이라는 것이다. 이 모드 비트의 값에 따라 특권 명령, 일반 명령으로 나누어 CPU가 명령을 수행하게 된다. 모드 비트는 0과 1로 나눌 수 있는데, 모드 비트가 0이라면 특권 명령으로 자신이 처리하는 모든 명령을 특권 명령으로 규정한다. 
+특권 명령은 모든 장치로부터 접근을 허용하는 모드인데 일반적으로 OS가 프로세스로부터 시스템 콜 요청을 받아 처리하는 과정에서 모드비트가 0으로 세팅된다.&lt;br /&gt;
+반대로 모드비트가 1일 경우에는 자신이 처리하는 명령을 일반 명령으로 규정하고 아주 제한된 명령들만 수행한다. 즉, 일반 명령은 현재 실행하고 있는 프로세스 자신의 명령들만 수행하도록 하는 명령이다. 이것을 통해 CPU는 언제 시스템 리소스에 접근 가능한지를 구별해낼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;CPU는 프로세스를 실행시키면서 언제 다른 프로세스를 실행해야할지 스스로 알지 못한다.(시분할 처리 시스템) 하드웨어 인터럽트, 소프트웨어 인터럽트 이외에 한 프로세스가 CPU를 계속 점유하고 있는 상황을 방지하기 위해 타이머라는 장치를 두었다. 
+타이머는 프로세스가 CPU를 정유하여 실행할 수 있는 아주 짧은 시간을 관리한다. 프로세스가 실행된 이후 타이머가 관리하는 시간만큼 시간이 지난다면 타이머는 CPU에게 인터럽트를 보내게 되고 CPU는 강제적으로 자신이 처리하고 있는 프로세스에서 다른 프로세스를 교체받아 
+처리하게 된다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-정리&quot;&gt;🌱 정리&lt;/h2&gt;
+&lt;p&gt;이번 글은 CPU의 위주로 CPU가 컴퓨터에서 어떤 역할을 하는지 복습해보았다. CPU를 설명하면서 현업에서 사용할 수 있는 정보가 무엇이 있을까 고민해보았는데 이런 매트릭을 분석하는 것도 CS를 스터디하는 것이라 느끼게 되었다. 
+다음 글은 메모리와 프로세스에 대해서 복습해보려고 한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;️-깨알-상식&quot;&gt;❗️ 깨알 상식&lt;/h4&gt;
+
+&lt;h4 id=&quot;1-인터럽트&quot;&gt;1. 인터럽트&lt;/h4&gt;
+&lt;p&gt;인터럽트는 다양한 환경에서 접해볼 수 있는 개념이다. 컴퓨터 시스템 레벨에서 사용되는 인터럽트는 하드웨어 인터럽트, 소프트웨어 인터럽트가 있다. 하드웨어 인터럽트는 외부장치 컨트롤러로부터 CPU에게 이양된 명령을 모두 수행하고 다시 CPU에게 
+처리한 값을 응답해야할 때 보내는 신호이다. 소프트웨어 인터럽트(트랩)은 예외 상황과 시스템 콜로 나눌 수 있는데, 예외 상황은 프로세스가 비정상적인 행동을 취할 때(허용되지 않은 메모리에 접근하거나, 프로세스의 메모리가 가득차게 되는 등) 인터럽트를 
+발생시켜서 OS가 적절한 조치를 취할 수 있도록 한다. 시스템 콜은 사용자 프로세스는 제한된 일반 명령만을 수행할 수 있기 때문에 시스템 리소스에 접근하기 위해서는 OS의 도움이 필요하다. 이 때, OS에 요청할 수 있는 인터럽트가 시스템 콜이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;2-동기식-입출력-비동기식-입출력&quot;&gt;2. 동기식 입출력, 비동기식 입출력&lt;/h4&gt;
+&lt;p&gt;사용자 프로세스는 I/O 요청을 위해 인터럽트를 발생시킬 수 있다. 이 때, 동기식 입출력 방식으로 동작하는 요청일 경우에는 프로세스가 해당 요청을 OS의 시스템 콜 인터럽트로 보낸 이후 Blocked 상태가 되어 응답을 받기 까지 일시적으로 실행이 중단된다. 반면에, 
+비동기식 입출력은 프로세스가 인터럽트를 발생시키면 Blocked 상태가 되는 것이 아니라 바로 준비 큐에 할당되어 CPU 스켈줄러에 의해 CPU를 할당받기 기다리거나 바로 CPU를 점유하여 실행할 수 있는 방식이다.&lt;/p&gt;
+
+&lt;p&gt;글로만 보면 그럼 비동기가 좋은 것 아닌가요? 할 수 있지만 각 방식마다 사용하는 목적이 달라서 둘 다 꼭 필요한 방식들이다. (이부분은 추후에 Blocked &amp;amp; Non-Block / Synchronous &amp;amp; Asynchronous를 다룰 때 설명하는 것이 좋을 것 같다.)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="computer_science" /><category term="os" /><summary type="html">컴퓨터가 동작하는 원리부터 시작해 OS, Network, Database 등이 어떻게 상호작용하며 동작하는지 스스로 정리하기 위한 시리즈입니다.</summary></entry><entry><title type="html">[재고 관리 #2] 트러블슈팅: 문제를 다른 시각으로 보기</title><link href="http://localhost:4000/project/sm-project2.html" rel="alternate" type="text/html" title="[재고 관리 #2] 트러블슈팅: 문제를 다른 시각으로 보기" /><published>2023-07-20T00:00:00+09:00</published><updated>2023-07-20T00:00:00+09:00</updated><id>http://localhost:4000/project/sm-project2</id><content type="html" xml:base="http://localhost:4000/project/sm-project2.html">&lt;blockquote&gt;
+  &lt;p&gt;트랜잭션과 락을 사용하기 위해서는 높은 비용을 감당해야한다. 하지만 대용량 트래픽이 발생되는 지점에서 높은 비용을 지불하는 것은 자칫 서버 다운으로 이어질 수 있어
+위험하다. 이번 트러블 슈팅에서는 기획의 변경을 통해 이러한 문제를 풀어보려고 한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;-실버-불릿은-없다&quot;&gt;🟤 실버 불릿은 없다.&lt;/h3&gt;
+&lt;p&gt;기술에 있어서 신의 은총을 받은 기술은 없다. 무언가 얻은 것이 있다면 그에 대한 리스크는 존재한다. 그것은 트랜잭션과 락에서도 통용되는 이야기이다. 
+트랜잭션과 락을 구현하는 것은 매우 편리하다. Spring에서 트랜잭션을 적용하기 위해선 @Transactional 어노테이션을 붙여주면 끝이다.(극단적인 표현으로..ㅎㅎ) 또한 
+락도 비관적 락을 적용하려면 쿼리 문 앞에 for update만 붙여주면 끝..! 이걸 구현이라고 한거야? 라고 표현할 수도 있을만큼 간단하다.(당연히 여러 가지 고려해야할 부분도 
+존재한다. 데드락같은..) 하지만 이런 편리한 기술에도 그림자는 존재한다. 신속한 데이터 가공과 처리를 요하는 서버 어플리케이션에는 다소 사용하기 부적절하다.(느려서..🐢)&lt;/p&gt;
+
+&lt;h3 id=&quot;-기술적으로-풀어내기-어려운-상황일-경우&quot;&gt;🟤 기술적으로 풀어내기 어려운 상황일 경우&lt;/h3&gt;
+&lt;p&gt;지금 이 기능을 구현해야하는 상황을 한번 생각해보자.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;기획자는 재고와 주문을 처리하는만큼 데이터 정합성을 강조한다.&lt;/li&gt;
+  &lt;li&gt;대용량 트래픽이 발생할 것이라 예상한다.&lt;/li&gt;
+  &lt;li&gt;물류 센터에서 주문이 처리되는 과정을 빠르게 확인할 수 있어야 한다.&lt;/li&gt;
+  &lt;li&gt;거기다가! 되도록 빠른 시일 내에 출시해야한다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;이런 상황일 경우.. 거의 지금 산을 몇개 넘어야 한다.🤮&lt;/p&gt;
+
+&lt;p&gt;이런 상황에서 내가 알고 있는 데이터 정합성을 맞추는 방법은 트랜잭션 뿐이다. 어렴풋이 알고 있는 Redis, Kafka 같은 기술로는 빠르게 안정성 있는 서버를 개발하기 어려울 것이다.
+빠르게 출시해야하는 서비스인데 보름동안 기술 스터디로 발목을 잡힐 수는 없지 않은가..?&lt;/p&gt;
+
+&lt;p&gt;이런 상황에서 할 수 있는 최선의 고민은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;어떤 기술이 이 문제를 해결해줄까?&lt;/code&gt;가 아니라 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;어떻게 문제 해결을 할까?&lt;/code&gt;의 인식이다. 문제를 해결하기 위해서는 내게 주어진 상황을 냉정하게 분석하고 불필요한 것들을 
+제거하는 작업이 필요할 수 있다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-본격적인-트러블-슈팅&quot;&gt;🌱 본격적인 트러블 슈팅&lt;/h2&gt;
+
+&lt;p&gt;현재 이 서비스의 목적은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;물류 센터 내에 들어온 주문을 근로자가 처리하는 것이다.&lt;/code&gt; 즉, 이미 소비자가 1차적으로 상품을 주문할 때 현재 재고량을 트래킹하면서 재고가 있다면 주문 성공 처리를, 재고가 없다면 주문 실패 처리를 해야한다는 것이다. (이 부분을 구현하는 것은 아예 다른 
+서비스의 차원에서 다뤄야할 이야기라고 생각된다.)&lt;/p&gt;
+
+&lt;p&gt;근로자가 주문을 처리할 때는 이미 센터 내에 재고가 확보되어 있는 상태이기 때문에 주문 완료처리를 함으로써 센터 내에 있는 재고의 히스토리가 0이하로 내려갈 상황은 존재하지 않을 것이다. 이 부분은 0으로 내려갔을 경우 예외처리를 해야하고 트랜잭션을 걸어야 하는 
+상황을 제거해줄 수 있다.&lt;/p&gt;
+
+&lt;p&gt;“중앙에서 주문이 처리되는 과정을 빠르게 확인할 수 있어야 한다.” 이 부분에 대해서는 얼마나 빠르게? 라는 정의가 필요할 것이다. 보통 빠르게라고 한다면 주문을 처리하자마자 반영되어 있어야 한다 라고 인식할 수 있겠다. 하지만 이것도 냉정하게 생각해보자. 재고의 시스템이 
+WebSocket으로 실시간 통신하지 않는 이상은 중앙 재고를 확인하는 순간에도 재고값의 변동은 계속 일어나고 있을 것이다. 정리하자면, 중앙에서 처리되는 재고 값을 확인한다 하는 순간에도 근로자는 재고를 처리하고 있을 것이니 그 순간만의 재고량의 데이터는 
+사실 의미가 없어질 수 있다.&lt;/p&gt;
+
+&lt;p&gt;위의 2가지를 종합해본다면 물류 센터 내의 재고는 0으로 내려가지 않음과 동시에 즉시 재고 히스토리가 반영되지 않아도 된다는 의미이다. 중앙에서는 ‘처리된 재고량을 확인하면 되지 굳이 총 재고량에서 처리된 재고량의 차를 실시간으로 확인하지 않아도 된다는 것이다.’&lt;/p&gt;
+
+&lt;p&gt;마지막으로 각 주문의 아이디를 조회하여 처리하는 주체를 서버가 아니라 근로자가 담당하도록 할 수도 있다. 이 부분도 기획과 함께 의논되면 성능 이슈를 크게 개선할 수 있는 사항 중 하나이다. (아래에서 좀 더 세밀하게 분석해보겠다.)&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;-문제가-발생하는-로직&quot;&gt;🟤 문제가 발생하는 로직&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;근로자에게 주문 할당
+초기 기획에서는 근로자가 주문을 받는 API를 호출하게 되면 서버에서 WAITING 상태에 있는 주문 중 하나를 조회하여 근로자에게 할당하는 코드를 작성해보았다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Service Layer&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@Service&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@RequiredArgsConstructor&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OrderToEmployeeService&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OrderRepository&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orderRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OrderDetailRepository&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orderDetailRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;EmployeeRepository&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;employeeRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+	&lt;span class=&quot;c1&quot;&gt;// 1안&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Transactional&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OrderToEmployeeResponse&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dispatchWaitedOrderToEmployee&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;employeeId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Order&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;waitingStatusOrder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orderRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findWaitingStatusOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orderId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;waitingStatusOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+		&lt;span class=&quot;nc&quot;&gt;Boolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isLocked&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redisOrderLockRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;orderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Boolean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isLocked&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;waitingStatusOrder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orderRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findWaitingStatusOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;orderId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;waitingStatusOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+		&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+		&lt;span class=&quot;n&quot;&gt;orderRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;orderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;waitingStatusOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toUpdateOrderWhenDispatchToEmployee&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;employeeId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OrderStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;PROCESS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OrderToEmployeeResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;orderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orderDetailRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findByOrderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;orderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	
+	&lt;span class=&quot;c1&quot;&gt;// 2안&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Transactional&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OrderToEmployeeResponse&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dispatchWaitedOrderToEmployee&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;employeeId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Order&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;waitingStatusOrder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orderRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findWaitingStatusOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orderId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;waitingStatusOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+		&lt;span class=&quot;n&quot;&gt;orderRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;orderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;waitingStatusOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toUpdateOrderWhenDispatchToEmployee&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;employeeId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OrderStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;PROCESS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OrderToEmployeeResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;orderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orderDetailRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findByOrderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;orderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//-----------------&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// Persistence Layer&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@Mapper&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OrderMapper&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	
+	&lt;span class=&quot;c1&quot;&gt;// 1안에 사용된 Pessimistic Lock&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Select&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;select id, order_status, total_count, center_id, employee_id from orders where order_status = 'WAITING' limit 1 for update&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;nc&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Order&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findWaitingStatusOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;strike&gt;이렇게 적나라하게 코드를 오픈하니 너무 부끄럽다..&lt;/strike&gt;
+&lt;p&gt;😶‍🌫️
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;-어떤-생각으로-1안-코드를-작성하게-되었나요-&quot;&gt;🎤 어떤 생각으로 1안 코드를 작성하게 되었나요? &lt;br /&gt;&lt;/h4&gt;
+&lt;p&gt;(변명) 아아.. 일단 1안은 낙관적 락 개념을 활용하였습니다. Redis로 재고 아이디를 분산락 개념으로 활용하여 서버 어플리케이션 중 해당 재고 아이디를 조회하여 사용하고 있다면 다시 쿼리를 날려 값을 조회하는 방식으로 
+구현했습니다. 이 코드에서 2안으로 수정한 이유는 멀티스레딩 상태에서 동시에 저 메소드를 호출하게 되면 하나의 스레드가 Redis로부터 락을 걸고 조회하는 동안 다른 스레드들이 스핀락같이 불필요한 쿼리들을 요청하기 때문에 변경했습니다. 
+얼추 2개의 스레드만 로컬 환경에서 동시에 실행한다 해도 하나의 서버 어플리케이션에서 10번정도의 쿼리가 요청되는 것을 확인했는데, 이것은 DB에 쿼리 요청 연산에 대한 부하가 심할 것 같아 코드를 수정했습니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;-어떤-생각으로-2안-코드를-작성하게-되었나요-&quot;&gt;🎤 어떤 생각으로 2안 코드를 작성하게 되었나요? &lt;br /&gt;&lt;/h4&gt;
+&lt;p&gt;(변명) DB에 불필요한 쿼리 요청을 제거하기 위해서 어떻게 해야할까 고민했습니다. 고민 결과 조회하고 있는 데이터에 비관적 락을 거는 방법 외에는 떠오르지 않았습니다.ㅠㅠ 하지만 낙관적 락, 비관적 락 모두 치명적인 단점이 있었습니다. 
+바로 하나의 트랜잭션이 데이터를 조회하고 처리를 완료될 때까지 다른 트랜잭션은 waiting 상태가 된다는 것입니다. 이것은 효율적으로 데이터를 처리하지 못할 뿐더러 대용량 트래픽이 발생하게 된다면 이 지점에서 병목현상이 발생될 여지가 
+충분했습니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;-주문-완료-처리하는-서비스-레이어-코드는&quot;&gt;🎤 주문 완료 처리하는 서비스 레이어 코드는..?&lt;/h4&gt;
+&lt;p&gt;재고를 처리하는 서비스 레이어 코드에는 문제점이 발생하였습니다. 처리하려고 하는 재고 상품들에 모두 락을 걸고 재고 수량 조회 후 업데이트를 하려고 하니 다른 주문으로 인한 트랜잭션에서 같은 상품을 3개 이상 중복되면 데드락 현상이 발생하였습니다. 
+이 문제는 성능을 떠나서 심각한 장애로 남을 수 있기 때문에 신속한 코드 변경이 필요했습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;-다른-방향성을-가지고-현-상황의-문제에-접근하여-해결&quot;&gt;🟤 다른 방향성을 가지고 현 상황의 문제에 접근하여 해결&lt;/h3&gt;
+&lt;p&gt;주문 처리를 근로자에게 할당하는 기능의 이슈는 생각보다 간단한 문제일 수 있다고 생각되었다. 바로 서버가 근로자에게 알맞은 주문을 직접 조회하여 응답하는 것이 아니라 근로자가 외부에서 처리할 주문 건을 미리 주고 그 주문 아이디를 통해 서버에게 ‘나 이제 이거 
+주문 완료 처리할거에요’라고 요청을 보내는 것이다. 실제로 쿠* 물류가 이러한 비슷한 과정을 거쳐 주문을 처리한다. (유경험자..💪🏻) 그렇게 된다면 서버 측에서 트랜잭션과 락을 걸어 성능을 저하시킬 필요없이 근로자로부터 받은 아이디를 조회해주기만 하면 된다. 
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;주문을 완료 처리하여 재고를 업데이트 해야하는 기능 또한 간단하게 풀 수 있었다. 주문 완료처리된 주문 아이디로부터 주문된 상품 세부 정보를 조회한 후 정보에 있는 count를 모두 더하면 된다. 이에 대한 쿼리를 작성해보자.&lt;/p&gt;
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;order_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;completed_items_quantity&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orders&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;join&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;order_detail&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;order_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;order_id&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;order_status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'COMPLETE'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;itemId&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;이렇게 주문 완료된 상품들을 조회하여 각 주문에 대한 상품 주문량을 모두 더하면 현재까지의 총 주문량이 된다. 이 주문량을 상품 재고 데이터에서 마이너스하면 현재 물류 센터에 남아있는 상품 재고량을 얻을 수도 있다.
+그리고 실제 상품 테이블의 재고 히스토리는 직원들의 쉬는 시간 등에 따로 완료된 주문 데이터를 서버가 자동으로 처리하게끔 하면 트랜잭션과 락에 대한 문제는 해결할 수 있을 것이다.
+(단, 여기서 이 쿼리를 사용하여 데이터를 조회하는 것은 생각해볼 문제인 것 같다. 통계성 데이터라 쿼리로 작성해도 무방하다, 아니다라는 의견이 분분한 것 같은데 지금은 백엔드 개발자로 )&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-정리&quot;&gt;🌱 정리&lt;/h2&gt;
+&lt;strike&gt;솔직히 Kafka 마려웠다.&lt;/strike&gt;
+&lt;p&gt;사실 이 문제는 Redis와 Kafka를 적절히 사용하면 해결할 수 있다. 서버와 데이터베이스 사이에 Redis로 임시 상품 재고를 만들어 카운트하고 카운트에 성공하면 Kafka같은 메시지 큐
+방식을 사용하여 데이터베이스에 순차적으로 업데이트 쿼리를 날리는 것이다.&lt;/p&gt;
+
+&lt;p&gt;하지만 당장 이렇게 해결하고 싶지는 않았다. 클라이언트 개발자를 할때부터 느꼈지만, 단순히 기능을 개발하는 것은 코더도 가능하다고 느꼈다. 적당히 구글링해서 해당 기능 구현한 사람 코드 긁어와 구현하는 것은 누구나(?.. 물론 어려운 기술도 많습니다 하핳..😅) 
+시간만 있으면 가능하다고 생각했다. 그럼 &lt;strong&gt;좋은&lt;/strong&gt; 개발자란 무엇일까? CS를 잘 아는 개발자? 매트릭을 잘 분석하는 개발자? 프레임워크를 잘 다루는 개발자?…. 사실 모두가 CS를 잘알고 싶고, 메트릭을 잘 분석하고 싶고 등등 개발을 잘 하고 싶을 것이다.
+(나도 너무 개발을 잘하고 싶다..🔥)&lt;/p&gt;
+
+&lt;p&gt;좋은 개발자는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;주어진 문제를 잘 해결하는 사람&lt;/code&gt;이라는 생각이 들었다. 특히 기능이 아닌 사람들에게 서비스를 제공하는 개발자는 더더욱 주어진 문제를 잘 파악하고 이를 효율적으로 해결하는 사람이다. 조금 더 세부적으로 들어가자면, 백엔드 개발자는 현재 비즈니스를 이해하고 
+어떻게 하면 최대한 간결하게 비즈니스를 해결할 수 있을까? 고민하는 사람이다. 결국 기술을 연구하는 사람이 아닌 기술로 서비스를 하는 사람들이기에 기술에 절대적으로 매몰되지 않아야겠다. (물론! 당연히! 기술 공부도 부지런히!! 🏃🏻‍♂️)&lt;/p&gt;
+
+&lt;strike&gt;(절대 Kafka를 몰라서 이런 고민을 하게 된 것이 맞다ㅎㅎ 🥹🔨)&lt;/strike&gt;
+
+&lt;p&gt;그래도 언제나 기술을 연마하는 것은 게을리 하지 않아야하니 다음 트러블 슈팅은 기술을 도입한 해결 방안을 찾아보려고 한다.&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="transaction" /><category term="lock" /><summary type="html">트랜잭션과 락을 사용하기 위해서는 높은 비용을 감당해야한다. 하지만 대용량 트래픽이 발생되는 지점에서 높은 비용을 지불하는 것은 자칫 서버 다운으로 이어질 수 있어 위험하다. 이번 트러블 슈팅에서는 기획의 변경을 통해 이러한 문제를 풀어보려고 한다.</summary></entry><entry><title type="html">[재고 관리 #1] 트랜잭션, 락의 부하 최적화(feat. 실버 블릿은 없다.)</title><link href="http://localhost:4000/project/sm-project1.html" rel="alternate" type="text/html" title="[재고 관리 #1] 트랜잭션, 락의 부하 최적화(feat. 실버 블릿은 없다.)" /><published>2023-07-19T00:00:00+09:00</published><updated>2023-07-19T00:00:00+09:00</updated><id>http://localhost:4000/project/sm-project1</id><content type="html" xml:base="http://localhost:4000/project/sm-project1.html">&lt;blockquote&gt;
+  &lt;p&gt;트랜잭션과 락을 어떻게 하면 성능을 최적화할 수 있을지 고민합니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;-트랜잭션과-락을-스터디해보자&quot;&gt;🟤 트랜잭션과 락을 스터디해보자.&lt;/h3&gt;
+&lt;p&gt;백엔드 개발자가 갖추어야할 역량 중 하나는 신뢰할 수 있는 데이터를 가공하여 수집하는 것이라고 생각했다. 그렇다고 한다면 데이터의 정합성을 다룰 수 있는 트랜잭션과 
+락의 조합을 공부해보면 좋겠다는 생각이 들었다. 일전에 경험했던 쿠* 물류 센터의 경험을 살려 많은 근로자들이 동시에 주문을 처리해서 재고 히스토리를 업데이트 해야하는 
+재고 관리 프로젝트에 도전했다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-이슈-발생--트랜잭션과-락의-조합으로-근로자가-주문을-처리&quot;&gt;🌱 이슈 발생 : 트랜잭션과 락의 조합으로 근로자가 주문을 처리&lt;/h2&gt;
+&lt;p&gt;성능 문제는 뒤로하고 매우 단순하게 생각해보았다. “그냥 서비스 코드에 @Transaction 어노테이션을 걸어주고 쿼리에 for update을 걸어주면 되는거 아닌가?” 라는 단순하고 무식하게 
+접근해보았다. 이것으로 문제가 해결되었다면 바로 성능을 개선해보았겠지만 이 부분 자체로도 발생할 수 있는 이슈가 있었다.&lt;/p&gt;
+
+&lt;h3 id=&quot;-트랜잭션과-락이-주문을-처리하는데-필요하다고-판단한-이유&quot;&gt;🟤 트랜잭션과 락이 주문을 처리하는데 필요하다고 판단한 이유&lt;/h3&gt;
+&lt;p&gt;데이터의 정합성을 위해서는 트랜잭션이 꼭 필요하다고 생각했다. 전체적인 서비스 로직을 수행하면서 데이터베이스에 처리한 값들을 반영하는데 만약 예외상황이 생긴다면 모든 처리를 다시 롤백 시키는 등 
+하나의 클라이언트로부터의 요청에 수행되어야 하는 쿼리를 원자적(Atomic)으로 처리해야했기 때문이다.&lt;/p&gt;
+
+&lt;p&gt;또한, 락이 필요하다고 판단했던 이유는 데이터베이스에서 값을 조회하고 조회한 값을 사용하여 재고를 감소시켜야하는 상황에서 원자적으로 처리되지 않기 때문이다.
+&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/project/stock-management/stock-project-ex1.jpeg&quot; width=&quot;800&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 그림에서 보이는 바와 같이 DB에 있는 재고 값을 업데이트하기 위해서는 전에 재고가 얼마나 있었는지 조회를 해야 알 수 있다. X 요청이 먼저 A 재고가 20이라고 select 문을 통해 조회를 한다. 
+이후 조회한 값을 가지고 서버에서 재고 처리를 한 다음 처리한 값을 다시 DB에 저장하면 아무 문제 없는.. 것처럼 보일 수 있다. 하지만 여기서 끝난다면 개발이 조금 더 쉬웠을까.. X 요청이 재고 값을 받아 
+서버에서 처리하는 동안 Y 요청이 A 재고를 조회하여 재고를 처리해야하는 상황이 발생했다.&lt;/p&gt;
+
+&lt;p&gt;X요청과 Y요청을 모두 처리한 결과는 두 연산된 값을 모두 뺀 20 - 2 - 5 = 13 이어야 한다. 하지만 Y 요청은 20을 조회하여 5를 뺀 나머지 15를 DB에 업데이트하게 되었고 결국 X가 처리한 결과의 값은 
+온데간데 사라진 것이다. 이 경우 락을 사용하여 먼저 조회한 데이터가 트랜잭션 처리 완료될 때까지 다른 데이터가 접근하는 것을 막는 기능이 필요하다고 판단했다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;하지만 이 판단에 대해서 여러 문제들이 발생했다. 🥲&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-성능-문제-이건-당연했다&quot;&gt;🟤 성능 문제 (이건 당연했다.)&lt;/h3&gt;
+&lt;h4 id=&quot;--트랜잭션&quot;&gt;- 트랜잭션&lt;/h4&gt;
+&lt;p&gt;단순하게 생각해보아도 이 부분은 명확하다. 먼저 트랜잭션은 생각보다 비용이 큰 연산이다.&lt;/p&gt;
+
+&lt;p&gt;단순하게 조회, 업데이트 등의 쿼리를 요청하는 것과 다르게 트랜잭션은 트랜잭션 이후에 발생되는 
+모든 쿼리 요청을 저장해야한다. 특히나 트랜잭션 수행된 쿼리 로그를 저장해야하는 공간은 데이터베이스 즉 디스크 영역이다. 디스크 영역에서 I/O 처리가 일어나는 것은 매우 느린 작업일 것이다.&lt;/p&gt;
+
+&lt;p&gt;데이터베이스는 트랜잭션 범위 내에서 수행한 데이터 중 락킹되어 있는 데이터가 있다면 그 데이터에 접근했는지 안했는지의 여부를 판단해야하는 작업이 추가로 발생할 수 있다. (락 경합)&lt;/p&gt;
+
+&lt;p&gt;마지막으로 롤백 처리인데, 롤백 처리는 이전에 남겼던 로그 데이터를 기반으로 수행된 쿼리 요청을 다시 복구하는 기능이다. 정합성에는 필요한 기능일 수 있지만 데이터베이스에서 이같은 기능을 
+수행한다는 것 역시 연산이 적지않게 발생한다고 볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;사실 실제로 트랜잭션이 적용된 상태에서 쿼리 요청되는 과정과 일반 상태에서 쿼리 요청되는 과정을 모니터링하고 작성해보려고 했지만.. 위와같이 부하를 만드는 요인이 다양하다보니 안봐도 비디오라는 생각이 들었다.🥸&lt;/p&gt;
+
+&lt;h4 id=&quot;--락&quot;&gt;- 락&lt;/h4&gt;
+&lt;p&gt;또한, 락.. 락도 성능을 저하시키는 문제 중 하나였던 것이다. 사실 락은 성능을 저하시킨다는 표현보다는 락이 가지고 있는 매커니즘으로 인해 간접적으로 성능이 나빠진다고 생각되었다.
+락은 기본적으로 데이터가 락킹되어 있으면 다른 값들이 락이 풀리기 전까지는 대기 상태에 머문다. 이건 마치 해당 데이터에 접근하여 처리하려고 하는 요청들을 일렬로 세워두고 synchronized &amp;amp; blocking 처리와 비슷한 
+매커니즘으로 락이 반환될 때까지 다른 작업들을 처리하지 못하는 상황이 발생하게 될 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+트랜잭션과 락.. 이 2가지 기술은 매우 편안~~해보이고 단편적으로 본다면 좋은 기술이라고 생각하지만 그 속에는 시커먼 속내(?)가 있는 기술이라고 생각된다. 그래서 처리량이 적은 요청이라면 해당 기술을 적용해도 되겠지만 
+큰 규모의 시스템에서 대용량 데이터 처리를 해야하는 경우라면 오히려 가능하면 피해야하는 기술이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;-데드락&quot;&gt;🟤 데드락&lt;/h3&gt;
+&lt;p&gt;두번째 이슈는 바로 데드락이다.&lt;/p&gt;
+
+&lt;p&gt;재고를 처리하는 과정은 하나의 주문에 여러 상품들이 속해있다. 그렇기 때문에 하나의 주문을 처리한다는 것은 여러 상품들의 재고를 동시에 감소시켜야한다는 의미이다. 트랜잭션과 락을 사용해서 하나의 주문에 여러 상품들의 재고를 
+감소시키는 작업은 주문 데이터를 완료 처리함과 동시에 주문에 속한 모든 상품 데이터에 락을 걸어 재고를 각각 감소시키고 모든 처리가 완료되면 커밋을 한다는 의미이다. 커밋하기 전까지는 모든 상품 데이터에 락을 거는 행위가 
+데드락을 유발하는 트리거가 되었다.&lt;/p&gt;
+
+&lt;p&gt;데드락을 설명하기에 유명한 이야기로 철학자 이야기?가 있는데, 그 상황과 현재 상품 재고 처리의 상황이 일치했다. A 트랜잭션은 상품 A와 B를, B 트랜잭션은 상품 B와 C를, C 트랜잭션은 상품 C와 A를 각각 처리해야한다면 
+이해하기 쉬울 것 같다. 각각 트랜잭션마다 A, B, C 상품을 락을 걸고 다른 상품에 접근하려고 보면 이미 락이 걸려있어서 값이 반환될 때까지 무한정 대기해야하는 상황이 발생한다. 그렇다고 트랜잭션의 격리 수준(isolation)을 낮추는 
+것은 애초에 목적했던 정합성을 해치는 행위가 될 수 있었다.&lt;/p&gt;
+
+&lt;h2 id=&quot;-정리&quot;&gt;🌱 정리&lt;/h2&gt;
+&lt;p&gt;아직 찾지 못한 이슈들이 있을 수 있지만 위의 2문제 (특히 데드락)만으로도 개선의 여지는 매우 충분하다. 아니 꼭 개선해야한다. (데드락 이슈라면 꼭 개선해야하지…)&lt;/p&gt;
+
+&lt;p&gt;이번 기회에 실버블릿(신의 은총)은 없다라는 것을 많이 느낀다. 트랜잭션, 락 이라는 개념만 봤을 때는 매우 편리한 기능이었다. 구글링을 통해서도 정말 많은 자료들이 쏟아져나오는만큼 
+매우 좋은 기술이기 때문에 소개되는 것이 아닌가? 생각이 들었다. 하지만 그건 오산이었다는 것..🥲&lt;/p&gt;
+
+&lt;p&gt;오히려 대용량 트래픽을 처리할 정도의 규모를 가진 IT기업들은 이 기술을 다른 방법들로 풀어낸다고 한다. 그 중에서 인사이트가 있었던 방법들을 소개하고 마무리하려 한다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;완전히 기술적으로 풀어내기&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;사실 위의 구현 사항들은 트랜잭션, 락을 사용하지 않고도 다른 기술들로 풀어낼 수 있다. 현재 프로젝트 규모로 할 수 있는 방법들로는 Redis와 Kafka를 활용하는 것이다. 
+Redis는 싱글 스레드로 동작하는 비동기 이벤트 루프 기반의 데이터베이스이다. 또한 In-mememory로 동작하기 때문에 디스크에 읽고 쓰는 I/O 처리보다 월등한 속도를 자랑한다. 
+Kafka는 간단하게 Message Queue로 동작하는만큼 Queue의 특징을 살려 병렬적으로 실행된 요청들을 순차적으로 처리할 수 있는 기술이다.&lt;/p&gt;
+
+&lt;p&gt;이렇게 기술로 풀어낼 수 있는 장점에도 단점이 존재한다. Redis, Kafka같은 기술을 사용하게 된다면 프로젝트의 전체적인 규모가 커지다보니 이 기술을 안정적, 지속적으로 관리해야하는 리소스 
+즉 유지보수, 혹은 모니터링 할 추가적인 자원이 필요하다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://syeon2.github.io/project/sm-project2.html&quot;&gt;데이터를 처리할 프로세스를 변경하기&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;2번의 경우 기존의 틀에서 벗어나 데이터를 처리할 설계를 변경하는 것이다. 개인적으로 이 부분이 현업에 있어서 꼭 필요한 문제 해결 능력이라고 생각한다.&lt;/p&gt;
+
+&lt;p&gt;이번 케이스는 재고가 처리되는 과정을 즉시 모니터링할 수 있도록 하기 위해 “트랜잭션과 락”을 함께 사용하는 방법을 꾀했다.
+현재 기술적으로 풀어낼 수 있는 시간적, 지식적인 리소스는 부족하기에 현재 상황에서 사용할 수 있는 기술을 끌어모은 것이 트랜잭션과 락이었다. 
+하지만 현재 프로젝트에 주어진 최우선의 전제조건은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;대용량 트래픽 처리&lt;/code&gt;이다. 그러면 이런 상황에 맞닥뜨렸을 때 어떻게 할것인가?&lt;/p&gt;
+
+&lt;p&gt;혹자는 주어진 기획 조건에 맞추어 어떻게든 구현하려고 할 것이다. 그럼 1번과 같이 그 기술을 구현하기 위해 업무량은 자신이 감당할 수 없을정도로 비대해질 것이고 서비스 출시는 불안정할 수 밖에 없을 것 같다. 
+기술적인 여건이 여유로운 상황이라면 타개할 수 있는 방안들이 있겠지만,, 그렇지 않다면 자신이 생각해낸 방안을 다시 한번 검토하는 과정이 꼭 필요할 것 같다.&lt;/p&gt;
+
+&lt;p&gt;현업이라면 생각을 검토하면서 기획자와 다시 논의해볼 수도 있을 것이다. 아니면 팀원들에게 자신만만하게 내세웠던 계획을 변경하는 것을 요청해볼 수도 있을 것 같다. 중요한 것은 어떤 기술을 
+사용했느냐가 아니라 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;주어진 문제를 어떻게 해결했느냐&lt;/code&gt;가 더 중요하다고 느껴진다. (서비스 IT회사라면 더욱이!!)&lt;/p&gt;
+
+&lt;p&gt;정리를 해보자. 개발 기술 중에 실버 불릿을 가진 기술은 없다. 모든 기술마다 장단점은 존재하기 마련이고 서비스의 특징과 상황에 따라 잘 분별해서 사용해야한다. 
+그렇기 때문에 기술에 매몰되지 말자. 기술은 서비스를 위한 도구일 뿐, 개발자는 문제 해결을 하는 사람이라는 것을 항상 새기자.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;이번에는 개인 프로젝트이기에 2가지 케이스를 모두 생각해보고자 한다. 1번 기술적으로 풀어낼 수 있는 방법은 무엇이 있고 어떻게 적용할 수 있는지 고민해보자. 또한, 2번 데이터를 
+처리할 프로세스를 어떻게 하면 변경할 수 있을지,, 가상의 기획자가 있다고 생각해보고 타협점을 찾을 수 있는 지점을 발견해보고 고민해보자.&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="transaction" /><category term="lock" /><summary type="html">트랜잭션과 락을 어떻게 하면 성능을 최적화할 수 있을지 고민합니다.</summary></entry><entry><title type="html">[Hot-Dealicious #3] WebSocket 성능 테스트</title><link href="http://localhost:4000/project/hd-websocket2.html" rel="alternate" type="text/html" title="[Hot-Dealicious #3] WebSocket 성능 테스트" /><published>2023-07-04T00:00:00+09:00</published><updated>2023-07-04T00:00:00+09:00</updated><id>http://localhost:4000/project/hd-websocket2</id><content type="html" xml:base="http://localhost:4000/project/hd-websocket2.html">&lt;blockquote&gt;
+  &lt;p&gt;다양한 툴을 사용하여 WebSocket의 성능을 테스트해본 경험을 이야기합니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;-websocket의-성능을-분석해보자&quot;&gt;🌱 WebSocket의 성능을 분석해보자.&lt;/h2&gt;
+&lt;p&gt;이번 프로젝트의 주요한 기능은 WebSocket을 활용하여 실시간으로 라이더의 위치정보를 클라이언트에게 전송하는 것이다. 나름 대규모 시스템을 염두하고 코드를 작성하고 
+있어서 이 서버가 WebSocket에 대한 부하를 어느정도까지 커버할 수 있을지 궁금했고, Trouble shooting할 영역이 있는지 확인할 수 있는 근거를 마련할 수 있겟다고 생각했다.&lt;/p&gt;
+
+&lt;p&gt;또 코드를 작성하면서 내가 작성한 코드가 어느정도 성능을 낼 수 있을지에 대한 메트릭 자료도 제대로 활용할 수 있는 기회라고 생각하여 주저없이 성능 분석에 대한 스터디를 시작했다.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;-jmeter를-사용한-부하-테스트&quot;&gt;📚 JMeter를 사용한 부하 테스트&lt;/h2&gt;
+&lt;h2 id=&quot;-jmeter로-테스트하기까지&quot;&gt;🌱 JMeter로 테스트하기까지&lt;/h2&gt;
+&lt;p&gt;현재 프로젝트에 적용되어 있는 WebSocket 라이브러리는 Spring WebSocket과 Stomp를 조합하여 사용하고 있다. 단순 WebSocket을 테스트하기에는 Postman으로도 가능하지만 Stomp 프로토콜의 
+API 테스트는 지원하지 않고 있다. 이에 Apic이라는 툴을 알게되어 단일성으로 간단하게 테스트하고 있었다.&lt;/p&gt;
+
+&lt;p&gt;기능이 동작하는지만 테스트하려면 Apic으로도 충분했지만 대용량 트래픽이 발생하는 경우를 테스트를 통해 간접적으로 경험해보고 싶었다. 매우 유명한 ngrinder 툴이 있었지만 WebSocket API로 많은 
+부하를 줄시에는 다소 정확하지 않다는 &lt;a href=&quot;https://tech.kakao.com/2020/06/15/websocket-part2/&quot;&gt;카카오 기술 블로그&lt;/a&gt;를 통해 접하게 되었다. 그래서 알게된 JMeter를 통해 테스트를 진행해보았다.&lt;/p&gt;
+
+&lt;p&gt;Stomp 프로토콜로 WebSocket 연결을 하게 되면 다양한 커멘드를 통해 요청을 주고 받을 수 있다. 이번 테스트 환경에서는 WebSocket Connect -&amp;gt; Send 순으로 요청 시나리오를 만들어 다양하게 테스트해보았다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;각 1번, 1000번, 5000번, 10000번의 요청 시나리오를 1초에 처리하기.&lt;/li&gt;
+  &lt;li&gt;10000번, 50000번의 요청 시나리오를 n초에 걸쳐 처리하기.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;-테스트-결과&quot;&gt;🌱 테스트 결과&lt;/h2&gt;
+&lt;p&gt;1번, 1000번 5000번까지는 결과가 동일했다. 서버 어플리케이션도 잘 동작했고 요청도 잘 처리되었다. 문제는 5000번 이상의 요청 시나리오를 1초에 처리할 때 발생하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/project/hot-dealicious/websocket-jmeter.png&quot; /&gt;
+&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/project/hot-dealicious/websocket-jemter2.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;적은?량의 처리할 때와는 다르게 10000건 이상의 요청을 처리할 때는 Error 발생률이 증가했다. 위의 상황만보더라도 거의 3분의 1이 요청 실패로 이어저 대책을 마련해야했다.
+먼저 에러가 발생할 상황들을 가정해보았다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;WebSocket은 서버와 클라이언트가 커넥션을 계속 유지해야하는 네트워크 프로토콜이다. 그렇기 때문에 서버와 클라이언트가 네트워크 통신을 할 때 사용하는 소켓을 계속 유지하고 있어야한다.
+소켓은 보통 네트워크 TCP/UDP Layer에서 어플리케이션 Layer로 올라오게 될 때 파일 디스크립터에 할당된다. 각 프로세스마다 할당될 수 있는 파일 디스크립터는 제한되어 있다고 알고 있어 이에 대한 문제가 아닐까 생각했다.&lt;/li&gt;
+  &lt;li&gt;두번째 가정 상황은 OOME가 발생했을 경우이다. 파일 디스크립터가 충분히 만들어질 수 있는 요청일지라도 소켓을 메모리에 저장하는 메모리가 Max Heap을 넘어 OOME가 발생하게 된다면 이 상황으로 인해 요청에 에러가 
+발생할 수도 있겠대고 생각했다.&lt;/li&gt;
+  &lt;li&gt;CPU와 Thread의 문제도 고려해보았다. 동시다발적으로 WebSocket을 생성할 때 동시성 이슈가 발생할 수도 있지 않을까 생각해보았다.(사실 WebSocket은 일반적으로 동시성 이슈를 고려하지 않아도 된다고 한다.) 또 혹여나 많은 요청이 한꺼번에 처리해야하는 상황에서 gc에 부하가 걸려 hang이 되는 상황도 고려해보았다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;-서버의-메모리threadcpu-확인&quot;&gt;🟤 서버의 메모리/Thread/CPU 확인&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;먼저 VisualVM을 통해 서버의 여러 리소스를 확인해보았다.
+&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/project/hot-dealicious/websocket-vm.png&quot; /&gt;
+당시 상황을 캡쳐한 메트릭이다. CPU를 먼저 보자. 만일 Race Condition으로 발생한 이슈라면 CPU 가용률이 순간적으로 올라가고 jvm thread의 상태는 lock이 되어야 한다. 하지만 위의 상황을 보았을 때 처리를 위해 CPU 처리량이 
+높아진 것은 확인할 수 있지만, fastThread를 통해 dump를 떠서 Thread 상태를 확인해보았을 때는 lock이 걸린 thread는 존재하지 않았다.
+&lt;br /&gt;
+&lt;br /&gt;
+또한 Heap 메모리도 안정적으로 확장된 것이 보인다. Max Heap memory 안에서 요청을 잘 처리하고 있는 것을 확인해볼 수 있었다.
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;혹여나 서버의 처리량이 많아 GC에 hang이 걸린 것은 아닌지 확인해보았다.
+&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/project/hot-dealicious/websocket-fastthread.png&quot; /&gt;
+thread dump를 뜨고 fastThread로 메트릭을 확인해보았다. 여러 GC Thread들이 눈에 들어왔지만 모두 상태가 RUNNABLE인 것을 확인할 수 있었다. 이것을 통해 gc에 hang이 걸린 문제도 아니라고 판단이 되었다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;이것을 통해 위의 1, 2, 3번 가정 모두 현 상황과 맞지 않음을 알 수 있었다…(그럼 뭘까..?🤔 이후 계속…)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="Network" /><category term="WebSocket" /><summary type="html">다양한 툴을 사용하여 WebSocket의 성능을 테스트해본 경험을 이야기합니다.</summary></entry><entry><title type="html">[Hot-Dealicious #2] WebSocket 통신</title><link href="http://localhost:4000/project/hd-websocket1.html" rel="alternate" type="text/html" title="[Hot-Dealicious #2] WebSocket 통신" /><published>2023-06-30T00:00:00+09:00</published><updated>2023-06-30T00:00:00+09:00</updated><id>http://localhost:4000/project/hd-websocket1</id><content type="html" xml:base="http://localhost:4000/project/hd-websocket1.html">&lt;blockquote&gt;
+  &lt;p&gt;라이더와 지속적인 위치 정보 Request를 위한 기술 스터디&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;-기능-구현을-위한-탐색&quot;&gt;🌱 기능 구현을 위한 탐색&lt;/h2&gt;
+&lt;p&gt;이번 프로젝트에서 핵심적인 기능을 소개하자면 라이더의 위치 정보를 지속적으로 Request 받아 소비자 클라이언트에게 전송하여 실시간 위치 정보를 제공하는 
+기능을 꼽을 수 있을 것 같다. (WOW!!)&lt;/p&gt;
+
+&lt;p&gt;이 기능을 구현하기 위해 다양한 환경을 고려해야했다. 제일 먼저 고려했던.. 가장 중요한 것은 서버 어플리케이션의 다중화였다. WebSocket으로 클라이언트와 
+요청을 주고받기 위해서는 반드시 처음에 연결된 서버와 지속적으로 통신해야한다.(아래에 더 자세하게!) 하지만 이 프로젝트의 가장 큰 특징 중 하나는 
+서버 어플리케이션을 여러개 두어 로드벨런서로 분산 처리를 하는 다중화를 고려하여 구현하는 것이다. 그러므로 클라이언트가 하나의 서버와 지속적인 통신을 
+주고받기 위해서는 특별한 장치가 마련되어야 했다.&lt;/p&gt;
+
+&lt;p&gt;다음으로 Redis를 적절하게 사용하는 것이 포인트이다. 이미 로그인 &amp;amp; 세션 파트를 구현하면서 Redis Session을 사용했었지만 이번 기능을 통해 
+Redis에 Geo 데이터를 저장하는 용도, 서버와 클라이언트의 WebSocket 통신을 지속적으로 가능하게 해주는 Routing Table 등을 구현하면서 
+Redis에 대한 지식을 확장하는 기회였다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-기능을-구현하기-위한-설계&quot;&gt;🌱 기능을 구현하기 위한 설계&lt;/h2&gt;
+&lt;h3 id=&quot;-어떤-기술이-필요할까&quot;&gt;🟤 어떤 기술이 필요할까?&lt;/h3&gt;
+&lt;p&gt;클라이언트와 효율적으로 통신하기 위해서 WebSocket 통신 방식을 사용하기로 했다. Http는 Stateless Protocal이므로 서버 혹은 클라이언트에서 요청/응답에 대한 
+상태값이 변경되면 다시 Http 통신을 하여 Refresh를 시켜주어야 하는 단점이 있었다. 이런 단점을 해소하기 위해 클라이언트에서 서버에 주기적으로 데이터를 
+요청하는 Polling 방식이나 서버에서 주기적으로 클라이언트에게 Push하는 Server-Sent Events가 있다.&lt;/p&gt;
+
+&lt;p&gt;하지만 이러한 통신 방식 또한 한계점을 가지고 있다. 첫번째로는 클라이언트 혹은 서버에서 주기적으로 Refresh하는 요청/응답을 하더라도 조금의 
+딜레이는 존재하게 된다. 즉, 실시간 데이터가 아니라는 한계점이다. 두번째로는 클라이언트와 서버가 통신을 할때마다 4-way handshake같은 네트워크 처리 
+과정이 필요해진다. 이런 부분은 어떻게 보면 클라이언트, 서버 양쪽 모두 자원을 불필요하게 낭비하는 과정이 발생하게 된다.&lt;/p&gt;
+
+&lt;p&gt;WebSocket을 사용하게 되면 위의 요소들을 해소할 수 있게 된다. 클라이언트와 서버가 한번 연결되면 이후 추가적인 커넥션 과정을 거치지 않고 바로 데이터를 요청/응답할 수 
+있어서 네트워크 통신에 필요한 과정을 단축시킬 수 있다. 이는 양측 모두 실시간으로 데이터를 반영할 수 있게된다는 의미이기도 하다.&lt;/p&gt;
+
+&lt;p&gt;당연히 장점이 있다면 단점도 있기 마련..! 단점으로는 역시 유지보수/관리해야하는 비용이 추가된다는 것이다. 아무래도 단순한 Http 요청이 아니기 때문에 WebSocket 통신을 
+구현하기 위해 추가적으로 필요한 장치들이 있을 것이다. 이러한 요소들을 관리해야하는 비용적인 측면이 존재한다. 그리고, 여러 장치가 추가된다는 것은 코드와 아키택처에 대한 
+복잡성이 커진다는 것이다. 잠깐 위에서 언급했지만, 분산 환경에서 처리하고 있는 서버 중 하나와 클라이언트가 지속적으로 커넥션을 유지하며 통신하기 위해서는 코드와 아키택쳐 방면으로 
+추가적인 기능이 필요하다고 판단할 수 있다. 그리고 서버와 클라이언트 간의 커넥션을 끊지 않고 계속 연결해야하기 때문에 커넥션에 대한 메모리도 조심해서 관리해야할 것이다.&lt;/p&gt;
+
+&lt;p&gt;이러한 특징들을 가지고 있기 때문에 초기에 기획과 설계를 하는 과정에서 충분한 비교를 해봐야할 것이다. 유지보수할 수 있는 인력은 충분한지, 현재 구현되어 있는 어플리케이션에 당장 
+적용할 수 있는 기능인지, 없다면 무엇이 필요하고 기능 구현에 필요한 시간 등 다양한 요소들을 고려해봐야할 것이다. &lt;br /&gt;
+여기서는 프로젝트이기 때문에 WebSocket 스터디를 하고 싶어 적용하게 되었다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-필요한-기술-다음에-고려할-것은-어떻게-현-아키택처에-적용할지-고민하는-것&quot;&gt;🟤 필요한 기술 다음에 고려할 것은 어떻게 현 아키택처에 적용할지 고민하는 것!&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/project/hot-dealicious/webSocekt-architecture.jpeg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여러가지 고민을 하면서 설계해보았다. 현재 서버의 상황은 이렇다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;WebSocket을 처리할 서버는 분산 처리를 위한 다중화가 되어 있다.&lt;/li&gt;
+  &lt;li&gt;로드벨런서로 HA Proxy를 선택했다. (Nginx도 선택지에 있었지만, Nginx는 Health Check 기능이 유료인점..🥲 HA proxy는 무료로 제공된다.)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;그림을 보기만해도 가장 큰 특징은 분산처리를 위한 서버 다중화이다. 서버를 다중화하고 부하 분산 장치인 로그벨런서를 두어 대용량 트레픽에 견딜 수 있도록 설계한 것이 중점이다. 
+이러한 환경에서 WebSocket이 안정적으로 관리되기 위해서는 별도의 장치가 필요하다. 바로 Routing Table이다.&lt;/p&gt;
+
+&lt;p&gt;라이더는 처음에 서버와 WebSocket 통신을 맺을 때 Routing Table에서 WebSocket 서버의 URL을 조회한다. 만약 Routing Table에 URL이 있다면 바로 클라이언트는 
+특정 서버의 URL에 위치 정보를 Request 보낸다. 하지만 Routing Table에 URL이 없을 경우 클라이언트는 로드벨러서에 요청하고 로드벨런서가 적절한 WebSocket 서버로 
+요청하여 이후 요청부터는 WebSocket 서버와 클라이언트가 다이렉트로 통신하도록 한다.&lt;/p&gt;
+
+&lt;p&gt;클라리언트로부터 요청받는 Geo 데이터는 공통 Redis 서버를 두어 분산 환경에서도 데이터를 공유 가능하도록 설계하였다.&lt;/p&gt;
+
+&lt;h6 id=&quot;토스-증권의-실시간-시세-적용기-영상을-많이-참고하였다&quot;&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=WKYE-QtzO6g&amp;amp;list=PL1DJtS1Hv1PiGXmgruP1_gM2TSvQiOsFL&amp;amp;index=39&quot;&gt;토스 증권의 실시간 시세 적용기&lt;/a&gt; 영상을 많이 참고하였다.&lt;/h6&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-실제-코드로-구현해보자&quot;&gt;🌱 실제 코드로 구현해보자!🧑🏻‍💻&lt;/h2&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@EnableWebSocketMessageBroker&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;WebSocketConfigurer&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;WebSocketMessageBrokerConfigurer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;configureMessageBroker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MessageBrokerRegistry&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setApplicationDestinationPrefixes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/rider&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;registerStompEndpoints&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;StompEndpointRegistry&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addEndpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/ws&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+			&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setAllowedOrigins&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;*&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Spring 기반의 서버이기 때문에 @Configuration으로 DI 컨테이너에 등록한다. 여기서 Broker라는 개념이 등장한다. Spring에서 구현하는 Stomp의 Broker는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/pub/*&lt;/code&gt;으로 요청이 오는 
+Request들을 인메모리에 각각 저장하여 해당 URL을 구독하는 Subcriber에게 메시지를 전달하는 역할을 한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;️-stomp와-broker&quot;&gt;❗️ Stomp와 Broker&lt;/h3&gt;
+&lt;p&gt;Stomp는 WebSocket 위에서 동작하는 프로토콜이다. 단순히 WebSocket을 사용하는 것보다 많은 이점을 가지고 있는데 
+이 부분은 타 &lt;a href=&quot;http://minjoon.com/spring-stomp&quot;&gt;블로그&lt;/a&gt;를 첨부한다.&lt;/p&gt;
+
+&lt;h6 id=&quot;stomp---web-socket&quot;&gt;&lt;a href=&quot;http://minjoon.com/spring-stomp&quot;&gt;STOMP - Web Socket&lt;/a&gt;&lt;/h6&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * Redis Routing Table이 있는 서버에서 실행되는 API
+ * 메인 서버 어플리케이션에서 실행되지 않는다. (단, 여기에서는 프로젝트이기 때문에 하나의 서버로 동작한다.)
+ */&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@RestController&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@RequestMapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/api/v1/rider&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@RequiredArgsConstructor&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;WebSocketRoutingTableController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RedisTemplate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redisRoutingTableTemplate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+	&lt;span class=&quot;nd&quot;&gt;@GetMapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/{id}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApiResult&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getConnectedWebSocketUri&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@PathVariable&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HttpServletRequest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redisRoutingTableTemplate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;opsForValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApiResult&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onSuccess&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이 부분은 웹 소켓 서버에서 실행되는 컨트롤러는 아니다. 라이더가 WebSocket 통신을 할 때 이미 WebSocket과 커넥션되어 있는 서버 URL이 있는지 확인하는 
+API이다. 이 컨트롤러와 커넥션되어 있는 Redis 라우터와 함께 하나의 라우팅 테이블이 있는 서버로 배포되어야한다. 지금은 프로젝트라 하나의 어플리케이션 코드에서 구현한다고 
+이렇게 구현하게 되었다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@MessageMapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/commute&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApiResult&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;checkCommute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;RiderGeoDto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;riderGeoDto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	
+	&lt;span class=&quot;nc&quot;&gt;Point&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Point&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;riderGeoDto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;riderGeoDto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;redisGeoTemplate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;opsForGeo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;myMap&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;riderGeoDto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getRiderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;riderGeoDto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getWorkStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;WorkStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;INIT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;connectWebSocketServerToRider&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;riderGeoDto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getRiderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApiResult&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onSuccess&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;riderGeoDto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getRiderId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이 메소드가 WebSocket 통신할 때 호출되는 메소드이다. 여기에서는 Request받는 파라미터 타입을 적절히 활용하여 Redis에 Geo 데이터를 저장하도록 했다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-마무리&quot;&gt;🌱 마무리&lt;/h2&gt;
+&lt;p&gt;처음에 WebSocket에 관심을 가졌을 때는 안드로이드 개발자로 현업에 있을 때다. 그 당시에는 WebRTC 기술을 활용하여 화상 미팅 기능을 지원하는 
+SendBird API를 사용하면서 네트워크 통신의 심오함에 관심을 가지게 되었다.(네트워크.. 너무 깊고 넓다..🌊)&lt;/p&gt;
+
+&lt;p&gt;이번 프로젝트에서 WebSocket을 활용하는 기능을 구현하게 되어 처음에는 새로운 개념에 머릿속이 복잡하기도 했고 어떻게 풀어가지? 고민도 되었다. 완벽주의 성향이 있어서 
+ 완벽한 프로젝트가 되지 않으면 레포지토리에 반영하거나 블로그 글을 작성하기 꺼렸다.&lt;/p&gt;
+
+&lt;p&gt;최근에 토스의 개발자 컨퍼런스 영상을 보면서 인사이트를 얻은 문장이 있었다. “정답은 없다.”라는 문구이다. 현업에 있을 때도 느꼈지만 정말 기능을 구현할 때는 어떤 방법을 사용하든 
+어떻게 구현하든 사람들마다 다른 방향성을 가지고 접근했었다. 여러 선택지 중에서 베스트 케이스를 판단하는 것이 중요하다고 느꼈다. 베스트 케이스를 선택하는 기준은 그 기능을 
+논리적으로 뒷받침해줄 CS 지식과 다양한 사례들을 기준으로 선택하는 것..! 결국 지금 당장 가지고 있는 지식은 부족할 수 있지만, 앞으로 성장하면서 얻게될 지식들을 기반으로 꾸준히 
+보완하며 개선해나가는 것이 프로그래밍을 업으로 하는 사람들의 마음가짐이 아닐까 한다.&lt;/p&gt;
+
+&lt;p&gt;이 프로젝트도 나와 함께 성장하는 어플리케이션이 되었으면 하는 바람이다.🙏🏻&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="Network" /><category term="WebSocket" /><summary type="html">라이더와 지속적인 위치 정보 Request를 위한 기술 스터디</summary></entry><entry><title type="html">Docker, Nginx의 CI (지속적 통합)</title><link href="http://localhost:4000/project/project-review-hd.html" rel="alternate" type="text/html" title="Docker, Nginx의 CI (지속적 통합)" /><published>2023-06-06T00:00:00+09:00</published><updated>2023-06-06T00:00:00+09:00</updated><id>http://localhost:4000/project/project-review-hd</id><content type="html" xml:base="http://localhost:4000/project/project-review-hd.html">&lt;blockquote&gt;
+  &lt;p&gt;Docker와 Nginx는 왜 CI에서 사용할까?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;️-간략한-프로젝트-소개&quot;&gt;💁🏻‍♂️ 간략한 프로젝트 소개&lt;/h2&gt;
+&lt;p&gt;Hot-Dealicious라는 이름으로 작은 프로젝트를 시작했다. 배&lt;em&gt;, 쿠&lt;/em&gt;이츠, 모빌리티 서비스 등 위치 추적 기술 너무 신기했다. 주식이나 코인의 시세가 시도때도 없이 변동하는 기술도 
+너무 신기했는데 위치 기반 서비스를 구현해보면 WebSocket같은 네트워크 기술로 서버에서 계속 데이터를 push할 수 있을 거라 생각했다. 처음 백엔드 프로젝트를 시작하는만큼 
+아주 베이직한 이커머스적인 특징을 가지고 있는 배달 서비스를 첫 프로젝트로 삼았다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-프로젝트-초기-단계&quot;&gt;🌱 프로젝트 초기 단계&lt;/h3&gt;
+&lt;p&gt;프로젝트를 시작하면서 들었던 생각은 항상 팀 단위의 협업을 염두해두고 이 프로세스에 익숙해져야한다고 생각했다. 개인 프로젝트이지만 협업을 위한 스킬을 어떻게 기술로 녹일 수 있을까 고민해봤는데 
+과거 안드로이드 신입시절 신기하게 생각했던 CI/CD가 떠올랐다. 처음 구축할 때는 머리아팠지만… 그런데 구축한 이후의 편의성..도 사실 개인 프로젝트라 큰 변화는 없겠지만😂 그저 왜 이런 기술들을 현업에서 
+사용하는지 알고 싶었다.(관심도 매우 많이 갔다!!) &lt;br /&gt;
+대략적인 프로세스는 이렇게 설계하였다. IDE에서 Github으로 코드를 push하면 Github가 Jenkins에 전달하여 빌드와 테스트를 담당한다. Jenkins에서 해당 프로세스를 완료하면 Docker Hub에 업데이트되고 이후 
+AWS같은 클라우드 서버에 반영되게 하는 것이 목표이다. 즉, IDE -&amp;gt; Github -&amp;gt; Jenkins -&amp;gt; Docker Hub -&amp;gt; Cloud Server 순으로 파이프라인을 구축할 예정이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;-그런데-왜-docker-jenkins일까&quot;&gt;🌱 그런데 왜 Docker, Jenkins일까?&lt;/h3&gt;
+&lt;p&gt;Git은 당연히 개발자라면 주니어부터 중요하게 생각하는 형상관리 시스템이다. ‘1일 1커밋’, ‘잔디 심기’ 등 주니어가 성실성을 보여줄 수 있는 수단으로도 활용되지만, 현업에서는 기능에 따라 분업화하여 효율적인 업무가 가능하도록 하고 
+효율적인 코드 병합, 버전 관리 등을 가능하게 하는 중요한 기술이다. 그래서 주니어 때는 Git을 거의 필수적으로 사용했다고 해도 무방하다. 하지만 Docker, Jenkins 등은 이미 구축되어 있는 곳이 많아 쉽게 접할 수는 없는 것 같다. (물론 
+일당백해야하는 스타트업이라면 다 해보신 분들도 계시겠지만..ㅎ) &lt;br /&gt; &lt;br /&gt;
+먼저 Docker는 사실 프론트 개발할 때는 중요성을 잘 인지하지 못했다. 그런데 백엔드를 공부하다보니 컨테이너 기반 기술은 꼭 익혀야하는 기술이라고 생각되었다. 프론트는 기본적으로 html, css, js같은 정적 파일을 클라이언트에게 응답하면 그것으로 
+마무리된다. 이후는 브라우저가 처리할 문제이다. 그런데 백엔드는 아니다. 다수의 클라이언트로부터 서버에 요청이 들어오면 서버는 그 많은 요청들을 처리해야한다. 여기서 포인트는 요청이 기하급수적으로 늘어나게 되면 하나의 서버로는 모든 요청을 감당
+하기가 어렵다.🥲 &lt;br /&gt; &lt;br /&gt;
+Docker같은 컨테이너 기술은 이 때 빛을 발한다. 컨테이너 기술의 장점은 독립적인 개발환경을 빠르게 구축할 수 있다. 하나의 서버에서 독립적인 환경을 구축할 수 있기에 컴퓨팅 리소스를 최대한 끌어낼 수 있고, 같은 서버 어플리케이션을 Scale out 할 수도 있고, MSA(MicroService Architecture)같이 각 기능별로 서버를 나누어 개별적인 환경 관리가 가능하도록 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Jenkins는 테스트와 빌드를 자동화하고 빌드된 코드를 배포 코드에 반영하기까지의 역할을 담당한다. 개발자가 일일히 테스트 코드를 돌리고 빌드하여 배포 코드에 업데이트하는 수고를 덜어주는 것이다. 여러가지 테스트, 빌드 자동화 툴이 있지만 그 중 Jenkins는 오픈소스이기 때문에 나같은 &lt;strike&gt;취준생이&lt;/strike&gt; 사용하기 좋다. 
+물론 지원하는 플러그인도 많다고 한다!! ㅎㅎ&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-nginx는-왜-사용할까&quot;&gt;🌱 Nginx는 왜 사용할까?&lt;/h3&gt;
+&lt;p&gt;Nginx는 보통 Reverse Proxy를 사용하여 클라이언트에서 서버로 들어오는 Request를 한번 필터링(?)하는 과정을 거치게 한다. Nginx를 사용할 때 당연히 자세한 분석과 프로젝트에 적합한지의 판단을 해야겠지만, 여기서는 Https 프로토콜을 사용하기 위해서라고 하고 싶다.
+Nginx를 사용하여 로드벨런싱을 하는 경우도 있지만, 현업에서는 Nginx를 사용하여 로드밸런싱을 하기보다 다른 상품들을 사용한다고 한다. (그래서 나는 HA Proxy를 사용해보려고 한다.) 그 이유는 Nginx는 Health Check 기능이 없기 때문!! Health Check란 로드밸런싱하는 
+서버에서 분선처리를 진행할 때 분산되는 컴퓨터의 부하를 모니터링하는 것을 의미한다. 이런 모니터링 기능이 있어야 우리 같은 개발자들이 어디에서 병목이 일어나고, 서버가 불안정하다는 등의 판단을 할 수 있는 근거를 가지게 되는 셈이다📝&lt;br /&gt;
+그렇기 때문에 이 프로젝트에서 Nginx는 로드벨런싱보다 Https 프로토콜을 사용하도록 하는 관문의 역할을 맡기려한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-docker-hub에서-aws까지의-여정&quot;&gt;🌱 Docker Hub에서 AWS까지의 여정&lt;/h3&gt;
+&lt;p&gt;처음에 jar나 war같은 어플리케이션 파일을 Jenkins에서 빌드하여 자동으로 Docker Hub에 업로드하고 이어 AWS까지 자동화해야한다고 생각했다. 그게 “자.동.화”라고 생각했다. 모든 것을 자동화시켜 편리함의 끝을 봐야지라고 생각했다. 그런데 보통 빌드된 파일을 Docker Hub에 
+업로드하는 것까지는 괜찮은데 Docker Hub에서 AWS같은 운영 서버에 반영하는 것은 위험하다고 판단하게 되었다.&lt;br /&gt;
+자동화되는 것은 어디까지나 우리가 안전하다고 생각하는 범위 내에서 하고 테스트와 테스트를 거쳐 운영서버에 배포되어야 한다고 생각되었다. 그래서 운영 서버에 반영할 때는 수동으로 Docker Hub에 업로드 된 최신 이미지를 업데이트하도록 해야할 것 같다. :)&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-이제-프로젝트-시작&quot;&gt;🌱 이제 프로젝트 시작!&lt;/h3&gt;
+&lt;p&gt;전체적인 서버 아키텍쳐를 설계해보았다. 하나부터 열까지 다 구현하기에는 “내가 왜 이 기술을 사용하지?”, “이 기술말고 다른 기술은 없을까?” 등 같이 기술에 대한 분석과 프로젝트에 필요한 것들을 적용할 수 있는 판단력을 길러야겠다고 판단했다. 먼저 어플리케이션 코드를 완성해보고 
+이후에 처음에 설계했던 서버 아키텍쳐를 반영하여 배포까지 해보는 것을 목표로 해보자!!!&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="Docker" /><category term="Nginx" /><summary type="html">Docker와 Nginx는 왜 CI에서 사용할까?</summary></entry><entry><title type="html">String literal과 new String (feat. VisualVM)</title><link href="http://localhost:4000/devlog/stringLiteral.html" rel="alternate" type="text/html" title="String literal과 new String (feat. VisualVM)" /><published>2023-05-22T00:00:00+09:00</published><updated>2023-05-22T00:00:00+09:00</updated><id>http://localhost:4000/devlog/stringLiteral</id><content type="html" xml:base="http://localhost:4000/devlog/stringLiteral.html">&lt;blockquote&gt;
+  &lt;p&gt;모니터링 프로그램을 사용해보고 싶어 비교해보는 String Literal과 new String의 비교&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!---more---&gt;
+
+&lt;h2 id=&quot;-왜-굳이-string-literal과-new-string생성자을-비교해볼까&quot;&gt;📚 왜 굳이 String literal과 new String(생성자)을 비교해볼까?&lt;/h2&gt;
+&lt;p&gt;Spring의 JDBC 환경에서 개발하던 중 Repository 컴포넌트에서 DB와 커넥션을 위해서 JdbcTemplate을 사용해야 했고, 쿼리문을 실행하기 위해서는 SQL문을
+직접 작성해서 JdbcTemplate에 주입해주어야 했다.
+그렇다보니 각 Repository의 메서드마다 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String sql = &quot;insert into TABLE(attribute) values (?...);&quot;&lt;/code&gt; 식으로 실행할 쿼리문을 넣어주어야 했다.
+&lt;br /&gt;
+String 하나쯤이야~ 라고 생각할 수 있겠지만 Spring 서버 어플리케이션은 Servlet을 통해 각 클라이언트의 요청마다 스레드가 할당되어 요청을 수행한다. 만일 
+String을 생성할 때마다 객체로 저장되어(Java에서 String은 객체이다.) Heap 메모리에 저장되면 많은 클라이언트들이 요청을 수행했을 때 OOME(OutOfMemroyException)이 
+발생하지 않을까? 생각했다.
+&lt;br /&gt;
+당연히 Java에서는 String만의 메모리 관리법이 있기 때문에 지금 우리가 Java 어플리케이션을 잘 사용하고 있겠지만, 모니터링 프로그램(VisualVM, Profiler) 등도 익숙해질 겸
+String Literal일 때와 new String일 때 어디에 데이터가 저장되는지 알아보고자 한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-예상-시나리오&quot;&gt;📚 예상 시나리오&lt;/h2&gt;
+&lt;p&gt;본래 String literal로 생성하는 데이터는 PermGen 영역에 저장되었다. PermGen은 Heap 영역에 속하지는 않지만 메모리 MaxSize가 고정되어 있어 String 데이터가 많아지면 OOME가 종종? 발생하였다…고 한다.
+Java 7 이후부터 PermGen에 저장되었던 String literal 데이터는 Heap 영역에 저장되었고, Heap의 특성인 GC가 가능하도록 변경되었다. &lt;a href=&quot;https://www.baeldung.com/java-string-pool&quot;&gt;관련 링크 [Baeldung]&lt;/a&gt;
+&lt;br /&gt;
+(여기서 조심해야할 부분은 String literal을 보관하는 String Constant Pool은 Java7에 Heap 영역으로 옮겨졌고, PermGen이 Metaspace로 변경된 것은 Java8에 이루어졌다. 햇갈리지 않기!)
+&lt;br /&gt;
+&lt;br /&gt;
+위의 정보들을 토대로 예상되는 결론은&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;하나의 String literal 데이터를 변수에 할당하는 반복문을 N번 호출하게 된다면 데이터는 String literal 데이터 하나를 저장하는 미세한 변동만 보여질 것이다.&lt;/li&gt;
+  &lt;li&gt;각각 다른 String literal 데이터 100개를 N번 호출하면 100개를 Heap에 저장하는 것 이외의 변동은 없을 것이다.&lt;/li&gt;
+  &lt;li&gt;같은 String 문자열을 new String으로 생성시에는 Heap에 차지하게 되는 객체의 수가 생성된 객체만큼 늘어날 것이다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-모니터링-결과-visualvm&quot;&gt;📚 모니터링 결과 (VisualVM)&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;사용한 환경 : Java11, Spring Web(API 호출을 위해)&lt;/li&gt;
+  &lt;li&gt;Tool : VisualVM, PostMan(String literal 생성하는 API N번 호출)&lt;/li&gt;
+  &lt;li&gt;공통으로 적용된 값
+    &lt;ul&gt;
+      &lt;li&gt;반복문으로 변수에 100번씩 할당&lt;/li&gt;
+      &lt;li&gt;Postman으로 해당 로직을 총 N * M(10000000)이 되도록 호출 (Servlet의 영향으로 각 요청마다 스레드가 생겨나는 이슈 생각하기)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;-같은-string-literal을-생성하는-로직을-100--n-번-호출한-결과&quot;&gt;🌱 같은 String literal을 생성하는 로직을 100 * N 번 호출한 결과&lt;/h3&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public void literal() {
+    for (int i = 0; i &amp;lt; 100; i++) {
+        String sql = &quot;insert into table(attribute) values (?..);&quot;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/devlog/javaSpring/2023_05_22_stringLiteral1.png&quot; width=&quot;600&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;CPU가 사용된 주황색 라인 지점에서 메서드가 실행되었다. 동일한 지점에서 Heap 메모리는 아주 미세하게 값이 증가하였는데, 이는 Servlet의 Thread 생성 비용으로 추정됨 (확인 필요)&lt;/p&gt;
+
+&lt;h3 id=&quot;-서로-다른-100개의-string-literal을-생성하는-로직을-n번-호출한-결과&quot;&gt;🌱 서로 다른 100개의 String literal을 생성하는 로직을 N번 호출한 결과&lt;/h3&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public void literal2() {
+    for (int i = 0; i &amp;lt; 100; i++) {
+        String sql = &quot;insert into table(attribute) values (?..);&quot; + &quot; &quot; + i;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/devlog/javaSpring/2023_05_22_stringLiteral100.png&quot; width=&quot;600&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;하나의 String literal만 생성하는 것보다 약간 증가폭이 늘었지만 여전히 비슷한 결과를 보여주고 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;-new-string생성자를-사용한-로직을-n번-호출한-결과&quot;&gt;🌱 new String()(생성자)를 사용한 로직을 N번 호출한 결과&lt;/h3&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public void newString() {
+    for (int i = 0; i &amp;lt; 100; i++) {
+        String sql = new String(&quot;insert into table(attribute) values (?..);&quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/devlog/javaSpring/2023_05_22_newString.png&quot; width=&quot;600&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;String literal로 생성했던 결과들과 확연하게 차이가 보인다. 즉 생성자로 생성하는 String 값 모두 새롭게 생성되고 일정 메모리 이상 올라가면 GC가 발생하는 것을 확인할 수 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;-서로-다른-10000개의-string-literal-생성하는-로직을-n번-호출한-결과&quot;&gt;🌱 서로 다른 10000개의 String literal 생성하는 로직을 N번 호출한 결과&lt;/h3&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public void literal3() {
+    for (int i = 0; i &amp;lt; 10000; i++) {
+        String sql = &quot;insert into table(attribute) values (?..);&quot; + &quot; &quot; + i;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/devlog/javaSpring/2023_05_22_stringLiteral10000.png&quot; width=&quot;600&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Java7 이후부터 String literal이 Heap영역으로 옮겨졌기 때문에 위와같이 String literal도 GC가 발생한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-마무리&quot;&gt;📚 마무리&lt;/h3&gt;
+&lt;p&gt;String 데이터가 많으면 많아질 수록 literal를 사용하는 것이 매우 효율적이라는 것을 알 수 있다. 하나의 문자열을 String Constant Pool에 저장하고 GC가 일어나기 전까지 계속 캐싱된 문자열을 
+사용할 수 있기 때문에 메모리 효율을 높일 수 있다. 생성자를 통해 생성하는 String은 생성할 때마다 새로운 Heap 메모리를 차지하기 때문에 메모리 효율도 않좋을 뿐더러 GC가 더욱 자주 발생된다. 이는 GC를 동작시키는 
+컴퓨팅 리소스를 불필요하게 소비하기 때문에 literal을 통한 문자열 생성을 적극 권장한다.
+&lt;br /&gt;
+&lt;br /&gt;
+이와는 별개로 Spring의 Repository에 SQL문을 작성하는 것은 다른 접근 방법이 필요할 것 같다. 가령 클라이언트로(스레드)로부터 동시에 메소드가 호출된다면 SQL문을 literal로 생성하는 것이 이중으로 발생할 수 있어서 이 또한 
+효율이 좋지 않을 수 있을 것 같다.
+&lt;br /&gt;
+이러한 이유로 SQL문을 관리하는 enum을 만들어 SQL문을 상수화하고(enum은 상수로써 런타임 시 바로 Method Area에 초기화되는 특징을 가지고 있다.) enum 클래스로부터 SQL문을 주입받는 것도 괜찮은 선택인 것 같다.&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="java_spring" /><category term="JVM" /><category term="Memory" /><summary type="html">모니터링 프로그램을 사용해보고 싶어 비교해보는 String Literal과 new String의 비교</summary></entry><entry><title type="html">Listen Socket과 Accept 이후의 Socket의 변화(feat. Spring)</title><link href="http://localhost:4000/devlog/socket.html" rel="alternate" type="text/html" title="Listen Socket과 Accept 이후의 Socket의 변화(feat. Spring)" /><published>2023-04-29T00:00:00+09:00</published><updated>2023-04-29T00:00:00+09:00</updated><id>http://localhost:4000/devlog/socket</id><content type="html" xml:base="http://localhost:4000/devlog/socket.html">&lt;blockquote&gt;
   &lt;p&gt;네트워크 원리 83p의 글 중 “서버는 클라이언트의 요청을 받기 위해 먼저 Socket을 열고 대기하고 있다.” 의 문구를 보고
 가지게 된 의문점&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -167,923 +1013,4 @@ Spring RequestMapping URL로 요청
     &lt;p&gt;원래 처음에는 report를 sorting하고 한 reporter가 같은 reported 사람을 신고하면 1번만 처리되게하는 코드였는데 sorting으로 데이터를 나열하여 같은 값을 찾는건 위험하다는 것을 알게 된 것 같다. (ex. neo, neos일 경우)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;다른 사람의 풀이를 보니 User라는 class를 만들고 report관련된 데이터를 class instance에 저장하는 방법을 사용한 것 같은데 신박했다. 새로운 api를 사용하고 method를 사용하는 것도 신기했지만, 객체지향 관점을 알고리즘에 적용하여 풀어내는 부분이 인상깊었다. 도전해봐야겠다!&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><summary type="html">프로그래머스 신고결과받기(카카오)</summary></entry><entry><title type="html">[Algorithm] 백준 12845문제</title><link href="http://localhost:4000/devlog/baekjoon-12845.html" rel="alternate" type="text/html" title="[Algorithm] 백준 12845문제" /><published>2022-07-12T00:00:00+09:00</published><updated>2022-07-12T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-12845</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-12845.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 12845 Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;영관이는 게임을 좋아한다. 별의별 게임을 다 하지만 그 중에서 제일 좋아하는 게임은 모두의 마블이다. 어김없이 오늘도 영관이는 학교 가는 버스에서 캐릭터 합성 이벤트를 참여했다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;이번 이벤트는 다음과 같다. 순서가 매겨진 여러 장의 카드가 있다. 각각의 카드는 저마다 레벨이 있다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;카드 A에 카드 B를 덧붙일 수 있다. 이때 붙이는 조건은 다음과 같다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;두 카드는 인접한 카드여야 한다.
-업그레이드 된 카드 A의 레벨은 변하지 않는다.
-카드 합성을 할 때마다 두 카드 레벨의 합만큼 골드를 받는다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;영관이가 골드를 최대한 많이 받을 수 있게 여러분이 도와주자.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;예를 들어, c1, c2, c3로 연속된 카드 3개가 있고 각각 레벨이 40,30,30 이라고 하자.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;이 카드들을 합치는 과정에서, 먼저 c3에 c2를 합쳐 임시 카드 x1을 만든다. x1의 레벨은 30이고 획득 골드는 60이다. 그 다음엔 c1에 x1을 합쳐 카드 x2를 만들면 레벨이 40이고 70만큼의 골드를 획득할 수 있다. 이때, 영관이가 획득한 골드는 70+60 = 130이다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;다른 방법으로 c1에 c2를 덧붙인 카드 x1을 만들면, x1의 레벨은 40이고 획득한 골드는 70이다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;x1에 c3를 덧붙인 카드 x2의 레벨은 40이고 획득 골드는 70이다. 이때, 영관이가 획득한 골드는 70 + 70 = 140이다. 이외에 더 많은 골드를 받는 방법이 없으므로 140이 획득할 수 있는 최대 골드이다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Input / Output
-3
-40 30 30 / 140&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-
-        Integer[] list = new Integer[N];
-
-        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-
-        for (int i = 0; i &amp;lt; N; i++) {
-            list[i] = Integer.parseInt(st.nextToken());
-        }
-
-        Arrays.sort(list, Collections.reverseOrder());
-
-        int result = 0;
-        for (int i = 1; i &amp;lt; N; i++) {
-            result += list[0] + list[i];
-        }
-
-        System.out.println(result);
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;오랜만에 시간초과나 런타임 에러 없이 한번에 문제를 풀었다! (쉬운 문제지만..ㅎ)&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;문제에서 이것 저것 정보를 주지만, 문제의 핵심 요약은 나열되어 있는 수들을 짝을 지어 더하면 한 카드는 사라지고 두 카드의 레벨만큼 골드를 획득하는데 이 골드의 수가 가장 큰 경우를 구하는 것이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;생각해보면 문제에서는 인접한 카드의 합이라고 했지만 가장 레벨을 가지고 있는 카드를 기준으로 레벨을 더하면 결국 모든 카드가 가장 레벨이 높은 카드와 합해진다는 것을 의미할 수 있다.&lt;/li&gt;
-  &lt;li&gt;따라서 내림차순으로 sorting한 다음 index 0을 기준으로 나머지 값들과 더한 값을 더한 값(result += list[0] + list[i] / 0 &amp;lt; i &amp;lt; N)이 정답이 되는 것이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;문제가 쉽기는 했지만 결국 문제를 푼다는 것은 대충 해당 알고리즘만 갔다가 끼워맞추는 것이 아니라 요구하는 바를 파악하고 문제에 맞는 알고리즘을 파악하고 최적의 방법을 생각하는 것이라 느꼈다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 12845 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1541문제</title><link href="http://localhost:4000/devlog/baekjoon-1541.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1541문제" /><published>2022-07-11T00:00:00+09:00</published><updated>2022-07-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1541</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1541.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 1541 Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;세준이는 양수와 +, -, 그리고 괄호를 가지고 식을 만들었다. 그리고 나서 세준이는 괄호를 모두 지웠다.
-그리고 나서 세준이는 괄호를 적절히 쳐서 이 식의 값을 최소로 만들려고 한다.
-괄호를 적절히 쳐서 이 식의 값을 최소로 만드는 프로그램을 작성하시오.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Input / Output
-55-50+40 / -35
-10+20+30+40 / 100
-0009 - 0009 / 0&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        String input = br.readLine();
-
-        // + 만 있는 경우
-        if (!input.contains(&quot;-&quot;) &amp;amp;&amp;amp; input.contains(&quot;+&quot;)) {
-            String[] indexes = input.split(&quot;\\+&quot;);
-
-            int result = 0;
-            for (int i = 0; i &amp;lt; indexes.length; i++) {
-                result += Integer.parseInt(indexes[i]);
-            }
-
-            System.out.println(result);
-        } else if (input.contains(&quot;-&quot;) &amp;amp;&amp;amp; !input.contains(&quot;+&quot;)) {
-            // - 만 있는 경우
-            String[] indexes = input.split(&quot;-&quot;);
-
-            int result = Integer.parseInt(indexes[0]);
-            for (int i = 1; i &amp;lt; indexes.length; i++) {
-                result -= Integer.parseInt(indexes[i]);
-            }
-
-            System.out.println(result);
-        } else if (input.contains(&quot;-&quot;) &amp;amp;&amp;amp; input.contains(&quot;+&quot;)) {
-            // 두개 다 있는 경우
-            String[] minusList = input.split(&quot;-&quot;);
-
-            int result = 0;
-            // first Value
-            if (minusList[0].contains(&quot;+&quot;)) {
-                String[] firstList = minusList[0].split(&quot;\\+&quot;);
-
-                for (int i = 0; i &amp;lt; firstList.length; i++) {
-                    result += Integer.parseInt(firstList[i]);
-                }
-            } else {
-                result = Integer.parseInt(minusList[0]);
-            }
-
-            for (int i = 1; i &amp;lt; minusList.length; i++) {
-                if (minusList[i].contains(&quot;+&quot;)) {
-                    String[] indexValues = minusList[i].split(&quot;\\+&quot;);
-
-                    for (int x = 0; x &amp;lt; indexValues.length; x++) {
-                        result -= Integer.parseInt(indexValues[x]);
-                    }
-                } else {
-                    result -= Integer.parseInt(minusList[i]);
-                }
-            }
-
-            System.out.println(result);
-        } else {
-            System.out.println(Integer.parseInt(input));
-        }
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;이번 문제는 생각보다 쉬웠다. (정답률 50%이니 당연한건가..?)&lt;/li&gt;
-  &lt;li&gt;임의의 괄호를 추가하여 식이 최솟값이 되려면 -를 기준으로 +하여 한꺼번에 빼면 된다고 생각하였다.&lt;/li&gt;
-  &lt;li&gt;그래서 식에 +만 있는 경우, -만 있는 경우, +,-만 있는 경우 3가지로 나누어 코드를 설계하였다.&lt;/li&gt;
-  &lt;li&gt;+만 있으면 + split하여 값을 모두 더하면 끝!&lt;/li&gt;
-  &lt;li&gt;-만 있으면 처음 값만 양수로 지정하고 나머지를 모두 빼면 끝!&lt;/li&gt;
-  &lt;li&gt;+, -가 모두 있으면 먼저 -를 기준으로 split한다. 그리고 각 index에 +가 있는 경우 값을 더해주고 아니면 그대로 둔다.&lt;/li&gt;
-  &lt;li&gt;그리고 index 0을 양수로 두고 나머지를 모두 빼면 최솟값을 구할 수 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;처음에 NumberFormat 에러가 발생하기에 이게 머지라는 생각을 했다.&lt;/li&gt;
-  &lt;li&gt;Integer.parseInt 할 때, 안의 값에 숫자 이외에 다른 타입의 문자가 섞여있으면 발생하는 에러였다.&lt;/li&gt;
-  &lt;li&gt;그래서 +, -가 모두 있을 때는 index 하나하나에 문자들이 섞여있는지 모두 검사해주어 해결하였다. (다행히 시간초과는 아니었다.)!!&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1541 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 4796문제</title><link href="http://localhost:4000/devlog/baekjoon-4796.html" rel="alternate" type="text/html" title="[Algorithm] 백준 4796문제" /><published>2022-07-09T00:00:00+09:00</published><updated>2022-07-09T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-4796</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-4796.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 4796 Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;등산가 김강산은 가족들과 함께 캠핑을 떠났다. 하지만, 캠핑장에는 다음과 같은 경고문이 쓰여 있었다.
-캠핑장은 연속하는 20일 중 10일동안만 사용할 수 있습니다.
-강산이는 이제 막 28일 휴가를 시작했다. 이번 휴가 기간 동안 강산이는 캠핑장을 며칠동안 사용할 수 있을까?
-강산이는 조금 더 일반화해서 문제를 풀려고 한다.
-캠핑장을 연속하는 P일 중, L일동안만 사용할 수 있다. 강산이는 이제 막 V일짜리 휴가를 시작했다. 강산이가 캠핑장을 최대 며칠동안 사용할 수 있을까? (1 &amp;lt; L &amp;lt; P &amp;lt; V)&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Input / Output
-5 8 20 / Case 1: 14
-5 8 17 / Case 2: 11
-0 0 0&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        int count = 1;
-
-        ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
-
-        while(true) {
-            StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-
-            int L = Integer.parseInt(st.nextToken());
-            int P = Integer.parseInt(st.nextToken());
-            int V = Integer.parseInt(st.nextToken());
-
-            if (L == 0 &amp;amp;&amp;amp; P == 0 &amp;amp;&amp;amp; V == 0) {
-                break;
-            }
-
-            int result = ((V / P) * L) + (V % P);
-
-            list.add(&quot;Case &quot; + count + &quot;: &quot; + result);
-            count++;
-        }
-
-        list.forEach(System.out::println);
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;처음 문제를 봤을 때 ‘어? 이거 쉬운데 왜 정답률이 30%대지??’ 라는 생각이 들었다.&lt;/li&gt;
-  &lt;li&gt;막상 백준에서 제시해준 test case들을 기준으로 식을 세워 코드를 짰다. 그리고 제출을 한 결과..Fail..😂 그럼그렇지..&lt;/li&gt;
-  &lt;li&gt;그런데 아무리 생각해봐도 저기에서 예외 케이스가 먼지 도통 알 수가 없었다..그저 빨리 풀고 싶었을 뿐..&lt;/li&gt;
-  &lt;li&gt;조급한 마음에 다른 사람들이 썼던 풀이법을 살짝 봤는데.. 머리를 한대 맞은 느낌이었다.&lt;/li&gt;
-  &lt;li&gt;V % P가 L보다 클 경우가 있다는 것… 예를 들어 5 8 15 케이스이다.&lt;/li&gt;
-  &lt;li&gt;15 % 8 * 5는 문제없이 5이다. 여기서 내가 만든 코드를 넣으면 15 % 8 = 7 =&amp;gt; 5 + 7이 되는데.. 이 문제에서는 한번 연속된 값을 더할때는 분명 5(L)을 넘으면 안되는데… 중얼거리며 바로 수정하니 정답…&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    int result = ((V / P) * L) + (V % P);
-
-    =&amp;gt;
-
-    int result1 = (V / P) * L;
-    int result2;
-    if (V % P &amp;gt; L) {
-        result2 = L;
-    } else {
-        result2 = V % P;
-    }
-
-    int result = result1 + result2;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;누가 그랬던 것 같은데..? 개발은 겸손해야한다고..&lt;/li&gt;
-  &lt;li&gt;더 문제에 대해 고민해볼 수 있었지만, 깊이 생각하고 싶지 않고 내 코드가 왜 이상이 있지? 라고 생각했던 것이 이번 문제의 오답의 요인이 되었던 것 같다.&lt;/li&gt;
-  &lt;li&gt;주어진 테스트 케이스 뿐아니라 다양한 상황에서 예외를 가질 수 있는 테스트 케이스가 있을 수 있고 이런 케이스들을 잘 찾아내는 능력도 중요하겠구나 라는 생각도 들었다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 4796 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1946문제</title><link href="http://localhost:4000/devlog/baekjoon-1946.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1946문제" /><published>2022-07-08T00:00:00+09:00</published><updated>2022-07-08T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1946</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1946.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 1946 Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;언제나 최고만을 지향하는 굴지의 대기업 진영 주식회사가 신규 사원 채용을 실시한다. 인재 선발 시험은 1차 서류심사와 2차 면접시험으로 이루어진다. 최고만을 지향한다는 기업의 이념에 따라 그들은 최고의 인재들만을 사원으로 선발하고 싶어 한다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;그래서 진영 주식회사는, 다른 모든 지원자와 비교했을 때 서류심사 성적과 면접시험 성적 중 적어도 하나가 다른 지원자보다 떨어지지 않는 자만 선발한다는 원칙을 세웠다. 즉, 어떤 지원자 A의 성적이 다른 어떤 지원자 B의 성적에 비해 서류 심사 결과와 면접 성적이 모두 떨어진다면 A는 결코 선발되지 않는다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;이러한 조건을 만족시키면서, 진영 주식회사가 이번 신규 사원 채용에서 선발할 수 있는 신입사원의 최대 인원수를 구하는 프로그램을 작성하시오.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
-
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        int T = Integer.parseInt(br.readLine());
-
-        while(T-- &amp;gt; 0) {
-
-            int N = Integer.parseInt(br.readLine());
-
-            int[][] list = new int[N][2];
-
-            for(int i = 0; i &amp;lt; N; i++) {
-                StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-                list[i][0] = Integer.parseInt(st.nextToken());
-                list[i][1] = Integer.parseInt(st.nextToken());
-            }
-
-            Arrays.sort(list, (o1, o2) -&amp;gt; {
-                return o1[0] - o2[0];
-            });
-
-            int count = 0;
-            int pivot = list[0][1];
-
-            for(int i = 1; i &amp;lt; N; i++) {
-                if(pivot &amp;lt; list[i][1]) {
-                    count++;
-                } else {
-                    pivot = list[i][1];
-                }
-            }
-
-            System.out.println(N - count);
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;2일에 걸쳐 푼 문제…😂&lt;/li&gt;
-  &lt;li&gt;어제는 생각을 쥐어짜내도 풀어지지가 않던데..(배탈나서 그런가..) 오늘은 앉아서 문제를 보자마자 술술 풀렸다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;사실 술술 풀리기보다는 array sort만 오름차순으로 바꿨을뿐인데 풀이 방법이 생각났다…&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;처음에는 이중 for문으로 하나하나 비교해서 값을 찾을까 했지만.. 아니나 다를까 시간초과가 떳다..&lt;/li&gt;
-  &lt;li&gt;다른 자료구조를 사용해야하나 어떻게 해야하나 문제를 읽고 읽어서 요구하는 것을 파악하는데 시간이 좀 걸린 것 같다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;이번 문제는 알고리즘이나 자료구조의 사용법보다 풀이 전략을 잘 세우는 것이 중요한 것 같다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;먼저 서류심사 기준으로 sorting을 한다. 1순위부터 n순위까지 sorting을 하면 면접 순위만 비교하면 된다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;서류 1순위가 면접 4순위라면, 그 다음 서류 2순위는 📌무조건!! 면접 4순위보다 높아야한다.&lt;/li&gt;
-  &lt;li&gt;서류 2순위가 면접 4순위보다 낮은 순위라면 서류 1순위보다 두개 다 낮기 때문에 탈락되기 때문..!&lt;/li&gt;
-  &lt;li&gt;이런 식으로 서류 1순위의 면접 순위를 pivot으로 정하고 서류 2순위가 서류 1순위보다 면접 순위가 높으면 pivot은 서류 2순의의 면접 순위로 재할당한다.&lt;/li&gt;
-  &lt;li&gt;이렇게 비교하면 전체 count는 탈락한 사람들의 숫자가 나올텐데 여기서 전체(N) - 탈락인원(pivot)을 하면 값을 구할 수 있다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1946 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 13458문제</title><link href="http://localhost:4000/devlog/baekjoon-13458.html" rel="alternate" type="text/html" title="[Algorithm] 백준 13458문제" /><published>2022-07-06T00:00:00+09:00</published><updated>2022-07-06T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-13458</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-13458.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 13458 Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;총 N개의 시험장이 있고, 각각의 시험장마다 응시자들이 있다. i번 시험장에 있는 응시자의 수는 Ai명이다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;감독관은 총감독관과 부감독관으로 두 종류가 있다. 총감독관은 한 시험장에서 감시할 수 있는 응시자의 수가 B명이고, 부감독관은 한 시험장에서 감시할 수 있는 응시자의 수가 C명이다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;각각의 시험장에 총감독관은 오직 1명만 있어야 하고, 부감독관은 여러 명 있어도 된다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;각 시험장마다 응시생들을 모두 감시해야 한다. 이때, 필요한 감독관 수의 최솟값을 구하는 프로그램을 작성하시오.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Input / Output
-1
-1
-1 1 / 1&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;3
-3 4 5
-2 2 / 7&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;5
-1000000 1000000 1000000 1000000 1000000
-5 7 / 714290&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;5
-10 9 10 9 10
-7 20 / 10&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;5
-10 9 10 9 10
-7 2 / 13&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-
-public class Main {
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        int N = Integer.parseInt(br.readLine());
-
-        int[] place = new int[N];
-
-        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-        for (int i = 0; i &amp;lt; place.length; i++) {
-            place[i] = Integer.parseInt(st.nextToken());
-        }
-
-        StringTokenizer person = new StringTokenizer(br.readLine(), &quot; &quot;);
-        int B = Integer.parseInt(person.nextToken());
-        int C = Integer.parseInt(person.nextToken());
-
-        int count = 0;
-
-        for (int i = 0; i &amp;lt; place.length; i++) {
-            // 총감독관 counting
-            int remain = place[i] - B;
-            count++;
-
-            // 부감독관 counting
-            // remain 이 0 이하일 경우
-            if (remain &amp;lt;= 0) {
-                continue;
-            }
-
-            // remain 이 C 보다 작을 경우
-            if (remain &amp;lt;= C) {
-                count++;
-                continue;
-            }
-
-            // remain 이 C 보다 클 경우
-            if (remain &amp;gt; C) {
-                if(remain % C == 0) {
-                    count += remain / C;
-                } else {
-                    count += (remain / C) + 1;
-                }
-            }
-        }
-
-        System.out.println(count);
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;풀이전략&lt;/li&gt;
-  &lt;li&gt;각 시험장마다 총감독관은 1명씩 무조건 필요하므로 총감독관의 감독가능 학생 수를 뺀 나머지 값을 부감독관 감독 가능 수로 나누어 count한다.&lt;/li&gt;
-  &lt;li&gt;총감독관 무조건 한명 =&amp;gt; (total 학생 - 총감독 가능 인원 = a) -&amp;gt; a / 부감독 가능 인원 -&amp;gt; 만약 a와 부감독 가능 인원의 나눈 값에 나머지가 있다면 count + 1 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    Scanner sc = new Scanner(System.in);
-    int N = sc.nextInt();
-    long count = 0;
-
-    int[] place = new int[N];
-    for(int i = 0; i &amp;lt; N; i++) {
-        place[i] = sc.nextInt();
-    }
-
-    int B = sc.nextInt();
-    int C = sc.nextInt();
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;이 문제는 쉬운 것 같은데 왜 정답률이 20%인지 잘 몰랐다.&lt;/li&gt;
-  &lt;li&gt;막상 풀어보니 풀이 방법은 맞는 것 같은데 계속 틀리는 이유가 무엇인지 모르겠다..&lt;/li&gt;
-  &lt;li&gt;IDE로 풀어보았을 때 테스트 코드는 모두 통과했지만 백준에서는 계속 제출하자마자 틀렸다는 문구가 나왔다…&lt;/li&gt;
-  &lt;li&gt;혹시나 싶어서 BufferedReader 대신 Scanner를 사용해보았는데 성공.. (차이가 머지..?)&lt;/li&gt;
-  &lt;li&gt;일단 Scanner 사용방법을 알게 되어 좋긴했지만.. 소요된 시간이 아깝..ㅠ&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 13458 Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 2217문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-2217.html" rel="alternate" type="text/html" title="[Algorithm] 백준 2217문제 (Greedy)" /><published>2022-07-05T00:00:00+09:00</published><updated>2022-07-05T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-2217</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-2217.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 2217 Greedy Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;N(1 ≤ N ≤ 100,000)개의 로프가 있다. 이 로프를 이용하여 이런 저런 물체를 들어올릴 수 있다. 각각의 로프는 그 굵기나 길이가 다르기 때문에 들 수 있는 물체의 중량이 서로 다를 수도 있다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;하지만 여러 개의 로프를 병렬로 연결하면 각각의 로프에 걸리는 중량을 나눌 수 있다. k개의 로프를 사용하여 중량이 w인 물체를 들어올릴 때, 각각의 로프에는 모두 고르게 w/k 만큼의 중량이 걸리게 된다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;각 로프들에 대한 정보가 주어졌을 때, 이 로프들을 이용하여 들어올릴 수 있는 물체의 최대 중량을 구해내는 프로그램을 작성하시오. 모든 로프를 사용해야 할 필요는 없으며, 임의로 몇 개의 로프를 골라서 사용해도 된다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Input / Output
-2
-10
-15 / 20&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        int N = Integer.parseInt(br.readLine());
-        ArrayList&amp;lt;Integer&amp;gt; ropes = new ArrayList&amp;lt;&amp;gt;();
-
-        for(int i = 0; i &amp;lt; N; i++) {
-            int rope = Integer.parseInt(br.readLine());
-
-            ropes.add(rope);
-        }
-
-        ropes.sort((o1, o2) -&amp;gt; {
-            return o1 - o2;
-        });
-
-        int result = 0;
-
-        for (int i = 0; i &amp;lt; ropes.size(); i++) {
-            int curWeight = ropes.get(i) * N;
-
-            result = Math.max(result, curWeight);
-            N--;
-        }
-
-        System.out.println(result);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;풀이전략&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;처음에는 주어진 ropes들을 Des sorting하여 제일 앞에 있는 rope에 N을 곱하여 최대 중량을 구하는 문제라고 생각했다. 하지만 그렇게 간단한..?(너무 간단한가..?) 문제는 아니었다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;ropes에 많은 좋은 rope들이 있더라도 index 0에 있는 줄의 최대 중량이 1이라면 1 * N밖에 되지 않는 최대 중량이 될 것이다.&lt;/li&gt;
-  &lt;li&gt;그래서 로프가 N–일 때 그에 맞는 최대 중량이 다 다를 것이고 값도 규칙성을 가지지 않기 때문에 하나하나 Math.max하여 비교한 값을 return 하였다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;처음으로 다른 분들의 코드와 비슷했다. (뿌듯)&lt;/li&gt;
-  &lt;li&gt;문제의 난이도가 쉽다고 하지만 이것을 기점으로 더 알고리즘 성장을 이뤄내고 싶다🔥&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 2217 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 11000문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-11000.html" rel="alternate" type="text/html" title="[Algorithm] 백준 11000문제 (Greedy)" /><published>2022-07-04T00:00:00+09:00</published><updated>2022-07-04T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-11000</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-11000.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 11000 Greedy Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;수강신청의 마스터 김종혜 선생님에게 새로운 과제가 주어졌다.
-김종혜 선생님한테는 Si에 시작해서 Ti에 끝나는 N개의 수업이 주어지는데, 최소의 강의실을 사용해서 모든 수업을 가능하게 해야 한다.
-참고로, 수업이 끝난 직후에 다음 수업을 시작할 수 있다. (즉, Ti ≤ Sj 일 경우 i 수업과 j 수업은 같이 들을 수 있다.)&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Input / Output
-3
-1 3
-2 4
-3 5 / 2&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
-
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        int N = Integer.parseInt(br.readLine());
-
-        ArrayList&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
-        while(N-- &amp;gt; 0) {
-            ArrayList&amp;lt;Integer&amp;gt; classes = new ArrayList&amp;lt;&amp;gt;();
-
-            StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-            int startClass = Integer.parseInt(st.nextToken());
-            int endClass = Integer.parseInt(st.nextToken());
-
-            classes.add(startClass);
-            classes.add(endClass);
-
-            list.add(classes);
-        }
-
-        list.sort((o1, o2) -&amp;gt; {
-          if(o1.get(1) == o2.get(1)) {
-            return o1.get(1) - o2.get(1);
-          }
-
-          return o1.get(0) - o2.get(0);
-        });
-
-
-        // 시간초과
-//        ArrayList&amp;lt;Integer&amp;gt; endList = new ArrayList&amp;lt;&amp;gt;();
-//        endList.add(list.get(0).get(1));
-//
-//        for (int i = 1; i &amp;lt; list.size(); i++) {
-//            boolean isChanged = false;
-//
-//            for (int x = 0; x &amp;lt; endList.size(); x++) {
-//
-//                if (list.get(i).get(0) &amp;gt;= endList.get(x)) {
-//                    endList.set(x, list.get(i).get(1));
-//                    isChanged = true;
-//                    break;
-//                }
-//            }
-//
-//            if(!isChanged) {
-//                endList.add(list.get(i).get(1));
-//            }
-//        }
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;풀이전략&lt;/li&gt;
-  &lt;li&gt;저번에 풀었던 회의실 문제랑 비슷한 문제라고 생각했다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;주어진 강의 시간들을 잘 정렬하는 것이 이 문제의 키포인트 중 하나이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;강의 시간을 정렬할 때 기본적으로 시작시간 기준으로 오름차순으로 정렬하되, 만약 시작시간이 같을 경우 끝나는 시간을 오름차순으로 정렬한다.&lt;/li&gt;
-  &lt;li&gt;이렇게 시간을 정렬하고나면 시간을 for문으로 각각 비교하였을 때 오름차순 순으로 시간들을 비교할 수 있어서 이중, 삼중으로 비교하고 값을 할당하지 않아도 된다.&lt;/li&gt;
-  &lt;li&gt;그렇게 최소한의 비교를 위해 전체 시간 정렬 list와 끝나는 시간 list를 만들어 비교하려고 했..으나.. 계속 ‘시간초과’가 발생하였다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    PriorityQueue&amp;lt;Integer&amp;gt; pq = new PriorityQueue&amp;lt;&amp;gt;();
-    pq.add(list.get(0).get(1));
-
-    for (int i = 1; i &amp;lt; list.size(); i++) {
-        if(pq.peek() &amp;lt;= list.get(i).get(0)) {
-            pq.poll();
-        }
-
-        pq.add(list.get(i).get(1));
-    }
-
-    System.out.println(pq.size());
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;로직이 잘못된 것인지, for loop 하나로 해결할 수 있는 방법이 있는지 계속 고민했지만 결국 해결하지 못했다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;하루 이틀 고민해봤지만 무엇이 문제인지 알수가 없어서 결국 다른 사람들이 어떻게 풀이하였는지 참고하였다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;참고해보니 접근법은 비슷했다. 다만, 이 접근법을 통해 더 효율적인 방안을 사용하는 것…&lt;/li&gt;
-  &lt;li&gt;Java로 알고리즘 문제들을 풀이할 때 지금까지 알고리즘 방법에서 막혔었다면.. 이번에는 자료구조에 실패의 요인이 있었다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;ArrayList는 get 메소드 경우 O(1)로 복잡하지 않지만, add, remove 등의 메소드는 O(n)의 시간이 소요된다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;그럴 때 사용하는 자료구조가 우선순위 큐(최대 / 최소 힙)이다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;우선순위 큐는 시간복잡도가 O(logN)으로 이 문제에서 요구하는 각 시간들을 비교할 때 최적의 자료구조라고 생각되었다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;자료구조를 ArrayList에서 PrioityQueue로 바꾸니 정답이었다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;이번 문제를 통해 각 문제마다 접근할 수 있는 것이 알고리즘뿐 아니라 자료구조에 대해 고민해보게 되었다… 점점 고려할 사항들이 많아지니 언제 한번 문제 접근 방법에 대해 고민해보는 시간을 가져야겠다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 11000 Greedy Algorithm 문제입니다.</summary></entry><entry><title type="html">[Algorithm] 백준 1783문제 (Greedy)</title><link href="http://localhost:4000/devlog/baekjoon-1783.html" rel="alternate" type="text/html" title="[Algorithm] 백준 1783문제 (Greedy)" /><published>2022-07-01T00:00:00+09:00</published><updated>2022-07-01T00:00:00+09:00</updated><id>http://localhost:4000/devlog/baekjoon-1783</id><content type="html" xml:base="http://localhost:4000/devlog/baekjoon-1783.html">&lt;blockquote&gt;
-  &lt;p&gt;백준 1783 Greedy Algorithm 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;목차
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제&quot;&gt;문제&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-나의-풀이&quot;&gt;나의 풀이&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-자가-피드백&quot;&gt;자가 피드백&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-문제&quot;&gt;📌 문제&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;병든 나이트가 N × M 크기 체스판의 가장 왼쪽아래 칸에 위치해 있다. 병든 나이트는 건강한 보통 체스의 나이트와 다르게 4가지로만 움직일 수 있다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;2칸 위로, 1칸 오른쪽
-1칸 위로, 2칸 오른쪽
-1칸 아래로, 2칸 오른쪽
-2칸 아래로, 1칸 오른쪽
-병든 나이트는 여행을 시작하려고 하고, 여행을 하면서 방문한 칸의 수를 최대로 하려고 한다. 병든 나이트의 이동 횟수가 4번보다 적지 않다면, 이동 방법을 모두 한 번씩 사용해야 한다. 이동 횟수가 4번보다 적은 경우(방문한 칸이 5개 미만)에는 이동 방법에 대한 제약이 없다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;체스판의 크기가 주어졌을 때, 병든 나이트가 여행에서 방문할 수 있는 칸의 최대 개수를 구해보자.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;100 50 =&amp;gt; 48
-1 1 =&amp;gt; 1
-17 5 =&amp;gt; 4
-2 4 =&amp;gt; 2
-20 4 =&amp;gt; 4&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-나의-풀이&quot;&gt;📌 나의 풀이&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-
-        int count = 1;
-        int moveM = 1;
-
-        // 최대 칸이 4이상일 최소 경우의 수
-        if (N &amp;gt;= 3 &amp;amp;&amp;amp; M &amp;gt;= 7) {
-            count = 5;
-            moveM = 7;
-
-            while (M &amp;gt;= moveM + 1) {
-                moveM++;
-                count++;
-            }
-
-            System.out.println(count);
-        } else {
-            // 최대 칸이 4미만이며, 말이 위 아래로 왔다갔다할 수 있는 경우
-            // 세로칸이 3칸일 경우 오른쪽으로 1씩 이동 가능
-            if (N &amp;gt; 2) {
-                while (M &amp;gt;= moveM + 1) {
-                    count++;
-                    moveM++;
-                }
-
-                System.out.println(Math.min(count, 4));
-                return;
-            }
-
-            // 세로칸이 2칸일 경우 오른쪽으로 2씩 이동 가능
-            if (N &amp;gt; 1) {
-                while (M &amp;gt;= moveM + 2) {
-                    count++;
-                    moveM += 2;
-                }
-
-                System.out.println(Math.min(count, 4));
-                return;
-            }
-
-            System.out.println(count);
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;풀이전략&lt;/li&gt;
-  &lt;li&gt;문제에서 체스말이 움직일 수 있는 방법은 4가지이지만, 제약을 기준으로 코드를 설계하는 것이 좋을 것 같다고 판단했다.&lt;/li&gt;
-  &lt;li&gt;체스말이 최대 4번 이상 움직일 수 있으면 무조건 4가지 이동방법을 다 사용해야하는 제약을 통해 알 수 있는 것이 있다.&lt;/li&gt;
-  &lt;li&gt;체스말의 이동 방법의 특징은 상하로는 언제든지 움직일 수 있지만, 좌우로는 무조건 오른쪽으로 이동한다는 특징이다.&lt;/li&gt;
-  &lt;li&gt;이 특징을 활용하여 세로칸이 3이상, 가로칸이 7이상인 경우 위에서 언급한 제약사항을 적용한다.&lt;/li&gt;
-  &lt;li&gt;제약사항에 적용되지 않는 상황일 때는 각 세로칸에서(2 or 1) 가로칸으로 움직일 수 있는 상황을 구한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;-자가-피드백&quot;&gt;📌 자가 피드백&lt;/h2&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine(), &quot; &quot;);
-
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-
-        if(N == 1) { System.out.println(1); }
-
-        if(N == 2) {
-            int result = Math.min(4, 1 + ((M - 1) / 2));
-            System.out.println(result);
-        }
-
-        if(N &amp;gt;= 3) {
-            if(M &amp;gt;= 7) {
-                System.out.println(5 + (M - 7));
-            } else {
-                System.out.println(Math.min(4, M));
-            }
-        }
-    }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;특징을 다시 잘 살펴보면, 세로칸이 1일 경우, 2일 경우, 3이상일 경우로 나누어 코드를 단축시킬 수 있다.&lt;/li&gt;
-  &lt;li&gt;세로가 1일 경우에는 당연히 움직이지 못하기 때문에 (1, 1)하나로 return 1&lt;/li&gt;
-  &lt;li&gt;세로가 2일 경우에는 체스말이 상하로 1씩밖에 움직이지 못하기 때문에 오른쪽으로 무조건 2씩 이동해야한다.&lt;/li&gt;
-  &lt;li&gt;세로가 3 이상일 경우에는 제약 사항을 적용해야한다.&lt;/li&gt;
-  &lt;li&gt;즉, 세로가 3이상이면서 가로가 7이상이면 4가지 방식을 다 적용한 이후의 좌표 (3, 7)부터 오른쪽으로 가능한 한 움직인다.&lt;/li&gt;
-  &lt;li&gt;가로가 7 미만이면 제약사항을 적용시키지 못하므로 무조건 최대값은 4가 된다. (4 이상이려면 제약사항을 적용해야하므로)&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;그렇기 때문에 상하로는 계속 움직일 수 있지만 가로로는 4와 M 중 최소값을 return하면 된다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;코드를 설계할 때 문제를 잘 파악하여, 기준점을 잘 세우는 것이 중요할 것 같다.&lt;/li&gt;
-  &lt;li&gt;문제를 잘 파악하는 능력을 길러야겠다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="greedy" /><summary type="html">백준 1783 Greedy Algorithm 문제입니다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><summary type="html">프로그래머스 신고결과받기(카카오)</summary></entry></feed>
