@@ -40,7 +40,7 @@ tags: project wanted pre_onboarding assignment
 ## 🌱 기술적으로 정리해보고자 하는 것들
 기술적으로 어떻게 고민했는지, 왜 이렇게 구현했는지 등을 생각해본 것들 위주로 정리해보고자 한다.
 
-1. JWT를 통한 사용자 인증(+ Session과 뭐가 다를까?)
+1. [JWT를 통한 사용자 인증](https://syeon2.github.io/project/wanted_assignment1.html)(+ Session과 뭐가 다를까?)
 2. 게시판 모델링과 변경과 테스트 코드 이야기
 
 -----
