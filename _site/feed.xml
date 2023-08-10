@@ -1,26 +1,232 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2023-08-09T16:42:28+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><entry><title type="html">[원티드 프리온보딩 백엔드] #1 JWT를 통한 로그인 인증</title><link href="http://localhost:4000/project/wanted_assignment1.html" rel="alternate" type="text/html" title="[원티드 프리온보딩 백엔드] #1 JWT를 통한 로그인 인증" /><published>2023-08-08T00:00:00+09:00</published><updated>2023-08-08T00:00:00+09:00</updated><id>http://localhost:4000/project/wanted_assignment1</id><content type="html" xml:base="http://localhost:4000/project/wanted_assignment1.html">&lt;blockquote&gt;
-  &lt;p&gt;JWT를 사용하여 로그인 및 사용자 인증, 인가를 구현하고 정리한 글입니다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2023-08-10T16:32:14+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
+</subtitle><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><entry><title type="html">ClassLoader의 다양한 활용 (feat. jjwt library)</title><link href="http://localhost:4000/devlog/classloader.html" rel="alternate" type="text/html" title="ClassLoader의 다양한 활용 (feat. jjwt library)" /><published>2023-08-10T00:00:00+09:00</published><updated>2023-08-10T00:00:00+09:00</updated><id>http://localhost:4000/devlog/classloader</id><content type="html" xml:base="http://localhost:4000/devlog/classloader.html">&lt;blockquote&gt;
+  &lt;p&gt;JVM의 클래스로더를 알아보고 코드에서 어떻게 사용되는지 생각해보기 위해 Deep Dive합니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;!--more--&gt;
 
-&lt;p&gt;/——————&lt;/p&gt;
+&lt;h3 id=&quot;-classloader를-왜-스터디해야할까&quot;&gt;🟤 ClassLoader를 왜 스터디해야할까?&lt;/h3&gt;
+&lt;p&gt;JVM을 스터디하면서 Runtime Data Area, Execution Engine은 스터디하는 목적에 대해 분명했다. Java의 메모리 관리에 대해 스터디하고 싶다면 Runtime Data Area는 
+꼭 스터디해야할 영역이다. Execution Engine은 Java 코드가 컴파일되어 있는 바이트코드를 해석하는 인터프리터, JIT 컴파일러 등이 있지만, 역시나 Java 개발자들 사이에서 
+중요하게 생각하는 Garbage Collection이 Execution Engine 영역 안에 있기 때문에 스터디해야하는 영역이다. 하지만 클래스로더는 제일 처음 Java 바이트코드가 실행될 때 
+JVM 안에서 진입하게 되는 영역이지만 어떻게 활용되는지는 감이 안왔다. 그저 코드가 실행되는 것만을 지켜볼 뿐..&lt;/p&gt;
 
-&lt;p&gt;글에서 나타내고자 하는 것&lt;/p&gt;
+&lt;p&gt;원티드 사전 과제를 진행하면서 JWT의 라이브러리가 3개로 나뉘어져있고 인터페이스, 구현체 등이 각각의 개별적인 라이브러리에 코드로 구현되어 있었다. 내부를 확인해보니 ClassLoader를 사용하는 듯한 
+코드를 발견했는데, 이것을 계기로 클래스로더가 어떤 역할을 하는지 확인하고 싶었다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-클래스로더를-사용한-다양한-기술&quot;&gt;🌱 클래스로더를 사용한 다양한 기술&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-singleton&quot;&gt;1. Singleton&lt;/h3&gt;
+&lt;p&gt;클래스로더를 설명하다가 난데없이 싱글톤라는 주제가 등장하게 되었다. 싱글톤이 클래스로더와 관련이 있을까? 사실 아주 베이직하게 구현되고 있는 싱글톤 방식은 클래스로더의 개념을 사용하지는 않는다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;INSTANCE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Singleton&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;INSTANCE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 코드는 아주 기본적으로 사용되고 있는 싱글톤 방식이다. 해당 싱글톤은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Early Initialization Singleton&lt;/code&gt;이라는 특징을 가지고 있다. 한마디로 Java 파일이 실행되면 static 변수들은 
+Java 파일이 실행됨과 함께 초기화가 진행되는데 이 때 early initialization 방식의 싱글톤도 Java 파일이 실행될 때 함께 초기화된다는 것이다.&lt;/p&gt;
+
+&lt;p&gt;싱글톤 클래스 개수가 적다면 Java 파일을 실행하는데 오래걸리지는 않겠지만, 만약 초기화해야하는 싱글톤 클래스가 많다면? 그럼 당연히 Java 파일을 실행하는데 필요한 시간이 길어질 것이다. (모든 싱글톤 클래스 파일을 로드하여 
+초기화를 진행해야하기 때문에..!) 그래서 싱글톤 클래스에 대한 여러가지 방안들이 등장하기 시작한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;volatile&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;INSTANCE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Singleton&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;INSTANCE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;INSTANCE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;no&quot;&gt;INSTANCE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;INSTANCE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;해당 코드는 double checked locking 싱글톤 방식이다. 위의 코드는 Java 파일이 실행될 때 static에는 아직 초기화할 값이 있지 않기 때문에 INSTANCE가 런타임시 불릴 때 
+클래스가 로드되어 인스턴스가 생성된다는 장점을 가지고 있다. 하지만 이 코드는 자칫 에러를 발생할 수 있는 여지를 가지고 있는 코드이다.&lt;/p&gt;
+
+&lt;p&gt;Java에서는 JVM, 컴파일러, 프로세서가 명령어를 재정렬할 수 있다. (Reordering) JVM의 특징 중 하나는 명령의 의미가 동일하게 유지된다면 성능상의 이유로 명령을 재정렬할 수 있다. 
+그것을 방지해주는 것이 volatile 예약어이긴 하다. 그렇지만 volatile은 Java 5 버전 이하에서는 지원하지 않기 때문에 안티패턴으로 불린다.&lt;/p&gt;
+
+&lt;p&gt;volatile이 없다면 해당 코드는 Singleton 객체의 생성이 완료되기 전에 INSTANCE 참조가 업데이트될 수 있다. 이 때 다른 스레드가 INSTANCE를 읽게 되면 
+아직 완전히 생성하지 않은 객체에 접근하게 되는 원리이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Singleton&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;LazyHolder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;INSTANCE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;LazyHolder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;INSTANCE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Singleton&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;현재 가장 많이 사용되는 Singleton 방식이다. 이 싱글톤 방식이 바로 클래스로더의 특징을 사용해서 구현된 싱글톤 기법이다. 클래스는 해당 클래스가 호출되어 인스턴스를 만드는 코드가 
+불리우기 전까지 로드되지 않는다. Java는 클래스를 동적 로드 방식으로 로드하기 때문이다.&lt;/p&gt;
+
+&lt;p&gt;해당 싱글톤은 Singleton 클래스로부터 getInstance 메소드가 호출될 때 LazyHolder 클래스가 로드됨과 함께 바로 초기화가 되는 방식이다. 따라서 JVM의 ClassLoader의 특징을 
+이용하여 구현한 Lazy Initialization 싱글톤 기법이라고 할 수 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-jjwt-library&quot;&gt;2. jjwt library&lt;/h3&gt;
+&lt;p&gt;이번 원티드 사전과제를 진행하면서 알게된 JWT의 jjwt 라이브러리이다. jjwt 라이브러리는 jjwt-api, jjwt-impl, jjwt-jackson 총 3개의 
+라이브러리로 나뉘어져 있다. 각각 인터페이스, 구현체로 나뉘어져 있는 이 라이브러리는 얼핏 봤을 때는 굳이 나누어서 배포해야했을까? 라는 생각이 든다.&lt;/p&gt;
+
+&lt;p&gt;jjwt github에 보면 jjwt-api는 implementation으로 라이브러리를 로드하고 나머지 jjwt-impl, jjwt-jackson은 runtime시에만 모듈을 로드하는 것을 볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;jjwt-api에 선언되어 있는 API를 사용할 때면 jjwt-impl의 파일에 직접 접근하여 해당 클래스 파일을 로드하는 것을 볼 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JwtParserBuilder&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parserBuilder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Classes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;newInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;io.jsonwebtoken.impl.DefaultJwtParserBuilder&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;--------&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;newInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fqcn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fqcn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;--------&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;forName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fqcn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UnknownClassException&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    
+        &lt;span class=&quot;nc&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clazz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;THREAD_CL_ACCESSOR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;loadClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fqcn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clazz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;clazz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;CLASS_CL_ACCESSOR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;loadClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fqcn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    
+        &lt;span class=&quot;o&quot;&gt;.....&lt;/span&gt;
+    
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clazz&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;--------&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loadClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fqcn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clazz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;ClassLoader&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getClassLoader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;clazz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;loadClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fqcn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ClassNotFoundException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;//Class couldn't be found by loader&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+		
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clazz&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;해당 로직은 jjwt-api 라이브러리에 있는 API를 동작하게 하는 코드이다. 위에서부터 보면 jjwt-impl 라이브러리에 있는 구현체를 
+실행시키기 위해 구현체가 있는 패키지 명부터 차례대로 호출되어 결국 loadClass 메소드에서 클래스로더에 의해 필요한 구현체 클래스가 로드되는 것을 
+볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;이를 통해 jjwt 라이브러리가 가질 수 있는 이점을 생각해보았다.&lt;/p&gt;
+
 &lt;ol&gt;
-  &lt;li&gt;게시판에서 나타나는 인증, 인가&lt;/li&gt;
-  &lt;li&gt;JWT를 어떻게 게시판에서 구현했는가?
+  &lt;li&gt;의존성을 분리한다.
     &lt;ul&gt;
-      &lt;li&gt;JWT 토큰 발행&lt;/li&gt;
-      &lt;li&gt;Spring Argument Resolver&lt;/li&gt;
+      &lt;li&gt;각 모듈이 필요한 의존성만 포함하여 불필요한 의존성을 줄이고 라이브리러의 크기를 경량화시킬 수 있다.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;일전에 구현한 Redis-Session과 JWT의 비교&lt;/li&gt;
-  &lt;li&gt;Session vs JWT&lt;/li&gt;
-  &lt;li&gt;느낀점
-—————–/&lt;/li&gt;
+  &lt;li&gt;확장성
+    &lt;ul&gt;
+      &lt;li&gt;인터페이스와 구현을 분리함으로써, 다양한 환경과 요구 사항에 대응할 수 있다. (버전 호환이 가능하다.)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;p&gt;jjwt 라이브러리는 세 가지 주요 구성 요소로 나뉘며, 이는 의존성 관리, 확장성 향상, 경량화 등의 이점을 가져다 준다. 
+이러한 설계 방향은 개&lt;a href=&quot;..%2F..%2F..%2FGemfile.lock&quot;&gt;Gemfile.lock&lt;/a&gt;발자가 자신의 프로젝트에 필요한 부분만 선택하여 사용할 수 있게 해준다. 
+이런 유연성은 모던 라이브러리 설계에서 중요한 요소로 작용하며, jjwt가 많은 개발자들에게 선택받는 이유 중 하나라고 생각된다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-정리&quot;&gt;🌱 정리&lt;/h2&gt;
+&lt;p&gt;클래스로더에 대한 정의와 기술 자체에 대한 설명은 좋은 글들이 많다. (&lt;a href=&quot;https://d2.naver.com/helloworld/1230&quot;&gt;Naver D2 - JVM Internal&lt;/a&gt;) 
+이번 글을 통해서는 클래스로더가 어떻게 쓰이는지에 대해 알아보고 활용하는 사례들을 스터디해보고 싶었다.&lt;/p&gt;
+
+&lt;p&gt;단순히 코드를 작성하는 것이 아닌 기술적인 특징을 파악하고 그것을 응용하여 설계하는 것 또한 좋은 엔지니어에게 필요한 
+역량이라는 생각이 드는 스터디였다.&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="java_spring" /><category term="JVM" /><category term="classLodaer" /><summary type="html">JVM의 클래스로더를 알아보고 코드에서 어떻게 사용되는지 생각해보기 위해 Deep Dive합니다.</summary></entry><entry><title type="html">[원티드 프리온보딩 백엔드] 사전 과제를 구현해보다.</title><link href="http://localhost:4000/project/wanted_assignment.html" rel="alternate" type="text/html" title="[원티드 프리온보딩 백엔드] 사전 과제를 구현해보다." /><published>2023-08-08T00:00:00+09:00</published><updated>2023-08-08T00:00:00+09:00</updated><id>http://localhost:4000/project/wanted_assignment</id><content type="html" xml:base="http://localhost:4000/project/wanted_assignment.html">&lt;blockquote&gt;
+  &lt;p&gt;원티드 프리 온보딩 사전과제에서 구현한 기술들을 정리하고자 합니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;-원티드-프리온보딩을-신청하다&quot;&gt;🟤 원티드 프리온보딩을 신청하다.&lt;/h3&gt;
+&lt;p&gt;백엔드로 전향하기 위해 스터디한지 어연 6개월차가 다 되어간다. 본격적인 구직을 하기 앞서 여러 사람들을 만나 개발 지식들을 나누고 스터디하는 그룹들을 찾고 싶었는데 마침 
+원티드에서 프리온보딩 백엔드 코스를 진행하는 것을 보게 되었다. 구직에 필요한 정보와 여러 도움들도 함께 제공하기에 1석 2조라 생각하여 모집 공고글을 본 즉시 바로 신청 사이트에 접속하였다.&lt;/p&gt;
+
+&lt;p&gt;하지만 원티드 프리온보딩에 참여하려면 몇가지의 주어진 과제를 이행하여 제출하고 선발되어야 했다. 이 글은 원티드 프리온보딩 사전 과제를 구현해보고 사용했던 기술들에 대해 정리해보고자 하기 위한 목적으로 
+쓰려고 한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-사전-과제에서-주어진-구현사항&quot;&gt;🌱 사전 과제에서 주어진 구현사항&lt;/h2&gt;
+&lt;p&gt;가능한한 추가 기능 구현까지 모두 구현해보고 싶었다. 필수로 주어진 과제는 간단한 CRUD를 통해 게시판을 만들어보고, 좀 더 나아가 JWT를 사용한 사용자 인증, 게시판 모델링 등이 있었다. 
+추가 구현 사항으로는 단위 or 통합 테스트 코드를 작성하기, docker-compose로 간단한 서버 환경 구축하기, AWS로 배포 후 해당 도메인으로 API 작동 확인하기 등이 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;필수 구현사항
+    &lt;ul&gt;
+      &lt;li&gt;JWT로 로그인 및 일부 API는 JWT를 통한 인증&lt;/li&gt;
+      &lt;li&gt;게시판 글 추가, 조회, 수정, 삭제&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;추가 구현사항
+    &lt;ul&gt;
+      &lt;li&gt;단위, 통합 테스트 코드 작성하기&lt;/li&gt;
+      &lt;li&gt;docker-compose로 서버 환경 구축하기&lt;/li&gt;
+      &lt;li&gt;AWS에 배포 후 배포된 도메인으로 API 작동 확인하기&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이 정도로 정리할 수 있다. (당연히 게시판은 모델링까지 직접해야했다!)&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-기술적으로-정리해보고자-하는-것들&quot;&gt;🌱 기술적으로 정리해보고자 하는 것들&lt;/h2&gt;
+&lt;p&gt;기술적으로 어떻게 고민했는지, 왜 이렇게 구현했는지 등을 생각해본 것들 위주로 정리해보고자 한다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://syeon2.github.io/project/wanted_assignment1.html&quot;&gt;JWT를 통한 사용자 인증&lt;/a&gt;(+ Session과 뭐가 다를까?)&lt;/li&gt;
+  &lt;li&gt;게시판 모델링과 변경과 테스트 코드 이야기&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-원티드-프리온보딩-사전과제를-통해-느낀점&quot;&gt;🟤 원티드 프리온보딩 사전과제를 통해 느낀점&lt;/h3&gt;
+&lt;p&gt;해당 과제를 구현하면서 시간이 제일 많이 소요된 기술은 JWT와 AWS EC2와 Docker-Compose로 서버 환경을 구축하는 것이었다.&lt;/p&gt;
+
+&lt;p&gt;이번 과제에서는 AWS EC2에서 docker-compose를 사용하지 않고 EC2 컴퓨팅 메모리에 직접 MySQL과 Java -jar 파일을 실행시켜 동작하도록 했다. 
+그 이유는 docker-compose가 내 로컬환경에서는 잘 동작하는데, EC2환경에서는 말썽을 계속 일으키는 바람에 일단 AWS에는 docker-compose를 사용하지 않았다. 
+(포트 포워딩을 잘못해준건지.. 추후에 다시 차근차근 스터디해보아야할 내용라고 생각한다.) 
+애초에 EC2에 docker-compose로 한번에 서버 인프라 구성하는 것보다는 nginx로 https 리버스 프록시같은 로드벨런서도 추가해주고, 
+EC2는 서버 어플리케이션, RDS 서버에 MySQL을 실행시켜 VPC로 묶어주는 등의 작업이 훨씬 인프라적으로 안정적이겠지만..혹시 모를 예산적 문제가 발생할 수도 있을 것 같아 일단 이렇게 구현했다.&lt;/p&gt;
+
+&lt;p&gt;그동안 AWS 등 인프라 관련된 스터디에 많이 소홀히했던 것 같은데 슬슬 분산 시스템에 대한 간단한 인프라 구축 등도 포함해서 스터디를 병행해야할 때가 온 것 같다. (면접에 대비하여..!)
+이제는 기본적인 CS 및 Java, Spring에 관련된 지식들은 탄탄한 복습 위주로 스터디하고 조금씩 영역을 확장하면서 넓어진 개념에 deep dive하면서 CS와 연계하여 스터디해야겠다고 느꼈다. (특히 DB..!)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="wanted" /><category term="pre_onboarding" /><category term="assignment" /><summary type="html">원티드 프리 온보딩 사전과제에서 구현한 기술들을 정리하고자 합니다.</summary></entry><entry><title type="html">[원티드 프리온보딩 백엔드] #1 JWT를 통한 로그인 인증</title><link href="http://localhost:4000/project/wanted_assignment1.html" rel="alternate" type="text/html" title="[원티드 프리온보딩 백엔드] #1 JWT를 통한 로그인 인증" /><published>2023-08-08T00:00:00+09:00</published><updated>2023-08-08T00:00:00+09:00</updated><id>http://localhost:4000/project/wanted_assignment1</id><content type="html" xml:base="http://localhost:4000/project/wanted_assignment1.html">&lt;blockquote&gt;
+  &lt;p&gt;JWT를 사용하여 로그인 및 사용자 인증, 인가를 구현하고 정리한 글입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
 
 &lt;h2 id=&quot;-jwt를-통한-인증-인가를-구현하기에-앞서&quot;&gt;🌱 JWT를 통한 인증, 인가를 구현하기에 앞서…&lt;/h2&gt;
 
@@ -254,71 +460,12 @@ createJwtAutoToken은 로그인 시 유저에게 JWT 토큰을 발행하기 위�
 
 &lt;h2 id=&quot;-구현하면서-느낀-점&quot;&gt;🌱 구현하면서 느낀 점&lt;/h2&gt;
 
-&lt;p&gt;Redis-Session는 구현해본 경험이 있다. 경험상 서버를 신경쓰지 않는다면 Session이 오히려 구현하기 간편했던 것으로 기억하고 있다. 보안적인 측면에서도 토큰 값이 
+&lt;p&gt;Session는 구현해본 경험이 있다. 경험상 서버를 신경쓰지 않는다면 Session이 오히려 구현하기 간편했던 것으로 기억하고 있다. 보안적인 측면에서도 토큰 값이 
 아무런 내용을 내포하고 있지 않을 뿐 아니라 서버에서 관리하고 있는 Session이 더 좋은 성능을 가질 것이라고 생각한다. (JWT는 로그인을 지속적으로 연장시키기 위해서는 
 Refresh Token을 사용해야하는데 이것은 결국 서버의 스토리지를 사용해야하는 것이므로 Session과 별다른 차이가 없다.)&lt;/p&gt;
 
 &lt;p&gt;JWT의 강점은 타 서비스의 인증을 통한 확정성이라고 생각한다. social login같은 기능은 빅테크 기업의 우수한 보안 기술과 접근성을 용이하게 해준다. Session과 
-JWT 모두 장단점을 가지고 있을거라 생각해서 다음 포스팅 주제로 Session vs JWT를 내가 구현했던 방식을 기준으로 작성해보고자 한다.&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="wanted" /><category term="pre_onboarding" /><category term="assignment" /><category term="jwt" /><summary type="html">JWT를 사용하여 로그인 및 사용자 인증, 인가를 구현하고 정리한 글입니다.</summary></entry><entry><title type="html">[원티드 프리온보딩 백엔드] 사전 과제를 구현해보다.</title><link href="http://localhost:4000/project/wanted_assignment.html" rel="alternate" type="text/html" title="[원티드 프리온보딩 백엔드] 사전 과제를 구현해보다." /><published>2023-08-08T00:00:00+09:00</published><updated>2023-08-08T00:00:00+09:00</updated><id>http://localhost:4000/project/wanted_assignment</id><content type="html" xml:base="http://localhost:4000/project/wanted_assignment.html">&lt;blockquote&gt;
-  &lt;p&gt;원티드 프리 온보딩 사전과제에서 구현한 기술들을 정리하고자 합니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;h3 id=&quot;-원티드-프리온보딩을-신청하다&quot;&gt;🟤 원티드 프리온보딩을 신청하다.&lt;/h3&gt;
-&lt;p&gt;백엔드로 전향하기 위해 스터디한지 어연 6개월차가 다 되어간다. 본격적인 구직을 하기 앞서 여러 사람들을 만나 개발 지식들을 나누고 스터디하는 그룹들을 찾고 싶었는데 마침 
-원티드에서 프리온보딩 백엔드 코스를 진행하는 것을 보게 되었다. 구직에 필요한 정보와 여러 도움들도 함께 제공하기에 1석 2조라 생각하여 모집 공고글을 본 즉시 바로 신청 사이트에 접속하였다.&lt;/p&gt;
-
-&lt;p&gt;하지만 원티드 프리온보딩에 참여하려면 몇가지의 주어진 과제를 이행하여 제출하고 선발되어야 했다. 이 글은 원티드 프리온보딩 사전 과제를 구현해보고 사용했던 기술들에 대해 정리해보고자 하기 위한 목적으로 
-쓰려고 한다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;-사전-과제에서-주어진-구현사항&quot;&gt;🌱 사전 과제에서 주어진 구현사항&lt;/h2&gt;
-&lt;p&gt;가능한한 추가 기능 구현까지 모두 구현해보고 싶었다. 필수로 주어진 과제는 간단한 CRUD를 통해 게시판을 만들어보고, 좀 더 나아가 JWT를 사용한 사용자 인증, 게시판 모델링 등이 있었다. 
-추가 구현 사항으로는 단위 or 통합 테스트 코드를 작성하기, docker-compose로 간단한 서버 환경 구축하기, AWS로 배포 후 해당 도메인으로 API 작동 확인하기 등이 있다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;필수 구현사항
-    &lt;ul&gt;
-      &lt;li&gt;JWT로 로그인 및 일부 API는 JWT를 통한 인증&lt;/li&gt;
-      &lt;li&gt;게시판 글 추가, 조회, 수정, 삭제&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;추가 구현사항
-    &lt;ul&gt;
-      &lt;li&gt;단위, 통합 테스트 코드 작성하기&lt;/li&gt;
-      &lt;li&gt;docker-compose로 서버 환경 구축하기&lt;/li&gt;
-      &lt;li&gt;AWS에 배포 후 배포된 도메인으로 API 작동 확인하기&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;이 정도로 정리할 수 있다. (당연히 게시판은 모델링까지 직접해야했다!)&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;-기술적으로-정리해보고자-하는-것들&quot;&gt;🌱 기술적으로 정리해보고자 하는 것들&lt;/h2&gt;
-&lt;p&gt;기술적으로 어떻게 고민했는지, 왜 이렇게 구현했는지 등을 생각해본 것들 위주로 정리해보고자 한다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;JWT를 통한 사용자 인증(+ Session과 뭐가 다를까?)&lt;/li&gt;
-  &lt;li&gt;게시판 모델링과 변경과 테스트 코드 이야기&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-원티드-프리온보딩-사전과제를-통해-느낀점&quot;&gt;🟤 원티드 프리온보딩 사전과제를 통해 느낀점&lt;/h3&gt;
-&lt;p&gt;해당 과제를 구현하면서 시간이 제일 많이 소요된 기술은 JWT와 AWS EC2와 Docker-Compose로 서버 환경을 구축하는 것이었다.&lt;/p&gt;
-
-&lt;p&gt;이번 과제에서는 AWS EC2에서 docker-compose를 사용하지 않고 EC2 컴퓨팅 메모리에 직접 MySQL과 Java -jar 파일을 실행시켜 동작하도록 했다. 
-그 이유는 docker-compose가 내 로컬환경에서는 잘 동작하는데, EC2환경에서는 말썽을 계속 일으키는 바람에 일단 AWS에는 docker-compose를 사용하지 않았다. 
-(포트 포워딩을 잘못해준건지.. 추후에 다시 차근차근 스터디해보아야할 내용라고 생각한다.) 
-애초에 EC2에 docker-compose로 한번에 서버 인프라 구성하는 것보다는 nginx로 https 리버스 프록시같은 로드벨런서도 추가해주고, 
-EC2는 서버 어플리케이션, RDS 서버에 MySQL을 실행시켜 VPC로 묶어주는 등의 작업이 훨씬 인프라적으로 안정적이겠지만..혹시 모를 예산적 문제가 발생할 수도 있을 것 같아 일단 이렇게 구현했다.&lt;/p&gt;
-
-&lt;p&gt;그동안 AWS 등 인프라 관련된 스터디에 많이 소홀히했던 것 같은데 슬슬 분산 시스템에 대한 간단한 인프라 구축 등도 포함해서 스터디를 병행해야할 때가 온 것 같다. (면접에 대비하여..!)
-이제는 기본적인 CS 및 Java, Spring에 관련된 지식들은 탄탄한 복습 위주로 스터디하고 조금씩 영역을 확장하면서 넓어진 개념에 deep dive하면서 CS와 연계하여 스터디해야겠다고 느꼈다. (특히 DB..!)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="wanted" /><category term="pre_onboarding" /><category term="assignment" /><summary type="html">원티드 프리 온보딩 사전과제에서 구현한 기술들을 정리하고자 합니다.</summary></entry><entry><title type="html">[스스로 정리해보는 CS] #2 프로세스</title><link href="http://localhost:4000/devlog/operation2.html" rel="alternate" type="text/html" title="[스스로 정리해보는 CS] #2 프로세스" /><published>2023-07-23T00:00:00+09:00</published><updated>2023-07-23T00:00:00+09:00</updated><id>http://localhost:4000/devlog/operation2</id><content type="html" xml:base="http://localhost:4000/devlog/operation2.html">&lt;blockquote&gt;
+JWT 모두 장단점을 가지고 있을거라 생각해서 다음 포스팅 주제로 Session vs JWT를 내가 구현했던 방식을 기준으로 작성해보고자 한다.&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="wanted" /><category term="pre_onboarding" /><category term="assignment" /><category term="jwt" /><summary type="html">JWT를 사용하여 로그인 및 사용자 인증, 인가를 구현하고 정리한 글입니다.</summary></entry><entry><title type="html">[스스로 정리해보는 CS] #2 프로세스</title><link href="http://localhost:4000/devlog/operation2.html" rel="alternate" type="text/html" title="[스스로 정리해보는 CS] #2 프로세스" /><published>2023-07-23T00:00:00+09:00</published><updated>2023-07-23T00:00:00+09:00</updated><id>http://localhost:4000/devlog/operation2</id><content type="html" xml:base="http://localhost:4000/devlog/operation2.html">&lt;blockquote&gt;
   &lt;p&gt;컴퓨터가 동작하는 원리부터 시작해 OS, Network, Database 등이 어떻게 상호작용하며 동작하는지 스스로 정리하기 위한 시리즈입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -1098,108 +1245,4 @@ Nginx를 사용하여 로드벨런싱을 하는 경우도 있지만, 현업에�
 
 &lt;h3 id=&quot;-이제-프로젝트-시작&quot;&gt;🌱 이제 프로젝트 시작!&lt;/h3&gt;
 &lt;p&gt;전체적인 서버 아키텍쳐를 설계해보았다. 하나부터 열까지 다 구현하기에는 “내가 왜 이 기술을 사용하지?”, “이 기술말고 다른 기술은 없을까?” 등 같이 기술에 대한 분석과 프로젝트에 필요한 것들을 적용할 수 있는 판단력을 길러야겠다고 판단했다. 먼저 어플리케이션 코드를 완성해보고 
-이후에 처음에 설계했던 서버 아키텍쳐를 반영하여 배포까지 해보는 것을 목표로 해보자!!!&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="Docker" /><category term="Nginx" /><summary type="html">Docker와 Nginx는 왜 CI에서 사용할까?</summary></entry><entry><title type="html">String literal과 new String (feat. VisualVM)</title><link href="http://localhost:4000/devlog/stringLiteral.html" rel="alternate" type="text/html" title="String literal과 new String (feat. VisualVM)" /><published>2023-05-22T00:00:00+09:00</published><updated>2023-05-22T00:00:00+09:00</updated><id>http://localhost:4000/devlog/stringLiteral</id><content type="html" xml:base="http://localhost:4000/devlog/stringLiteral.html">&lt;blockquote&gt;
-  &lt;p&gt;모니터링 프로그램을 사용해보고 싶어 비교해보는 String Literal과 new String의 비교&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!---more---&gt;
-
-&lt;h2 id=&quot;-왜-굳이-string-literal과-new-string생성자을-비교해볼까&quot;&gt;📚 왜 굳이 String literal과 new String(생성자)을 비교해볼까?&lt;/h2&gt;
-&lt;p&gt;Spring의 JDBC 환경에서 개발하던 중 Repository 컴포넌트에서 DB와 커넥션을 위해서 JdbcTemplate을 사용해야 했고, 쿼리문을 실행하기 위해서는 SQL문을
-직접 작성해서 JdbcTemplate에 주입해주어야 했다.
-그렇다보니 각 Repository의 메서드마다 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String sql = &quot;insert into TABLE(attribute) values (?...);&quot;&lt;/code&gt; 식으로 실행할 쿼리문을 넣어주어야 했다.
-&lt;br /&gt;
-String 하나쯤이야~ 라고 생각할 수 있겠지만 Spring 서버 어플리케이션은 Servlet을 통해 각 클라이언트의 요청마다 스레드가 할당되어 요청을 수행한다. 만일 
-String을 생성할 때마다 객체로 저장되어(Java에서 String은 객체이다.) Heap 메모리에 저장되면 많은 클라이언트들이 요청을 수행했을 때 OOME(OutOfMemroyException)이 
-발생하지 않을까? 생각했다.
-&lt;br /&gt;
-당연히 Java에서는 String만의 메모리 관리법이 있기 때문에 지금 우리가 Java 어플리케이션을 잘 사용하고 있겠지만, 모니터링 프로그램(VisualVM, Profiler) 등도 익숙해질 겸
-String Literal일 때와 new String일 때 어디에 데이터가 저장되는지 알아보고자 한다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;-예상-시나리오&quot;&gt;📚 예상 시나리오&lt;/h2&gt;
-&lt;p&gt;본래 String literal로 생성하는 데이터는 PermGen 영역에 저장되었다. PermGen은 Heap 영역에 속하지는 않지만 메모리 MaxSize가 고정되어 있어 String 데이터가 많아지면 OOME가 종종? 발생하였다…고 한다.
-Java 7 이후부터 PermGen에 저장되었던 String literal 데이터는 Heap 영역에 저장되었고, Heap의 특성인 GC가 가능하도록 변경되었다. &lt;a href=&quot;https://www.baeldung.com/java-string-pool&quot;&gt;관련 링크 [Baeldung]&lt;/a&gt;
-&lt;br /&gt;
-(여기서 조심해야할 부분은 String literal을 보관하는 String Constant Pool은 Java7에 Heap 영역으로 옮겨졌고, PermGen이 Metaspace로 변경된 것은 Java8에 이루어졌다. 햇갈리지 않기!)
-&lt;br /&gt;
-&lt;br /&gt;
-위의 정보들을 토대로 예상되는 결론은&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;하나의 String literal 데이터를 변수에 할당하는 반복문을 N번 호출하게 된다면 데이터는 String literal 데이터 하나를 저장하는 미세한 변동만 보여질 것이다.&lt;/li&gt;
-  &lt;li&gt;각각 다른 String literal 데이터 100개를 N번 호출하면 100개를 Heap에 저장하는 것 이외의 변동은 없을 것이다.&lt;/li&gt;
-  &lt;li&gt;같은 String 문자열을 new String으로 생성시에는 Heap에 차지하게 되는 객체의 수가 생성된 객체만큼 늘어날 것이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;-모니터링-결과-visualvm&quot;&gt;📚 모니터링 결과 (VisualVM)&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;사용한 환경 : Java11, Spring Web(API 호출을 위해)&lt;/li&gt;
-  &lt;li&gt;Tool : VisualVM, PostMan(String literal 생성하는 API N번 호출)&lt;/li&gt;
-  &lt;li&gt;공통으로 적용된 값
-    &lt;ul&gt;
-      &lt;li&gt;반복문으로 변수에 100번씩 할당&lt;/li&gt;
-      &lt;li&gt;Postman으로 해당 로직을 총 N * M(10000000)이 되도록 호출 (Servlet의 영향으로 각 요청마다 스레드가 생겨나는 이슈 생각하기)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;-같은-string-literal을-생성하는-로직을-100--n-번-호출한-결과&quot;&gt;🌱 같은 String literal을 생성하는 로직을 100 * N 번 호출한 결과&lt;/h3&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public void literal() {
-    for (int i = 0; i &amp;lt; 100; i++) {
-        String sql = &quot;insert into table(attribute) values (?..);&quot;;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/devlog/javaSpring/2023_05_22_stringLiteral1.png&quot; width=&quot;600&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;CPU가 사용된 주황색 라인 지점에서 메서드가 실행되었다. 동일한 지점에서 Heap 메모리는 아주 미세하게 값이 증가하였는데, 이는 Servlet의 Thread 생성 비용으로 추정됨 (확인 필요)&lt;/p&gt;
-
-&lt;h3 id=&quot;-서로-다른-100개의-string-literal을-생성하는-로직을-n번-호출한-결과&quot;&gt;🌱 서로 다른 100개의 String literal을 생성하는 로직을 N번 호출한 결과&lt;/h3&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public void literal2() {
-    for (int i = 0; i &amp;lt; 100; i++) {
-        String sql = &quot;insert into table(attribute) values (?..);&quot; + &quot; &quot; + i;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/devlog/javaSpring/2023_05_22_stringLiteral100.png&quot; width=&quot;600&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;하나의 String literal만 생성하는 것보다 약간 증가폭이 늘었지만 여전히 비슷한 결과를 보여주고 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;-new-string생성자를-사용한-로직을-n번-호출한-결과&quot;&gt;🌱 new String()(생성자)를 사용한 로직을 N번 호출한 결과&lt;/h3&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public void newString() {
-    for (int i = 0; i &amp;lt; 100; i++) {
-        String sql = new String(&quot;insert into table(attribute) values (?..);&quot;);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/devlog/javaSpring/2023_05_22_newString.png&quot; width=&quot;600&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;String literal로 생성했던 결과들과 확연하게 차이가 보인다. 즉 생성자로 생성하는 String 값 모두 새롭게 생성되고 일정 메모리 이상 올라가면 GC가 발생하는 것을 확인할 수 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;-서로-다른-10000개의-string-literal-생성하는-로직을-n번-호출한-결과&quot;&gt;🌱 서로 다른 10000개의 String literal 생성하는 로직을 N번 호출한 결과&lt;/h3&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public void literal3() {
-    for (int i = 0; i &amp;lt; 10000; i++) {
-        String sql = &quot;insert into table(attribute) values (?..);&quot; + &quot; &quot; + i;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;https://wkblog-images.s3.ap-northeast-2.amazonaws.com/devlog/javaSpring/2023_05_22_stringLiteral10000.png&quot; width=&quot;600&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Java7 이후부터 String literal이 Heap영역으로 옮겨졌기 때문에 위와같이 String literal도 GC가 발생한다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-마무리&quot;&gt;📚 마무리&lt;/h3&gt;
-&lt;p&gt;String 데이터가 많으면 많아질 수록 literal를 사용하는 것이 매우 효율적이라는 것을 알 수 있다. 하나의 문자열을 String Constant Pool에 저장하고 GC가 일어나기 전까지 계속 캐싱된 문자열을 
-사용할 수 있기 때문에 메모리 효율을 높일 수 있다. 생성자를 통해 생성하는 String은 생성할 때마다 새로운 Heap 메모리를 차지하기 때문에 메모리 효율도 않좋을 뿐더러 GC가 더욱 자주 발생된다. 이는 GC를 동작시키는 
-컴퓨팅 리소스를 불필요하게 소비하기 때문에 literal을 통한 문자열 생성을 적극 권장한다.
-&lt;br /&gt;
-&lt;br /&gt;
-이와는 별개로 Spring의 Repository에 SQL문을 작성하는 것은 다른 접근 방법이 필요할 것 같다. 가령 클라이언트로(스레드)로부터 동시에 메소드가 호출된다면 SQL문을 literal로 생성하는 것이 이중으로 발생할 수 있어서 이 또한 
-효율이 좋지 않을 수 있을 것 같다.
-&lt;br /&gt;
-이러한 이유로 SQL문을 관리하는 enum을 만들어 SQL문을 상수화하고(enum은 상수로써 런타임 시 바로 Method Area에 초기화되는 특징을 가지고 있다.) enum 클래스로부터 SQL문을 주입받는 것도 괜찮은 선택인 것 같다.&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="java_spring" /><category term="JVM" /><category term="Memory" /><summary type="html">모니터링 프로그램을 사용해보고 싶어 비교해보는 String Literal과 new String의 비교</summary></entry></feed>
+이후에 처음에 설계했던 서버 아키텍쳐를 반영하여 배포까지 해보는 것을 목표로 해보자!!!&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="Docker" /><category term="Nginx" /><summary type="html">Docker와 Nginx는 왜 CI에서 사용할까?</summary></entry></feed>

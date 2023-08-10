@@ -195,7 +195,9 @@ parserBuilder메소드의 내부를 자세히 살펴보면 이런 코드들을 �
 Jwts의 parserBuilder가 호출되기 전까지는 io.jsonwebtoken.impl.DefaultJwtParserBuilder 의 해당 클래스가 로드되어있지 않다. JVM은 동적로드 기법을 사용하여 
 동작하기 때문이다. 특히, ClassLoader.loadClass 메소드를 사용하는 런타임 동적로드를 사용하여 해당 parserBuilder에 필요한 구현체를 타 라이브러리로부터 가지고 오고 있다.
 
-클래스로더에 대한 설명은 추후 따로 포스팅해야할 것 같다.
+클래스로더에 대한 설명은 추후 따로 포스팅해야할 것 같다. <br />
+- [클래스 로더 포스팅](https://medium.com/@gsy4568/jvm%EC%9D%98-%EC%B2%AB%EA%B4%80%EB%AC%B8-classloader-ecdf93d53a7b)
+- [클래스 로더 간단 활용법](https://syeon2.github.io/devlog/classloader.html)
 
 ----
 
