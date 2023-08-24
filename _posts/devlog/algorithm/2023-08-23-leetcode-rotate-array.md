@@ -12,7 +12,7 @@ tags: algorithm array string
 
 📚 목차
 - [🌱 Rotate Array](#-rotate-array)
-  - [🟤 문제 요약 - Definition](#-문제-요약-definition)
+  - [🟤 문제 정의 - Definition](#-문제-요약-definition)
   - [🟤 문제 풀이 전략 추상화 - Abstraction](#-문제-풀이-전략-추상화-abstraction)
   - [🟤 문제 풀이 - Algorithm](#-문제-풀이-algorithm)
 
