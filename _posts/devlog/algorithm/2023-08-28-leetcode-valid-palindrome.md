@@ -3,7 +3,7 @@ layout: post
 title: "[LeetCode] 125. Valid Palindrome"
 subtitle: "algorithm"
 categories: devlog
-tags: algorithm array string
+tags: algorithm array two-pointer
 ---
 
 > LeetCode Top Interview 150의 125번 문제입니다.
@@ -11,7 +11,7 @@ tags: algorithm array string
 <!--more-->
 
 📚 목차
-- [🌱 Valid Palindrome](#-rotate-array)
+- [🌱 Valid Palindrome](#-valid-palindrome)
   - [🟤 문제 정의 - Definition](#-문제-요약-definition)
   - [🟤 문제 풀이 전략 추상화 - Abstraction](#-문제-풀이-전략-추상화-abstraction)
   - [🟤 문제 풀이 - Algorithm](#-문제-풀이-algorithm)
