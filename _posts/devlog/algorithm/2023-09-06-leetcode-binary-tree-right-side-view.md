@@ -22,32 +22,33 @@ tags: algorithm tree
 
 ### 🟤 문제 정의 (Definition)
 
-- 파라미터로 트리 구조의 루트 노드가 주어진다.
-- 해당 루트노드로부터 각 depth에 해당하는 노드들 중 제일 오른쪽에 있는 노드들을 리스트에 담아 반환하는 문제이다.
+- 파라미터로 트리 구조의 루트 노드를 제공한다.
+- 각 depth를 기준으로 존재하는 수들의 평균을 배열에 저장하여 반환하는 문제이다.
 
 
 - 조건
-  - The number of nodes in the tree is in the range [0, 100].
-  - -100 <= Node.val <= 100
+  - The number of nodes in the tree is in the range [1, 10<sup>4</sup>].
+  - -2<sup>31</sup> <= Node.val <= 2<sup>31</sup> - 1
 
 ---
 
 ### 🟤 문제 풀이 전략 추상화 (Abstraction)
 
-해당 문제는 정확하게 이해해야한다. 무조건 오른쪽 자식 노드를 각 depth에 맞게 배열에 담아 반환하는 문제가 아.니.다.
+각 depth에 있는 노드에 접근할 때마다 수의 총 함계와 얼만큼 접근했는지를 트래킹할 수 있는 클래스를 별로도 정의했다. 
+재귀함수로 각 depth에 있는 모든 노드들을 탐색한다. depth를 인덱스 삼은 리스트에 해당 depth에 접근할 때마다 접근했던 노드의 숫자필드를 합하고 현재 depth에서 접근 횟수를 카운팅한다. 
 
-각 이진트리에서 depth마다 최대로 가질 수 있는 노드가 정해져있다. 루트 노드는 1개, 그 아래는 루트 노드로부터 left, right 총 2개, 그 아래 depth는 
-위의 2개의 노드에서 각각 left, right가 생겨 총 4개의 노드가 생길 '수' 있다. 하지만 무조건 depth의 제곱만큼 노드가 생기는 것은 아니다. 이 부분을 잘 생각해보아야할 것이다.
+```java
+class Node {
 
-만일 루트노드로부터 내림차순으로 작은 값만 추가한다면 왼쪽 노드만이 길게 이어진 트리 구조가 될것이다. 그럼 각 depth에서 제일 오른쪽에 있는 노드는 왼쪽 자식 노드일 것이다. 이런 경우가 
-존재한다는 것을 생각해야한다.
+    double sum;
+    int count;
 
-그래서 각 자식 노드에 대한 정보를 리스트에 저장하기 위해 depth또한 함께 재귀 함수의 파라미터로 지정한다. depth는 1씩 일정하게 증가므로 각 depth의 제일 오른쪽에 있는 값을 왼쪽부터 차례대로 리스트에 
-저장한다. 그리고 해당 depth에서 오른쪽 자식 노드에 접근할 때마다 해당 depth를 사용하여 배열 인덱스에 접근 후 갱신한다.
-
-> 🥕 시간복잡도는 모든 노드를 탐색하여 제일 오른쪽 노드를 갱신하기 때문에 O(N)의 시간복잡도를 가진다.
-> 
-> 🥕 공간복잡도 또한 모든 노드를 탐색하는 재귀 함수를 사용하기 때문에 O(N)의 공간복잡도를 가진다.
+    public Node(int sum, int count) {
+        this.sum = sum;
+        this.count = count;
+    }
+}
+```
 
 ---
 
@@ -55,25 +56,50 @@ tags: algorithm tree
 
 ```java
 class Solution {
-    public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
+
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Node> list = new ArrayList<>();
 
         bfs(list, root, 0);
 
-        return list;
+        List<Double> answer = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            Node node = list.get(i);
+
+            double a = (double) node.sum / (double) node.count;
+
+            answer.add(a);
+        }
+
+        return answer;
     }
 
-    public void bfs(List<Integer> list, TreeNode node, int depth) {
+    public void bfs(List<Node> list, TreeNode node, int depth) {
         if (node == null) return;
 
         if (list.size() <= depth) {
-            list.add(node.val);
+            list.add(new Node(node.val, 1));
         } else {
-            list.set(depth, node.val);
+            Node n = list.get(depth);
+
+            n.sum += node.val;
+            n.count += 1;
         }
 
-        bfs(list, node.left, depth + 1);
-        bfs(list, node.right, depth + 1);
+        if (node.left != null) bfs(list, node.left, depth + 1);
+        if (node.right != null) bfs(list, node.right, depth + 1);
+    }
+
+    class Node {
+
+        double sum;
+        int count;
+
+        public Node(int sum, int count) {
+            this.sum = sum;
+            this.count = count;
+        }
     }
 }
 ```
