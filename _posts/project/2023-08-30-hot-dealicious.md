@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Hot-Dealicious V2] 전체 프로젝트 재설계"
+title: "[Hot-Deal] 전체 프로젝트 설계"
 subtitle: "프로젝트 예상 설계"
 categories: project
 tags: project architecture
@@ -12,11 +12,9 @@ tags: project architecture
 
 ## 🌱 프로젝트 개요
 
-> Hot-Dealicious는 음식 배달 플랫폼으로 회원가입, 주문, 결제, 라이더 위치 정보 제공 서비스 등 `배달`에 필요한 핵심 기능 위주로 구현한 프로젝트입니다.
+> Hot-Deal은 쿠팡 같은 E-Commerce 플렛폼으로 회원가입, 주문, 결제, 선착순 쿠폰 발행 등 필요한 핵심 기능 위주로 구현한 프로젝트입니다.
 
-Hot-Dealicious 프로젝트를 통해 배달에 필요한 기능들을 구현함으로써 서버 개발에 필요한 기술을 익히고 심화학습하고자 하는 목표를 가지고 있습니다.
-
-이전 버전 V1에서 다소 아쉽게 개발된 기술들을 보완하고 리팩토링하여 다시 프로젝트를 재구성합니다.
+Hot-Deal 프로젝트를 통해 서버 개발에 필요한 기술을 익히고 심화학습하고자 하는 목표를 가지고 있습니다.
 
 ---
 
@@ -25,8 +23,7 @@ Hot-Dealicious 프로젝트를 통해 배달에 필요한 기능들을 구현함
 #### 🟤 for Application : Java 11, Spring Boot 2.7.x <br />
 #### 🟤 for Database : MySQL, Redis(cache) <br />
 #### 🟤 for DB Connection : Spring Data JPA, QueryDSL <br />
-#### 🟤 for Network : WebSocket STOMP, AWS EC2 <br />
-#### 🟤 for CI/CD : Github, Jenkins, Docker-Compose <br />
+#### 🟤 for CI/CD : Github, Jenkins, Docker-Compose, AWS EC2 <br />
 
 위의 기술들을 기본적으로 가져가려고 한다.
 
@@ -34,17 +31,14 @@ Java와 Spring은 당연히 서버 어플리케이션을 구현하기 위한 언
 기본적으로 지원하기 때문에 대용량 트래픽을 요하는 프로젝트에서 자주 사용되기 때문에 선택했다. 또한, 객체 지향 언어이기 때문에 객체 지향을 최대로 활용한 Spring 프레임워크를 
 사용한다.
 
-Database로는 MySQL과 Redis를 사용한다. MySQL은 관계형 데이터베이스로 많이 사용되는 DB이며, 배달 플렛폼 특성상 주문하거나, 회원가입 등 새로 데이터를 생성하는 쿼리보다 
-여러 테이블을 조회하여 데이터를 보여주는 기능이 월등하게 많다. 그렇기 때문에 관계형 DB인 MySQL이 프로젝트의 데이터베이스로 적합하다고 판단했다.
+Database로는 MySQL과 Redis를 사용한다. MySQL은 관계형 데이터베이스로 많이 사용되는 DB이며, 이커머스 특성상 주문하거나, 회원가입 등 새로 데이터를 생성하는 insert, update 등의 쿼리보다  
+여러 테이블을 조회하여 상품을 보여주는 select 쿼리가 월등하게 많다. 그렇기 때문에 관계형 DB인 MySQL이 프로젝트의 데이터베이스로 적합하다고 판단했다.
 <br />
-Redis는 일시적으로 데이터를 저장할 수 있는 In-Memory 캐시 스토리지로 활용할 예정이다. 장바구니같은 중요하지 않은 데이터뿐만 아니라 Session같은 로그인 정보를 일시적으로 보관하기, 
+Redis는 일시적으로 데이터를 저장할 수 있는 In-Memory 캐시 스토리지로 활용할 예정이다. 장바구니같은 중요하지 않은 데이터뿐만 아니라 JWT의 Refresh Token, Session같은 로그인 정보를 일시적으로 보관하기, 
 분산락 등 다양하게 활용할 수 있다.
 
 JPA는 DB에 요청하는 쿼리문을 객체지향적으로 풀어 사용할 수 있는 ORM이다. 기존에는 SQL Mapper(MyBatis)를 사용하여 쿼리문을 일일히 작성해야하는 불편함이 있었지만 JPA를 사용하면 
 쿼리문을 프레임워크에서 알아서(물론 정확하게 의도하여 구현해야겠지만!) 쿼리문을 작성하여 요청한다. 현업에서도 많이 사용되는 기술이기에 프로젝트에 채용하여 사용해보고자 한다.
-
-네트워크 기술로는 WebSocket STOMP를 사용하여 라이더의 위치 정보를 실시간으로 제공할 예정이다. 사실 Redis의 GeoLocation 기능을 활용할 예정이기 때문에 Redis pub/sub의 기술도 
-탐났지만 WebSocket 기술을 자세하게 다시 공부해보고자 사용하게 되었다.
 
 CI/CD는 형상관리 시스템 git과 자동 빌드 툴 Jenkins 등을 사용하여 배포를 자동화할 예정이다. 다만 Jenkins의 역할은 CI까지의 역할이 크다. 배포된 코드를 테스트 검사하고 컴파일까지 
 진행한다. 이후 컴파일된 파일을 AWS에 자동 배포하는 것은 사람이 수동으로 관리하고자 한다. 모든 것을 자동화하기보다 사람이 최소한으로 관리/감독할 영역을 두어 최대한 안전하게 서비스를 
