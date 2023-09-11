@@ -11,7 +11,7 @@ tags: algorithm tree
 <!--more-->
 
 📚 목차
-- [🌱 208. Implement Trie (Prefix Tree)]()
+- [🌱 Implement Trie (Prefix Tree)](#-implement-trie--prefix-tree-)
   - [🟤 문제 정의 - Definition](#-문제-요약-definition)
   - [🟤 문제 풀이 전략 추상화 - Abstraction](#-문제-풀이-전략-추상화-abstraction)
   - [🟤 문제 풀이 - Algorithm](#-문제-풀이-algorithm)
