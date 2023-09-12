@@ -11,7 +11,7 @@ tags: algorithm heap
 <!--more-->
 
 📚 목차
-- [🌱 215. Kth Largest Element in an Array]()
+- [🌱 215. Kth Largest Element in an Array](#-kth-largest-element-in-an-array)
   - [🟤 문제 정의 - Definition](#-문제-요약-definition)
   - [🟤 문제 풀이 전략 추상화 - Abstraction](#-문제-풀이-전략-추상화-abstraction)
   - [🟤 문제 풀이 - Algorithm](#-문제-풀이-algorithm)
