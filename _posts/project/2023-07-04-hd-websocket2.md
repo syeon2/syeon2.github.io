@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Hot-Dealicious #3] WebSocket 성능 테스트"
+title: "[Hot-Dealicious #2] WebSocket 성능 테스트"
 subtitle: "WebSocket 성능 테스트"
 categories: project
 tags: project Network WebSocket

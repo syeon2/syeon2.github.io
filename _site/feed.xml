@@ -1,5 +1,633 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2023-09-14T01:02:48+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;생각하고 기록하는 습관을 익히는 중...&quot;
-</subtitle><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><entry><title type="html">[Hot-Deal #1] Member 도메인 개발</title><link href="http://localhost:4000/project/hot-deal-member.html" rel="alternate" type="text/html" title="[Hot-Deal #1] Member 도메인 개발" /><published>2023-09-12T00:00:00+09:00</published><updated>2023-09-12T00:00:00+09:00</updated><id>http://localhost:4000/project/hot-deal-member</id><content type="html" xml:base="http://localhost:4000/project/hot-deal-member.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko-KR, en-US"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko-KR, en-US" /><updated>2023-09-25T14:58:22+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Syeon</title><subtitle>&quot;성장을 기록하는 Devlog&quot;
+</subtitle><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><entry><title type="html">[Hot-Dealicious #3] Hot-Dealicious 중간 피드백</title><link href="http://localhost:4000/project/hd-websocket3.html" rel="alternate" type="text/html" title="[Hot-Dealicious #3] Hot-Dealicious 중간 피드백" /><published>2023-09-25T00:00:00+09:00</published><updated>2023-09-25T00:00:00+09:00</updated><id>http://localhost:4000/project/hd-websocket3</id><content type="html" xml:base="http://localhost:4000/project/hd-websocket3.html">&lt;blockquote&gt;
+  &lt;p&gt;Hot-Dealicious Project의 중간 피드백과 개선점을 고민합니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;-hot-dealicious의-구조적-문제&quot;&gt;🌱 Hot-Dealicious의 구조적 문제&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://syeon2.github.io/project/hd-websocket1.html&quot;&gt;Hot-Dealicious의 프로젝트&lt;/a&gt;는 기능적으로는 동작하지만, 전체적으로는 잘못된 
+기획과 구조를 가지고 있었다는 결론에 도달하였습니다. 서비스 기획과 구현을 소홀히 한 대가였습니다.&lt;/p&gt;
+
+&lt;p&gt;….&lt;/p&gt;
+
+&lt;p&gt;지금은 라이더가 언제 서버와 WebSocket 커넥션을 맺어 실시간 통신을 하는지, Scale out된 WebSocket 서버에서 어떻게 소비자 클라이언트가 자신과 
+매칭된 라이더의 위치를 지속적으로 받을 수 있는지에 대한 고민이 미흡한 상태에서 코드를 구현했기 때문에, 어떤 Flow로 전체 프로세스가 진행되는지 
+파악할 수 없을 지경에 이르렀습니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;첫 백엔드 프로젝트로써 서버 구축과 WebSocket 통신, Scale out을 고려한 서버 확장 등 많은 것들을 신경쓰면서 작업했기 때문에 많은 스터디를 할 수 있었지만, 
+복잡한 기능일 수록 탄탄한 기획과 아키텍쳐가 단단하게 받쳐줘야 한다는 것을 다시한번 깨닫게 되었습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-아키텍쳐를-rebuilding-해봅니다&quot;&gt;🌱 아키텍쳐를 ReBuilding 해봅니다.&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;기존의 아키텍쳐&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.ibb.co/mNbgsPV/web-Socekt-architecture.jpg&quot; alt=&quot;web-Socekt-architecture&quot; width=&quot;850&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 아키텍쳐의 의도는 이러합니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;
+      &lt;p&gt;라이더는 Scale out된 서버와 WebSocket을 통해 한번 커넥션을 맺은 서버와 지속적으로 통신해야합니다.
+  마치 “sticky session”과 같은 방식으로 routing table에 라이더가 한번 통신 맺은 서버의 URL을 저장합니다.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;URL을 가지고 있는 라이더는 이미 자신의 위치를 커넥션 맺은 서버에게 제공하고 있는 중이기 때문에 라우팅 테이블에 저장한 서버 URL에
+  지속적으로 자신의 위치를 업데이트합니다.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;만일 라우팅 테이블에 라이더 자신과 커넥션을 맺은 서버 URL이 없다면 LB를 통해 하나의 서버 URL가 매칭된다면 그 URL을 라우팅 테이블에 저장하고
+  이후 지속적으로 서버와 통신합니다.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;하지만 이 의도는 많은 것들을 간과하고 구성된 아키텍쳐를 만들게 되었습니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;
+      &lt;p&gt;WebSocket으로 한번 커넥션을 맺은 서버와 라이더는 이후 별도의 처리가 필요없이 지속적으로 커넥션을 맺고 있습니다. WebSocket 자체가 서버와 실시간 통신을 
+위해 한번 맺은 커넥션을 끊지 않고 유지시키기 때문에 한번 LB를 통해 맺어진 라이더-서버 간의 커넥션은 누구 하나의 종료가 없다면 계속 이어집니다.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;WebSocket의 라우팅 테이블이 필요한 기능은 바로 소비자 클라이언트와 라이더 간의 매칭입니다. 라이더는 서버와 WebSocket 커넥션을 맺고 
+지속적으로 통신하지만, 소비자 클라이언트는 배달을 한번 매칭된 이후 라이더의 위치를 조회해야하기 때문입니다.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;🥲️ 위의 기술적 동작 방식을 다시 고려하여 새롭게 아키텍쳐를 구성하고 실시간 위치 조회 기능 Flow를 재정의하보았습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.ibb.co/fXyGQp7/hot-dealicious-real-architecture.png&quot; alt=&quot;hot-dealicious-real-architecture&quot; width=&quot;850&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;라이더는 출근 시 서버와 WebSocket 커넥션을 맺고 지속적으로 위치 정보를 갱신합니다. &lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;매장에서 라이더를 호출 시 매장 주변으로 라이더가 존재하는지 탐색합니다. &lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;2번 성공 / 실패
+    &lt;ul&gt;
+      &lt;li&gt;매칭 성공 시 라우팅 테이블에 주문에 대한 소비자 아이디를 Key값으로 저장, Key에 대한 Value로 매칭된 라이더 아이디를 저장합니다.&lt;/li&gt;
+      &lt;li&gt;매칭 실패 시 매장에게 안내합니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;매칭 성공하게 되면 매장, 소비자에게 각각 안내합니다.&lt;/li&gt;
+  &lt;li&gt;소비자는 라이더를 조회하는 특정 페이지에서 Polling 방식으로 매칭된 라이더 아이디를 조회합니다. 조회한 후 라이더의 위치 정보를 조회하여 
+소비자 클라이언트에게 반환합니다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;위치 정보를 제공하는 기능 Flow가 보다 명확해졌습니다. 이와 함께 Scale out을 고려한 아키택쳐도 재정의해보려합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.ibb.co/DRDLHLX/Screenshot-2023-09-25-at-2-38-05-PM.png&quot; alt=&quot;Screenshot-2023-09-25-at-2-38-05-PM&quot; width=&quot;850&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다소 Redis를 맹신(?)하는 것처럼 보일 수 있을 것 같습니다. Redis는 In-Memory 기반으로 사용할 수 있는 캐시 스토리지이기 때문에 일반적으로 File I/O를 하는 DB보다 
+빠르게 저장하고 데이터를 조회할 수 있습니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;❗️ 다만, Redis는 메인 메모리에 값을 저장하기 때문에 영구적인 데이터 저장이 어려워 중요한 데이터를 보관하는데 적합하지 않습니다. 그렇기에 라이더의 위치를 조회하는 것은 
+배달에 아무런 영향을 끼치지 않으므로 Redis를 사용하기에 적합하다고 판단했습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-중간-피드백-정리&quot;&gt;🌱 중간 피드백 정리&lt;/h2&gt;
+
+&lt;p&gt;전 직장에서도 고민이 많았던 기획에 대해 다시 생각해보는 프로젝트였습니다.&lt;/p&gt;
+
+&lt;p&gt;탄탄하게 설계된 기획과 기능 Flow는 명확하게 의사를 전달할 수 있다는 것입니다. 이는 구두 전달이나 팀 미팅 뿐만 아니라 코드 레벨에서도 적용될 수 있다는 점입니다.&lt;/p&gt;
+
+&lt;p&gt;팀 미션이었다면 마음이 많이 어려웠을 것 같습니다. 그만큼 팀들과 생산성 있는 작업을 함께하기 위해서 명확하게 전달할 수 있는 도구나 메모가 꼭 필요하다고 느꼈습니다. 
+이번 프로젝트는 일단 여기에서 Break을 걸려고 합니다. 아무래도 전체적인 부분을 수정하기 위해서는 새로운 Repository를 만들어 구현하는 것이 더욱 빠를 것 같다고 예상됩니다.&lt;/p&gt;
+
+&lt;p&gt;다만, 그동안 2개정도의 프로젝트를 진행해보면서 익힌 TDD, JPA 등의 효율적인 개발 방법론과 기술들을 도입해서 리뉴얼할 예정입니다.&lt;/p&gt;
+
+&lt;p&gt;완벽한 프로젝트가 아니라 성장하는 프로젝트를 위해 더욱 힘써야겠습니다.&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><summary type="html">Hot-Dealicious Project의 중간 피드백과 개선점을 고민합니다.</summary></entry><entry><title type="html">[Java] Primitive Type 데이터가 저장되는 공간은 어딜까?</title><link href="http://localhost:4000/devlog/primitive-type-storage.html" rel="alternate" type="text/html" title="[Java] Primitive Type 데이터가 저장되는 공간은 어딜까?" /><published>2023-09-21T00:00:00+09:00</published><updated>2023-09-21T00:00:00+09:00</updated><id>http://localhost:4000/devlog/primitive-type-storage</id><content type="html" xml:base="http://localhost:4000/devlog/primitive-type-storage.html">&lt;blockquote&gt;
+  &lt;p&gt;javap CMD를 사용하여 어떻게 동작하는지 비교합니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;-primitive-type-데이터란&quot;&gt;🌱 Primitive Type 데이터란?&lt;/h2&gt;
+
+&lt;p&gt;Java에서 Primitive Type 데이터는 아주 기본적인 타입, 더이상 나눌 수 없는 단위의 데이터를 의미하며 8가지의 기본 타입 데이터가 존재합니다.&lt;/p&gt;
+
+&lt;p&gt;Primitive type 데이터에 대한 자세한 정보는 Java입문서와 블로그에서 확인할 수 있었으나, 어디에 저장되는지는 명확하게 파악할 방법이 없었습니다. 이에 
+이를 알아보고자 합니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-블로깅의-발단&quot;&gt;🌱 블로깅의 발단&lt;/h2&gt;
+
+&lt;p&gt;참조형 데이터는 대개 Heap 영역에 저장된다고 알려져 있습니다. 그리고 Primitive type 데이터는 JVM Stack에 저장된다고 알려져 있습니다. 하지만 사실 Primitive Type 데이터에는 
+많은 이야기들이 돌고 있습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;원시 타입 데이터 또한 참조형 데이터처럼 원시 타입 데이터가 저장된 메모리의 주소를 비교한다.&lt;/li&gt;
+  &lt;li&gt;원시 타입 데이터는 컴파일 시점에 Constant Pool에 저장되고 런타임 시점에 Constant Pool에서 저장된 데이터의 주소를 JVM Stack에 저장한다.&lt;/li&gt;
+  &lt;li&gt;원시 타입 데이터를 == 연산자로 비교할 때는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;값&lt;/code&gt;을 비교하고, 참조형 데이터를 == 연산자로 비교할 때는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;데이터 주소&lt;/code&gt;를 비교한다. (그래서 참조형 데이터는 equals를 사용한다.)&lt;/li&gt;
+  &lt;li&gt;반대로 원시 타입 데이터 또한 == 연산자로 비교할 때 데이터 주소를 비교한다.&lt;/li&gt;
+  &lt;li&gt;클래스 안의 맴버 변수로 선언된 원시 타입 데이터는 그대로 Heap에 저장된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;등등 수많은 정보들을 접할 수 있는데.. 어떤 정보는 다른 정보와 정반대되는 의미를 가지고 있다는 것을 확인했습니다. 그래서 이 부분을 명확하게 정리하고 싶은 생각이 블로깅의 발단이 되었습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-어떻게-확인할-수-있을까&quot;&gt;🌱 어떻게 확인할 수 있을까?&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Java JDK 17을 사용하고 있습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;값이 Constant Pool에 저장되는지 그저 Stack에 저장되는지 사실 공식 문서를 제외하고는 명확하게 확인할 방법이 없지 않나 생각했습니다. 하지만 javap로 디어샘블링하여 실행되는 클래스가 constant pool에 어떤 값을 
+참조하고 있는지는 파악할 수 있지 않을까 생각하여 javap를 사용해보기로 했습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Parent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+		&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이 코드를 통해 여러가지 가설을 세워보았습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;b에 할당된 14는 Parent가 로드될 때 초기화되는 static 변수이다. static 데이터가 Heap에 저장되는지, Metaspace에 저장되는지 (Java8 이후)는 &lt;a href=&quot;https://stackoverflow.com/questions/8387989/where-are-static-methods-and-static-variables-stored-in-java&quot;&gt;논란이 많은 주제라고 생각되지만&lt;/a&gt;,
+결국 b는 Parent 객체에 할당된 값이기 때문에 Constant Pool이 아닌 Parent로부터 참조될 것이다.&lt;/li&gt;
+  &lt;li&gt;로컬 변수 a에 할당된 11은 Constant Pool에 저장되어 참조되는 것이 아니라, Parent의 main 메소드가 컴파일 되어 바이트코드로 변환될 때 수집된 정보로써, 바이트코드가 실행될 때 JVM stack에 각 데이터가 저장된다.&lt;/li&gt;
+  &lt;li&gt;b에 할당된 데이터는 참조를 통해, a에 할당된 데이터는 바이트코드를 통해 알 수 있으며, a + b의 결과인 c는 JVM 스택에서 연산된 값이므로 Constant Pool에 저장될 필요없이 JVM Stack에서 연산되어 소모된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;해당 가설과 함께 위의 코드를 javap로 디어샘블 해보았습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Classfile ***
+  Compiled from &quot;Parent.java&quot;
+public class Parent
+  minor version: 0
+  major version: 61
+  flags: (0x0021) ACC_PUBLIC, ACC_SUPER
+  this_class: #8                          // Parent
+  super_class: #2                         // java/lang/Object
+  interfaces: 0, fields: 1, methods: 3, attributes: 1
+Constant pool:
+   #1 = Methodref          #2.#3          // java/lang/Object.&quot;&amp;lt;init&amp;gt;&quot;:()V
+   #2 = Class              #4             // java/lang/Object
+   #3 = NameAndType        #5:#6          // &quot;&amp;lt;init&amp;gt;&quot;:()V
+   #4 = Utf8               java/lang/Object
+   #5 = Utf8               &amp;lt;init&amp;gt;
+   #6 = Utf8               ()V
+   #7 = Fieldref           #8.#9          // Parent.b:I
+   #8 = Class              #10            // Parent
+   #9 = NameAndType        #11:#12        // b:I
+  #10 = Utf8               Parent
+  #11 = Utf8               b
+  #12 = Utf8               I
+  #13 = Utf8               Code
+  #14 = Utf8               LineNumberTable
+  #15 = Utf8               main
+  #16 = Utf8               ([Ljava/lang/String;)V
+  #17 = Utf8               &amp;lt;clinit&amp;gt;
+  #18 = Utf8               SourceFile
+  #19 = Utf8               Parent.java
+{
+  static int b;
+    descriptor: I
+    flags: (0x0008) ACC_STATIC
+
+  public Parent();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object.&quot;&amp;lt;init&amp;gt;&quot;:()V
+         4: return
+      LineNumberTable:
+        line 1: 0
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=3, args_size=1
+         0: bipush        11
+         2: istore_1
+         3: iload_1
+         4: getstatic     #7                  // Field b:I
+         7: iadd
+         8: istore_2
+         9: return
+      LineNumberTable:
+        line 6: 0
+        line 8: 3
+        line 9: 9
+
+  static {};
+    descriptor: ()V
+    flags: (0x0008) ACC_STATIC
+    Code:
+      stack=1, locals=0, args_size=0
+         0: bipush        14
+         2: putstatic     #7                  // Field b:I
+         5: return
+      LineNumberTable:
+        line 3: 0
+}
+SourceFile: &quot;Parent.java&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;…&lt;/p&gt;
+
+&lt;p&gt;먼저, Constant Pool 입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Constant pool:
+   #1 = Methodref          #2.#3          // java/lang/Object.&quot;&amp;lt;init&amp;gt;&quot;:()V
+   #2 = Class              #4             // java/lang/Object
+   #3 = NameAndType        #5:#6          // &quot;&amp;lt;init&amp;gt;&quot;:()V
+   #4 = Utf8               java/lang/Object
+   #5 = Utf8               &amp;lt;init&amp;gt;
+   #6 = Utf8               ()V
+   #7 = Fieldref           #8.#9          // Parent.b:I
+   #8 = Class              #10            // Parent
+   #9 = NameAndType        #11:#12        // b:I
+  #10 = Utf8               Parent
+  #11 = Utf8               b
+  #12 = Utf8               I
+  #13 = Utf8               Code
+  #14 = Utf8               LineNumberTable
+  #15 = Utf8               main
+  #16 = Utf8               ([Ljava/lang/String;)V
+  #17 = Utf8               &amp;lt;clinit&amp;gt;
+  #18 = Utf8               SourceFile
+  #19 = Utf8               Parent.java
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이 바이트코드를 보면 Constant Pool에 정수형 데이터가 저장되어 있는 것을 확인할 수 없습니다. Constant Pool은 대개 타입, 이름, 상수 등의 정보들을 저장해놓는 공간이지만, 
+숫자형 데이터라고해서 모든 데이터가 상수가 되는 것은 아니라는 것을 확인할 수 있었습니다.&lt;/p&gt;
+
+&lt;p&gt;“그냥 상수형 데이터는 안나온거일 수도 있잖아요!” 라고 할 수 있을 것 같아 main 메소드에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String d = &quot;hello&quot;&lt;/code&gt;를 선언해보았습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#10 = Utf8               Parent
+#13 = String             #14            // hello
+#14 = Utf8               hello
+#15 = Utf8               Code
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;신기하게도 hello라는 데이터가 Constant Pool에 저장되어 있는 것을 확인할 수 있었습니다. String을 문자 리터럴 방식으로 선언하면 Constant Pool에 저장되는 특징을 가지고 있습니다. 이를 통해 
+숫자형 데이터가 Constant Pool에 저장되지 않는다는 것을 반증할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;…&lt;/p&gt;
+
+&lt;p&gt;그럼 14, 11 등의 데이터는 어디에 있을까요?&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=4, args_size=1
+         0: bipush        11
+         2: istore_1
+         3: iload_1
+         4: getstatic     #7                  // Field b:I
+         7: iadd
+         8: istore_2
+         9: ldc           #13                 // String hello
+        11: astore_3
+        12: return
+      LineNumberTable:
+        line 6: 0
+        line 8: 3
+        line 10: 9
+        line 11: 12
+
+  static {};
+    descriptor: ()V
+    flags: (0x0008) ACC_STATIC
+    Code:
+      stack=1, locals=0, args_size=0
+         0: bipush        14
+         2: putstatic     #7                  // Field b:I
+         5: return
+      LineNumberTable:
+        line 3: 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;javap로 볼 수 있는 Constant Pool이외에 2가지 데이터는 main 메소드가 실행될 때, static 변수에 값이 초기화될 때 입니다. 해당 바이트코드를 보면, 어디에서 가져온지도 모른체 
+bipush로 11과 14를 각각 JVM Stack에 저장하는 것을 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;11과 14 데이터는 Constant Pool에서 참조하지 않고, 메소드 내에서 직접 처리되는 것을 확인할 수 있습니다. 즉, 메소드 정보로 값을 가지고 있다가 런타임 시 바이트코드가 인터프리터 등으로 해석될 때 
+JVM Stack에 저장되는 것입니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-위의-분석을-통해-어떤-것을-알게-되었나요&quot;&gt;🌱 위의 분석을 통해 어떤 것을 알게 되었나요?&lt;/h2&gt;
+
+&lt;p&gt;원시 타입 데이터라고 해서 모두 Constant Pool에 저장되는 것은 아닙니다. 또한, 누군가 작성했던 Constant Pool에 저장된 원시 타입 데이터의 주소를 비교하여 동일성을 판단한다는 것도 사실이 아님을 볼 수 있었습니다.&lt;/p&gt;
+
+&lt;p&gt;결론으로 정리할 수 있는 것들은 다음과 같습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;-직접적으로-알-수-있었던-것들&quot;&gt;🟤 직접적으로 알 수 있었던 것들&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Primitive Type 데이터의 동일성을 비교할 때는 주소가 아닌 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;값&lt;/code&gt;을 비교한다. (참조형 데이터는 주소값을 비교하는게 맞다.)&lt;/li&gt;
+  &lt;li&gt;메소드에서 연산되어 새롭게 생성되는 데이터 (ex. int i = a + b)는 Constant Pool같은 별도의 공간에 할당되는 것이 아니라 JVM Stack에서 연산되어 바로 소모된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;-간접적으로-알-수-있었던-것들&quot;&gt;🟤 간접적으로 알 수 있었던 것들&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;static 으로 선언된 데이터는 Method Area의 static 영역에 저장되고, 클래스의 맴버 변수로 선언된 원시 타입 데이터는 객체 인스턴스와 함께 Heap 영역에 저장된다.&lt;/li&gt;
+  &lt;li&gt;String은 Constant Pool에 선언된 문자열 그대로 저장되기 때문에 String값을 무차별적으로 + 연산하면 Constant Pool의 메모리 공간을 낭비할 수 있다. (StringBuilder, StringBuffer 사용 권장)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-결론&quot;&gt;🌱 결론&lt;/h2&gt;
+
+&lt;p&gt;사실 이렇게 블로그를 작성했지만 위의 결과가 틀릴 수도 있습니다. 지금은 oracle에서 만든 Java 17버전을 사용한 결과이지만, Java의 종류와 제공하는 회사는 여러개 존재한다. 자바라는 큰 인터페이스에서 명세하는 
+기능을 어떤 방식으로 구현한다면 그것은 Java이기 때문에 세부적으로 동작하는 원리는 각 Java 종류마다 다를 수 있습니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;따라서, Oracle의 openJDK 한정으로 클래스 안에 있는 숫자형 리터럴 데이터는 어디에서 어떻게 선언되었느냐에 따라 저장되는 위치가 다르다.
+또한, 맴버 변수, 로컬 변수에 할당된 숫자형 리터럴 데이터는 Constant Pool에 저장되어 변수가 참조하는 것이 아니라 직접 변수에 값이 할당된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;-느낀점&quot;&gt;🧑🏻‍💻 느낀점&lt;/h4&gt;
+&lt;p&gt;javap라는 디어샘블링을 통해 “내가 사용하고 있는 Java는 어떤 특징을 가지고 있는지”, “쉽게 접근할 수 있는 정보를 한번쯤 옳은 정보인지에 대한 분석능력”을 기르기 위한 과정이었습니다. 
+널브러져있는 기술을 갖다쓰는 것은 초짜, 코더여도 할 수 있는 일이지만, 그것을 분석하고 판단해서 유용한 것인지를 분별해내는 것이 개발자라고 생각합니다. 기술을 사용하는데 있어서 나름의 이유와 그 이유를 뒷받침해줄 수 있는 
+근거를 제시할 수 있는 개발자가 되고 싶습니다. (물론 빠르게 구현하는 능력도 키우고 싶습니다 😁)&lt;/p&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="java" /><category term="primitive-type" /><summary type="html">javap CMD를 사용하여 어떻게 동작하는지 비교합니다.</summary></entry><entry><title type="html">[LeetCode] 133. Clone Graph</title><link href="http://localhost:4000/devlog/leetcode-clone-graph.html" rel="alternate" type="text/html" title="[LeetCode] 133. Clone Graph" /><published>2023-09-14T00:00:00+09:00</published><updated>2023-09-14T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-clone-graph</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-clone-graph.html">&lt;blockquote&gt;
+  &lt;p&gt;LeetCode Top Interview 150의 133번 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;📚 목차&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#-clone-graph&quot;&gt;🌱 Clone Graph&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제-요약-definition&quot;&gt;🟤 문제 정의 - Definition&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 - Abstraction&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 - Algorithm&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-clone-graph&quot;&gt;🌱 &lt;a href=&quot;https://leetcode.com/problems/clone-graph/?envType=study-plan-v2&amp;amp;envId=top-interview-150&quot;&gt;Clone Graph&lt;/a&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;-문제-정의-definition&quot;&gt;🟤 문제 정의 (Definition)&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;파라미터로 Graph 자료구조 특징을 가진 노드가 주어진다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;간단하게 문제를 요약하면, 주어진 graph 자료구조 노드를 deep copy하여 반환하는 것이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;조건
+    &lt;ul&gt;
+      &lt;li&gt;The number of nodes in the graph is in the range [0, 100].&lt;/li&gt;
+      &lt;li&gt;1 &amp;lt;= Node.val &amp;lt;= 100&lt;/li&gt;
+      &lt;li&gt;Node.val is unique for each node.&lt;/li&gt;
+      &lt;li&gt;There are no repeated edges and no self-loops in the graph.&lt;/li&gt;
+      &lt;li&gt;The Graph is connected and all nodes can be visited starting from the given node.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 (Abstraction)&lt;/h3&gt;
+
+&lt;p&gt;이 문제를 해결하기 전에 deep copy가 무엇인지 알아야한다.&lt;/p&gt;
+
+&lt;p&gt;deep copy는 데이터의 무결성을 위해 자주 사용되는 개념이다. 일반적으로 객체 인스턴스같은 참조 자료형 데이터는 Heap 메모리에 저장되어 변수에 할당된다.&lt;/p&gt;
+
+&lt;p&gt;Java는 기본적으로 call by value 방식으로 기본형 데이터와 참조형 데이터를 저장한다. 하지만 참조형 데이터를 다른 변수에 별도의 처리없이 할당될 경우에는 Heap 메모리에 저장된 
+참조형 데이터의 주소를 다른 변수에 할당하기 때문에 call by reference같은 현상이 일어난다. 즉, 다른 두개의 변수가 하나의 데이터 주소를 바라보고 있는 것처럼 
+처리되기 때문에 하나의 변수에 할당된 참조형 데이터를 수정하면 해당 데이터를 할당받고 있는 다른 변수에도 영향을 받는다. 이 개념이 shallow copy(얕은 복사)이다.&lt;/p&gt;
+
+&lt;p&gt;얕은 복사는 데이터를 변수에 할당하기에 아주 간단하지만, 데이터의 무결성을 지키기 어려워 에러를 유발하는 원인이 되기도 한다. 이를 방지하고자 deep copy라는 
+개념을 활용해야한다. deep copy는 참조형 데이터의 논리적 값은 일치하지만 물리적으로 저장된 메모리 주소의 위치는 다르게함을 의미한다.&lt;/p&gt;
+
+&lt;p&gt;deep copy 개념을 사용하여 참조형 데이터를 다른 변수에 할당하면 두 인스턴스는 별개의 주소에 저장되기 때문에 서로에게 영향을 주지 않는다. 이를 통해 데이터의 무결성을 
+지킬 수 있다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;❗️단, 여기서 주의해야할 점이 있다. 바로 참조형 데이터 안에 또 다른 참조형 데이터가 멤버 변수, 필드로 있는 경우이다. 이 경우에도 참조형 데이터 안에 있는 또다른 
+참조형 변수를 deep copy해주어야 deep copy라는 개념이 온전히 성럽될 수 있다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;…&lt;/p&gt;
+
+&lt;p&gt;문제에서 요구하는 것은 파라미터로 주어진 graph 자료구조의 객체 인스턴스를 deep copy하여 반환하는 것이다. graph 구조 데이터의 특징은 하나의 참조형 데이터 안에 
+또 다른 참조형 데이터가 있고, 이러한 형태가 반복적으로 이루어져있다.&lt;/p&gt;
+
+&lt;p&gt;그렇기 때문에 2가지가 필요하다. 바로 참조형 데이터가 어디까지 연속적으로 하위 멤버 변수로 할당되어 있는지 탐색하고 각 노드를 deep copy하여 반환할 노드의 child노드로 
+추가시키는 작업! 이 작업을 위해 dfs라는 방법을 사용한다. 또한, 조건으로 주어진 각 노드의 val값은 유니크하기 때문에 val값을 캐싱하여 해당 val과 연결되어 있는 
+또다른 노드와 연결시키기 위해 각 val들을 담은 deep copy된 노드들을 캐싱할 배열 자료구조가 필요하다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🥕 해당 문제의 시간복잡도는 O(N)이다. dfs를 사용해 모든 노드들을 방문하며 deep copy할 새로운 노드에 추가시켜야하기 때문이다.&lt;/p&gt;
+
+  &lt;p&gt;🥕 공간복잡도로는 O(N + 100) =&amp;gt; O(N)이 된다. O(100)은 조건으로 주어진 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 &amp;lt;= val &amp;lt;= 100&lt;/code&gt;을 통해 노드를 캐싱할 배열이다. 또한, DFS는 
+재귀함수를 사용하여 마치 stack과 같은 방법으로 탐색하기 때문에 주어진 모든 노드가 N일 경우 O(N)의 공간이 필요하다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 (Algorithm)&lt;/h3&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cloneGraph&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+		&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isVisit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;101&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+		&lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isVisit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isVisit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;isVisit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;neighbors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;neighbors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isVisit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newNode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+                &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;neighbors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newNode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+                &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newNode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isVisit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;neighbors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isVisit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]);&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="graph" /><summary type="html">LeetCode Top Interview 150의 133번 문제입니다.</summary></entry><entry><title type="html">[LeetCode] 909. Snakes and Ladders</title><link href="http://localhost:4000/devlog/leetcode-snakes-and-ladders.html" rel="alternate" type="text/html" title="[LeetCode] 909. Snakes and Ladders" /><published>2023-09-14T00:00:00+09:00</published><updated>2023-09-14T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-snakes-and-ladders</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-snakes-and-ladders.html">&lt;blockquote&gt;
+  &lt;p&gt;LeetCode Top Interview 150의 909번 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;📚 목차&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#-snakes-and-ladders&quot;&gt;🌱 Snakes and Ladders&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제-정의-definition&quot;&gt;🟤 문제 정의 - Definition&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-전략-추상화-abstraction--문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 전략 추상화 - Abstraction &amp;amp; 문제 풀이 (Algorithm)&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-snakes-and-ladders&quot;&gt;🌱 &lt;a href=&quot;https://leetcode.com/problems/snakes-and-ladders/?envType=study-plan-v2&amp;amp;envId=top-interview-150&quot;&gt;Snakes and Ladders&lt;/a&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;-문제-정의-definition&quot;&gt;🟤 문제 정의 (Definition)&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;파라미터로 int형의 2차원 배열(board)가 주어진다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;문제를 간략하게 요약하자면 이렇다. 주어진 2차원 배열을 게임 보드판이라고 가정한다. 이 보드판은 (board.length - 1)&lt;sup&gt;2&lt;/sup&gt;의 크기를 가지고 
+총 (board.length - 1)&lt;sup&gt;2&lt;/sup&gt; 만큼의 발판(위치값)을 가지고 있다.&lt;/li&gt;
+  &lt;li&gt;x = 0, y = board.length - 1에서부터 위치값 1로 시작하여 왼쪽방향으로 이동한다. 위치값도 1씩 증가한다.&lt;/li&gt;
+  &lt;li&gt;x가 board.length - 1에 다다르면 y축으로 -1하여 이동하고, 다시 x가 0이 되는 방향으로 (오른쪽으로) 위치값이 1씩 증가하면서 이동한다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;위의 2가지 이동방식을 가지고 발판(위치값)이 (board.length - 1)&lt;sup&gt;2&lt;/sup&gt; 값인 마지막 발판까지 도달하기 위한 최소 이동 수를 구하는 문제이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;이동에 필요한 조건으로는 주사위를 굴려 주사위에서 나온 수만큼 이동할 수 있다. 즉, 1 ~ 6만큼 이동할 수 있다.&lt;/li&gt;
+  &lt;li&gt;무조건 6만큼 움직이는 것이 좋은 것은 아니다. 왜냐하면 보드판 중간 중간에 사다리와 뱀이라는 구조물이 있는데, 이 구조물은 2개의 발판이 연결되었으며, 
+하나의 발판에 위치하면 연결된 다른 발판으로 이동할 수 있다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;이 구조물은 주사위를 굴려 한번 이동할 때마다 한번만 사용 가능하다. 예를 들어 1-6, 6-10 이렇게 사다리가 존재한다면 1에서 바로 10으로 갈 수 있는 것이 아니라 
+6으로 한번 이동하고 그 다음 10으로 이동 가능하다는 것이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;위와 같은 조건으로 문제를 풀어야 한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;조건
+    &lt;ul&gt;
+      &lt;li&gt;n == board.length == board[i].length&lt;/li&gt;
+      &lt;li&gt;2 &amp;lt;= n &amp;lt;= 20&lt;/li&gt;
+      &lt;li&gt;board[i][j] is either -1 or in the range [1, n2].&lt;/li&gt;
+      &lt;li&gt;The squares labeled 1 and n2 do not have any ladders or snakes.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-문제-풀이-전략-추상화-abstraction--문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 전략 추상화 (Abstraction) &amp;amp; 문제 풀이 (Algorithm)&lt;/h3&gt;
+
+&lt;p&gt;해당 문제는 특이한 형태라고 생각되지만, 전형적인 BFS를 사용한 최단 거리 탐색 문제이다. 
+이 문제의 특이점은 이동할 수 있는 거리가 1에서 6으로 랜덤하게 정할 수 있고, 1이라는 첫 시작점에서 n * n이라는 도착점까지 도달할 수 있는 최소 거리를 
+구하는 문제이다.&lt;/p&gt;
+
+&lt;p&gt;주의해야할 부분이라고 생각하는 포인트는 위의 관점으로 문제를 풀어야하는 것이다. 2차원 배열이 주어졌다고 해서 2차원 배열을 캐시 메모리로 사용하는 것보다 
+1부터 N * N까지의 거리를 1차원 배열로 캐싱 메모리를 구하는 것이 쉽고 효율적이다.&lt;/p&gt;
+
+&lt;p&gt;코드를 보면서 이해해보자.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;snakesAndLadders&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[][]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// n은 전체 보드판 중 하나의 row에 몇칸 있는지를 구한 값이다.&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// BFS 탐색을 위한 Queue 자료구조이다. Queue 자료구조는 한번 위치한 발판에서 1-6까지의 주사위를 통해 이동할 수 있는 다음 발판을 미리 저장하여 &lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// 수평 탐색을 가능하도록 한다.&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;Queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;LinkedList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+	
+	&lt;span class=&quot;c1&quot;&gt;// 첫 시작점인 1을 queue에 넣는다.&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+	&lt;span class=&quot;c1&quot;&gt;// 각 방문했던 발판을 캐싱하는 boolean 타입 배열 자료구조이다.&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isVisit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+
+	&lt;span class=&quot;c1&quot;&gt;// 한번 이동할 때마다 1씩 증가하는 move 변수이다.&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;move&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	
+	&lt;span class=&quot;c1&quot;&gt;// queue에 저장된 값이 없어질 때까지 무한히 동작한다.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isEmpty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		
+      &lt;span class=&quot;c1&quot;&gt;// 현재 queue 사이즈를 한번 i에 할당하여 i가 0이 될때까지 다음 동작을 수행한다.&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// 현재 queue 사이즈는 이전에 위치했던 발판에서 주사위를 굴려 다음에 위치할 수 있는 발판(위치값)을 저장한 개수이다.&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// 즉, 이 시점에서 queue가 담고 있는 발판값은 move + 1만큼의 이동으로 위치할 수 있는 것이다.&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		  
+        &lt;span class=&quot;c1&quot;&gt;// 현재 위치를 queue에서 가져온다.&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 현재 위치가 이미 방문했던 위치라면 이미 해당 위치에서 1-6까지 이동하는 수들이 queue에 저장되었기 때문에 continue를 사용하여 다음 값으로 넘긴다.&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 방문하지 않은 발판이라면 true로 해당 위치를 캐싱하여 다음에 다른 루트로 해당 발판을 방문했을 때 같은 반복을 추가로 하는 일이 없도록 한다.&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isVisit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;isVisit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+		&lt;span class=&quot;c1&quot;&gt;// 이 부분에서 문제에서 요구하는 값을 반환한다. 각 발판에 위치할 때마다 현재 위치값에서 1-6만큼의 값을 다시 queue에 넣는다.&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 이런 동작을 반복하다보면 도착지점 값이 queue에 저장되는 순간이 존재한다. 이 때, return을 하게 되면 현재까지 최소로 더한 move한 값을 &lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 구할 수 있다.&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;move&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+		&lt;span class=&quot;c1&quot;&gt;// 현재 위치에서 1-6만큼 주사위를 굴려 queue에 저장하는 코드이다.&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 이 코드에서는 총 2가지의 작업을 수행한다.&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 1. 다음으로 갈 위치값을 구하여 방문하지 않은 발판값만 queue에 저장한다.&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 2. 해당 발판이 사다리로 이어져있는 발판인지 확인해야하는 동작이 필요하다. 주어진 2차원 배열은 기본적으로 각 요소들이 -1값을 가지지만 &lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 사다리나 뱀으로 이어져있는 값들은 이어져있는 발판으로 저장되어 있다.&lt;/span&gt;
+        
+        &lt;span class=&quot;c1&quot;&gt;// 이동하는 경로는 숫자 상으로는 1부터 n * n까지지만, 해당 보드판은 각 숫자가 왼쪽에서 오른쪽으로 출발하여 위를 향해 지그제그 형태도 되어 있다.&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 이 특징을 가지고 다음 이동하는 경로를 2차원 배열에서 구하여 사다리, 뱀의 유무를 확인하는 함수(getPosition)를 구현한다.&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getPosition&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+          &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isVisit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+	  &lt;span class=&quot;c1&quot;&gt;// 한번 스냅샷?한 queue size만큼 동작을 반복하면 그것이 한번 이동할 때 발생하는 동작이기 때문에 for 문이 완료되면 move를 1증가시켜 &lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// 다음 이동할 때의 값들을 비교할 수 있도록 한다.&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;move&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;// 보드는 (1 - n), (n + n - n), (n + n + 1, n + n + n)... 이런 지그재그 방식으로 이동할 수 있기 때문에 이러한 특징을 고려하여 &lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// 다음에 이동할 발판에 사다리나 뱀이 있는지 없는지 탐색한다. 사다리나 뱀이 있다면 연결되어 있는 다음 발판 값을 반환하고 없다면 -1을 반환하여 &lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// 본래 주사위로 이동하는 코드에서 다음에 이동할 수 있는 경로를 queue에 저장하도록 한다.&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getPosition&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[][]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="graph" /><summary type="html">LeetCode Top Interview 150의 909번 문제입니다.</summary></entry><entry><title type="html">[Hot-Deal #1] Member 도메인 개발</title><link href="http://localhost:4000/project/hot-deal-member.html" rel="alternate" type="text/html" title="[Hot-Deal #1] Member 도메인 개발" /><published>2023-09-12T00:00:00+09:00</published><updated>2023-09-12T00:00:00+09:00</updated><id>http://localhost:4000/project/hot-deal-member</id><content type="html" xml:base="http://localhost:4000/project/hot-deal-member.html">&lt;blockquote&gt;
   &lt;p&gt;Member 도메인을 개발하면서 사용한 기술과 특징을 소개합니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -417,7 +1045,107 @@ Refresh Token도 만료시간이 지났다면 Access Token과 함께 Refresh Tok
   &lt;li&gt;&lt;a href=&quot;https://hudi.blog/session-based-auth-vs-token-based-auth/&quot;&gt;세션 기반 인증과 토큰 기반 인증 (feat. 인증과 인가)&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://team00csduck.tistory.com/93&quot;&gt;JWT에 대한 오해와, 세션으로 JWT(Json Web Token)을 사용하지 말자는 주장의 정리.&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html&quot;&gt;JSON Web Token Cheat Sheet for Java&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="domain" /><summary type="html">Member 도메인을 개발하면서 사용한 기술과 특징을 소개합니다.</summary></entry><entry><title type="html">[LeetCode] 208. Implement Trie (Prefix Tree)</title><link href="http://localhost:4000/devlog/leetcode-implement-trie.html" rel="alternate" type="text/html" title="[LeetCode] 208. Implement Trie (Prefix Tree)" /><published>2023-09-11T00:00:00+09:00</published><updated>2023-09-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-implement-trie</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-implement-trie.html">&lt;blockquote&gt;
+&lt;/ul&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="project" /><category term="project" /><category term="domain" /><summary type="html">Member 도메인을 개발하면서 사용한 기술과 특징을 소개합니다.</summary></entry><entry><title type="html">[LeetCode] 215. Kth Largest Element in an Array</title><link href="http://localhost:4000/devlog/leetcode-kth-largest-element-in-an-array.html" rel="alternate" type="text/html" title="[LeetCode] 215. Kth Largest Element in an Array" /><published>2023-09-11T00:00:00+09:00</published><updated>2023-09-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-kth-largest-element-in-an-array</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-kth-largest-element-in-an-array.html">&lt;blockquote&gt;
+  &lt;p&gt;LeetCode Top Interview 150의 215번 문제입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;📚 목차&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#-kth-largest-element-in-an-array&quot;&gt;🌱 215. Kth Largest Element in an Array&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제-요약-definition&quot;&gt;🟤 문제 정의 - Definition&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 - Abstraction&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 - Algorithm&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-kth-largest-element-in-an-array&quot;&gt;🌱 &lt;a href=&quot;https://leetcode.com/problems/kth-largest-element-in-an-array/?envType=study-plan-v2&amp;amp;envId=top-interview-150&quot;&gt;Kth Largest Element in an Array&lt;/a&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;-문제-정의-definition&quot;&gt;🟤 문제 정의 (Definition)&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;파라미터로 1차원 배열(nums)와 정수형 데이터 (k)가 주어진다.&lt;/li&gt;
+  &lt;li&gt;nums 배열 안에 있는 요소들 중, k번째로 큰 값을 찾는 문제이다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;단, 정렬을 사용하지 않아야한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;조건
+    &lt;ul&gt;
+      &lt;li&gt;1 &amp;lt;= k &amp;lt;= nums.length &amp;lt;= 10&lt;sup&gt;5&lt;/sup&gt;&lt;/li&gt;
+      &lt;li&gt;-10&lt;sup&gt;4&lt;/sup&gt; &amp;lt;= nums[i] &amp;lt;= 10&lt;sup&gt;4&lt;/sup&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 (Abstraction)&lt;/h3&gt;
+
+&lt;p&gt;방법 1.&lt;/p&gt;
+
+&lt;p&gt;사실 이 문제는 정렬을 사용하면 쉽게 해결할 수 있는 문제이다. 내림차순으로 정렬하고 K - 1번째 인덱스의 값을 반환하면 해결할 수 있는 문제이다.&lt;/p&gt;
+
+&lt;p&gt;방법 2.
+하지만 문제의 조건은 정렬을 사용하지 않고 해결할 수 있는지의 여부를 묻고 있다. 그렇다면 값의 순서를 보장하도록 정렬 API를 직접 사용하는 것이 아니라 
+배열의 값을 재구성하면서 정렬이 될 수 있도록 하는 방법을 사용하면 될 것이다. 바로 최대 Heap을 사용하는 것이다.&lt;/p&gt;
+
+&lt;p&gt;최대 Heap은 보통 완전이진트리 방식으로 구현된다. 처음에 저장하면 해당 값은 루트 노드가 되지만, 값을 저장할 때마다 부모 노드와 저장하는 값의 크기를 비교하여 
+값이 작다면 그대로 저장하고 값이 크다면 부모노드와 저장할 자식 노드의 위치를 바꾸는 방법이다. 이 방법을 사용하면 쉽게 정렬하면서 값을 재구성할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;따라서 주어진 1차원 배열의 값들을 힙을 사용한 우선순위 큐에 저장하고 우선순위 큐에서 k만큼 pop하고난 마지막 값을 반환하는 것으로 해당 문제를 풀기로 하였다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;🥕 시간복잡도는 O(NlogN)이다. 먼저, 1차원 배열에 있는 값들을 순환하면서 heap에 데이터를 저장한다. 이때 heap을 최대힙으로 사용한다고 가정한다면 
+최대 힙에 값을 저장할 때는 최악의 경우 하나의 요소를 저장할 때마다 logN의 시간복잡도가 소요된다. 저장할 값이 제일 작으면 O(1)이겠지만, 저장할 값이 제일 큰 값이라면 트리의 노드를 역으로 
+거슬러 올라가면서 부모노드와 자식노드의 순서를 바꾸어야하기 때문이다. 마찬가지로 값을 삭제할 때도 삭제할 노드 아래 자식노드가 있다면 노드를 재정렬해주어야 한다. 그렇기 때문에 
+삭제할 값이 k번 있다면 klogN의 시간복잡도가 소요된다. 따라서 최종적으로 O(NlogN + klogN)의 시간복잡도가 소요된다.&lt;/p&gt;
+
+  &lt;p&gt;🥕 공간 복잡도는 1차원 배열의 요소만큼 heap을 사용하기 때문에 O(N)의 공간복잡도가 소요된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 (Algorithm)&lt;/h3&gt;
+
+&lt;p&gt;방법 1.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findKthLargest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Arrays&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; 
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;…&lt;/p&gt;
+
+&lt;p&gt;방법 2.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findKthLargest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;Queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;PriorityQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Collections&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;reverseOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+
+	  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		  &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="heap" /><summary type="html">LeetCode Top Interview 150의 215번 문제입니다.</summary></entry><entry><title type="html">[LeetCode] 208. Implement Trie (Prefix Tree)</title><link href="http://localhost:4000/devlog/leetcode-implement-trie.html" rel="alternate" type="text/html" title="[LeetCode] 208. Implement Trie (Prefix Tree)" /><published>2023-09-11T00:00:00+09:00</published><updated>2023-09-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-implement-trie</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-implement-trie.html">&lt;blockquote&gt;
   &lt;p&gt;LeetCode Top Interview 150의 208번 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -571,144 +1299,7 @@ Refresh Token도 만료시간이 지났다면 Access Token과 함께 Refresh Tok
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="tree" /><summary type="html">LeetCode Top Interview 150의 208번 문제입니다.</summary></entry><entry><title type="html">[LeetCode] 212. Word Search II</title><link href="http://localhost:4000/devlog/leetcode-word-search-2.html" rel="alternate" type="text/html" title="[LeetCode] 212. Word Search II" /><published>2023-09-11T00:00:00+09:00</published><updated>2023-09-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-word-search-2</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-word-search-2.html">&lt;blockquote&gt;
-  &lt;p&gt;LeetCode Top Interview 150의 212번 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;📚 목차&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;&quot;&gt;🌱 212. Word Search II&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-요약-definition&quot;&gt;🟤 문제 정의 - Definition&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 - Abstraction&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 - Algorithm&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;-word-search-ii&quot;&gt;🌱 &lt;a href=&quot;https://leetcode.com/problems/word-search-ii/description/?envType=study-plan-v2&amp;amp;envId=top-interview-150&quot;&gt;Word Search II&lt;/a&gt;&lt;/h2&gt;
-
-&lt;h3 id=&quot;-문제-정의-definition&quot;&gt;🟤 문제 정의 (Definition)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;파라미터로 각 문자를 담은 2차원 배열와 단어를 담은 1차원 배열이 주어진다.&lt;/li&gt;
-  &lt;li&gt;2차원 배열은 각 문자 하나하나가 저장되어 있으며 마치 보드와 같은 형태를 띈다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;이 보드 안에 있는 문자들을 조합하여 1차원 배열에 있는 단어를 만들 수 있는지, 만들 수 있는 단어를 정답으로 반환하는 문제이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;문자들을 조합할 때 상하좌우로 인접한 문자끼리만 조합이 가능하다. 문자가 상하좌우로 인접해있지 않다면 조합할 수 없다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;조건
-    &lt;ul&gt;
-      &lt;li&gt;m == board.length&lt;/li&gt;
-      &lt;li&gt;n == board[i].length&lt;/li&gt;
-      &lt;li&gt;1 &amp;lt;= m, n &amp;lt;= 12&lt;/li&gt;
-      &lt;li&gt;board[i][j] is a lowercase English letter.&lt;/li&gt;
-      &lt;li&gt;1 &amp;lt;= words.length &amp;lt;= 3 * 10&lt;sup&gt;4&lt;/sup&gt;&lt;/li&gt;
-      &lt;li&gt;1 &amp;lt;= words[i].length &amp;lt;= 10&lt;/li&gt;
-      &lt;li&gt;words[i] consists of lowercase English letters.&lt;/li&gt;
-      &lt;li&gt;All the strings of words are unique.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 (Abstraction)&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;해당 문제는 Hard 문제답게 조금 접근하기 어려웠던 것 같다. 그래서 어떻게 사람들이 풀이했는지를 참고했다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;해당 문제를 풀이한 방법으로는 DFS와 Tree를 적절히 활용하여 문제를 풀이하였다. 각 자료구조와 탐색 알고리즘의 쓰임을 먼저 파악하고자 한다.&lt;/p&gt;
-
-&lt;p&gt;Tree 자료구조는 탐색해야할 각 단어들을 저장하는 목적을 가지고 있다. 각 문자들을 저장하고 DFS의 알고리즘에서 문자의 다음 문자 (apple 이라면 a 다음에 p라는 문자)가 
-있는지를 현재 board의 위치에서 상하좌우로 재귀를 통해 탐색한다. 만약 상하좌우에 해당 자식 노드의 값이 없다면 해당 문자는 조합할 수 없다는 의미가 된다.&lt;/p&gt;
-
-&lt;p&gt;또 한가지는 “#”이라는 문자를 방문한 board의 값에 넣어 이미 그 position은 다녀가서 다시 재귀로 인해 재방문하지 않도록 하는 것이 포인트이다. 상하좌우의 재귀를 모두 
-호출하고 난 이후는 다음 단어를 비교해야하기 때문에 다시 board의 “#”을 넣은 위치에 원래 값을 돌려놓아야 한다. 이 부분은 “#”이라는 문자를 활용하는 것도 좋아보이지만, 
-많이 사용하는 isVisit이라는 캐시 테이블을 만들어 조금 더 명확하게 문제를 풀이해도 괜찮겠다는 생각을 했다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;🥕 시간복잡도를 구하는 것은 크게 어렵지 않았다. 먼저 2차원 배열 board를 모두 탐색해야하기 때문에 O(N&lt;sup&gt;2&lt;/sup&gt;)가 소요되지만, 각 반복문 안에서 DFS 
-탐색 알고리즘이 사용된다. DFS는 최악의 경우 모든 노드를 탐색하기 때문에 DFS의 시간복잡도도 O(N&lt;sup&gt;2&lt;/sup&gt;)가 된다. 따라서 모든 시간복잡도는 O(N&lt;sup&gt;4&lt;/sup&gt;)가 된다.&lt;/p&gt;
-
-  &lt;p&gt;🥕 공간복잡도로는 DFS로 스택 데이터가 저장되기 때문에 O(N&lt;sup&gt;2&lt;/sup&gt;)의 공간이 필요하며, 각 알파벳을 저장하는 트리 노드에는 O(26&lt;sup&gt;l&lt;/sup&gt;)의 공간피 필요하다.
-그래서 총 O(N&lt;sup&gt;2&lt;/sup&gt; + 26&lt;sup&gt;l&lt;/sup&gt;)의 공간복잡도가 필요하겠다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 (Algorithm)&lt;/h3&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findWords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[][]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
-		
-		&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buildTrie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-		
-		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-			&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-				&lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-			&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-		
-		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[][]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
-		
-		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'#'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-		
-		&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
-		
-		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-			&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-			&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-		&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'#'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-		
-		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-		
-		&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;buildTrie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-		
-		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-			&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-			
-			&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toCharArray&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-				&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-				&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-				
-				&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
-			&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-			
-			&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-		
-		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-	&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-		&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;26&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
-	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="tree" /><summary type="html">LeetCode Top Interview 150의 212번 문제입니다.</summary></entry><entry><title type="html">[LeetCode] 373. Find K Pairs with Smallest Sums</title><link href="http://localhost:4000/devlog/leetcode-find-k-pairs-with-smallest-sums.html" rel="alternate" type="text/html" title="[LeetCode] 373. Find K Pairs with Smallest Sums" /><published>2023-09-11T00:00:00+09:00</published><updated>2023-09-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-find-k-pairs-with-smallest-sums</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-find-k-pairs-with-smallest-sums.html">&lt;blockquote&gt;
+&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="tree" /><summary type="html">LeetCode Top Interview 150의 208번 문제입니다.</summary></entry><entry><title type="html">[LeetCode] 373. Find K Pairs with Smallest Sums</title><link href="http://localhost:4000/devlog/leetcode-find-k-pairs-with-smallest-sums.html" rel="alternate" type="text/html" title="[LeetCode] 373. Find K Pairs with Smallest Sums" /><published>2023-09-11T00:00:00+09:00</published><updated>2023-09-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-find-k-pairs-with-smallest-sums</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-find-k-pairs-with-smallest-sums.html">&lt;blockquote&gt;
   &lt;p&gt;LeetCode Top Interview 150의 373번 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -962,15 +1553,15 @@ Refresh Token도 만료시간이 지났다면 Access Token과 함께 Refresh Tok
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="tree" /><summary type="html">LeetCode Top Interview 150의 211번 문제입니다.</summary></entry><entry><title type="html">[LeetCode] 215. Kth Largest Element in an Array</title><link href="http://localhost:4000/devlog/leetcode-kth-largest-element-in-an-array.html" rel="alternate" type="text/html" title="[LeetCode] 215. Kth Largest Element in an Array" /><published>2023-09-11T00:00:00+09:00</published><updated>2023-09-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-kth-largest-element-in-an-array</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-kth-largest-element-in-an-array.html">&lt;blockquote&gt;
-  &lt;p&gt;LeetCode Top Interview 150의 215번 문제입니다.&lt;/p&gt;
+&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="tree" /><summary type="html">LeetCode Top Interview 150의 211번 문제입니다.</summary></entry><entry><title type="html">[LeetCode] 212. Word Search II</title><link href="http://localhost:4000/devlog/leetcode-word-search-2.html" rel="alternate" type="text/html" title="[LeetCode] 212. Word Search II" /><published>2023-09-11T00:00:00+09:00</published><updated>2023-09-11T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-word-search-2</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-word-search-2.html">&lt;blockquote&gt;
+  &lt;p&gt;LeetCode Top Interview 150의 212번 문제입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;!--more--&gt;
 
 &lt;p&gt;📚 목차&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;#-kth-largest-element-in-an-array&quot;&gt;🌱 215. Kth Largest Element in an Array&lt;/a&gt;
+  &lt;li&gt;&lt;a href=&quot;&quot;&gt;🌱 212. Word Search II&lt;/a&gt;
     &lt;ul&gt;
       &lt;li&gt;&lt;a href=&quot;#-문제-요약-definition&quot;&gt;🟤 문제 정의 - Definition&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href=&quot;#-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 - Abstraction&lt;/a&gt;&lt;/li&gt;
@@ -981,20 +1572,29 @@ Refresh Token도 만료시간이 지났다면 Access Token과 함께 Refresh Tok
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;-kth-largest-element-in-an-array&quot;&gt;🌱 &lt;a href=&quot;https://leetcode.com/problems/kth-largest-element-in-an-array/?envType=study-plan-v2&amp;amp;envId=top-interview-150&quot;&gt;Kth Largest Element in an Array&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;-word-search-ii&quot;&gt;🌱 &lt;a href=&quot;https://leetcode.com/problems/word-search-ii/description/?envType=study-plan-v2&amp;amp;envId=top-interview-150&quot;&gt;Word Search II&lt;/a&gt;&lt;/h2&gt;
 
 &lt;h3 id=&quot;-문제-정의-definition&quot;&gt;🟤 문제 정의 (Definition)&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;파라미터로 1차원 배열(nums)와 정수형 데이터 (k)가 주어진다.&lt;/li&gt;
-  &lt;li&gt;nums 배열 안에 있는 요소들 중, k번째로 큰 값을 찾는 문제이다.&lt;/li&gt;
+  &lt;li&gt;파라미터로 각 문자를 담은 2차원 배열와 단어를 담은 1차원 배열이 주어진다.&lt;/li&gt;
+  &lt;li&gt;2차원 배열은 각 문자 하나하나가 저장되어 있으며 마치 보드와 같은 형태를 띈다.&lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;단, 정렬을 사용하지 않아야한다.&lt;/p&gt;
+    &lt;p&gt;이 보드 안에 있는 문자들을 조합하여 1차원 배열에 있는 단어를 만들 수 있는지, 만들 수 있는 단어를 정답으로 반환하는 문제이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;문자들을 조합할 때 상하좌우로 인접한 문자끼리만 조합이 가능하다. 문자가 상하좌우로 인접해있지 않다면 조합할 수 없다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;조건
     &lt;ul&gt;
-      &lt;li&gt;1 &amp;lt;= k &amp;lt;= nums.length &amp;lt;= 10&lt;sup&gt;5&lt;/sup&gt;&lt;/li&gt;
-      &lt;li&gt;-10&lt;sup&gt;4&lt;/sup&gt; &amp;lt;= nums[i] &amp;lt;= 10&lt;sup&gt;4&lt;/sup&gt;&lt;/li&gt;
+      &lt;li&gt;m == board.length&lt;/li&gt;
+      &lt;li&gt;n == board[i].length&lt;/li&gt;
+      &lt;li&gt;1 &amp;lt;= m, n &amp;lt;= 12&lt;/li&gt;
+      &lt;li&gt;board[i][j] is a lowercase English letter.&lt;/li&gt;
+      &lt;li&gt;1 &amp;lt;= words.length &amp;lt;= 3 * 10&lt;sup&gt;4&lt;/sup&gt;&lt;/li&gt;
+      &lt;li&gt;1 &amp;lt;= words[i].length &amp;lt;= 10&lt;/li&gt;
+      &lt;li&gt;words[i] consists of lowercase English letters.&lt;/li&gt;
+      &lt;li&gt;All the strings of words are unique.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -1003,472 +1603,91 @@ Refresh Token도 만료시간이 지났다면 Access Token과 함께 Refresh Tok
 
 &lt;h3 id=&quot;-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 (Abstraction)&lt;/h3&gt;
 
-&lt;p&gt;방법 1.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;해당 문제는 Hard 문제답게 조금 접근하기 어려웠던 것 같다. 그래서 어떻게 사람들이 풀이했는지를 참고했다.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;사실 이 문제는 정렬을 사용하면 쉽게 해결할 수 있는 문제이다. 내림차순으로 정렬하고 K - 1번째 인덱스의 값을 반환하면 해결할 수 있는 문제이다.&lt;/p&gt;
+&lt;p&gt;해당 문제를 풀이한 방법으로는 DFS와 Tree를 적절히 활용하여 문제를 풀이하였다. 각 자료구조와 탐색 알고리즘의 쓰임을 먼저 파악하고자 한다.&lt;/p&gt;
 
-&lt;p&gt;방법 2.
-하지만 문제의 조건은 정렬을 사용하지 않고 해결할 수 있는지의 여부를 묻고 있다. 그렇다면 값의 순서를 보장하도록 정렬 API를 직접 사용하는 것이 아니라 
-배열의 값을 재구성하면서 정렬이 될 수 있도록 하는 방법을 사용하면 될 것이다. 바로 최대 Heap을 사용하는 것이다.&lt;/p&gt;
+&lt;p&gt;Tree 자료구조는 탐색해야할 각 단어들을 저장하는 목적을 가지고 있다. 각 문자들을 저장하고 DFS의 알고리즘에서 문자의 다음 문자 (apple 이라면 a 다음에 p라는 문자)가 
+있는지를 현재 board의 위치에서 상하좌우로 재귀를 통해 탐색한다. 만약 상하좌우에 해당 자식 노드의 값이 없다면 해당 문자는 조합할 수 없다는 의미가 된다.&lt;/p&gt;
 
-&lt;p&gt;최대 Heap은 보통 완전이진트리 방식으로 구현된다. 처음에 저장하면 해당 값은 루트 노드가 되지만, 값을 저장할 때마다 부모 노드와 저장하는 값의 크기를 비교하여 
-값이 작다면 그대로 저장하고 값이 크다면 부모노드와 저장할 자식 노드의 위치를 바꾸는 방법이다. 이 방법을 사용하면 쉽게 정렬하면서 값을 재구성할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;따라서 주어진 1차원 배열의 값들을 힙을 사용한 우선순위 큐에 저장하고 우선순위 큐에서 k만큼 pop하고난 마지막 값을 반환하는 것으로 해당 문제를 풀기로 하였다.&lt;/p&gt;
+&lt;p&gt;또 한가지는 “#”이라는 문자를 방문한 board의 값에 넣어 이미 그 position은 다녀가서 다시 재귀로 인해 재방문하지 않도록 하는 것이 포인트이다. 상하좌우의 재귀를 모두 
+호출하고 난 이후는 다음 단어를 비교해야하기 때문에 다시 board의 “#”을 넣은 위치에 원래 값을 돌려놓아야 한다. 이 부분은 “#”이라는 문자를 활용하는 것도 좋아보이지만, 
+많이 사용하는 isVisit이라는 캐시 테이블을 만들어 조금 더 명확하게 문제를 풀이해도 괜찮겠다는 생각을 했다.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;🥕 시간복잡도는 O(NlogN)이다. 먼저, 1차원 배열에 있는 값들을 순환하면서 heap에 데이터를 저장한다. 이때 heap을 최대힙으로 사용한다고 가정한다면 
-최대 힙에 값을 저장할 때는 최악의 경우 하나의 요소를 저장할 때마다 logN의 시간복잡도가 소요된다. 저장할 값이 제일 작으면 O(1)이겠지만, 저장할 값이 제일 큰 값이라면 트리의 노드를 역으로 
-거슬러 올라가면서 부모노드와 자식노드의 순서를 바꾸어야하기 때문이다. 마찬가지로 값을 삭제할 때도 삭제할 노드 아래 자식노드가 있다면 노드를 재정렬해주어야 한다. 그렇기 때문에 
-삭제할 값이 k번 있다면 klogN의 시간복잡도가 소요된다. 따라서 최종적으로 O(NlogN + klogN)의 시간복잡도가 소요된다.&lt;/p&gt;
+  &lt;p&gt;🥕 시간복잡도를 구하는 것은 크게 어렵지 않았다. 먼저 2차원 배열 board를 모두 탐색해야하기 때문에 O(N&lt;sup&gt;2&lt;/sup&gt;)가 소요되지만, 각 반복문 안에서 DFS 
+탐색 알고리즘이 사용된다. DFS는 최악의 경우 모든 노드를 탐색하기 때문에 DFS의 시간복잡도도 O(N&lt;sup&gt;2&lt;/sup&gt;)가 된다. 따라서 모든 시간복잡도는 O(N&lt;sup&gt;4&lt;/sup&gt;)가 된다.&lt;/p&gt;
 
-  &lt;p&gt;🥕 공간 복잡도는 1차원 배열의 요소만큼 heap을 사용하기 때문에 O(N)의 공간복잡도가 소요된다.&lt;/p&gt;
+  &lt;p&gt;🥕 공간복잡도로는 DFS로 스택 데이터가 저장되기 때문에 O(N&lt;sup&gt;2&lt;/sup&gt;)의 공간이 필요하며, 각 알파벳을 저장하는 트리 노드에는 O(26&lt;sup&gt;l&lt;/sup&gt;)의 공간피 필요하다.
+그래서 총 O(N&lt;sup&gt;2&lt;/sup&gt; + 26&lt;sup&gt;l&lt;/sup&gt;)의 공간복잡도가 필요하겠다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;hr /&gt;
 
 &lt;h3 id=&quot;-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 (Algorithm)&lt;/h3&gt;
 
-&lt;p&gt;방법 1.&lt;/p&gt;
-
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-	
-	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findKthLargest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;nc&quot;&gt;Arrays&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findWords&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[][]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
 		
-		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; 
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buildTrie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		
+		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+			&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+		&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+		
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[][]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+		
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'#'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+		
+		&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+		
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+		&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+		&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'#'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+		
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		
+		&lt;span class=&quot;n&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;buildTrie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+		
+		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+			
+			&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toCharArray&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+				&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+				
+				&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+			&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+			
+			&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+		&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+		
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;26&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;…&lt;/p&gt;
-
-&lt;p&gt;방법 2.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findKthLargest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nc&quot;&gt;Queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;PriorityQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Collections&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;reverseOrder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
-
-	  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-		  &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-	  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="heap" /><summary type="html">LeetCode Top Interview 150의 215번 문제입니다.</summary></entry><entry><title type="html">[LeetCode] 530. Minimum Absolute Difference in BST</title><link href="http://localhost:4000/devlog/leetcode-minumum-absolute-difference-in-bst.html" rel="alternate" type="text/html" title="[LeetCode] 530. Minimum Absolute Difference in BST" /><published>2023-09-06T00:00:00+09:00</published><updated>2023-09-06T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-minumum-absolute-difference-in-bst</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-minumum-absolute-difference-in-bst.html">&lt;blockquote&gt;
-  &lt;p&gt;LeetCode Top Interview 150의 530번 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;📚 목차&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;#-minimum-absolute-difference-in-bst&quot;&gt;🌱 Minimum Absolute Difference in BST&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-요약-definition&quot;&gt;🟤 문제 정의 - Definition&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 - Abstraction&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 - Algorithm&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;-minimum-absolute-difference-in-bst&quot;&gt;🌱 &lt;a href=&quot;https://leetcode.com/problems/minimum-absolute-difference-in-bst/description/?envType=study-plan-v2&amp;amp;envId=top-interview-150&quot;&gt;Minimum Absolute Difference in BST&lt;/a&gt;&lt;/h2&gt;
-
-&lt;h3 id=&quot;-문제-정의-definition&quot;&gt;🟤 문제 정의 (Definition)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;파라미터로 이진탐색트리 구조를 가지는 루트 노드를 받는다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;각 노드 중 2개를 선택하여 2개의 노드 필드의 차가 최소인 값을 반환하는 문제이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;조건
-    &lt;ul&gt;
-      &lt;li&gt;The number of nodes in the tree is in the range [2, 10&lt;sup&gt;4&lt;/sup&gt;].&lt;/li&gt;
-      &lt;li&gt;0 &amp;lt;= Node.val &amp;lt;= 10&lt;sup&gt;5&lt;/sup&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 (Abstraction)&lt;/h3&gt;
-
-&lt;p&gt;해당 문제를 풀기 위해서는 어떻게 하면 LinkedList로 연결되어있는 노드의 필드를 알아내서 랜덤한 값의 최소값을 구할 수 있을지에 대해 고민해야한다.&lt;/p&gt;
-
-&lt;p&gt;방법 1.&lt;/p&gt;
-
-&lt;p&gt;먼저 매우 직관적으로 문제를 풀면 다음과 같다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;노드의 각 필드값을 모두 ArrayList에 넣는다.&lt;/li&gt;
-  &lt;li&gt;그리고 O(N&lt;sup&gt;2&lt;/sup&gt;)의 시간복잡도를 사용하여 모든 필드의 값을 구한 리스트를 이중 for문으로 순환하며 최소값을 구한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;위의 문제 중 O(N&lt;sup&gt;2&lt;/sup&gt;)의 시간복잡도를 가지는 코드가 제일 많은 시간을 소요할 것이다. 그렇기 때문에 해당 코드를 어떻게하면 더 효율적으로 개선할 수 있을까? 
-조금 더 생각해보면 각 요소간의 차이가 최소인 값을 구해 반환하는 문제이다. 각 요소간의 최소값은 각 값과 가장 숫자 상으로 가까운 값과의 차이가 최소가 될 것이다. 즉, 
-리스트를 정렬한다면 각 인접한 값들을 O(N)의 시간복잡도로 1차원 순환하며 최소값을 구할 수 있다. (여기서는 모든 노드를 탐색할 때 DFS의 방식인 Stack을 사용하여 모든 노드를 탐색하였다.)&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;🥕 시간복잡도로는 DFS 방식으로 Stack을 사용하여 방문하기 때문에 O(N)의 시간복잡도를 가진다. 또한, 배열을 정렬하는 API의 시간복잡도 O(NlogN)와 O(N)으로 순환하는 코드도 있기 때문에 
-O(2N + N logN) 이며, 총 O(N logN)의 시간복잡도를 가진다.&lt;/p&gt;
-
-  &lt;p&gt;🥕 공간복잡도로는 숫자필드를 저장하는 리스트 O(N)과 DFS로 Node를 저장하는 Stack O(logN)이 사용되었기 때문에 O(2N) =&amp;gt; O(N)의 공간복잡도를 필요로 한다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;…&lt;/p&gt;
-
-&lt;p&gt;방법 2.&lt;/p&gt;
-
-&lt;p&gt;방법 1번 문제를 풀면서 떠오른 아이디어이다. 결국 최소값은 숫자상으로 가까운 값끼리의 차가 최소가 될 수 있다는 아이디어이다.&lt;/p&gt;
-
-&lt;p&gt;BST의 특징은 현재 기준 값보다 값이 작다면 왼쪽으로, 크다면 오른쪽으로 자식 노드를 가진다. 그렇기 때문에 자식 노드가 왼쪽으로 뻗어나간 값들을 먼저 리스트에 넣고, 그 이후에 오른쪽으로 뻗어나간 값들을 
-리스트에 넣는다면 굳이 정렬을 할 필요없이 이미 정렬되어 나온 리스트를 얻을 수 있다.&lt;/p&gt;
-
-&lt;p&gt;이 방법을 사용하면 재귀를 사용하여 모든 노드르 탐색하기 때문에 O(N)의 시간복잡도가 사용되지만, 정렬 API로 사용되는 시간이 필요없어지기 때문에 조금 더 빠른 코드를 완성할 수 있다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 (Algorithm)&lt;/h3&gt;
-
-&lt;p&gt;방법 1.&lt;/p&gt;
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getMinimumDifference&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;TreeNode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-        &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
-
-        &lt;span class=&quot;nc&quot;&gt;Stack&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;TreeNode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Stack&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isEmpty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nc&quot;&gt;TreeNode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-
-            &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX_VALUE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sortedList&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sorted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;collect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Collectors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sortedList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sortedList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sortedList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;…&lt;/p&gt;
-
-&lt;p&gt;방법 2.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getMinimumDifference&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;TreeNode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX_VALUE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TreeNode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="tree" /><summary type="html">LeetCode Top Interview 150의 530번 문제입니다.</summary></entry><entry><title type="html">[LeetCode] 199. Binary Tree Right Side View</title><link href="http://localhost:4000/devlog/leetcode-binary-tree-right-side-view.html" rel="alternate" type="text/html" title="[LeetCode] 199. Binary Tree Right Side View" /><published>2023-09-06T00:00:00+09:00</published><updated>2023-09-06T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-binary-tree-right-side-view</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-binary-tree-right-side-view.html">&lt;blockquote&gt;
-  &lt;p&gt;LeetCode Top Interview 150의 199번 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;📚 목차&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;#-binary-tree-right-side-view&quot;&gt;🌱 Binary Tree Right Side View&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-요약-definition&quot;&gt;🟤 문제 정의 - Definition&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 - Abstraction&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 - Algorithm&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;-binary-tree-right-side-view&quot;&gt;🌱 &lt;a href=&quot;https://leetcode.com/problems/binary-tree-right-side-view/description/?envType=study-plan-v2&amp;amp;envId=top-interview-150&quot;&gt;Binary Tree Right Side View&lt;/a&gt;&lt;/h2&gt;
-
-&lt;h3 id=&quot;-문제-정의-definition&quot;&gt;🟤 문제 정의 (Definition)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;파라미터로 트리 구조의 루트 노드가 주어진다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;해당 루트노드로부터 각 depth에 해당하는 노드들 중 제일 오른쪽에 있는 노드들을 리스트에 담아 반환하는 문제이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;조건
-    &lt;ul&gt;
-      &lt;li&gt;The number of nodes in the tree is in the range [0, 100].&lt;/li&gt;
-      &lt;li&gt;-100 &amp;lt;= Node.val &amp;lt;= 100&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 (Abstraction)&lt;/h3&gt;
-
-&lt;p&gt;해당 문제는 정확하게 이해해야한다. 무조건 오른쪽 자식 노드를 각 depth에 맞게 배열에 담아 반환하는 문제가 아.니.다.&lt;/p&gt;
-
-&lt;p&gt;각 이진트리에서 depth마다 최대로 가질 수 있는 노드가 정해져있다. 루트 노드는 1개, 그 아래는 루트 노드로부터 left, right 총 2개, 그 아래 depth는
-위의 2개의 노드에서 각각 left, right가 생겨 총 4개의 노드가 생길 ‘수’ 있다. 하지만 무조건 depth의 제곱만큼 노드가 생기는 것은 아니다. 이 부분을 잘 생각해보아야할 것이다.&lt;/p&gt;
-
-&lt;p&gt;만일 루트노드로부터 내림차순으로 작은 값만 추가한다면 왼쪽 노드만이 길게 이어진 트리 구조가 될것이다. 그럼 각 depth에서 제일 오른쪽에 있는 노드는 왼쪽 자식 노드일 것이다. 이런 경우가
-존재한다는 것을 생각해야한다.&lt;/p&gt;
-
-&lt;p&gt;그래서 각 자식 노드에 대한 정보를 리스트에 저장하기 위해 depth또한 함께 재귀 함수의 파라미터로 지정한다. depth는 1씩 일정하게 증가므로 각 depth의 제일 오른쪽에 있는 값을 왼쪽부터 차례대로 리스트에
-저장한다. 그리고 해당 depth에서 오른쪽 자식 노드에 접근할 때마다 해당 depth를 사용하여 배열 인덱스에 접근 후 갱신한다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;🥕 시간복잡도는 모든 노드를 탐색하여 제일 오른쪽 노드를 갱신하기 때문에 O(N)의 시간복잡도를 가진다.&lt;/p&gt;
-
-  &lt;p&gt;🥕 공간복잡도 또한 모든 노드를 탐색하는 재귀 함수를 사용하기 때문에 O(N)의 공간복잡도를 가진다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 (Algorithm)&lt;/h3&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;rightSideView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;TreeNode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TreeNode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="tree" /><summary type="html">LeetCode Top Interview 150의 199번 문제입니다.</summary></entry><entry><title type="html">[LeetCode] 637. Average of Levels in Binary Tree</title><link href="http://localhost:4000/devlog/leetcode-average-of-levels-in-binary-tree.html" rel="alternate" type="text/html" title="[LeetCode] 637. Average of Levels in Binary Tree" /><published>2023-09-06T00:00:00+09:00</published><updated>2023-09-06T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-average-of-levels-in-binary-tree</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-average-of-levels-in-binary-tree.html">&lt;blockquote&gt;
-  &lt;p&gt;LeetCode Top Interview 150의 637번 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;📚 목차&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;#-average-of-levels-in-binary-tree&quot;&gt;🌱 Average of Levels in Binary Tree&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-요약-definition&quot;&gt;🟤 문제 정의 - Definition&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 - Abstraction&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 - Algorithm&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;-average-of-levels-in-binary-tree&quot;&gt;🌱 &lt;a href=&quot;https://leetcode.com/problems/average-of-levels-in-binary-tree/?envType=study-plan-v2&amp;amp;envId=top-interview-150&quot;&gt;Average of Levels in Binary Tree&lt;/a&gt;&lt;/h2&gt;
-
-&lt;h3 id=&quot;-문제-정의-definition&quot;&gt;🟤 문제 정의 (Definition)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;파라미터로 트리 구조의 루트 노드를 제공한다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;각 depth를 기준으로 존재하는 수들의 평균을 배열에 저장하여 반환하는 문제이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;조건
-    &lt;ul&gt;
-      &lt;li&gt;The number of nodes in the tree is in the range [1, 10&lt;sup&gt;4&lt;/sup&gt;].&lt;/li&gt;
-      &lt;li&gt;-2&lt;sup&gt;31&lt;/sup&gt; &amp;lt;= Node.val &amp;lt;= 2&lt;sup&gt;31&lt;/sup&gt; - 1&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 (Abstraction)&lt;/h3&gt;
-
-&lt;p&gt;각 depth에 있는 노드에 접근할 때마다 수의 총 함계와 얼만큼 접근했는지를 트래킹할 수 있는 클래스를 별로도 정의했다. 
-재귀함수로 각 depth에 있는 모든 노드들을 탐색한다. depth를 인덱스 삼은 리스트에 해당 depth에 접근할 때마다 접근했던 노드의 숫자필드를 합하고 현재 depth에서 접근 횟수를 카운팅한다.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 (Algorithm)&lt;/h3&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;averageOfLevels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;TreeNode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-        &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-            &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-            &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TreeNode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-            &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-        &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="tree" /><summary type="html">LeetCode Top Interview 150의 637번 문제입니다.</summary></entry><entry><title type="html">[LeetCode] 230. Kth Smallest Element in a BST</title><link href="http://localhost:4000/devlog/leetcode-kth-smallest-element-in-a-bst.html" rel="alternate" type="text/html" title="[LeetCode] 230. Kth Smallest Element in a BST" /><published>2023-09-06T00:00:00+09:00</published><updated>2023-09-06T00:00:00+09:00</updated><id>http://localhost:4000/devlog/leetcode-kth-smallest-element-in-a-bst</id><content type="html" xml:base="http://localhost:4000/devlog/leetcode-kth-smallest-element-in-a-bst.html">&lt;blockquote&gt;
-  &lt;p&gt;LeetCode Top Interview 150의 230번 문제입니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;📚 목차&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;#-kth-smallest-element-in-a-bst&quot;&gt;🌱 Kth Smallest Element in a BST&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-요약-definition&quot;&gt;🟤 문제 정의 - Definition&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 - Abstraction&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 - Algorithm&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;-kth-smallest-element-in-a-bst&quot;&gt;🌱 &lt;a href=&quot;https://leetcode.com/problems/kth-smallest-element-in-a-bst/?envType=study-plan-v2&amp;amp;envId=top-interview-150&quot;&gt;Kth Smallest Element in a BST&lt;/a&gt;&lt;/h2&gt;
-
-&lt;h3 id=&quot;-문제-정의-definition&quot;&gt;🟤 문제 정의 (Definition)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;파라미터로 BST 구조를 가지는 루트 노드와 int 값 k가 주어진다.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;각 노드의 모든 필드 값 중 k번째로 작은 값을 구하는 문제이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;조건
-    &lt;ul&gt;
-      &lt;li&gt;The number of nodes in the tree is n.&lt;/li&gt;
-      &lt;li&gt;1 &amp;lt;= k &amp;lt;= n &amp;lt;= 10&lt;sup&gt;4&lt;/sup&gt;&lt;/li&gt;
-      &lt;li&gt;0 &amp;lt;= Node.val &amp;lt;= 10&lt;sup&gt;4&lt;/sup&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-문제-풀이-전략-추상화-abstraction&quot;&gt;🟤 문제 풀이 전략 추상화 (Abstraction)&lt;/h3&gt;
-
-&lt;p&gt;해당 문제는 문제 &lt;a href=&quot;https://syeon2.github.io/devlog/leetcode-minumum-absolute-difference-in-bst.html&quot;&gt;530번(Minimum Absolute Difference in BST)&lt;/a&gt;와 매우 유사하게 풀 수 있다. 
-결국 LinkedList로 구성되어 있는 각 노드의 필드를 리스트 형태로 오름차순으로 정렬하면, 자연스럽게 K번째로 작은 값을 index에 접근하여 찾을 수 있다.&lt;/p&gt;
-
-&lt;p&gt;재귀를 사용하여 왼쪽 자식 노드와 오른쪽 자식 노드로 다시 재귀호출하되, 왼쪽 자식 노드를 가진 재귀 함수를 먼저 호출하고 현재 노드 값을 리스트에 추가한 다음 오른쪽 자식 노드를 사용한 재귀 함수를 호출해야한다. 
-그 이유는 현재 값을 리스트에 추가하기 전 왼쪽 자식 노드로 재귀 호출하게 되면 왼쪽의 제일 끝 노드에 도달한 후에 다음 코드 라인을 실행하기 때문이다. 이러한 진행 방식은 자연스럽게 오름차순으로 정렬할 수 있도로 만들어 준다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;🥕 시간복잡도로는 전체 노드를 탐색하기 때문에 O(N)의 시간복잡도가 쇼요된다.&lt;/p&gt;
-
-  &lt;p&gt;🥕 공간복잡도는 각 노드의 필드를 저장할 list O(N)과 재귀 함수 호출로 생겨나는 O(N)으로 총 O(2N) =&amp;gt; O(N)의 공간복잡도를 가진다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;-문제-풀이-algorithm&quot;&gt;🟤 문제 풀이 (Algorithm)&lt;/h3&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;kthSmallest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;TreeNode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TreeNode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;bfs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="tree" /><summary type="html">LeetCode Top Interview 150의 230번 문제입니다.</summary></entry></feed>
+&lt;hr /&gt;</content><author><name>SuYeon Kim</name><email>waterkite94@gmail.com</email></author><category term="devlog" /><category term="algorithm" /><category term="tree" /><summary type="html">LeetCode Top Interview 150의 212번 문제입니다.</summary></entry></feed>

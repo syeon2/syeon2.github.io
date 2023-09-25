@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Hot-Dealicious #2] WebSocket 통신"
+title: "[Hot-Dealicious #1] WebSocket 통신"
 subtitle: "라이더와 WebSocket 통신"
 categories: project
 tags: project Network WebSocket
