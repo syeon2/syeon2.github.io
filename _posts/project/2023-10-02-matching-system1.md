@@ -2,7 +2,7 @@
 layout: post
 title: "[Matching System #1] 프로젝트 개요 및 Architecture & 기능 Flow"
 subtitle: "Matching System 전반적인 소개"
-categories: project
+categories: devlog
 tags: project websocket stomp
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: "Docker, Nginx의 CI (지속적 통합)"
 subtitle: "Docker와 Nginx"
-categories: project
+categories: devlog
 tags: project Docker Nginx
 ---
 

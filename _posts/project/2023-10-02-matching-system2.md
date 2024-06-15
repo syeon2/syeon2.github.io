@@ -2,7 +2,7 @@
 layout: post
 title: "[Matching System #2] WebSocket & STOMP를 활용한 위치 데이터 저장"
 subtitle: "WebSocket & STOMP"
-categories: project
+categories: devlog
 tags: project websocket stomp
 ---
 

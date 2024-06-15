@@ -2,7 +2,7 @@
 layout: post
 title: "[Hot-Dealicious #3] Hot-Dealicious 중간 피드백"
 subtitle: "Hot-Dealicious의 피드백 및 개선점"
-categories: project
+categories: devlog
 tags: project
 ---
 

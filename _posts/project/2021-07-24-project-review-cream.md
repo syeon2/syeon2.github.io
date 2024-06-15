@@ -2,7 +2,7 @@
 layout: post
 title: "2차 프로젝트 회고 (CREAM)"
 subtitle: "2차 프로젝트를 돌아보며.."
-categories: project
+categories: devlog
 tags: project Kream React 경매
 image:
   path: https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-cream/2021-07-24-project-review-cream-Cover.png

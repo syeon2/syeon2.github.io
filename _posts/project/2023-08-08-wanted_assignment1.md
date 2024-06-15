@@ -2,7 +2,7 @@
 layout: post
 title: "[원티드 프리온보딩 백엔드] #1 JWT를 통한 로그인 인증"
 subtitle: "원티드 프리온보딩 사전 과제에서 사용한 기술 정리 - JWT"
-categories: project
+categories: devlog
 tags: project wanted pre_onboarding assignment jwt
 ---
 

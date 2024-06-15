@@ -2,8 +2,8 @@
 layout: post
 title: "[Hot-Deal #1] QueryDSL update 쿼리 인터페이스화"
 subtitle: "QueryDSL을 활용하여 update 쿼리를 인터페이스화 합니다."
-categories: project
-tags: project querydsl
+categories: devlog
+tags: troubleshooting querydsl
 ---
 
 > QueryDSL을 활용하여 update 쿼리를 인터페이스화 합니다.

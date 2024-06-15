@@ -2,8 +2,8 @@
 layout: post
 title: "[Matching System #3] WebSocket 서버의 Scale out"
 subtitle: "WebSocket 서버 확장"
-categories: project
-tags: project websocket scale-out
+categories: devlog
+tags: troubleshooting websocket scale-out
 ---
 
 > WebSocket 서버의 scale out을 고려한 아키텍쳐 설계

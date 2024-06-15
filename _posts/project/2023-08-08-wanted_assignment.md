@@ -2,7 +2,7 @@
 layout: post
 title: "[원티드 프리온보딩 백엔드] 사전 과제를 구현해보다."
 subtitle: "원티드 프리온보딩 사전 과제 개요"
-categories: project
+categories: devlog
 tags: project wanted pre_onboarding assignment
 ---
 

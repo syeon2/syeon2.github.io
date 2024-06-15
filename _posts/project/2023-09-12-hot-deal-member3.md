@@ -2,8 +2,8 @@
 layout: post
 title: "[Hot-Deal #3] JWT를 활용하여 로그인 인증/인가"
 subtitle: "JWT를 활용하여 로그인을 유지하는 기능을 소개합니다."
-categories: project
-tags: project jwt session
+categories: devlog
+tags: troubleshooting jwt session
 ---
 
 > JWT를 활용하여 로그인을 유지하는 기능을 소개합니다.

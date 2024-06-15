@@ -2,7 +2,7 @@
 layout: post
 title: "Werecord project -v2👨🏻‍💻"
 subtitle: "Wecode 멘티를 포커싱한 근태 프로젝트 -v2"
-categories: project
+categories: devlog
 tags: project werecord React 근태
 image:
   path: https://wkblog-images.s3.ap-northeast-2.amazonaws.com/wecode-werecord/v2/cover.jpg

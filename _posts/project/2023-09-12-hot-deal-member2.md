@@ -2,8 +2,8 @@
 layout: post
 title: "[Hot-Deal #2] SHA-256 암호화 알고리즘으로 비밀번호 암호화"
 subtitle: "sha-256 알고리즘을 이해하고 활용합니다."
-categories: project
-tags: project sha-256 password
+categories: devlog
+tags: troubleshooting sha-256 password
 ---
 
 > SHA-256 알고리즘을 이해하고 활용합니다.

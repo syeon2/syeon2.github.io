@@ -1,11 +1,11 @@
 ---
 layout: tag-list
 type: tag
-title: C.S
-slug: computer_science
+title: Project
+slug: project
 category: devlog
 sidebar: true
 order: 2
 description: >
-  Computer Science
+  개발한 프로젝트를 소개합니다.
 ---

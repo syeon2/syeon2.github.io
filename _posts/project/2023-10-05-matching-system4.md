@@ -2,8 +2,8 @@
 layout: post
 title: "[Matching System #4] Redis Distributed Lock (feat. 동시성 이슈)"
 subtitle: "Distributed Lock"
-categories: project
-tags: project distributed lock
+categories: devlog
+tags: troubleshooting distributed lock
 ---
 
 > Redis를 사용한 분산락으로 동시성 이슈를 해결한 사례입니다.
