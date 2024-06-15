@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://syeon2.github.io/sitemap.xml
