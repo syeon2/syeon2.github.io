@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Troubleshooing] JPA 변경감지 vs QueryDSL : 회원 정보 수정 최적화 방안"
+title: "[Troubleshooting] JPA 변경감지 vs QueryDSL : 회원 정보 수정 최적화 방안"
 subtitle: "Tosstock 프로젝트에 적용된 회원 정보 수정 최적화 방안에 대해 소개합니다."
 categories: devlog
 tags: troubleshooting jpa querydsl
@@ -18,13 +18,13 @@ tags: troubleshooting jpa querydsl
 
 ## 🌱 문제 인식
 
-Tosstock 프로젝트는 JPA에서 DB에 저장되어 있는 데이터를 변경하는 방법 중 하나인 '변경 감지'를 통해 회원의 정보를 변경하고 있었습니다.
+Tosstock 프로젝트는 JPA에서 DB에 저장된 데이터를 변경하는 방법 중 하나인 '변경 감지'를 통해 회원의 정보를 수정하고 있습니다
 
 이 방법은 간단하게 조회한 엔티티의 필드값을 바꿔주면 이후 해당 로직의 트랜젝션이 끝나고 커밋이 이루어질 때 변경된 필드를 감지하고 update하는 편리함을 제공합니다.
 
 하지만 필드를 변경하기 위해 무조건적으로 select문으로 쿼리 요청을 하는 방식이 비효율적이지 않을까 판단했습니다.
 
-- <strong>회원은 로그인 한 이후 자신의 개인정보를 알고 있는 상황에서 update를 위한 select문을 요청하는 것은 불필요</strong>
+- <strong>회원은 로그인한 이후 자신의 개인정보를 알고 있으므로 update를 위한 select 문을 요청하는 것은 불필요</strong>
 - <strong>AWS RDS를 사용하고 있기 때문에 네트워크 I/O를 줄이는 것은 비용절감에 기여할 수 있을 것</strong>
 
 select문 하나 요청하는 것이 큰 리소스를 차지하지 않다고 생각할 수 있지만, update 쿼리 하나만 요청하게 된다면 수치적으로 약 50%의 성능 개선이라고 감히 표현할 수 있을 것 같습니다.
@@ -43,10 +43,10 @@ public class MemberService {
     
     @Transactional
     public boolean changeMemberInfo(Long memberId, UpdateMemberDto updateMemberDto) {
-        // select query 발생
+        // select 쿼리 발생
         memberRepository.findById(memberId)
         
-        // update query 발생
+        // update 쿼리 발생
             .ifPresent(s -> s.set...(updateMemberDto...));
         
         return true;
@@ -140,4 +140,4 @@ JPA의 변경감지의 필요성에 대해 고민해보았을 때 '회원 정보
 
 회원 정보를 업데이트하고 난 이후 추가적으로 업데이트된 필드 값을 사용하는 비즈니스 로직이 있다면 JPA의 변경감지를 통해 업데이트하는 것이 효율적이지 않았을까 생각합니다.
 
-이렇듯 다양한 기술들을 사용할 때는 '무조건 옳다'는 기능은 없는 것 같습니다. 여러 상황에 맞게 필요한 기술을 선택하고 적용해서 최적의 답을 얻어내는 스킬이 개발자에게 필요하지 않을까 생각해봅니다.
+이렇듯 다양한 기술들을 사용할 때는 '항상 옳다'는 기능은 없다고 생각합니다. 여러 상황에 맞게 필요한 기술을 선택하고 적용해서 최적의 답을 얻어내는 스킬이 개발자에게 필요하지 않을까 생각해봅니다.
