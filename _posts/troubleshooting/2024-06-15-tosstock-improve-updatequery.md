@@ -56,8 +56,8 @@ public class MemberService {
 - 조회한 엔티티의 필드값을 변경하면 transaction이 커밋될 시점에 update 쿼리를 요청하는 매커니즘으로 동작
 
 #### 🥕 실행 결과
+<a href="https://ibb.co/sjwjSyP"><img src="https://i.ibb.co/p2z2DJP/prev-updateinfo.png" alt="prev-updateinfo" border="0"></a>
 
-<a href="https://ibb.co/93fTMJt"><img src="https://i.ibb.co/0VWMwkt/Screenshot-2024-06-15-at-14-08-40.png" alt="Screenshot-2024-06-15-at-14-08-40" border="0"></a>
 
 ---
 
@@ -117,8 +117,7 @@ public class MemberRepositoryImpl {
 - 어떤 회원 아이디를 가진 엔티티를 update할 것인지 where을 통해 선언합니다.
 
 #### 🥕 실행 결과
-
-<a href="https://ibb.co/6BCzPdx"><img src="https://i.ibb.co/nCJ9cWv/Screenshot-2024-06-15-at-14-37-52.png" alt="Screenshot-2024-06-15-at-14-37-52" border="0"></a>
+<a href="https://ibb.co/fY7rH1q"><img src="https://i.ibb.co/GvjCRxn/post-updateinfo.png" alt="post-updateinfo" border="0"></a>
 
 ---
 

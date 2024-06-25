@@ -62,8 +62,7 @@ public class MailService implements SendAuthCodeUseCase {
 - `implementation 'org.springframework.boot:spring-boot-starter-mail`에서 제공하는 JavaMailSender을 이용합니다.
 
 ### 🥕 실행 결과
-
-<a href="https://ibb.co/fHnXkLX"><img src="https://i.ibb.co/Ttbw4dw/prev-sender.png" alt="prev-sender" border="0"></a>
+<a href="https://ibb.co/JxmnHSM"><img src="https://i.ibb.co/k35KXPW/prev-async.png" alt="prev-async" border="0"></a>
 
 ---
 
@@ -75,7 +74,7 @@ Spring 기본적으로 다양한 어노테이션을 제공합니다. 그 중 @Be
 
 ### 🥕 @Async 흐름
 
-<a href="https://ibb.co/Kh59CG8"><img src="https://i.ibb.co/h9gKpMT/thread-pool.jpg" alt="thread-pool" border="0"></a>
+<a href="https://ibb.co/M8K1h2C"><img src="https://i.ibb.co/hXrdM7m/post-asycn.png" alt="post-asycn" border="0"></a>
 
 ```java
 @Service
@@ -155,7 +154,7 @@ public class MailAsyncConfig {
 
 ### 🥕 실행 결과
 
-<a href="https://ibb.co/yVN6J0b"><img src="https://i.ibb.co/fQXk7MP/post-sender.png" alt="post-sender" border="0"></a>
+<a href="https://ibb.co/cC3Bx8d"><img src="https://i.ibb.co/b2m07vn/post-async.png" alt="post-async" border="0"></a>
 
 > 4s(4000ms)가 걸리던 API의 응답속도에서 약 300ms까지 응답 속도를 개선시켰습니다. 
 
