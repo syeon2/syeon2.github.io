@@ -4,6 +4,8 @@ title: "[Project] 아기자기한 라즈베리파이 서버 구축"
 subtitle: "AWS 클라우드를 대체해 사용할 서버를 직접 구축한 사례입니다."
 categories: devlog
 tags: troubleshooting server cs network
+image:
+  path: https://i.ibb.co/w0mxVQ6/rasberrypi.jpg
 ---
 
 > AWS 클라우드의 비용 절감 및 Jenkins, Redis 등의 인프라 툴을 사용하기 위해 라즈베리파이로 서버를 구축한 사례입니다.
