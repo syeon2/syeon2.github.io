@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "[Project] 아기자기한 온프레미스? 홈 서버 구축"
-subtitle: "AWS 대용으로 사용할 서버를 직접 구축한 사례를 소개합니다."
+title: "[Project] 아기자기한 라즈베리파이 서버 구축"
+subtitle: "AWS 클라우드를 대체해 사용할 서버를 직접 구축한 사례입니다."
 categories: devlog
 tags: troubleshooting server cs network
 ---
 
-> AWS 클라우드의 비용 절감을 위해 라즈베리파이를 사용하여 홈 서버를 구축한 사례입니다.
+> AWS 클라우드의 비용 절감 및 Jenkins, Redis 등의 인프라 툴을 사용하기 위해 라즈베리파이로 서버를 구축한 사례입니다.
 
 <!--more-->
 
@@ -133,9 +133,10 @@ MicroSD 지원보다 SSD를 사용하는 것이 구축할 서버의 목적에 �
 > 1차적으로는 라즈베리파이의 SSH 접근을 허용하여 같은 네트워크 망에서만 서버에 접근할 수 있었습니다. 궁극적인 목표는 외부망에서도 서버에 접근할 수 있고, 
 > 허용된 포트로 접근하여 API call 및 API Docs를 제공, DB, 인프라 등에 접근할 수 있도록 하는 것입니다.
 
-<a href="https://ibb.co/JBJMVpk"><img src="https://i.ibb.co/w0mxVQ6/rasberrypi.jpg" alt="rasberrypi" border="0"></a>
-
-###### 작고 소중한 내 라즈베리파이🍓
+<p align="center" style="color:gray">
+  <img style="margin:50px 0 10px 0" src="https://i.ibb.co/w0mxVQ6/rasberrypi.jpg" />
+  작고 소중한 내 라즈베리파이🍓
+</p>
 
 ---
 
