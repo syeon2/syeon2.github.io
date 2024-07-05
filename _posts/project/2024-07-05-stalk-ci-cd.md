@@ -242,3 +242,7 @@ ansible을 활용하는 가장 큰 이유 중 하나는 바로 inventory입니�
 Jenkins pipeline에서 마지막에 실행될 step은 바로 ansible 서버에 ssh 접속을 한 이후 ansible-playbook.yml을 실행하기 위함입니다.
 
 이로써 Jenkins와 Ansible, Docker를 활용한 CI/CD 작업이 마무리 되었습니다.
+
+<a href="https://ibb.co/SvvZ7fB"><img src="https://i.ibb.co/MNNJ5B7/jenkins-result.png" alt="jenkins-result" border="0"></a>
+
+###### 🌱 생각보다 괜찮은 UI (Deploy pipeline 플러그인)
