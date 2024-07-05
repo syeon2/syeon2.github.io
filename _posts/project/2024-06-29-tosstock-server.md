@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Project] 아기자기한 라즈베리파이 서버 구축"
+title: "[Stalk Project] 아기자기한 라즈베리파이 서버 구축"
 subtitle: "AWS 클라우드를 대체해 사용할 서버를 직접 구축한 사례입니다."
 categories: devlog
 tags: troubleshooting server cs network
