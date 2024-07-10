@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "[Stalk Project] 간단한 MSA 환경 구축기"
-subtitle: "Spring cloud eureka & config & api gateway를 활용한 간단한 MSA 환경을 구축한 경험을 소개합니다."
+title: "[Stalk] Stalk Project를 소개합니다."
+subtitle: "Stalk 프로젝트를 시작하며"
 categories: devlog
-tags: msa eureka config api-gateway
+tags: msa
 ---
 
-> Spring Cloud Netflix Eureka & Spring Cloud Config & Spring Cloud Api Gateway를 설명하고 활용한 경험입니다. 
+> Stalk 프로젝트를 소개하고, 프로젝트의 이슈들을 모아 정리한 글입니다. 
 
 <!--more-->
 
