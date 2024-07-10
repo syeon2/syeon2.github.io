@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Stalk] Stalk Project를 소개합니다."
+title: "📈 Stalk Project를 소개합니다."
 subtitle: "Stalk 프로젝트를 시작하며"
 categories: devlog
 tags: msa
@@ -20,6 +20,8 @@ tags: msa
 
 
 ## 🌱 개요
+
+> 여러 증권사의 종목 탐색 및 최대 5년간의 개장가, 종가, 저가, 고가 등 세부 정보 제공과 투자자 간 인사이트 공유가 가능한 커뮤니티 프로그램입니다.
 
 Stalk 프로젝트는 MSA 환경을 기반으로 기획된 프로젝트입니다.
 
@@ -103,3 +105,7 @@ CI/CD 파이프라인을 구성하는 툴들로 Jenkins와 Ansible을 사용하�
 
 - [아기자기한 라즈베리파이 서버 구축](https://syeon2.github.io/devlog/tosstock-server.html)
 - [Jenkins & Ansible을 활용한 CI/CD 구축기](https://syeon2.github.io/devlog/stalk-ci-cd.html)
+
+- [JPA의 N + 1 Query issue 성능 개선 사례](https://syeon2.github.io/devlog/tosstock-query-n+1.html)
+- [@Async을 활용한 이메일 수신 API 개선 방안](https://syeon2.github.io/devlog/tosstock-mail-sender.html)
+- [JPA 변경감지 vs QueryDSL : 회원 정보 수정 최적화 방안](https://syeon2.github.io/devlog/tosstock-improve-updatequery.html)
