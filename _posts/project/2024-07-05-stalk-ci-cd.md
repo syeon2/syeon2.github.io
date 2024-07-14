@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Stalk Project] Jenkins & Ansible을 활용한 CI/CD 구축기"
+title: "Jenkins & Ansible을 활용한 CI/CD 구축 사례"
 subtitle: "Jenkins와 Ansible의 필요성을 고려하여 Stalk 프로젝트의 CI/CD를 구축한 사례입니다."
 categories: devlog
 tags: ci cd jenkins ansible
