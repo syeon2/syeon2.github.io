@@ -11,7 +11,12 @@ tags: msa spring cloud config
 <!--more-->
 
 - 목차
-
+    - [🌱 여는 글](#-여는-글)
+    - [🌱 Stalk 프로젝트의 Spring Cloud Config](#-stalk-프로젝트의-spring-cloud-config)
+      - [🥕 Spring Cloud Config 운영 계획](#-spring-cloud-config-운영-계획)
+      - [🥕 서비스 환경 설정 .yml 파일 관리](#-서비스-환경-설정-yml-파일-관리)
+      - [🥕 마이크로 서비스 운영 환경 업데이트 방법](#-마이크로-서비스-운영-환경-업데이트-방법)
+    - [🌱 맺으며](#-맺으며)
   
 
 
@@ -211,8 +216,6 @@ java 실행 Dockerfile에 주입합니다. (예시_[Stalk Config Jenkinsfile](ht
 수동 방식 중 Spring Cloud Bus는 Method: Post, */acturator/busrefresh 엔드포인트를 호출하여 수동적이지만, 업데이트된 설정 파일을 모두 적용하는 도구입니다.
 
 Kafka를 Spring Cloud Bus의 도구로 사용하는 것은 비용과 용량 측면에서 과도할 수 있다는 판단하에 rabbitmq를 택하였습니다.
-
-[//]: # (RabbitMQ 동작 방식 (BroadCast)
 
 <br />
 <br />
