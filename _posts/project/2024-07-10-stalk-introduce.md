@@ -105,6 +105,9 @@ CI/CD 파이프라인을 구성하는 툴들로 Jenkins와 Ansible을 사용하�
 
 - [아기자기한 라즈베리파이 서버 구축](https://syeon2.github.io/devlog/tosstock-server.html)
 - [Jenkins & Ansible을 활용한 CI/CD 구축기](https://syeon2.github.io/devlog/stalk-ci-cd.html)
+- [Spring Cloud Config로 분산된 마이크로 서비스 설정 중앙 관리](https://syeon2.github.io/devlog/stalk-msa-config.html)
+- [Service Discovery로 마이크로 서비스 주소 관리하기](https://syeon2.github.io/devlog/stalk-service-discovery.html)
+
 
 - [JPA의 N + 1 Query issue 성능 개선 사례](https://syeon2.github.io/devlog/tosstock-query-n+1.html)
 - [@Async을 활용한 이메일 수신 API 개선 방안](https://syeon2.github.io/devlog/tosstock-mail-sender.html)
