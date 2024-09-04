@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Spring에서의 DTO와 VO 전략"
+title: "[Project] Spring에서의 DTO와 VO 전략"
 subtitle: "DTO와 VO 개념을 활용하여 클래스를 재활용하기 위한 전략"
 categories: devlog
 tags: project
