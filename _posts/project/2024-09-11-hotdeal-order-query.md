@@ -13,6 +13,15 @@ tags: project
 #### 목차
 
 - [여는 글](#-여는-글)
+- [주문 처리 최적화 트러블슈팅](#-주문-쿼리-최적화-트러블슈팅)
+  - [문제 파악](#-문제-파악)
+  - [원인 분석](#-원인-분석)
+  - [쿼리 최적화를 통한 커넥션 풀 확보 전략](#-쿼리-최적화를-통한-커넥션-풀-확보-전략)
+    - [Where In 절을 활용한 조회 쿼리 최적화](#-where-in-절을-활용한-조회-쿼리-최적화)
+    - [Bulk Insert를 활용한 저장 쿼리 최적화](#-bulk-insert를-활용한-저장-쿼리-최적화)
+- [마무리 및 성능 개선 수치 자료](#-마무리-및-성능-개선-수치-자료)
+  - [개선 전](#-개선-전)
+  - [개선 후](#-개선-후)
 
 ---
 
@@ -245,7 +254,7 @@ public class OrderDetailRepository {
 
 <img src="https://i.ibb.co/9tXZPXj/order-query-issue3.png" alt="order-query-issue3" border="0">
 
-## 🌱 마무리
+## 🌱 마무리 및 성능 개선 수치 자료
 
 where in 절과 JdbcTemplate를 활용한 bulk insert를 사용하여 주문 쿼리를 최적화한 결과는 다음과 같습니다.
 
