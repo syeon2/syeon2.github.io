@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Project] 상품 주문 요청 속도 개선 사례를 소개합니다. "
+title: "[Project] 예약 상품 주문 요청 속도 개선 사례를 소개합니다. "
 subtitle: "Redis의 Rua Script를 활용하여 동시성 이슈 및 속도를 개선한 사례입니다."
 categories: devlog
 tags: project
