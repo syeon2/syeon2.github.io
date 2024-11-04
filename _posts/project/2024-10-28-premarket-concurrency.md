@@ -133,9 +133,8 @@ User 1번이 Item의 재고를 조회하고 차감하기 전에 User 2번이 같
 
 이러한 동시성 이슈를 해결하기 위한 다양한 방법이 존재합니다.
 
-1. Application Synchronized 예약어 사용
-2. DB Lock (Pessimistic Lock, Optimistic Lock)
-등등..
+1. Application Synchronized 예약어 사용 [🔗 Deep Dive](https://medium.com/@gsy4568/java-synchronized-deep-dive-9a764568d27c)
+2. DB Lock (Pessimistic Lock, Optimistic Lock) [🔗 Deep Dive](https://medium.com/@gsy4568/pessimistic-locking-deep-dive-feat-mysql-7fcf90f259f0)
 
 그 중에서 2번 DB Lock 개념을 활용하여 1차적으로 동시성 이슈를 해결해보고자 합니다.
 
@@ -153,8 +152,6 @@ DB에서 제공하는 Lock은 동시성 이슈를 해결하는 방법 중 가장
 
 DB를 통한 Lock 매커니즘은 크게 Pessimistic Lock, Optimistic Lock으로 나눌 수 있으며, 여기서는 상품 재고에 확정적으로 요청끼리 충돌하기 때문에 Pessimistic Lock을 
 사용하여 문제를 해결하였습니다.
-
-###### [🔗 Pessimistic Lock vs Optimistic Lock](https://medium.com/@gsy4568/pessimistic-locking-deep-dive-feat-mysql-7fcf90f259f0)
 
 ```java
 ItemEntity itemEntity = itemRepository.findItemEntityForQuantityUpdate(orderItem.getItemId())
