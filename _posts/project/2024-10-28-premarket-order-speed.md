@@ -39,7 +39,6 @@ tags: project
 MySQL은 디스크에 데이터를 저장하고 불러오는 특징을 가지고 있습니다. 어플리케이션(프로세스)에서 디스크에 접근하여 데이터를 불러오는 속도는 생각보다 많이 느리다는 점이 이 
 문제의 포인트입니다.
 
-
 <img src="https://i.ibb.co/YcMhTzs/diskandmemory.png" alt="diskandmemory" border="0">
 
 위의 표는 각 메모리마다 연산 속도의 차이를 보여주는 표입니다. HDD는 SSD보다 500배 빠르지만, RAM(메인 메모리)는 SSD보다 1,000배 더 빠릅니다.

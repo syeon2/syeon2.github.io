@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Project] Spring Security 동작 프로세스"
+title: "[Spring] Spring Security 동작 프로세스"
 subtitle: "Spring Security가 동작하는 프로세스를 설명합니다."
 categories: devlog
 tags: project security

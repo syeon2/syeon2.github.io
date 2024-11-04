@@ -23,9 +23,9 @@ tags: project
 
 ## 🌱 여는 글
 
-Hot Deal 서비스는 예약 구매 기능을 제공하여, 판매자가 원하는 시간에 상품을 구매할 수 있도록 설정할 수 있습니다. 설정한 시간이 되면 선착순으로 구매가 가능하며, 재고 설정과 함께 한 번에 하나의 예약 구매 상품만 선택하여 구매할 수 있습니다. 수량은 구매자의 재량에 따라 결정됩니다.
+Pre market 서비스는 예약 구매 기능을 제공하여, 판매자가 원하는 시간에 상품을 구매할 수 있도록 설정할 수 있습니다. 설정한 시간이 되면 선착순으로 구매가 가능하며, 재고 설정과 함께 한 번에 하나의 예약 구매 상품만 선택하여 구매할 수 있습니다. 수량은 구매자의 재량에 따라 결정됩니다.
 
-현재 Hot Deal 서비스의 DAU(일일 활성 사용자 수)는 2,000명 수준이지만, 인기 상품이 예약 구매 기능을 통해 제공될 경우 갑작스러운 트래픽 상승이 발생할 수 있습니다.
+현재 Pre market 서비스의 DAU(일일 활성 사용자 수)는 2,000명 수준이지만, 인기 상품이 예약 구매 기능을 통해 제공될 경우 갑작스러운 트래픽 상승이 발생할 수 있습니다.
 
 기획 상 DAU 2,000명은 시간당 평균 약 100명이 접속하는 수준이지만, 회원 수 증가와 예약 구매 기능의 중요성을 고려해 TPS(초당 처리량) 최소 500~1000을 안전하게 확보할 필요가 있습니다.
 
@@ -135,7 +135,6 @@ User 1번이 Item의 재고를 조회하고 차감하기 전에 User 2번이 같
 
 1. Application Synchronized 예약어 사용
 2. DB Lock (Pessimistic Lock, Optimistic Lock)
-3. 
 등등..
 
 그 중에서 2번 DB Lock 개념을 활용하여 1차적으로 동시성 이슈를 해결해보고자 합니다.
@@ -155,7 +154,7 @@ DB에서 제공하는 Lock은 동시성 이슈를 해결하는 방법 중 가장
 DB를 통한 Lock 매커니즘은 크게 Pessimistic Lock, Optimistic Lock으로 나눌 수 있으며, 여기서는 상품 재고에 확정적으로 요청끼리 충돌하기 때문에 Pessimistic Lock을 
 사용하여 문제를 해결하였습니다.
 
-###### [🔗 Pessimistic Lock vs Optimistic Lock](https://sabarada.tistory.com/175)
+###### [🔗 Pessimistic Lock vs Optimistic Lock](https://medium.com/@gsy4568/pessimistic-locking-deep-dive-feat-mysql-7fcf90f259f0)
 
 ```java
 ItemEntity itemEntity = itemRepository.findItemEntityForQuantityUpdate(orderItem.getItemId())
@@ -190,4 +189,3 @@ Lock을 사용하는 것은 논블로킹으로 처리할 수 있었던 요청들
 
 또한, 조금 더 근본적으로 디스크에 데이터를 저장하고 조회하는 MySQL의 속도는 초기에 목표한 TPS 500 ~ 1,000의 요구량을 충족시키기 어려웠습니다. (프로젝트를 가동시키고 있는 컴퓨터 기준)
 다음 글에서는 어떻게 재고 차감 및 주문 생성 속도를 향상시킬 수 있었는지에 대한 사례를 소개합니다.
-
