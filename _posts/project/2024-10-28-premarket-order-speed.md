@@ -22,7 +22,7 @@ tags: project
 
 ## 🌱 여는 글
 
-[이전 글 (Pessimistic Lock으로 동시성 이슈 트러블슈팅)](https://syeon2.github.io/devlog/hotdeal-pre-order.html)에서 주문 시 상품 재고가 
+[이전 글 (Pessimistic Lock으로 동시성 이슈 트러블슈팅)](https://syeon2.github.io/devlog/premarket-concurrency.html)에서 주문 시 상품 재고가 
 정상적으로 처리되지 않는 이슈를 해결해보았습니다.
 
 하지만 Pessimistic Lock으로는 동시성 문제를 해결했지만, 기획에서 요구하는 요청 속도는 현저히 미치지 못하고 있다는 것을 발견하게 되었습니다.

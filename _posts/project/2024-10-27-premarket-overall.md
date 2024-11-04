@@ -56,4 +56,6 @@ Pre Market 프로젝트에서 고민한 핵심 기술과 이를 통해 얻은 �
 ## 🌱 문제 및 트러블슈팅
 
 - [Pre Market 소프프웨어 아키텍처 (Layered & DDD)](https://syeon2.github.io/devlog/pre-market-architecture.html)
-- [많은 트래픽을 안정적으로 처리하는 예약 주문 기능 설계]()
+- [많은 트래픽을 안정적으로 처리하는 예약 주문 기능 설계](https://syeon2.github.io/devlog/premarket-concurrency.html)
+- [상품 주문 쿼리 최적화 사례](https://syeon2.github.io/devlog/premarket-order-query.html)
+- 
