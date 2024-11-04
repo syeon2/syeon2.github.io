@@ -55,7 +55,10 @@ Pre Market 프로젝트에서 고민한 핵심 기술과 이를 통해 얻은 �
 
 ## 🌱 문제 및 트러블슈팅
 
-- [Pre Market 소프프웨어 아키텍처 (Layered & DDD)](https://syeon2.github.io/devlog/pre-market-architecture.html)
-- [많은 트래픽을 안정적으로 처리하는 예약 주문 기능 설계](https://syeon2.github.io/devlog/premarket-concurrency.html)
+- [Layered Architecture with DDD](https://syeon2.github.io/devlog/pre-market-architecture.html)
+- [상품 주문 시 재고 차감 동시성 이슈 트러블슈팅](https://syeon2.github.io/devlog/premarket-concurrency.html)
+    - [Java Synchronized Deep Dive](https://medium.com/@gsy4568/java-synchronized-deep-dive-9a764568d27c)
+    - [Pessimistic Lock Deep Dive (feat.MySQL)](https://medium.com/@gsy4568/pessimistic-locking-deep-dive-feat-mysql-7fcf90f259f0)
+    - [예약 상품 주문 요청 속도 개선 사례를 소개합니다.](https://syeon2.github.io/devlog/premarket-order-speed.html)
 - [상품 주문 쿼리 최적화 사례](https://syeon2.github.io/devlog/premarket-order-query.html)
-- 
+- [Spring Security 동작 프로세스](https://syeon2.github.io/devlog/pre-market-security.html)
